@@ -1,0 +1,56 @@
+(symbols '(pico))
+
+(de main ()
+
+  (gc 64)
+
+  (let (Ve (glue "." (version T))
+        Hp-Sz (heap)
+        Hp-Fr (heap T)
+        St-Sz (stack))
+        
+    (prinl)
+    (prinl "PilOS " Ve " AArch64")
+    (prinl "Heap Size (MB): " Hp-Sz)
+    (prinl "Heap Free (MB): " Hp-Fr)
+    (prinl "Stack Size (KB): " St-Sz)
+      
+    (prinl "Enter REPL")
+    #(ech)
+    (repl)
+    
+    (loop)))
+  
+(de ech () (loop (uart~pr (char (uart~rd)))))
+  
+(de repl ()
+
+  (prin ": ")
+  
+  (loop
+  
+    # build str, then eval
+    (let? C (char (uart~rd))
+    
+      (case C
+      
+        ("^M" # enter
+          (if S
+              (prog
+                (for E (str (pack (flip S)))
+                  (uart~prl)
+                  (uart~pr "-> ")
+                  (println (eval E)))
+                (setq S ()))
+              (uart~prl))
+          (uart~pr ": "))
+          
+        ("^?" # bksp (code is del but key is bksp)
+          (uart~pr "^H ^H")
+          (pop 'S))
+          
+        (T
+          (uart~pr C)
+          (push 'S C))))))
+    
+(main)

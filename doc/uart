@@ -1,0 +1,69 @@
+6 UARTs
+
+  GPIO 14/15 : UART 0 -> serial (aka PL011 or BT on PI4)
+              : UART 1 -> mini UART
+  GPIO 0-3   : UART 2 -> serial
+  GPIO 4-7   : UART 3 -> serial
+  GPIO 8-11  : UART 4 -> serial
+  GPIO 12-15 : UART 5 -> serial
+  
+    UART 5 overlaps with standard UARTs on 14 & 15, 
+    but UART 5 has its flow control signals there -
+    TXD5 and RXD5 appear on 12 & 13.    
+
+  * "Primary" is GPIO14/15 mapping to UART0/1 - depends on model
+    * There is no "secondary" mapping for UART1 - shared with GPIO14/15
+    * To set alternate mapping, set device tree
+
+    Model 	             Primary (GPIO14/15 mapping)                   enable_uart=
+    Raspberry Pi 1 	     PL011                (or mini UART)           1
+    Raspberry Pi 2 	     PL011                (or mini UART)           1  
+    Raspberry Pi 3 	     mini UART (disabled) (or Bluetooth via PL011) 0
+    Raspberry Pi 4 	     mini UART (disabled) (or Bluetooth via PL011) 0
+    Raspberry Pi Zero 	 PL011                (or mini UART)           1
+    Raspberry Pi Zero W  mini UART (disabled) (or Bluetooth via PL011) 0
+
+* PL011 is a full featured serial port
+* mini UART is a minimal serial port
+  * requires fixed VPU clock (see enable_uart)
+
+* enable_uart will fix the VPU clock...**only** when mini-UART is mapped
+  * Default value for enable_uart depends on model's default primary
+    * 0 when mini UART
+    * 1 when PL011
+  * enable_uart also fixes the clock to 250 or 500 (RPI4)      
+  * Counter-intuitively, to use the mini UART, must set to 1, or alternatively:
+    * RPI1/2/3:
+      * core_freq fixes clock to specific freq
+      * force_turbo fixes clock to max freq      
+    * RPI4:
+      * PI4 does not support manual core_freq -> fixed depending on display
+      * core_freq:
+        * 500 MHZ (default)
+        * 360 MHZ (enable_tvout)
+        * 550 MHZ (hdmi_enable_4kp60)
+      * use core_freq_min
+  * If the core clock is not set, mini UART is disabled
+
+* Ensure sw(reg) freq >= to hw freq
+  * i.e AUX_MU_BAUD_REG = 270 (for 250 MHZ VPU) or 541 (for 500 MHZ VPU)
+
+* Only UART0 is default enabled, i.e not the mini UART
+  * so must set sw register
+
+RPI4:
+no device tree: primary=mini UART (UART1), PL011 (UART0)
+disable-bt:     GPIO14/15=PL011 (UART0)
+minibt:    GPIO14/15=mini UART, PL011 (UART0)=BT
+  may reduce maximum usable baud rate
+  does not fix clock - must set opts
+  enable_uart only fixes clock if primary is BT
+  
+
+https://www.raspberrypi.org/documentation/configuration/uart.md  
+https://www.raspberrypi.org/documentation/configuration/config-txt/overclocking.md
+https://www.raspberrypi.org/documentation/configuration/config-txt/video.md
+https://github.com/raspberrypi/documentation/issues/1461
+https://raspberrypi.stackexchange.com/questions/104464/where-are-the-uarts-on-the-raspberry-pi-4
+https://github.com/s-matyukevich/raspberry-pi-os/issues/127
+https://www.raspberrypi.org/forums/viewtopic.php?t=213499

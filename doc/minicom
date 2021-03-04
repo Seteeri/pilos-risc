@@ -1,0 +1,47 @@
+https://unix.stackexchange.com/questions/283924/how-can-minicom-permanently-translate-incoming-newline-n-to-crlf
+
+How can minicom “permanently” translate incoming newline (\n) to CR+LF?
+
+PROBLEM:
+I have a micro-controller device that is sending newline-terminated strings through the USB-attached serial port and (so far) I'm using minicom version 2.6 to read from /dev/ttyACM0. I've setup the terminal application for line wrapping but I'd like it to go to the beginning of the next line when receiving a line feed character from my serial device. Can [and how does] minicom do that?
+
+SOLUTION:
+In minicom press Ctrl+A Z. This will show the menu. Then press U ("Add Carriage Ret"), and minicom will add the CR symbol to each LF symbol automatically.
+
+You may want to do that again in order to turn this function OFF.
+
+WORKAROUND:
+Try sending the lines terminating with "\r\n" from the microcontroller.
+\r means the Carriage return (ASCII code 13 or 0xd)
+\n means the Line feed or New line (ASCII code 10 or 0xa)
+
+You can execute minicom -s as root, choose Screen and keyboard, then press T - Add carriage return, and Save setup as dfl to turn this option ON systemwide. Or you can save this configuration in a separate onfig-file, and then use as minicom -D /dev/ttyUSB0 /etc/minicom/minirc.myconfig. Unfortunately, Minicom 2.7 release seems to include an old man page, so these new options are not described there.
+
+note:
+hw flow ctrl uses additional wires (RTS/CTS) for flow ctrl (in addition to TX/RX/GND)
+ours is basic and does not have it so must DISABLE HW FLOW CTRL in serial port setup
+
+
+
+   #{
+    (let (Y (set $Kern (parse (name (val (tail (mkStr $Kerns)))) NO (hex "5D0A") 0))
+          Z Y)
+      (loop
+        (outString ($ ": "))  (print (car Z)) (newline)
+        (outString ($ "-> ")) (print (eval (car Z))) (newline)
+        (setq Z (cdr Z))
+        (? (nil? Z) 0))
+      (outString ($ "BYE\n")))
+   
+    (let (Y (set $Kern (parse (name (val (tail (mkStr $Kerns)))) NO (hex "5D0A") 0))
+          Z Y
+          E $Nil)
+      (loop
+        (setq E (eval (car Z)))
+        (setq Z (cdr Z))
+        (? (nil? Z)
+           (outString ($ "-> "))
+           (print E)
+           (newline))))
+               
+   }#
