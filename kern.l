@@ -25,7 +25,8 @@
 # misc, lib, bits are global (pico nsp);
 # considered part of "stdlib"
 (def '*nsp 
-  '(uart
+  '(gic
+    uart
     mbox))
   
 (for X *nsp
@@ -35,6 +36,16 @@
 
   # ret top level
   (symbols '(pico)))
+
+(de prl-kern (X)
+  # Print with cnt time
+  (prinl 
+    (pack "[" (cntvct) "] " X)))
+
+(de pr-kern (X)
+  # Print with cnt time
+  (prin 
+    (pack "[" (cntvct) "] " X)))   
 # 08oct20 Software Lab. Alexander Burger
 
 # *Allow
@@ -1163,7 +1174,11 @@
   
 }#
 
-  
+# https://stackoverflow.com/questions/8011700/how-do-i-extract-specific-n-bits-of-a-32-bit-unsigned-integer-in-c
+(de ubfx (R B A)
+  # a < b
+  (>> A (& R (>> (- A) (- (>> (- (+ (- B A) 1)) 1) 1)))))
+
 (de bw-not (N)
   (bin
     (pack
@@ -1710,15 +1725,487 @@
       (= RESP (ui* (+ *MBox (* 4 1))))))
 
 (symbols '(pico))
+(symbols '(gic pico))
+
+(local)
+(CTL-ON CTL-OFF)
+ 
+# MOVE to GIC?
+(def 'CTL-ON (>> 0 1))
+(def 'CTL-OFF (>> 0 0))
+
+
+(symbols '(pico))
+(symbols '(gic pico))
+
+(local)
+(+Cpu
+ init-cpu)
+
+ 
+(class +Cpu)
+(dm T (P)
+  (=: p P)
+  (=: ctl    (+ (: p) (hex "0000")))
+  (=: pm     (+ (: p) (hex "0004")))
+  (=: bp     (+ (: p) (hex "0008")))
+  (=: ia     (+ (: p) (hex "000C")))
+  
+  (=: eoi    (+ (: p) (hex "0010")))
+  (=: rp     (+ (: p) (hex "0014")))  
+  (=: hppi   (+ (: p) (hex "0018")))
+  (=: abp    (+ (: p) (hex "001C")))  
+  
+  (=: aia    (+ (: p) (hex "0020")))
+  (=: aeoi   (+ (: p) (hex "0024")))  
+  (=: ahppi  (+ (: p) (hex "0028")))
+  (=: ap0    (+ (: p) (hex "00D0")))  
+  
+  (=: ns-ap0 (+ (: p) (hex "00E0")))    
+  (=: iid    (+ (: p) (hex "00FC")))
+  (=: di     (+ (: p) (hex "1000")))
+  
+  (init> This))
+
+
+(dm init> ()
+ 
+  (ui* (: ctl) CTL-OFF)
+  
+  # Set the priority level as the lowest priority
+  # Note: Higher priority corresponds to a lower Priority field value in the GIC_PMR.
+  # In addition to this, writing 255 to the GICC_PMR always sets it to the 
+  # largest supported priority field value.
+  (ui* (: pm) (hex "FF")) # "F0"
+
+  # Handle all of interrupts in a single group
+  (ui* (: bp) (hex "0"))
+  
+  # Clear all of the active interrupts
+  (when NIL
+    (let Pen-IRQ c # =255
+      (while (not (= Pen-IRQ (hex "3FF")))
+        (ui* (: eoi)
+               (ui* (: ia)))
+        (setq Pen-IRQ (& (ui* (: ia)) (hex "3FF"))))))
+  
+  (ui* (: ctl) CTL-ON))
+
+  
+(symbols '(pico))
+(symbols '(gic pico))
+
+(local)
+(+Dist
+ init-dist
+ ctl> id>
+ prl-dist-iid prl-dist-type
+ get-it-lines-number
+ dist-cfg      dist-i-prio dist-i-tgts 
+ dist-clr-pend dist-on-intr dist-off-intr)
+
+ 
+# 8.9.7 GICD_ICFGR<n>, Interrupt Configuration Registers
+(def 'LVL (hex "0")) # level-sensitive
+(def 'EDGE  (hex "2")) # edge-triggered 
+
+(def 'DIST-I-ID-MSK
+  (list
+    (cons 'PRODUCTID   '(31 24))
+    (cons 'VARIANT     '(19 16))
+    (cons 'REVISION    '(15 12))
+    (cons 'IMPLEMENTER '(11 0))))
+
+    
+(def 'DIST-TYPE-R-MSK
+  (list
+    (cons 'LSPI            '(15 11))
+    (cons 'SECURITY-EXTN   '(10 10))
+    (cons 'CPU-NUMBER      '(7   5))
+    (cons 'IT-LINES-NUMBER '(4   0))))
+
+ 
+(def 'DIST-TYPE-R-PR
+  '(((X) (if (=0 X) "NO SECURITY EXTENSIONS" X))
+    ((X) (+ X 1))
+    ((X) (n0 X))    
+    ((X) (* X 32))))
+
+ 
+(class +Dist)
+(dm T (P)
+  (=: p P)
+  
+  # Enables the forwarding of pending interrupts from the Distributor to the CPU interfaces.
+  (=: ctl          (+ (: p) (hex "000")))
+  
+  # Provides information about the configuration of the GIC. It indicates:
+  # whether the GIC implements the Security Extensions
+  # the maximum number of interrupt IDs that the GIC supports
+  # the number of CPU interfaces implemented
+  # if the GIC implements the Security Extensions, the maximum number of
+  #   implemented Lockable Shared Peripheral Interrupts (LSPIs).
+  (=: type-r       (+ (: p) (hex "004")))
+  
+  # Provides information about the implementer and revision of the Distributor.
+  (=: i-id         (+ (: p) (hex "008")))
+  
+  # The GICD_IGROUPR registers provide a status bit for each interrupt supported by the GIC.
+  # Each bit controls whether the corresponding interrupt is in Group 0 or Group 1. 
+  #
+  # On start-up or reset, each interrupt with ID32 or higher resets as Group 0 and therefore all SPIs are Group 0 unless
+  # the system reprograms the appropriate GICD_IGROUPR bit. See GICD_IGROUPR0 reset value for information
+  # about the reset configuration of interrupts with IDs 0-31.  
+  (=: i-group      (+ (: p) (hex "080")))
+  
+  # The GICD_ISENABLERs provide a Set-enable bit for each interrupt supported by the GIC.
+  # Writing 1 to a Set-enable bit enables forwarding of the corresponding interrupt from the
+  # Distributor to the CPU interfaces. Reading a bit identifies whether the interrupt is enabled.
+  (=: is-enab      (+ (: p) (hex "100")))
+  
+  # The GICD_ICENABLERs provide a Clear-enable bit for each interrupt supported by the
+  # GIC. Writing 1 to a Clear-enable bit disables forwarding of the corresponding interrupt from
+  # the Distributor to the CPU interfaces. Reading a bit identifies whether the interrupt is
+  # enabled.  
+  (=: ic-enab      (+ (: p) (hex "180")))  
+  
+  # The GICD_ISPENDRs provide a Set-pending bit for each interrupt supported by the GIC.
+  # Writing 1 to a Set-pending bit sets the status of the corresponding peripheral interrupt to
+  # pending. Reading a bit identifies whether the interrupt is pending.  
+  (=: is-pend      (+ (: p) (hex "200")))
+  
+  # The GICD_ICPENDRs provide a Clear-pending bit for each interrupt supported by the GIC.
+  # Writing 1 to a Clear-pending bit clears the pending state of the corresponding peripheral
+  # interrupt. Reading a bit identifies whether the interrupt is pending.  
+  (=: ic-pend      (+ (: p) (hex "280")))
+  
+  # The GICD_ISACTIVERs provide a Set-active bit for each interrupt that the GIC supports.
+  # Writing to a Set-active bit Activates the corresponding interrupt. These registers are used
+  # when preserving and restoring GIC state.  
+  (=: is-act       (+ (: p) (hex "300")))
+  
+  # The GICD_ICACTIVERs provide a Clear-active bit for each interrupt that the GIC
+  # supports. Writing to a Clear-active bit Deactivates the corresponding interrupt. These
+  # registers are used when preserving and restoring GIC state.  
+  (=: ic-act       (+ (: p) (hex "380")))
+  
+  # The GICD_IPRIORITYRs provide an 8-bit priority field for each interrupt supported by the
+  # GIC. This field stores the priority of the corresponding interrupt.  
+  (=: i-prio       (+ (: p) (hex "400")))
+  
+  # The GICD_ITARGETSRs provide an 8-bit CPU targets field for each interrupt supported
+  # by the GIC. This field stores the list of target processors for the interrupt. That is, it holds
+  # the list of CPU interfaces to which the Distributor forwards the interrupt if it is asserted and
+  # has sufficient priority.  
+  (=: i-tgts       (+ (: p) (hex "800")))
+    
+  # The GICD_ICFGRs provide a 2-bit Int_config field for each interrupt supported by the GIC.
+  # This field identifies whether the corresponding interrupt is edge-triggered or level-sensitive,
+  # see Interrupt types on page 1-18.    
+  (=: i-cfg        (+ (: p) (hex "C00")))
+    
+  (=: ppi-s        (+ (: p) (hex "D00")))    
+  (=: spi-s        (+ (: p) (hex "D04")))
+  (=: sgi          (+ (: p) (hex "F00")))
+  (=: c-pend-sgi   (+ (: p) (hex "F10")))
+  (=: s-pend-sgi   (+ (: p) (hex "F20")))  
+  
+  (=: pid-4        (+ (: p) (hex "FD0")))
+  (=: pid-5        (+ (: p) (hex "FD4")))
+  (=: pid-6        (+ (: p) (hex "FD8")))
+  (=: pid-7        (+ (: p) (hex "FDC")))    
+
+  (=: pid-0        (+ (: p) (hex "FE0")))
+  (=: pid-1        (+ (: p) (hex "FE4")))
+  (=: pid-2        (+ (: p) (hex "FE8")))
+  (=: pid-3        (+ (: p) (hex "FEC")))
+
+  (=: cid-0        (+ (: p) (hex "FF0")))    
+  (=: cid-1        (+ (: p) (hex "FF4")))
+  (=: cid-2        (+ (: p) (hex "FF8")))
+  (=: cid-3        (+ (: p) (hex "FEC")))
+  
+  (init> This))
+
+(dm on> ()  (ui* (: ctl) CTL-ON))
+(dm off> () (ui* (: ctl) CTL-OFF))
+
+(dm type-r> (N) (mak-nm-lst (: type-r) DIST-TYPE-R-MSK N))
+(dm get-it-lines-number> () (type-r> This 'IT-LINES-NUMBER))
+
+(dm max-intr-id> () (* (+ (get-it-lines-number> This) 1) 32))
+
+(dm pr-type-r> () 
+  (prl-kern
+    (pack
+      "[gic] DIST-TYPE-R: "
+      (ui* (: type-r)) "="
+      (bin (ui* (: type-r)))))
+  (pr-reg (type-r> This) DIST-TYPE-R-PR))
+
+(dm i-id>   (N) (mak-nm-lst (: i-id) DIST-I-ID-MSK N))
+(dm pr-i-id> () 
+  (prl-kern
+    (pack
+      "[gic] DIST-I-ID: "
+      (ui* (: i-id)) "="
+      (bin (ui* (: i-id)))))
+  (pr-reg (i-id> This) NIL)) # No pr fns
+
+(dm init> ()
+
+  # TODO: On init, create id, type-r cls since fixed
+  # Pr info
+  (pr-i-id> This)
+  (pr-type-r> This)
+
+  # Off distributor
+  # Cfg before intrs passed to CPU
+  (off> This)
+
+  # TODO: store on init
+  (let (Intr-Lns (get-it-lines-number> This)
+        Max-Intr-ID (* (+ Intr-Lns 1) 32))
+  
+    # Disable/clear IRQs
+    (for (N 0 (< N Max-Intr-ID) (inc N))
+      (let (O (* 4 (/ N 32))
+            En (+ (: ic-enab) O)
+            Pe (+ (: ic-pend) O))
+        (when (=0 (% N 32))
+          (ui* En (hex "FFFFFFFF"))
+          (ui* Pe (hex "FFFFFFFF")))))
+
+    # Set intr priorities to lowest prior
+    (for (N 0 (< N Max-Intr-ID) (inc N))
+      (let (O (* 4 (/ N 4))
+            Pr (+ (: i-prio) O))
+        (when (=0 (% N 4))
+          (ui* Pr (hex "FFFFFFFF")))))
+
+    # Set tgt of spi's, proc 0
+    (for (N 0 (< N Max-Intr-ID) (inc N))
+      (let (O (* 4 (/ N 4))
+            Ta (+ (: i-tgts) O))
+        (when (=0 (% N 4))
+          (ui* Ta (hex "01010101")))))
+
+    # Set trigger of spi's, level triggered
+    (for (N 0 (< N Max-Intr-ID) (inc N))
+      (let (O (* 4 (/ N 16))
+            Cf (+ (: i-cfg) O))
+        (when (=0 (% N 16))
+          (ui* Cf LVL)))))
+
+  # On distributor
+  (on> This))
+
+# Get
+  
+(dm is-enab> (Irq) (ui* (+ (: is-enab) (* (/ Irq 32) 4))))
+(dm is-pend> (Irq) (ui* (+ (: is-pend) (* (/ Irq 32) 4))))
+(dm is-act>  (Irq) (ui* (+ (: is-act)  (* (/ Irq 32) 4))))
+
+
+(dm ic-enab> (Irq Wd) (ui* (+ (: ic-enab) (* (/ Irq 32) 4)) Wd))
+(dm ic-pend> (Irq Wd) (ui* (+ (: ic-pend) (* (/ Irq 32) 4)) Wd))
+(dm ic-act>  (Irq Wd) (ui* (+ (: ic-act)  (* (/ Irq 32) 4)) Wd))
+
+# Set
+
+# ((volatile uint32_t *)(uintptr_t)(0x08000000 + 0x100 + ( (irq / 32) * 4 ) ))
+(dm is-enab-intr> (Irq) (ul* (+ (: is-enab) (* (/ Irq 32) 4)) (>> (- (% Irq 32)) 1)))
+(dm is-pend-intr> (Irq) (ui* (+ (: is-pend) (* (/ Irq 32) 4)) (>> (- (% Irq 32)) 1)))
+(dm is-act-intr>  (Irq) (ui* (+ (: is-act)  (* (/ Irq 32) 4)) (>> (- (% Irq 32)) 1)))
+                      
+(dm ic-enab-intr> (Irq) (ui* (+ (: ic-enab) (* (/ Irq 32) 4)) (>> (- (% Irq 32)) 1)))
+(dm ic-pend-intr> (Irq) (ui* (+ (: ic-pend) (* (/ Irq 32) 4)) (>> (- (% Irq 32)) 1)))
+(dm ic-act-intr>  (Irq) (ui* (+ (: ic-act)  (* (/ Irq 32) 4)) (>> (- (% Irq 32)) 1)))
+
+
+(dm i-cfg> (Irq Cfg)
+  (let (Shft (* (% Irq 16) 2)
+        P    (+ (: i-cfg) (* (/ Irq 16) 4))
+        Reg  (& (ui* P) (bw-not (>> (- Shft) (hex "03"))))
+        Reg  (| Reg (>> (- Shft) Cfg)))
+    (ui* P Reg)))
+
+(dm i-prio> (Irq Prio)
+  (let (Shft (* (% Irq 4) 8)
+        P    (+ (: i-prio) (* (/ Irq 4) 4))
+        Reg  (& (ui* P) (bw-not (>> (- Shft) (hex "FF"))))
+        Reg  (| Reg (>> (- Shft) Prio)))
+    (setq Reg (hex "00FFFFFF"))
+    (ui* P Reg)))
+
+(dm i-tgts> (Irq Proc)
+  (let (Shft (* (% Irq 4) 8)
+        P    (+ (: i-tgts) (* (/ Irq 4) 4))
+        Reg  (& (ui* P) (bw-not (>> (- Shft) (hex "FF"))))
+        Reg  (| Reg (>> (- Shft) Proc)))
+    (ui* P Reg)))
+
+
+#############################    
+
+# Both empty = rd
+# One or more = wr
+(dm ctl> (Grp0 Grp1)
+  (if (nor Grp0 Grp1)))
+
+######################
+
+(de mak-nm-lst (P L N)
+  # Make assoc list of name : masked
+  (let O (make
+          (let R (ui* P)
+            (for Nm-Msk L
+              (let (Nm  (car Nm-Msk)
+                    Msk (cdr Nm-Msk))
+                (link (cons Nm (ubfx R (car Msk) (cadr Msk))))))))
+    # Return single prop if N
+    (if N
+        (get O N)
+        O)))
+
+(de pr-reg (Msk Fns)
+  (mapc
+    '((A Pr)
+      (let (Nm  (car A)
+            Va  (cdr A)
+            Out (when Pr (Pr Va)))
+        (prl-kern (pack "[gic]  " Nm ": " Out "=" Va))))
+    Msk
+    Fns))
+
+
+(symbols '(pico))
+(symbols '(gic pico))
+
+(local)
+(TIMER-IRQ 
+ +Intr +Ppi +Spi +Sgi)
+
+
+(def 'TIMER-IRQ 27)
+  
+(class +Intr)
+(dm grp> (Bits))
+(dm ena> (Fn Bit))
+(dm pen> (Fn Bit))
+(dm act> (Fn Bit))
+(dm pri> (Bits))
+(dm tgt> (Bits))
+(dm cfg> (Bits))
 
 #{
-    wait-wr 1073741824
-    wait-rd 1073741824
-    wait-rd-Y 67108872
-    wait-rd 1073741824
-    wait-rd-Y 0
-    wait-rd 1073741824
+  Private Peripheral Interrupt
+
+  Generated explicitly by software by writing to a dedicated distributor register, the Software Generated Interrupt Register Most commonly used for inter-core communication
+  SGIs can be targeted at all, or at a selected group of cores in the system
+  Interrupt numbers 0-15 are reserved for this
+  Software manages the exact interrupt number used for communication
 }#
+
+(class +Ppi) 
+
+
+#{
+  Shared Peripheral Interrupt
+
+  Generated by a peripheral that is private to an individual core
+  Interrupt numbers 16-31 are reserved for this
+  PPIs identify interrupt sources private to the core
+  Independent of the same source on another core, for example, per-core timer
+}#
+
+(class +Spi) 
+
+
+#{
+  Software generated interrupts
+
+  Generated by a peripheral that the Interrupt Controller can route to more than one core
+  Interrupt numbers 32-1020 are used for this
+  SPIs are used to signal interrupts from various peripherals accessible across the whole system
+}#
+
+(class +Sgi)
+
+(symbols '(pico))
+(symbols '(gic pico))
+
+(local)
+(+Gic
+ +Vicb +Hyp +Vci)
+  
+#{
+
+  Cls -> ptrs
+  - Intr use dist/cpu methods
+    - +Dist is singleton: *dist
+  - Dist/Cpu methods for ctl registers
+
+  Cls holds offsets
+  Meths use offsets
+
+}#
+ 
+(class +Gic)
+(dm T ()
+  (=: p    (hex "FF840000"))
+  (=: dist (new '(+Dist) (+ (: p) (hex "1000"))))
+  (=: cpu  (new '(+Cpu)  (+ (: p) (hex "2000")))))
+
+# Mov to Irq class  
+# Irq = -1 : set all?
+(dm enab> (Irq Val) ((if Val 'is-enab> 'ic-enab>) This Irq))
+(dm pend> (Irq Val) ((if Val 'is-pend> 'ic-pend>) This Irq))
+(dm act>  (Irq Val) ((if Val 'is-act>  'ic-act>)  This Irq))  
+(dm on>   (Irq) (enab> This Irq T))
+(dm off>  (Irq) (enab> This Irq))
+
+(dm find-pend-irq> ()
+  (let Irq NIL
+    (for Id (max-intr-id> (: dist))
+      # check pend bit
+      (let (J (dec Id)
+            W (is-pend> (: dist) J)
+            B (>> (- (% J 32)) 1))
+        (when (n0 (& B W))
+          (setq Irq J))))
+    Irq))
+
+(de init ()
+
+  (def '*gic (new '(+Gic)))
+  
+  (let Dist (get *gic 'dist)
+
+    (i-cfg>        Dist TIMER-IRQ EDGE)
+    (i-prio>       Dist TIMER-IRQ (>> -4 0))
+    (i-tgts>       Dist TIMER-IRQ (hex "1")) # proc 0
+    (ic-pend-intr> Dist TIMER-IRQ)
+    (is-enab-intr> Dist TIMER-IRQ)))
+
+
+(class +Vicb)
+(dm T (P)
+  (=: p P)
+  (=: c0 (+ (: p) (hex "5000")))
+  (=: c1 (+ (: p) (hex "5200")))
+  (=: c2 (+ (: p) (hex "5400")))
+  (=: c3 (+ (: p) (hex "5600")))
+  (=: c4 (+ (: p) (hex "5800")))
+  (=: c5 (+ (: p) (hex "5A00")))  
+  (=: c6 (+ (: p) (hex "5C00")))    
+  (=: c7 (+ (: p) (hex "5E00"))))
+
+(class +Hyp)
+  
+(class +Vci)
+  
+(symbols '(pico))
 (symbols '(pico))
 
 (de term ()
@@ -1733,7 +2220,7 @@
   # BS  = 8   = "^H"
   # ESC = 27  = "^["
 
-  (prin ": ")
+  (pr-kern ": ")
   
   (loop
   
@@ -1777,11 +2264,11 @@
         (for E (str (pack (flip *buf-term)))
           (uart~prl)
           (let F (eval E)
-            (uart~pr "-> ")
+            (pr-kern "-> ")
             (println F)))
         (off *buf-term))
       (uart~prl))
-  (uart~pr ": "))
+  (pr-kern ": "))
 
 
 (de case-esc ()
@@ -1828,66 +2315,131 @@
       (T
         (prinl "CSI? " @ " " (uart~rd))))))
 (symbols '(pico))
-
-(de pr-kern (X)
-  # Print with cnt time
-  (prinl 
-    (pack "[" (cntv-ct) "] " X)))
-
+    
 #{
-  [24467196] Board Model: 0
-  [24678402] Board Revision: C0311
-  [24953472] Board Serial: 1000000BA08938
-  [25236837] Firmware Revision: 5FF86CB
-  [25521708] ARM Memory Base/Size: 3B40000 0
-  [25845181] VC Memory Base/Size: 4C0000 3B40000
-  [26194251] MAC Address: DC-A6-32-9B-40-37
+
+    [24908182] Board Model: 0                                               
+    [25121743] Board Revision: C03112                                       
+    [25410831] Board Serial: 10000000 BA08938C                              
+    [25712292] Firmware Revision: 5FF86CB4                                  
+    [26004380] ARM Memory Base/Size: 3B400000 0                             
+    [26337306] VC Memory Base/Size: 4C00000 3B400000                        
+    [26695736] MAC Address: DC-A6-32-9B-40-37                               
+    [26916918]                                                              
+    [26977889] cntv-ctl: 0                                                  
+    [27086774] cntv-cval: 0                                                 
+    [27201597] cntvct: 27196357                                            
+    [27338944] cnt-frq: 54000000                                            
+    [27471752]                                                              
+    [27540543] PilOS 21.1.25 AArch64 ARMv8-A A64                            
+    [27746104] Heap Size: 1 MB                                              
+    [28362097] Heap Free: 0 MB
+    [28458391] Stack Size: 512 KB
+    [28601545] *Kern Load Time: 21759131
+    
 }#
 
 (de pr-mbox ()
-  (pr-kern (pack "Board Model: "          (mbox~bmod)))
-  (pr-kern (pack "Board Revision: "       (mbox~brev)))
-  (pr-kern (pack "Board Serial: "         (let ((A B) (mbox~bser)) (pack A " " B))))
-  (pr-kern (pack "Firmware Revision: "    (mbox~frev)))
-  (pr-kern (pack "ARM Memory Base/Size: " (let ((B S) (mbox~amem)) (pack B " " S))))
-  (pr-kern (pack "VC Memory Base/Size: "  (let ((B S) (mbox~vmem)) (pack B " " S))))
-  (pr-kern (pack "MAC Address: "          (glue "-" (mbox~madr)))))
+  (prl-kern (pack "Board Model: "          (mbox~bmod)))
+  (prl-kern (pack "Board Revision: "       (mbox~brev)))
+  (prl-kern (pack "Board Serial: "         (let ((A B) (mbox~bser)) (pack A " " B))))
+  (prl-kern (pack "Firmware Revision: "    (mbox~frev)))
+  (prl-kern (pack "ARM Memory Base/Size: " (let ((B S) (mbox~amem)) (pack B " " S))))
+  (prl-kern (pack "VC Memory Base/Size: "  (let ((B S) (mbox~vmem)) (pack B " " S))))
+  (prl-kern (pack "MAC Address: "          (glue "-" (mbox~madr)))))
 
 
-(de pr-arm ()
-  (pr-kern (text "cntv-ctl: @1"  (cntv-ctl)))
-  (pr-kern (text "cntv-cval: @1" (cntv-cval)))
-  (pr-kern (text "cntv-ct: @1"   (cntv-ct)))
-  (pr-kern (text "cnt-frq: @1"   (cnt-frq))))
+(de pr-tim ()
+  (prl-kern (text "cnt-frq: @1"   (cnt-frq)))
+  
+  (prl-kern (text "cntv-ctl: @1"  (cntv-ctl)))
+  (prl-kern (text "cntv-cval: @1" (cntv-cval)))
+  (prl-kern (text "cntv-tval: @1" (cntv-tval)))  
+  (prl-kern (text "cntvct: @1"    (cntvct)))
+  
+  (prl-kern (text "cntp-ctl: @1"  (cntp-ctl)))
+  (prl-kern (text "cntp-cval: @1" (cntp-cval)))
+  (prl-kern (text "cntp-tval: @1" (cntp-tval)))
+  (prl-kern (text "cntpct: @1"    (cntpct))))
   
   
 (de pr-sys ()
-  (pr-kern (text "PilOS @1 AArch64 ARMv8-A A64" (glue "." (version T))))
-  (pr-kern (text "Heap Size: @1 MB" (heap)))
-  (pr-kern (text "Heap Free: @1 MB" (heap T)))
-  (pr-kern (text "Stack Size: @1 KB" (stack 512)))
-  (pr-kern (text "*Kern Load Time: @1" (usec))))
+  (prl-kern (text "PilOS @1 AArch64 ARMv8-A A64" (glue "." (version T))))
+  (prl-kern (text "Heap Size: @1 MB" (heap)))
+  (prl-kern (text "Heap Free: @1 MB" (heap T)))
+  (prl-kern (text "Stack Size: @1 KB" (stack 256)))
+  (prl-kern (text "*Kern Load Time: @1" (usec))))
+  
+(de on-timer2 ()
 
+  #(daif)
+  
+  (let (C (cntv-ctl)
+        C (& C (bw-not C))) # 0
+    (cntv-ctl C))
+    
+  (let (Cntfrq (cnt-frq)
+        Ticks (* 3 Cntfrq)
+        Cur-Cnt (cntvct))
+    (cntv-cval (+ Cur-Cnt Ticks)))
+    
+  (let (C (cntv-ctl)
+        C (| C (>> 0 1))) # 1
+    (cntv-ctl C))
 
+  #(daif T)
+  
+  (pr-tim))
+  
+(de on-timer ()
+
+  (daif)
+  
+  (let (C (cntv-ctl)
+        C (& C (bw-not C))) # 0
+    (cntv-ctl C))
+    
+  (let (Cntfrq (cnt-frq)
+        Ticks (* 3 Cntfrq)
+        Cur-Cnt (cntvct))
+    (cntv-cval (+ Cur-Cnt Ticks)))
+    
+  (let (C (cntv-ctl)
+        C (| C (>> 0 1))) # 1
+    (cntv-ctl C))
+
+  (daif T)
+  
+  (pr-tim))
+
+  
 (de main ()
-
-  # print pagetable
+  
+  ################
+  # print sys info
   
   (prinl)
-  
-  #(loop (println (mbox~bser)))
 
   (pr-mbox)
   
-  (pr-kern)   
+  (prl-kern)
   
-  (pr-kern)  
+  (pr-tim)
   
-  (pr-arm)
-  
-  (pr-kern)
+  (prl-kern)
   
   (pr-sys)
+  
+  ##############
+  # init drivers
+  
+  (prl-kern)
+  
+  (gic~init)
+  
+  
+  ############
+  # start term
   
   (term)
   

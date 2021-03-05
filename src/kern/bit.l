@@ -10,7 +10,11 @@
   
 }#
 
-  
+# https://stackoverflow.com/questions/8011700/how-do-i-extract-specific-n-bits-of-a-32-bit-unsigned-integer-in-c
+(de ubfx (R B A)
+  # a < b
+  (>> A (& R (>> (- A) (- (>> (- (+ (- B A) 1)) 1) 1)))))
+
 (de bw-not (N)
   (bin
     (pack

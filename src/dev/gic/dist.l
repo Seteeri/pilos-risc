@@ -14,36 +14,28 @@
 (def 'LVL (hex "0")) # level-sensitive
 (def 'EDGE  (hex "2")) # edge-triggered 
 
-
-# MSK, first num = start, second num = cnt
 (def 'DIST-I-ID-MSK
   (list
-    (cons 'IMPLEMENTER (>> (- 1)  (- (>> (- 5) 1) 1)))
-    (cons 'REVISION    (>> (- 6)  (- (>> (- 3) 1) 1)))
-    (cons 'VARIANT     (>> (- 11) (- (>> (- 1) 1) 1)))
-    (cons 'PRODUCTID   (>> (- 12) (- (>> (- 5) 1) 1)))))
-    
-(def 'DIST-I-ID-MSK-PR
-  (list
-    (cons 'IMPLEMENTER (>> (- 1)  (- (>> (- 5) 1) 1)))
-    (cons 'REVISION    (>> (- 6)  (- (>> (- 3) 1) 1)))
-    (cons 'VARIANT     (>> (- 11) (- (>> (- 1) 1) 1)))
-    (cons 'PRODUCTID   (>> (- 12) (- (>> (- 5) 1) 1)))))    
+    (cons 'PRODUCTID   '(31 24))
+    (cons 'VARIANT     '(19 16))
+    (cons 'REVISION    '(15 12))
+    (cons 'IMPLEMENTER '(11 0))))
 
     
 (def 'DIST-TYPE-R-MSK
   (list
-    (cons 'IT-LINES-NUMBER (>> (- 1)  (- (>> (- 5) 1) 1)))
-    (cons 'SECURITY-EXTN   (>> (- 6)  (- (>> (- 3) 1) 1)))
-    (cons 'CPU-NUMBER      (>> (- 11) (- (>> (- 1) 1) 1)))
-    (cons 'LSPI            (>> (- 12) (- (>> (- 5) 1) 1))))) 
+    (cons 'LSPI            '(15 11))
+    (cons 'SECURITY-EXTN   '(10 10))
+    (cons 'CPU-NUMBER      '(7   5))
+    (cons 'IT-LINES-NUMBER '(4   0))))
+
  
 (def 'DIST-TYPE-R-PR
-  '(((X) (* X 32))
-    ((X) (n0 X))
+  '(((X) (if (=0 X) "NO SECURITY EXTENSIONS" X))
     ((X) (+ X 1))
-    ((X) (if (=0 X) "NO SECURITY EXTENSIONS" X))))
- 
+    ((X) (n0 X))    
+    ((X) (* X 32))))
+
  
 (class +Dist)
 (dm T (P)
@@ -148,10 +140,22 @@
 
 (dm max-intr-id> () (* (+ (get-it-lines-number> This) 1) 32))
 
-(dm pr-type-r> () (prinl "[gic] DIST-TYPE-R: ") (pr-reg (type-r> This) DIST-TYPE-R-PR))
+(dm pr-type-r> () 
+  (prl-kern
+    (pack
+      "[gic] DIST-TYPE-R: "
+      (ui* (: type-r)) "="
+      (bin (ui* (: type-r)))))
+  (pr-reg (type-r> This) DIST-TYPE-R-PR))
 
 (dm i-id>   (N) (mak-nm-lst (: i-id) DIST-I-ID-MSK N))
-(dm pr-i-id> () (prinl "[gic] DIST-I-ID: ")  (pr-reg (i-id> This))) # No pr fns
+(dm pr-i-id> () 
+  (prl-kern
+    (pack
+      "[gic] DIST-I-ID: "
+      (ui* (: i-id)) "="
+      (bin (ui* (: i-id)))))
+  (pr-reg (i-id> This) NIL)) # No pr fns
 
 (dm init> ()
 
@@ -263,7 +267,7 @@
             (for Nm-Msk L
               (let (Nm  (car Nm-Msk)
                     Msk (cdr Nm-Msk))
-                (link (cons Nm (& R Msk)))))))
+                (link (cons Nm (ubfx R (car Msk) (cadr Msk))))))))
     # Return single prop if N
     (if N
         (get O N)
@@ -275,7 +279,7 @@
       (let (Nm  (car A)
             Va  (cdr A)
             Out (when Pr (Pr Va)))
-        (prinl "[gic]  " Nm ": " Out "=" Va)))
+        (prl-kern (pack "[gic]  " Nm ": " Out "=" Va))))
     Msk
     Fns))
 

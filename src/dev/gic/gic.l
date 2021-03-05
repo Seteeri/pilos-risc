@@ -1,7 +1,7 @@
 (symbols '(gic pico))
 
 (local)
-(+Gic-400
+(+Gic
  +Vicb +Hyp +Vci)
   
 #{
@@ -16,16 +16,11 @@
 
 }#
  
-(class +Gic-v2)
+(class +Gic)
 (dm T ()
-  (=: p    (hex "08000000"))
-  (=: dist (new '(+Dist) (: p)))
-  (=: cpu  (new '(+Cpu)  (+ (: p) (hex "10000"))))
-  
-  # Unused...
-  (=: vicb (new '(+Vicb) (+ (: p) (hex "2000"))))
-  (=: hyp  (new '(+Hyp)  (+ (: p) (hex "3000"))))
-  (=: vci  (new '(+Vci)  (+ (: p) (hex "4000")))))
+  (=: p    (hex "FF840000"))
+  (=: dist (new '(+Dist) (+ (: p) (hex "1000"))))
+  (=: cpu  (new '(+Cpu)  (+ (: p) (hex "2000")))))
 
 # Mov to Irq class  
 # Irq = -1 : set all?
@@ -48,19 +43,15 @@
 
 (de init ()
 
-  (def '*gic (new '(+Gic-v2)))
+  (def '*gic (new '(+Gic)))
   
   (let Dist (get *gic 'dist)
 
-    #(i-cfg>    Dist TIMER-IRQ EDGE)
-    (i-prio>   Dist TIMER-IRQ (>> -4 0))
-    #(i-tgts>   Dist TIMER-IRQ (hex "1")) # proc 0
-    #(ic-pend-intr>  Dist TIMER-IRQ)
-    #(on-intr>  Dist TIMER-IRQ)
-    
-    (is-enab-intr> Dist TIMER-IRQ)
-    
-    ))
+    (i-cfg>        Dist TIMER-IRQ EDGE)
+    (i-prio>       Dist TIMER-IRQ (>> -4 0))
+    (i-tgts>       Dist TIMER-IRQ (hex "1")) # proc 0
+    (ic-pend-intr> Dist TIMER-IRQ)
+    (is-enab-intr> Dist TIMER-IRQ)))
 
 
 (class +Vicb)

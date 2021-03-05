@@ -1,10 +1,5 @@
 (symbols '(pico))
-
-(de pr-kern (X)
-  # Print with cnt time
-  (prinl 
-    (pack "[" (cntv-ct) "] " X)))
-
+    
 #{
 
     [24908182] Board Model: 0                                               
@@ -17,7 +12,7 @@
     [26916918]                                                              
     [26977889] cntv-ctl: 0                                                  
     [27086774] cntv-cval: 0                                                 
-    [27201597] cntv-ct: 27196357                                            
+    [27201597] cntvct: 27196357                                            
     [27338944] cnt-frq: 54000000                                            
     [27471752]                                                              
     [27540543] PilOS 21.1.25 AArch64 ARMv8-A A64                            
@@ -29,49 +24,86 @@
 }#
 
 (de pr-mbox ()
-  (pr-kern (pack "Board Model: "          (mbox~bmod)))
-  (pr-kern (pack "Board Revision: "       (mbox~brev)))
-  (pr-kern (pack "Board Serial: "         (let ((A B) (mbox~bser)) (pack A " " B))))
-  (pr-kern (pack "Firmware Revision: "    (mbox~frev)))
-  (pr-kern (pack "ARM Memory Base/Size: " (let ((B S) (mbox~amem)) (pack B " " S))))
-  (pr-kern (pack "VC Memory Base/Size: "  (let ((B S) (mbox~vmem)) (pack B " " S))))
-  (pr-kern (pack "MAC Address: "          (glue "-" (mbox~madr)))))
+  (prl-kern (pack "Board Model: "          (mbox~bmod)))
+  (prl-kern (pack "Board Revision: "       (mbox~brev)))
+  (prl-kern (pack "Board Serial: "         (let ((A B) (mbox~bser)) (pack A " " B))))
+  (prl-kern (pack "Firmware Revision: "    (mbox~frev)))
+  (prl-kern (pack "ARM Memory Base/Size: " (let ((B S) (mbox~amem)) (pack B " " S))))
+  (prl-kern (pack "VC Memory Base/Size: "  (let ((B S) (mbox~vmem)) (pack B " " S))))
+  (prl-kern (pack "MAC Address: "          (glue "-" (mbox~madr)))))
 
 
-(de pr-arm ()
-  (pr-kern (text "cntv-ctl: @1"  (cntv-ctl)))
-  (pr-kern (text "cntv-cval: @1" (cntv-cval)))
-  (pr-kern (text "cntv-ct: @1"   (cntv-ct)))
-  (pr-kern (text "cnt-frq: @1"   (cnt-frq))))
+(de pr-tim ()
+  (prl-kern (text "cnt-frq: @1"   (cnt-frq)))
+  
+  (prl-kern (text "cntv-ctl: @1"  (cntv-ctl)))
+  (prl-kern (text "cntv-cval: @1" (cntv-cval)))
+  (prl-kern (text "cntv-tval: @1" (cntv-tval)))  
+  (prl-kern (text "cntvct: @1"    (cntvct)))
+  
+  (prl-kern (text "cntp-ctl: @1"  (cntp-ctl)))
+  (prl-kern (text "cntp-cval: @1" (cntp-cval)))
+  (prl-kern (text "cntp-tval: @1" (cntp-tval)))
+  (prl-kern (text "cntpct: @1"    (cntpct))))
   
   
 (de pr-sys ()
-  (pr-kern (text "PilOS @1 AArch64 ARMv8-A A64" (glue "." (version T))))
-  (pr-kern (text "Heap Size: @1 MB" (heap)))
-  (pr-kern (text "Heap Free: @1 MB" (heap T)))
-  (pr-kern (text "Stack Size: @1 KB" (stack 512)))
-  (pr-kern (text "*Kern Load Time: @1" (usec))))
+  (prl-kern (text "PilOS @1 AArch64 ARMv8-A A64" (glue "." (version T))))
+  (prl-kern (text "Heap Size: @1 MB" (heap)))
+  (prl-kern (text "Heap Free: @1 MB" (heap T)))
+  (prl-kern (text "Stack Size: @1 KB" (stack 256)))
+  (prl-kern (text "*Kern Load Time: @1" (usec))))
 
+  
+(de on-timer ()
 
+  (daif)
+  
+  (let (C (cntv-ctl)
+        C (& C (bw-not C))) # 0
+    (cntv-ctl C))
+    
+  (let (Cntfrq (cnt-frq)
+        Ticks (* 3 Cntfrq)
+        Cur-Cnt (cntvct))
+    (cntv-cval (+ Cur-Cnt Ticks)))
+    
+  (let (C (cntv-ctl)
+        C (| C (>> 0 1))) # 1
+    (cntv-ctl C))
+
+  (daif T)
+  
+  (pr-tim))
+
+  
 (de main ()
-
-  # print pagetable
+  
+  ################
+  # print sys info
   
   (prinl)
-  
-  #(loop (println (mbox~bser)))
 
   (pr-mbox)
   
-  (pr-kern)   
+  (prl-kern)
   
-  (pr-arm)
+  (pr-tim)
   
-  (pr-kern)
+  (prl-kern)
   
   (pr-sys)
   
+  ##############
   # init drivers
+  
+  (prl-kern)
+  
+  (gic~init)
+  
+  
+  ############
+  # start term
   
   (term)
   

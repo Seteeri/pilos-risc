@@ -39,7 +39,7 @@ _start:
 
     // set stack before our code
     ldr     x1, =_start
-
+    
     // set up EL1
     mrs     x0, CurrentEL
     and     x0, x0, #12 // clear reserved bits
@@ -91,8 +91,18 @@ _start:
     sub     w2, w2, #1
     cbnz    w2, 3b
 
+    ldr	    x1, =vectors
+    msr	    vbar_el1, x1
+    isb        
+    
 4:  bl      uart_init
     bl      mmu_map_stage2
+    
+    ldr	    x1, =vectors
+    msr	    vbar_el1, x1
+    isb            
+    
+    bl      uart_hello
     bl      main
     b       1b
     

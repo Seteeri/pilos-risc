@@ -85,6 +85,7 @@
 
 .macro call_common_trap_handler
 	mov	x0, sp
+	//bl uart_hello 
 	bl sig
 .endm
 

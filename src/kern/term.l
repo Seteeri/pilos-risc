@@ -12,7 +12,7 @@
   # BS  = 8   = "^H"
   # ESC = 27  = "^["
 
-  (prin ": ")
+  (pr-kern ": ")
   
   (loop
   
@@ -56,11 +56,11 @@
         (for E (str (pack (flip *buf-term)))
           (uart~prl)
           (let F (eval E)
-            (uart~pr "-> ")
+            (pr-kern "-> ")
             (println F)))
         (off *buf-term))
       (uart~prl))
-  (uart~pr ": "))
+  (pr-kern ": "))
 
 
 (de case-esc ()

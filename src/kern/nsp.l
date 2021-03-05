@@ -25,7 +25,8 @@
 # misc, lib, bits are global (pico nsp);
 # considered part of "stdlib"
 (def '*nsp 
-  '(uart
+  '(gic
+    uart
     mbox))
   
 (for X *nsp
@@ -35,3 +36,13 @@
 
   # ret top level
   (symbols '(pico)))
+
+(de prl-kern (X)
+  # Print with cnt time
+  (prinl 
+    (pack "[" (cntvct) "] " X)))
+
+(de pr-kern (X)
+  # Print with cnt time
+  (prin 
+    (pack "[" (cntvct) "] " X)))   
