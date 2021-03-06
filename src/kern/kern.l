@@ -55,14 +55,13 @@
   (prl-kern (text "*Kern Load Time: @1" (usec))))
 
 
-(def 'IRQ-TIMER 27)
 (de init-irq-timer ()
   (with *gic
-    (gic~i-cfg>   (: gic~dist) IRQ-TIMER gic~EDGE)
-    (gic~i-prio>  (: gic~dist) IRQ-TIMER (>> -4 0))
-    (gic~i-tgts>  (: gic~dist) IRQ-TIMER (hex "1")) # proc 0
-    (gic~ic-pend> (: gic~dist) IRQ-TIMER T)
-    (gic~is-enab> (: gic~dist) IRQ-TIMER T)))
+    (gic~i-cfg>   (: gic~dist) irq~TIMER-VIRT-EL1 gic~EDGE)
+    (gic~i-prio>  (: gic~dist) irq~TIMER-VIRT-EL1 (>> -4 0))
+    (gic~i-tgts>  (: gic~dist) irq~TIMER-VIRT-EL1 (hex "1")) # proc 0
+    (gic~ic-pend> (: gic~dist) irq~TIMER-VIRT-EL1 T)
+    (gic~is-enab> (: gic~dist) irq~TIMER-VIRT-EL1 T)))
 
 
 (de on-timer (T1 T2)

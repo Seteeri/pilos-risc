@@ -3,9 +3,9 @@
 (local)
 (off-cntv on-cntv set-timer exha-2
  test-me)
-
-
-(de test-me () (println "test-me timer"))
+ 
+(de init ()
+  T)
 
 
 (de exha-2 ()
