@@ -17,10 +17,10 @@
 }#
  
 (class +Gic)
-(dm T ()
-  (=: p    (hex "FF840000"))
-  (=: dist (new '(+Dist) (+ (: p) (hex "1000"))))
-  (=: cpu  (new '(+Cpu)  (+ (: p) (hex "2000")))))
+(dm T (P)
+  (=: p    P)
+  (=: dist (new '(+Dist) (+ P (hex "1000"))))
+  (=: cpu  (new '(+Cpu)  (+ P (hex "2000")))))
 
 # Mov to Irq class  
 # Irq = -1 : set all?
@@ -41,9 +41,9 @@
           (setq Irq J))))
     Irq))
 
-(de init ()
+(de init (P)
 
-  (def '*gic (new '(+Gic)))
+  (def '*gic (new '(+Gic) P))
   
   (let Dist (get *gic 'dist)
 

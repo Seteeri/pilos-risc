@@ -41,44 +41,94 @@
 (dm T (P)
   (=: p P)
   
-  (=: ctl          (+ P (hex "000")))
-  (=: type-r       (+ P (hex "004")))
-  (=: i-id         (+ P (hex "008")))
-  (=: i-group      (+ P (hex "080")))
+  # Enables the forwarding of pending interrupts from the Distributor to the CPU interfaces.
+  (=: ctl          (+ (: p) (hex "000")))
+  
+  # Provides information about the configuration of the GIC. It indicates:
+  # whether the GIC implements the Security Extensions
+  # the maximum number of interrupt IDs that the GIC supports
+  # the number of CPU interfaces implemented
+  # if the GIC implements the Security Extensions, the maximum number of
+  #   implemented Lockable Shared Peripheral Interrupts (LSPIs).
+  (=: type-r       (+ (: p) (hex "004")))
+  
+  # Provides information about the implementer and revision of the Distributor.
+  (=: i-id         (+ (: p) (hex "008")))
+  
+  # The GICD_IGROUPR registers provide a status bit for each interrupt supported by the GIC.
+  # Each bit controls whether the corresponding interrupt is in Group 0 or Group 1. 
+  #
+  # On start-up or reset, each interrupt with ID32 or higher resets as Group 0 and therefore all SPIs are Group 0 unless
+  # the system reprograms the appropriate GICD_IGROUPR bit. See GICD_IGROUPR0 reset value for information
+  # about the reset configuration of interrupts with IDs 0-31.  
+  (=: i-group      (+ (: p) (hex "080")))
+  
+  # The GICD_ISENABLERs provide a Set-enable bit for each interrupt supported by the GIC.
+  # Writing 1 to a Set-enable bit enables forwarding of the corresponding interrupt from the
+  # Distributor to the CPU interfaces. Reading a bit identifies whether the interrupt is enabled.
+  (=: is-enab      (+ (: p) (hex "100")))
+  
+  # The GICD_ICENABLERs provide a Clear-enable bit for each interrupt supported by the
+  # GIC. Writing 1 to a Clear-enable bit disables forwarding of the corresponding interrupt from
+  # the Distributor to the CPU interfaces. Reading a bit identifies whether the interrupt is
+  # enabled.  
+  (=: ic-enab      (+ (: p) (hex "180")))  
+  
+  # The GICD_ISPENDRs provide a Set-pending bit for each interrupt supported by the GIC.
+  # Writing 1 to a Set-pending bit sets the status of the corresponding peripheral interrupt to
+  # pending. Reading a bit identifies whether the interrupt is pending.  
+  (=: is-pend      (+ (: p) (hex "200")))
+  
+  # The GICD_ICPENDRs provide a Clear-pending bit for each interrupt supported by the GIC.
+  # Writing 1 to a Clear-pending bit clears the pending state of the corresponding peripheral
+  # interrupt. Reading a bit identifies whether the interrupt is pending.  
+  (=: ic-pend      (+ (: p) (hex "280")))
+  
+  # The GICD_ISACTIVERs provide a Set-active bit for each interrupt that the GIC supports.
+  # Writing to a Set-active bit Activates the corresponding interrupt. These registers are used
+  # when preserving and restoring GIC state.  
+  (=: is-act       (+ (: p) (hex "300")))
+  
+  # The GICD_ICACTIVERs provide a Clear-active bit for each interrupt that the GIC
+  # supports. Writing to a Clear-active bit Deactivates the corresponding interrupt. These
+  # registers are used when preserving and restoring GIC state.  
+  (=: ic-act       (+ (: p) (hex "380")))
+  
+  # The GICD_IPRIORITYRs provide an 8-bit priority field for each interrupt supported by the
+  # GIC. This field stores the priority of the corresponding interrupt.  
+  (=: i-prio       (+ (: p) (hex "400")))
+  
+  # The GICD_ITARGETSRs provide an 8-bit CPU targets field for each interrupt supported
+  # by the GIC. This field stores the list of target processors for the interrupt. That is, it holds
+  # the list of CPU interfaces to which the Distributor forwards the interrupt if it is asserted and
+  # has sufficient priority.  
+  (=: i-tgts       (+ (: p) (hex "800")))
+    
+  # The GICD_ICFGRs provide a 2-bit Int_config field for each interrupt supported by the GIC.
+  # This field identifies whether the corresponding interrupt is edge-triggered or level-sensitive,
+  # see Interrupt types on page 1-18.    
+  (=: i-cfg        (+ (: p) (hex "C00")))
+    
+  (=: ppi-s        (+ (: p) (hex "D00")))    
+  (=: spi-s        (+ (: p) (hex "D04")))
+  (=: sgi          (+ (: p) (hex "F00")))
+  (=: c-pend-sgi   (+ (: p) (hex "F10")))
+  (=: s-pend-sgi   (+ (: p) (hex "F20")))  
+  
+  (=: pid-4        (+ (: p) (hex "FD0")))
+  (=: pid-5        (+ (: p) (hex "FD4")))
+  (=: pid-6        (+ (: p) (hex "FD8")))
+  (=: pid-7        (+ (: p) (hex "FDC")))    
 
-  (=: is-enab      (+ P (hex "100")))
-  (=: ic-enab      (+ P (hex "180")))  
+  (=: pid-0        (+ (: p) (hex "FE0")))
+  (=: pid-1        (+ (: p) (hex "FE4")))
+  (=: pid-2        (+ (: p) (hex "FE8")))
+  (=: pid-3        (+ (: p) (hex "FEC")))
 
-  (=: is-pend      (+ P (hex "200")))
-  (=: ic-pend      (+ P (hex "280")))
-
-  (=: is-act       (+ P (hex "300")))
-  (=: ic-act       (+ P (hex "380")))
-
-  (=: i-prio       (+ P (hex "400")))
-  (=: i-tgts       (+ P (hex "800")))
-  (=: i-cfg        (+ P (hex "C00")))
-
-  (=: ppi-s        (+ P (hex "D00")))    
-  (=: spi-s        (+ P (hex "D04")))
-  (=: sgi          (+ P (hex "F00")))
-  (=: c-pend-sgi   (+ P (hex "F10")))
-  (=: s-pend-sgi   (+ P (hex "F20")))  
-
-  (=: pid-4        (+ P (hex "FD0")))
-  (=: pid-5        (+ P (hex "FD4")))
-  (=: pid-6        (+ P (hex "FD8")))
-  (=: pid-7        (+ P (hex "FDC")))    
-
-  (=: pid-0        (+ P (hex "FE0")))
-  (=: pid-1        (+ P (hex "FE4")))
-  (=: pid-2        (+ P (hex "FE8")))
-  (=: pid-3        (+ P (hex "FEC")))
-
-  (=: cid-0        (+ P (hex "FF0")))    
-  (=: cid-1        (+ P (hex "FF4")))
-  (=: cid-2        (+ P (hex "FF8")))
-  (=: cid-3        (+ P (hex "FEC")))
+  (=: cid-0        (+ (: p) (hex "FF0")))    
+  (=: cid-1        (+ (: p) (hex "FF4")))
+  (=: cid-2        (+ (: p) (hex "FF8")))
+  (=: cid-3        (+ (: p) (hex "FEC")))
   
   (init> This))
 

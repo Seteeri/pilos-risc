@@ -8,24 +8,25 @@
 (class +Cpu)
 (dm T (P)
   (=: p P)
-  (=: ctl    (+ (: p) (hex "0000")))
-  (=: pm     (+ (: p) (hex "0004")))
-  (=: bp     (+ (: p) (hex "0008")))
-  (=: ia     (+ (: p) (hex "000C")))
   
-  (=: eoi    (+ (: p) (hex "0010")))
-  (=: rp     (+ (: p) (hex "0014")))  
-  (=: hppi   (+ (: p) (hex "0018")))
-  (=: abp    (+ (: p) (hex "001C")))  
-  
-  (=: aia    (+ (: p) (hex "0020")))
-  (=: aeoi   (+ (: p) (hex "0024")))  
-  (=: ahppi  (+ (: p) (hex "0028")))
-  (=: ap0    (+ (: p) (hex "00D0")))  
-  
-  (=: ns-ap0 (+ (: p) (hex "00E0")))    
-  (=: iid    (+ (: p) (hex "00FC")))
-  (=: di     (+ (: p) (hex "1000")))
+  (=: ctl    (+ P (hex "0000")))
+  (=: pm     (+ P (hex "0004")))
+  (=: bp     (+ P (hex "0008")))
+  (=: ia     (+ P (hex "000C")))
+
+  (=: eoi    (+ P (hex "0010")))
+  (=: rp     (+ P (hex "0014")))  
+  (=: hppi   (+ P (hex "0018")))
+  (=: abp    (+ P (hex "001C")))  
+
+  (=: aia    (+ P (hex "0020")))
+  (=: aeoi   (+ P (hex "0024")))  
+  (=: ahppi  (+ P (hex "0028")))
+  (=: ap0    (+ P (hex "00D0")))  
+
+  (=: ns-ap0 (+ P (hex "00E0")))    
+  (=: iid    (+ P (hex "00FC")))
+  (=: di     (+ P (hex "1000")))
   
   (init> This))
 

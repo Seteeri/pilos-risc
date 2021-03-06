@@ -34999,25 +34999,58 @@ _daif:                                  // @_daif
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
+	ldp	w1, w8, [x0, #8]
+	bfi	x1, x8, #32, #32
+	tst	x1, #0xf
+	b.eq	.LBB306_2
+// %bb.1:                               // %"$2"
+	//APP
+	mrs	x0, DAIF
+	//NO_APP
+	b	.LBB306_3
+.LBB306_2:                              // %"$3"
+	bl	evCnt
+	//APP
+	msr	DAIF, x0
+	//NO_APP
+.LBB306_3:                              // %"$4"
+	mov	w8, #2
+	bfi	x8, x0, #4, #60
+	mov	x0, x8
+	ldr	x30, [sp], #16                  // 8-byte Folded Reload
+	ret
+.Lfunc_end306:
+	.size	_daif, .Lfunc_end306-_daif
+	.cfi_endproc
+                                        // -- End function
+	.globl	_daif2                          // -- Begin function _daif2
+	.p2align	4
+	.type	_daif2,@function
+_daif2:                                 // @_daif2
+	.cfi_startproc
+// %bb.0:                               // %"$1"
+	str	x30, [sp, #-16]!                // 8-byte Folded Spill
+	.cfi_def_cfa_offset 16
+	.cfi_offset w30, -16
 	ldp	w9, w8, [x0, #8]
 	bfi	x9, x8, #32, #32
 	ldp	w0, w8, [x9]
 	bfi	x0, x8, #32, #32
 	tst	x0, #0x6
-	b.ne	.LBB306_4
+	b.ne	.LBB307_4
 // %bb.1:                               // %"$3"
-	tbz	w0, #3, .LBB306_3
+	tbz	w0, #3, .LBB307_3
 // %bb.2:                               // %"$6"
 	ldp	w0, w8, [x0]
 	bfi	x0, x8, #32, #32
-	b	.LBB306_4
-.LBB306_3:                              // %"$5"
+	b	.LBB307_4
+.LBB307_3:                              // %"$5"
 	bl	evList
-.LBB306_4:                              // %"$2"
+.LBB307_4:                              // %"$2"
 	adrp	x8, SymTab+8
 	add	x8, x8, :lo12:SymTab+8
 	cmp	x0, x8
-	b.ne	.LBB306_6
+	b.ne	.LBB307_6
 // %bb.5:                               // %"$7"
 	//APP
 	msr	DAIFSet, #2
@@ -35026,7 +35059,7 @@ _daif:                                  // @_daif
 	add	x0, x0, :lo12:SymTab+8
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.LBB306_6:                              // %"$8"
+.LBB307_6:                              // %"$8"
 	//APP
 	msr	DAIFClr, #2
 	//NO_APP
@@ -35034,8 +35067,8 @@ _daif:                                  // @_daif
 	add	x0, x0, :lo12:SymTab+216
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end306:
-	.size	_daif, .Lfunc_end306-_daif
+.Lfunc_end307:
+	.size	_daif2, .Lfunc_end307-_daif2
 	.cfi_endproc
                                         // -- End function
 	.globl	"_cnt-frq"                      // -- Begin function _cnt-frq
@@ -35050,8 +35083,8 @@ _daif:                                  // @_daif
 	mov	w0, #2
 	bfi	x0, x8, #4, #60
 	ret
-.Lfunc_end307:
-	.size	"_cnt-frq", .Lfunc_end307-"_cnt-frq"
+.Lfunc_end308:
+	.size	"_cnt-frq", .Lfunc_end308-"_cnt-frq"
 	.cfi_endproc
                                         // -- End function
 	.globl	"_cntv-ctl"                     // -- Begin function _cntv-ctl
@@ -35066,25 +35099,25 @@ _daif:                                  // @_daif
 	ldp	w1, w8, [x0, #8]
 	bfi	x1, x8, #32, #32
 	tst	x1, #0xf
-	b.eq	.LBB308_2
+	b.eq	.LBB309_2
 // %bb.1:                               // %"$2"
 	//APP
 	mrs	x0, CNTV_CTL_EL0
 	//NO_APP
-	b	.LBB308_3
-.LBB308_2:                              // %"$3"
+	b	.LBB309_3
+.LBB309_2:                              // %"$3"
 	bl	evCnt
 	//APP
 	msr	CNTV_CTL_EL0, x0
 	//NO_APP
-.LBB308_3:                              // %"$4"
+.LBB309_3:                              // %"$4"
 	mov	w8, #2
 	bfi	x8, x0, #4, #60
 	mov	x0, x8
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end308:
-	.size	"_cntv-ctl", .Lfunc_end308-"_cntv-ctl"
+.Lfunc_end309:
+	.size	"_cntv-ctl", .Lfunc_end309-"_cntv-ctl"
 	.cfi_endproc
                                         // -- End function
 	.globl	"_cntv-cval"                    // -- Begin function _cntv-cval
@@ -35099,25 +35132,25 @@ _daif:                                  // @_daif
 	ldp	w1, w8, [x0, #8]
 	bfi	x1, x8, #32, #32
 	tst	x1, #0xf
-	b.eq	.LBB309_2
+	b.eq	.LBB310_2
 // %bb.1:                               // %"$2"
 	//APP
 	mrs	x0, CNTV_CVAL_EL0
 	//NO_APP
-	b	.LBB309_3
-.LBB309_2:                              // %"$3"
+	b	.LBB310_3
+.LBB310_2:                              // %"$3"
 	bl	evCnt
 	//APP
 	msr	CNTV_CVAL_EL0, x0
 	//NO_APP
-.LBB309_3:                              // %"$4"
+.LBB310_3:                              // %"$4"
 	mov	w8, #2
 	bfi	x8, x0, #4, #60
 	mov	x0, x8
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end309:
-	.size	"_cntv-cval", .Lfunc_end309-"_cntv-cval"
+.Lfunc_end310:
+	.size	"_cntv-cval", .Lfunc_end310-"_cntv-cval"
 	.cfi_endproc
                                         // -- End function
 	.globl	"_cntv-tval"                    // -- Begin function _cntv-tval
@@ -35132,25 +35165,25 @@ _daif:                                  // @_daif
 	ldp	w1, w8, [x0, #8]
 	bfi	x1, x8, #32, #32
 	tst	x1, #0xf
-	b.eq	.LBB310_2
+	b.eq	.LBB311_2
 // %bb.1:                               // %"$2"
 	//APP
 	mrs	x0, CNTV_TVAL_EL0
 	//NO_APP
-	b	.LBB310_3
-.LBB310_2:                              // %"$3"
+	b	.LBB311_3
+.LBB311_2:                              // %"$3"
 	bl	evCnt
 	//APP
 	msr	CNTV_TVAL_EL0, x0
 	//NO_APP
-.LBB310_3:                              // %"$4"
+.LBB311_3:                              // %"$4"
 	mov	w8, #2
 	bfi	x8, x0, #4, #60
 	mov	x0, x8
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end310:
-	.size	"_cntv-tval", .Lfunc_end310-"_cntv-tval"
+.Lfunc_end311:
+	.size	"_cntv-tval", .Lfunc_end311-"_cntv-tval"
 	.cfi_endproc
                                         // -- End function
 	.globl	_cntvct                         // -- Begin function _cntvct
@@ -35165,8 +35198,8 @@ _cntvct:                                // @_cntvct
 	mov	w0, #2
 	bfi	x0, x8, #4, #60
 	ret
-.Lfunc_end311:
-	.size	_cntvct, .Lfunc_end311-_cntvct
+.Lfunc_end312:
+	.size	_cntvct, .Lfunc_end312-_cntvct
 	.cfi_endproc
                                         // -- End function
 	.globl	"_cntp-ctl"                     // -- Begin function _cntp-ctl
@@ -35181,25 +35214,25 @@ _cntvct:                                // @_cntvct
 	ldp	w1, w8, [x0, #8]
 	bfi	x1, x8, #32, #32
 	tst	x1, #0xf
-	b.eq	.LBB312_2
+	b.eq	.LBB313_2
 // %bb.1:                               // %"$2"
 	//APP
 	mrs	x0, CNTP_CTL_EL0
 	//NO_APP
-	b	.LBB312_3
-.LBB312_2:                              // %"$3"
+	b	.LBB313_3
+.LBB313_2:                              // %"$3"
 	bl	evCnt
 	//APP
 	msr	CNTP_CTL_EL0, x0
 	//NO_APP
-.LBB312_3:                              // %"$4"
+.LBB313_3:                              // %"$4"
 	mov	w8, #2
 	bfi	x8, x0, #4, #60
 	mov	x0, x8
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end312:
-	.size	"_cntp-ctl", .Lfunc_end312-"_cntp-ctl"
+.Lfunc_end313:
+	.size	"_cntp-ctl", .Lfunc_end313-"_cntp-ctl"
 	.cfi_endproc
                                         // -- End function
 	.globl	"_cntp-cval"                    // -- Begin function _cntp-cval
@@ -35214,25 +35247,25 @@ _cntvct:                                // @_cntvct
 	ldp	w1, w8, [x0, #8]
 	bfi	x1, x8, #32, #32
 	tst	x1, #0xf
-	b.eq	.LBB313_2
+	b.eq	.LBB314_2
 // %bb.1:                               // %"$2"
 	//APP
 	mrs	x0, CNTP_CVAL_EL0
 	//NO_APP
-	b	.LBB313_3
-.LBB313_2:                              // %"$3"
+	b	.LBB314_3
+.LBB314_2:                              // %"$3"
 	bl	evCnt
 	//APP
 	msr	CNTP_CVAL_EL0, x0
 	//NO_APP
-.LBB313_3:                              // %"$4"
+.LBB314_3:                              // %"$4"
 	mov	w8, #2
 	bfi	x8, x0, #4, #60
 	mov	x0, x8
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end313:
-	.size	"_cntp-cval", .Lfunc_end313-"_cntp-cval"
+.Lfunc_end314:
+	.size	"_cntp-cval", .Lfunc_end314-"_cntp-cval"
 	.cfi_endproc
                                         // -- End function
 	.globl	"_cntp-tval"                    // -- Begin function _cntp-tval
@@ -35247,25 +35280,25 @@ _cntvct:                                // @_cntvct
 	ldp	w1, w8, [x0, #8]
 	bfi	x1, x8, #32, #32
 	tst	x1, #0xf
-	b.eq	.LBB314_2
+	b.eq	.LBB315_2
 // %bb.1:                               // %"$2"
 	//APP
 	mrs	x0, CNTP_TVAL_EL0
 	//NO_APP
-	b	.LBB314_3
-.LBB314_2:                              // %"$3"
+	b	.LBB315_3
+.LBB315_2:                              // %"$3"
 	bl	evCnt
 	//APP
 	msr	CNTP_TVAL_EL0, x0
 	//NO_APP
-.LBB314_3:                              // %"$4"
+.LBB315_3:                              // %"$4"
 	mov	w8, #2
 	bfi	x8, x0, #4, #60
 	mov	x0, x8
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end314:
-	.size	"_cntp-tval", .Lfunc_end314-"_cntp-tval"
+.Lfunc_end315:
+	.size	"_cntp-tval", .Lfunc_end315-"_cntp-tval"
 	.cfi_endproc
                                         // -- End function
 	.globl	_cntpct                         // -- Begin function _cntpct
@@ -35280,8 +35313,8 @@ _cntpct:                                // @_cntpct
 	mov	w0, #2
 	bfi	x0, x8, #4, #60
 	ret
-.Lfunc_end315:
-	.size	_cntpct, .Lfunc_end315-_cntpct
+.Lfunc_end316:
+	.size	_cntpct, .Lfunc_end316-_cntpct
 	.cfi_endproc
                                         // -- End function
 	.globl	_version                        // -- Begin function _version
@@ -35302,22 +35335,22 @@ _version:                               // @_version
 	ldp	w0, w8, [x9]
 	bfi	x0, x8, #32, #32
 	tst	x0, #0x6
-	b.ne	.LBB316_4
+	b.ne	.LBB317_4
 // %bb.1:                               // %"$3"
-	tbz	w0, #3, .LBB316_3
+	tbz	w0, #3, .LBB317_3
 // %bb.2:                               // %"$6"
 	ldp	w0, w8, [x0]
 	bfi	x0, x8, #32, #32
-	b	.LBB316_4
-.LBB316_3:                              // %"$5"
+	b	.LBB317_4
+.LBB317_3:                              // %"$5"
 	bl	evList
-.LBB316_4:                              // %"$2"
+.LBB317_4:                              // %"$2"
 	adrp	x8, SymTab+8
 	add	x8, x8, :lo12:SymTab+8
 	cmp	x0, x8
 	adrp	x21, ($Version)
 	add	x21, x21, :lo12:($Version)
-	b.ne	.LBB316_6
+	b.ne	.LBB317_6
 // %bb.5:                               // %"$7"
 	ldr	x8, [x21]
 	lsr	x0, x8, #4
@@ -35336,7 +35369,7 @@ _version:                               // @_version
 	lsr	x0, x8, #4
 	bl	outWord
 	bl	newline
-.LBB316_6:                              // %"$8"
+.LBB317_6:                              // %"$8"
 	ldp	x19, x20, [x21]
 	ldr	x0, [x21, #16]
 	adrp	x1, SymTab+8
@@ -35351,8 +35384,8 @@ _version:                               // @_version
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x21, [sp], #32             // 16-byte Folded Reload
 	ret
-.Lfunc_end316:
-	.size	_version, .Lfunc_end316-_version
+.Lfunc_end317:
+	.size	_version, .Lfunc_end317-_version
 	.cfi_endproc
                                         // -- End function
 	.globl	evList                          // -- Begin function evList
@@ -35379,51 +35412,51 @@ evList:                                 // @evList
 	ldp	w20, w8, [x0]
 	bfi	x20, x8, #32, #32
 	tst	x20, #0x6
-	b.ne	.LBB317_25
+	b.ne	.LBB318_25
 // %bb.1:                               // %"$3"
-	tbz	w20, #3, .LBB317_10
+	tbz	w20, #3, .LBB318_10
 // %bb.2:                               // %"$7.preheader"
 	adrp	x22, ($Signal)
-.LBB317_3:                              // %"$7"
+.LBB318_3:                              // %"$7"
                                         // =>This Inner Loop Header: Depth=1
 	mov	x21, x20
 	ldr	w8, [x22, :lo12:($Signal)]
-	cbz	w8, .LBB317_5
+	cbz	w8, .LBB318_5
 // %bb.4:                               // %"$8"
-                                        //   in Loop: Header=BB317_3 Depth=1
+                                        //   in Loop: Header=BB318_3 Depth=1
 	mov	x0, x19
 	bl	sighandler
-.LBB317_5:                              // %"$9"
-                                        //   in Loop: Header=BB317_3 Depth=1
+.LBB318_5:                              // %"$9"
+                                        //   in Loop: Header=BB318_3 Depth=1
 	ldp	w20, w8, [x21]
 	bfi	x20, x8, #32, #32
 	tst	x20, #0x6
-	b.ne	.LBB317_19
+	b.ne	.LBB318_19
 // %bb.6:                               // %"$10"
-                                        //   in Loop: Header=BB317_3 Depth=1
+                                        //   in Loop: Header=BB318_3 Depth=1
 	tst	x20, #0xf
-	b.eq	.LBB317_22
+	b.eq	.LBB318_22
 // %bb.7:                               // %"$13"
-                                        //   in Loop: Header=BB317_3 Depth=1
+                                        //   in Loop: Header=BB318_3 Depth=1
 	ldp	w9, w8, [x20]
 	bfi	x9, x8, #32, #32
 	cmp	x20, x9
-	b.ne	.LBB317_3
+	b.ne	.LBB318_3
 // %bb.8:                               // %"$16"
 	mov	x0, x21
 	bl	sharedLib
-	tbz	w0, #0, .LBB317_27
+	tbz	w0, #0, .LBB318_27
 // %bb.9:                               // %"$17"
 	ldp	w9, w8, [x21]
 	bfi	x9, x8, #32, #32
 	and	x8, x9, #0xfffffffffffffffd
-	b	.LBB317_20
-.LBB317_10:                             // %"$5"
+	b	.LBB318_20
+.LBB318_10:                             // %"$5"
 	mov	x8, sp
 	adrp	x9, ($StkLimit)
 	ldr	x9, [x9, :lo12:($StkLimit)]
 	cmp	x9, x8
-	b.hi	.LBB317_26
+	b.hi	.LBB318_26
 // %bb.11:                              // %"$21"
 	mov	x0, x20
 	bl	evList
@@ -35438,36 +35471,36 @@ evList:                                 // @evList
 	stp	w8, w11, [x9, #-8]
 	adrp	x24, ($Signal)
 	str	x23, [x22, :lo12:env]
-.LBB317_12:                             // %"$22"
+.LBB318_12:                             // %"$22"
                                         // =>This Inner Loop Header: Depth=1
 	mov	x21, x0
 	ldr	w8, [x24, :lo12:($Signal)]
-	cbz	w8, .LBB317_14
+	cbz	w8, .LBB318_14
 // %bb.13:                              // %"$23"
-                                        //   in Loop: Header=BB317_12 Depth=1
+                                        //   in Loop: Header=BB318_12 Depth=1
 	mov	x0, x19
 	bl	sighandler
-.LBB317_14:                             // %"$24"
-                                        //   in Loop: Header=BB317_12 Depth=1
+.LBB318_14:                             // %"$24"
+                                        //   in Loop: Header=BB318_12 Depth=1
 	tst	x21, #0x6
-	b.ne	.LBB317_21
+	b.ne	.LBB318_21
 // %bb.15:                              // %"$25"
-                                        //   in Loop: Header=BB317_12 Depth=1
+                                        //   in Loop: Header=BB318_12 Depth=1
 	tst	x21, #0xf
-	b.eq	.LBB317_23
+	b.eq	.LBB318_23
 // %bb.16:                              // %"$28"
-                                        //   in Loop: Header=BB317_12 Depth=1
+                                        //   in Loop: Header=BB318_12 Depth=1
 	ldp	w0, w8, [x21]
 	bfi	x0, x8, #32, #32
 	ldp	w9, w8, [x0]
 	bfi	x9, x8, #32, #32
 	cmp	x0, x9
 	mov	x20, x21
-	b.ne	.LBB317_12
+	b.ne	.LBB318_12
 // %bb.17:                              // %"$31"
 	mov	x0, x21
 	bl	sharedLib
-	tbz	w0, #0, .LBB317_27
+	tbz	w0, #0, .LBB318_27
 // %bb.18:                              // %"$32"
 	ldp	w9, w8, [x21]
 	bfi	x9, x8, #32, #32
@@ -35475,37 +35508,37 @@ evList:                                 // @evList
 	mov	x0, x19
 	mov	x1, x21
 	blr	x8
-	b	.LBB317_24
-.LBB317_19:                             // %"$12"
+	b	.LBB318_24
+.LBB318_19:                             // %"$12"
 	and	x8, x20, #0xfffffffffffffffd
-.LBB317_20:                             // %"$2"
+.LBB318_20:                             // %"$2"
 	mov	x0, x19
 	mov	x1, x21
 	blr	x8
 	mov	x19, x0
-	b	.LBB317_25
-.LBB317_21:                             // %"$27"
+	b	.LBB318_25
+.LBB318_21:                             // %"$27"
 	and	x8, x21, #0xfffffffffffffffd
 	mov	x0, x19
 	mov	x1, x20
 	blr	x8
-	b	.LBB317_24
-.LBB317_22:                             // %"$14"
+	b	.LBB318_24
+.LBB318_22:                             // %"$14"
 	mov	x0, x20
 	mov	x1, x19
 	bl	evExpr
 	mov	x19, x0
-	b	.LBB317_25
-.LBB317_23:                             // %"$29"
+	b	.LBB318_25
+.LBB318_23:                             // %"$29"
 	mov	x0, x21
 	mov	x1, x19
 	bl	evExpr
-.LBB317_24:                             // %"$26"
+.LBB318_24:                             // %"$26"
 	mov	x19, x0
 	ldp	w9, w8, [x23, #8]
 	bfi	x9, x8, #32, #32
 	str	x9, [x22, :lo12:env]
-.LBB317_25:                             // %"$2"
+.LBB318_25:                             // %"$2"
 	mov	x0, x19
 	mov	sp, x29
 	ldp	x20, x19, [sp, #48]             // 16-byte Folded Reload
@@ -35513,15 +35546,15 @@ evList:                                 // @evList
 	ldp	x24, x23, [sp, #16]             // 16-byte Folded Reload
 	ldp	x29, x30, [sp], #64             // 16-byte Folded Reload
 	ret
-.LBB317_26:                             // %"$20"
+.LBB318_26:                             // %"$20"
 	mov	x0, x19
 	bl	stkErr
-.LBB317_27:                             // %"$18"
+.LBB318_27:                             // %"$18"
 	mov	x0, x21
 	mov	x1, x19
 	bl	undefined
-.Lfunc_end317:
-	.size	evList, .Lfunc_end317-evList
+.Lfunc_end318:
+	.size	evList, .Lfunc_end318-evList
 	.cfi_endproc
                                         // -- End function
 	.globl	outWord                         // -- Begin function outWord
@@ -35538,7 +35571,7 @@ outWord:                                // @outWord
 	.cfi_offset w30, -32
 	mov	x19, x0
 	cmp	x0, #10                         // =10
-	b.lo	.LBB318_2
+	b.lo	.LBB319_2
 // %bb.1:                               // %"$2"
 	mov	x8, #-3689348814741910324
 	movk	x8, #52429
@@ -35548,7 +35581,7 @@ outWord:                                // @outWord
 	bl	outWord
 	mov	w8, #10
 	msub	x19, x20, x8, x19
-.LBB318_2:                              // %"$3"
+.LBB319_2:                              // %"$3"
 	add	w0, w19, #48                    // =48
 	adrp	x8, ($Put)
 	ldr	x8, [x8, :lo12:($Put)]
@@ -35556,8 +35589,8 @@ outWord:                                // @outWord
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #32                  // 8-byte Folded Reload
 	ret
-.Lfunc_end318:
-	.size	outWord, .Lfunc_end318-outWord
+.Lfunc_end319:
+	.size	outWord, .Lfunc_end319-outWord
 	.cfi_endproc
                                         // -- End function
 	.globl	newline                         // -- Begin function newline
@@ -35575,8 +35608,8 @@ newline:                                // @newline
 	blr	x8
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end319:
-	.size	newline, .Lfunc_end319-newline
+.Lfunc_end320:
+	.size	newline, .Lfunc_end320-newline
 	.cfi_endproc
                                         // -- End function
 	.globl	cons                            // -- Begin function cons
@@ -35607,7 +35640,7 @@ cons:                                   // @cons
 	ldr	x0, [x22, :lo12:($Avail)]
 	lsr	x23, x20, #32
 	lsr	x21, x1, #32
-	cbnz	x0, .LBB320_2
+	cbnz	x0, .LBB321_2
 // %bb.1:                               // %"$2"
 	adrp	x24, env
 	ldr	x8, [x24, :lo12:env]
@@ -35631,7 +35664,7 @@ cons:                                   // @cons
 	bfi	x9, x8, #32, #32
 	str	x9, [x24, :lo12:env]
 	ldr	x0, [x22, :lo12:($Avail)]
-.LBB320_2:                              // %"$3"
+.LBB321_2:                              // %"$3"
 	ldp	w9, w8, [x0]
 	bfi	x9, x8, #32, #32
 	str	x9, [x22, :lo12:($Avail)]
@@ -35644,8 +35677,8 @@ cons:                                   // @cons
 	ldr	x25, [sp, #16]                  // 8-byte Folded Reload
 	ldp	x29, x30, [sp], #80             // 16-byte Folded Reload
 	ret
-.Lfunc_end320:
-	.size	cons, .Lfunc_end320-cons
+.Lfunc_end321:
+	.size	cons, .Lfunc_end321-cons
 	.cfi_endproc
                                         // -- End function
 	.globl	gc                              // -- Begin function gc
@@ -35675,78 +35708,78 @@ gc:                                     // @gc
 	orr	x8, x8, #0x1
 	str	x8, [x20]
 	add	x8, x20, #32                    // =32
-	adrp	x9, SymTab+5928
-	add	x9, x9, :lo12:SymTab+5928
-.LBB321_1:                              // %"$2"
+	adrp	x9, SymTab+5944
+	add	x9, x9, :lo12:SymTab+5944
+.LBB322_1:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	ldr	w10, [x8]
 	orr	w10, w10, #0x1
 	str	w10, [x8]
 	cmp	x9, x8
-	b.eq	.LBB321_3
+	b.eq	.LBB322_3
 // %bb.2:                               // %"$3"
-                                        //   in Loop: Header=BB321_1 Depth=1
+                                        //   in Loop: Header=BB322_1 Depth=1
 	add	x8, x8, #16                     // =16
-	b	.LBB321_1
-.LBB321_3:                              // %"$4"
+	b	.LBB322_1
+.LBB322_3:                              // %"$4"
 	adrp	x19, ($Heaps)
 	ldr	x8, [x19, :lo12:($Heaps)]
 	mov	w9, #65536
-.LBB321_4:                              // %"$6"
+.LBB322_4:                              // %"$6"
                                         // =>This Inner Loop Header: Depth=1
 	ldr	w10, [x8, #8]!
 	orr	w10, w10, #0x1
 	str	w10, [x8], #8
 	subs	x9, x9, #1                      // =1
-	b.ne	.LBB321_4
+	b.ne	.LBB322_4
 // %bb.5:                               // %"$8"
-                                        //   in Loop: Header=BB321_4 Depth=1
+                                        //   in Loop: Header=BB322_4 Depth=1
 	ldp	w8, w9, [x8]
 	bfi	x8, x9, #32, #32
 	mov	w9, #65536
-	cbnz	x8, .LBB321_4
+	cbnz	x8, .LBB322_4
 // %bb.6:                               // %"$10"
 	adrp	x21, gcData
 	add	x21, x21, :lo12:gcData
 	adrp	x22, gcData+408
 	add	x22, x22, :lo12:gcData+408
-.LBB321_7:                              // %"$11"
+.LBB322_7:                              // %"$11"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w0, w8, [x21]
 	bfi	x0, x8, #32, #32
 	bl	mark
 	cmp	x22, x21
-	b.eq	.LBB321_9
+	b.eq	.LBB322_9
 // %bb.8:                               // %"$12"
-                                        //   in Loop: Header=BB321_7 Depth=1
+                                        //   in Loop: Header=BB322_7 Depth=1
 	add	x21, x21, #8                    // =8
-	b	.LBB321_7
-.LBB321_9:                              // %"$13"
+	b	.LBB322_7
+.LBB322_9:                              // %"$13"
 	adrp	x21, env
 	add	x21, x21, :lo12:env
 	ldr	x0, [x21, #88]
 	bl	mark
-.LBB321_10:                             // %"$14"
+.LBB322_10:                             // %"$14"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w21, w8, [x21]
 	bfi	x21, x8, #32, #32
-	cbz	x21, .LBB321_12
+	cbz	x21, .LBB322_12
 // %bb.11:                              // %"$15"
-                                        //   in Loop: Header=BB321_10 Depth=1
+                                        //   in Loop: Header=BB322_10 Depth=1
 	ldp	w0, w8, [x21], #8
 	bfi	x0, x8, #32, #32
 	bl	mark
-	b	.LBB321_10
-.LBB321_12:                             // %"$16"
+	b	.LBB322_10
+.LBB322_12:                             // %"$16"
 	adrp	x8, env+8
 	add	x8, x8, :lo12:env+8
-.LBB321_13:                             // %"$17"
+.LBB322_13:                             // %"$17"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w21, w9, [x8]
 	bfi	x21, x9, #32, #32
-	cbz	x21, .LBB321_15
+	cbz	x21, .LBB322_15
 // %bb.14:                              // %"$18"
-                                        //   in Loop: Header=BB321_13 Depth=1
+                                        //   in Loop: Header=BB322_13 Depth=1
 	ldp	w0, w8, [x21]
 	bfi	x0, x8, #32, #32
 	bl	mark
@@ -35754,66 +35787,66 @@ gc:                                     // @gc
 	bfi	x0, x8, #32, #32
 	bl	mark
 	add	x8, x21, #16                    // =16
-	b	.LBB321_13
-.LBB321_15:                             // %"$20.preheader"
+	b	.LBB322_13
+.LBB322_15:                             // %"$20.preheader"
 	adrp	x21, env+24
 	add	x21, x21, :lo12:env+24
-	b	.LBB321_17
-.LBB321_16:                             // %"$24"
-                                        //   in Loop: Header=BB321_17 Depth=1
+	b	.LBB322_17
+.LBB322_16:                             // %"$24"
+                                        //   in Loop: Header=BB322_17 Depth=1
 	ldp	w0, w8, [x21, #16]
 	bfi	x0, x8, #32, #32
 	bl	mark
 	ldp	w0, w8, [x21, #112]
 	bfi	x0, x8, #32, #32
 	bl	mark
-.LBB321_17:                             // %"$20"
+.LBB322_17:                             // %"$20"
                                         // =>This Inner Loop Header: Depth=1
 	ldr	x21, [x21]
-	cbz	x21, .LBB321_20
+	cbz	x21, .LBB322_20
 // %bb.18:                              // %"$21"
-                                        //   in Loop: Header=BB321_17 Depth=1
+                                        //   in Loop: Header=BB322_17 Depth=1
 	ldp	w9, w8, [x21, #8]
 	bfi	x9, x8, #32, #32
-	cbz	x9, .LBB321_16
+	cbz	x9, .LBB322_16
 // %bb.19:                              // %"$23"
-                                        //   in Loop: Header=BB321_17 Depth=1
+                                        //   in Loop: Header=BB322_17 Depth=1
 	ldp	w0, w8, [x21, #8]
 	bfi	x0, x8, #32, #32
 	bl	mark
-	b	.LBB321_16
-.LBB321_20:                             // %"$25.preheader"
+	b	.LBB322_16
+.LBB322_20:                             // %"$25.preheader"
 	adrp	x8, env+40
 	add	x8, x8, :lo12:env+40
-	b	.LBB321_22
-.LBB321_21:                             // %"$31"
-                                        //   in Loop: Header=BB321_22 Depth=1
+	b	.LBB322_22
+.LBB322_21:                             // %"$31"
+                                        //   in Loop: Header=BB322_22 Depth=1
 	add	x8, x21, #16                    // =16
-.LBB321_22:                             // %"$25"
+.LBB322_22:                             // %"$25"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB321_27 Depth 2
-                                        //     Child Loop BB321_30 Depth 2
-                                        //     Child Loop BB321_34 Depth 2
+                                        //     Child Loop BB322_27 Depth 2
+                                        //     Child Loop BB322_30 Depth 2
+                                        //     Child Loop BB322_34 Depth 2
 	ldr	x21, [x8]
-	cbz	x21, .LBB321_37
+	cbz	x21, .LBB322_37
 // %bb.23:                              // %"$26"
-                                        //   in Loop: Header=BB321_22 Depth=1
+                                        //   in Loop: Header=BB322_22 Depth=1
 	ldp	w9, w8, [x21]
 	bfi	x9, x8, #32, #32
-	cbz	x9, .LBB321_25
+	cbz	x9, .LBB322_25
 // %bb.24:                              // %"$29"
-                                        //   in Loop: Header=BB321_22 Depth=1
+                                        //   in Loop: Header=BB322_22 Depth=1
 	ldp	w9, w8, [x21, #48]
 	bfi	x9, x8, #32, #32
 	cmp	x9, #0                          // =0
 	cset	w8, ne
-	cbz	w8, .LBB321_21
-	b	.LBB321_26
-.LBB321_25:                             //   in Loop: Header=BB321_22 Depth=1
+	cbz	w8, .LBB322_21
+	b	.LBB322_26
+.LBB322_25:                             //   in Loop: Header=BB322_22 Depth=1
 	mov	w8, wzr
-	cbz	w8, .LBB321_21
-.LBB321_26:                             // %"$30"
-                                        //   in Loop: Header=BB321_22 Depth=1
+	cbz	w8, .LBB322_21
+.LBB322_26:                             // %"$30"
+                                        //   in Loop: Header=BB322_22 Depth=1
 	ldp	w0, w8, [x21]
 	bfi	x0, x8, #32, #32
 	bl	mark
@@ -35827,29 +35860,29 @@ gc:                                     // @gc
 	ldp	w0, w8, [x21, #200]
 	bfi	x0, x8, #32, #32
 	bl	mark
-.LBB321_27:                             // %"$32"
-                                        //   Parent Loop BB321_22 Depth=1
+.LBB322_27:                             // %"$32"
+                                        //   Parent Loop BB322_22 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	ldp	w22, w8, [x22]
 	bfi	x22, x8, #32, #32
-	cbz	x22, .LBB321_29
+	cbz	x22, .LBB322_29
 // %bb.28:                              // %"$33"
-                                        //   in Loop: Header=BB321_27 Depth=2
+                                        //   in Loop: Header=BB322_27 Depth=2
 	ldp	w0, w8, [x22], #8
 	bfi	x0, x8, #32, #32
 	bl	mark
-	b	.LBB321_27
-.LBB321_29:                             // %"$34"
-                                        //   in Loop: Header=BB321_22 Depth=1
+	b	.LBB322_27
+.LBB322_29:                             // %"$34"
+                                        //   in Loop: Header=BB322_22 Depth=1
 	add	x8, x21, #120                   // =120
-.LBB321_30:                             // %"$35"
-                                        //   Parent Loop BB321_22 Depth=1
+.LBB322_30:                             // %"$35"
+                                        //   Parent Loop BB322_22 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	ldp	w22, w9, [x8]
 	bfi	x22, x9, #32, #32
-	cbz	x22, .LBB321_32
+	cbz	x22, .LBB322_32
 // %bb.31:                              // %"$36"
-                                        //   in Loop: Header=BB321_30 Depth=2
+                                        //   in Loop: Header=BB322_30 Depth=2
 	ldp	w0, w8, [x22]
 	bfi	x0, x8, #32, #32
 	bl	mark
@@ -35857,45 +35890,45 @@ gc:                                     // @gc
 	bfi	x0, x8, #32, #32
 	bl	mark
 	add	x8, x22, #16                    // =16
-	b	.LBB321_30
-.LBB321_32:                             // %"$37"
-                                        //   in Loop: Header=BB321_22 Depth=1
+	b	.LBB322_30
+.LBB322_32:                             // %"$37"
+                                        //   in Loop: Header=BB322_22 Depth=1
 	add	x22, x21, #136                  // =136
-	b	.LBB321_34
-.LBB321_33:                             // %"$42"
-                                        //   in Loop: Header=BB321_34 Depth=2
+	b	.LBB322_34
+.LBB322_33:                             // %"$42"
+                                        //   in Loop: Header=BB322_34 Depth=2
 	ldp	w0, w8, [x22, #16]
 	bfi	x0, x8, #32, #32
 	bl	mark
 	ldp	w0, w8, [x22, #112]
 	bfi	x0, x8, #32, #32
 	bl	mark
-.LBB321_34:                             // %"$38"
-                                        //   Parent Loop BB321_22 Depth=1
+.LBB322_34:                             // %"$38"
+                                        //   Parent Loop BB322_22 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	ldr	x22, [x22]
-	cbz	x22, .LBB321_21
+	cbz	x22, .LBB322_21
 // %bb.35:                              // %"$39"
-                                        //   in Loop: Header=BB321_34 Depth=2
+                                        //   in Loop: Header=BB322_34 Depth=2
 	ldp	w9, w8, [x22, #8]
 	bfi	x9, x8, #32, #32
-	cbz	x9, .LBB321_33
+	cbz	x9, .LBB322_33
 // %bb.36:                              // %"$41"
-                                        //   in Loop: Header=BB321_34 Depth=2
+                                        //   in Loop: Header=BB322_34 Depth=2
 	ldp	w0, w8, [x22, #8]
 	bfi	x0, x8, #32, #32
 	bl	mark
-	b	.LBB321_33
-.LBB321_37:                             // %"$27"
+	b	.LBB322_33
+.LBB322_37:                             // %"$27"
 	mov	x24, xzr
 	adrp	x21, ($Extern)
 	ldr	x23, [x21, :lo12:($Extern)]
 	mov	x22, #-10
-.LBB321_38:                             // %"$44"
+.LBB322_38:                             // %"$44"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB321_39 Depth 2
-                                        //       Child Loop BB321_49 Depth 3
-                                        //       Child Loop BB321_45 Depth 3
+                                        //     Child Loop BB322_39 Depth 2
+                                        //       Child Loop BB322_49 Depth 3
+                                        //       Child Loop BB322_45 Depth 3
 	mov	x9, x23
 	ldr	w8, [x9, #8]!
 	ldr	w10, [x9, #4]
@@ -35909,47 +35942,47 @@ gc:                                     // @gc
 	and	x9, x11, #0xfffffffffffffffe
 	str	w9, [x10]
 	tst	x11, #0xe
-	b.eq	.LBB321_51
-.LBB321_39:                             // %"$47"
-                                        //   Parent Loop BB321_38 Depth=1
+	b.eq	.LBB322_51
+.LBB322_39:                             // %"$47"
+                                        //   Parent Loop BB322_38 Depth=1
                                         // =>  This Loop Header: Depth=2
-                                        //       Child Loop BB321_49 Depth 3
-                                        //       Child Loop BB321_45 Depth 3
+                                        //       Child Loop BB322_49 Depth 3
+                                        //       Child Loop BB322_45 Depth 3
 	ldp	w0, w8, [x23]
 	bfi	x0, x8, #32, #32
 	ldrb	w8, [x0]
-	tbz	w8, #0, .LBB321_43
+	tbz	w8, #0, .LBB322_43
 // %bb.40:                              // %"$48"
-                                        //   in Loop: Header=BB321_39 Depth=2
+                                        //   in Loop: Header=BB322_39 Depth=2
 	ldp	w8, w9, [x0, #-8]
 	bfi	x8, x9, #32, #32
 	tst	x8, #0x6
-	b.eq	.LBB321_48
-.LBB321_41:                             // %"$51"
-                                        //   in Loop: Header=BB321_39 Depth=2
+	b.eq	.LBB322_48
+.LBB322_41:                             // %"$51"
+                                        //   in Loop: Header=BB322_39 Depth=2
 	cmn	x8, x8
-	b.lo	.LBB321_43
+	b.lo	.LBB322_43
 // %bb.42:                              // %"$55"
-                                        //   in Loop: Header=BB321_39 Depth=2
+                                        //   in Loop: Header=BB322_39 Depth=2
 	bl	mark
-.LBB321_43:                             // %"$49"
-                                        //   in Loop: Header=BB321_39 Depth=2
+.LBB322_43:                             // %"$49"
+                                        //   in Loop: Header=BB322_39 Depth=2
 	ldp	w8, w9, [x23, #8]
 	bfi	x8, x9, #32, #32
 	ldp	w9, w10, [x8]
 	bfi	x9, x10, #32, #32
 	tst	x9, #0xf
-	b.eq	.LBB321_52
-// %bb.44:                              //   in Loop: Header=BB321_39 Depth=2
+	b.eq	.LBB322_52
+// %bb.44:                              //   in Loop: Header=BB322_39 Depth=2
 	mov	x8, x24
-	cbz	x8, .LBB321_53
-.LBB321_45:                             // %"$62"
-                                        //   Parent Loop BB321_38 Depth=1
-                                        //     Parent Loop BB321_39 Depth=2
+	cbz	x8, .LBB322_53
+.LBB322_45:                             // %"$62"
+                                        //   Parent Loop BB322_38 Depth=1
+                                        //     Parent Loop BB322_39 Depth=2
                                         // =>    This Inner Loop Header: Depth=3
-	tbz	w8, #3, .LBB321_47
+	tbz	w8, #3, .LBB322_47
 // %bb.46:                              // %"$63"
-                                        //   in Loop: Header=BB321_45 Depth=3
+                                        //   in Loop: Header=BB322_45 Depth=3
 	and	x9, x8, #0xfffffffffffffff7
 	ldp	w10, w8, [x9, #8]
 	bfi	x10, x8, #32, #32
@@ -35958,10 +35991,10 @@ gc:                                     // @gc
 	lsr	x11, x23, #32
 	stp	w23, w11, [x10]
 	mov	x23, x9
-	cbnz	x8, .LBB321_45
-	b	.LBB321_53
-.LBB321_47:                             // %"$65"
-                                        //   in Loop: Header=BB321_39 Depth=2
+	cbnz	x8, .LBB322_45
+	b	.LBB322_53
+.LBB322_47:                             // %"$65"
+                                        //   in Loop: Header=BB322_39 Depth=2
 	ldp	w10, w9, [x8, #8]
 	bfi	x10, x9, #32, #32
 	ldr	w24, [x10, #8]!
@@ -35970,132 +36003,132 @@ gc:                                     // @gc
 	lsr	x9, x23, #32
 	stp	w23, w9, [x10]
 	mov	x23, x8
-	b	.LBB321_39
-.LBB321_48:                             // %"$50"
-                                        //   in Loop: Header=BB321_39 Depth=2
+	b	.LBB322_39
+.LBB322_48:                             // %"$50"
+                                        //   in Loop: Header=BB322_39 Depth=2
 	and	x8, x8, x22
-.LBB321_49:                             // %"$52"
-                                        //   Parent Loop BB321_38 Depth=1
-                                        //     Parent Loop BB321_39 Depth=2
+.LBB322_49:                             // %"$52"
+                                        //   Parent Loop BB322_38 Depth=1
+                                        //     Parent Loop BB322_39 Depth=2
                                         // =>    This Inner Loop Header: Depth=3
 	ldp	w8, w9, [x8, #8]
 	bfi	x8, x9, #32, #32
 	tst	x8, #0x6
-	b.ne	.LBB321_41
+	b.ne	.LBB322_41
 // %bb.50:                              // %"$53"
-                                        //   in Loop: Header=BB321_49 Depth=3
+                                        //   in Loop: Header=BB322_49 Depth=3
 	and	x8, x8, #0xfffffffffffffffe
-	b	.LBB321_49
-.LBB321_51:                             // %"$45"
-                                        //   in Loop: Header=BB321_38 Depth=1
+	b	.LBB322_49
+.LBB322_51:                             // %"$45"
+                                        //   in Loop: Header=BB322_38 Depth=1
 	lsr	x10, x24, #32
 	stp	w24, w10, [x8, #8]
 	mov	x24, x23
 	mov	x23, x9
-	b	.LBB321_38
-.LBB321_52:                             // %"$59"
-                                        //   in Loop: Header=BB321_38 Depth=1
+	b	.LBB322_38
+.LBB322_52:                             // %"$59"
+                                        //   in Loop: Header=BB322_38 Depth=1
 	lsr	x10, x24, #32
 	stp	w24, w10, [x8]
 	orr	x24, x23, #0x8
 	mov	x23, x9
-	b	.LBB321_38
-.LBB321_53:                             // %"$-1"
+	b	.LBB322_38
+.LBB322_53:                             // %"$-1"
 	adrp	x8, SymTab+168
 	adrp	x9, SymTab+168
 	add	x9, x9, :lo12:SymTab+168
 	ldrb	w10, [x9, #176]!
 	str	x9, [x8, :lo12:SymTab+168]
-	tbz	w10, #0, .LBB321_55
+	tbz	w10, #0, .LBB322_55
 // %bb.54:                              // %"$67"
 	mov	w8, #26
 	stp	x8, x20, [x20, #328]
-.LBB321_55:                             // %"$68"
+.LBB322_55:                             // %"$68"
 	mov	x10, xzr
 	ldr	x9, [x21, :lo12:($Extern)]
 	adrp	x8, ($ExtCnt)
-.LBB321_56:                             // %"$70"
+.LBB322_56:                             // %"$70"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB321_57 Depth 2
-                                        //       Child Loop BB321_67 Depth 3
-                                        //       Child Loop BB321_71 Depth 3
+                                        //     Child Loop BB322_57 Depth 2
+                                        //       Child Loop BB322_67 Depth 3
+                                        //       Child Loop BB322_71 Depth 3
 	ldp	w11, w12, [x9, #8]
 	bfi	x11, x12, #32, #32
 	ldp	w12, w13, [x11, #8]
 	bfi	x12, x13, #32, #32
 	tst	x12, #0xf
-	b.eq	.LBB321_74
-.LBB321_57:                             // %"$73"
-                                        //   Parent Loop BB321_56 Depth=1
+	b.eq	.LBB322_74
+.LBB322_57:                             // %"$73"
+                                        //   Parent Loop BB322_56 Depth=1
                                         // =>  This Loop Header: Depth=2
-                                        //       Child Loop BB321_67 Depth 3
-                                        //       Child Loop BB321_71 Depth 3
+                                        //       Child Loop BB322_67 Depth 3
+                                        //       Child Loop BB322_71 Depth 3
 	ldp	w12, w11, [x9]
 	bfi	x12, x11, #32, #32
 	ldrb	w11, [x12]
-	tbz	w11, #0, .LBB321_69
+	tbz	w11, #0, .LBB322_69
 // %bb.58:                              // %"$74"
-                                        //   in Loop: Header=BB321_57 Depth=2
+                                        //   in Loop: Header=BB322_57 Depth=2
 	ldr	x11, [x8, :lo12:($ExtCnt)]
 	sub	x11, x11, #1                    // =1
 	str	x11, [x8, :lo12:($ExtCnt)]
 	ldp	w11, w12, [x9, #8]
 	bfi	x11, x12, #32, #32
 	tst	x11, #0xf
-	b.eq	.LBB321_60
-// %bb.59:                              //   in Loop: Header=BB321_57 Depth=2
+	b.eq	.LBB322_60
+// %bb.59:                              //   in Loop: Header=BB322_57 Depth=2
 	mov	x12, x11
 	mov	x11, x9
-	b	.LBB321_62
-.LBB321_60:                             // %"$77"
-                                        //   in Loop: Header=BB321_57 Depth=2
+	b	.LBB322_62
+.LBB322_60:                             // %"$77"
+                                        //   in Loop: Header=BB322_57 Depth=2
 	ldrb	w12, [x11]
 	tst	w12, #0xf
-	b.eq	.LBB321_63
+	b.eq	.LBB322_63
 // %bb.61:                              // %"$78"
-                                        //   in Loop: Header=BB321_57 Depth=2
+                                        //   in Loop: Header=BB322_57 Depth=2
 	orr	w12, w11, #0x1
 	lsr	x13, x11, #32
 	stp	w12, w13, [x9, #8]
 	ldp	w12, w9, [x11, #8]
 	bfi	x12, x9, #32, #32
-.LBB321_62:                             // %"$-4.sink.split"
-                                        //   in Loop: Header=BB321_57 Depth=2
+.LBB322_62:                             // %"$-4.sink.split"
+                                        //   in Loop: Header=BB322_57 Depth=2
 	orr	w9, w12, #0x1
 	lsr	x13, x12, #32
 	stp	w9, w13, [x11, #8]
 	mov	x9, x12
-	b	.LBB321_70
-.LBB321_63:                             // %"$79"
-                                        //   in Loop: Header=BB321_57 Depth=2
+	b	.LBB322_70
+.LBB322_63:                             // %"$79"
+                                        //   in Loop: Header=BB322_57 Depth=2
 	ldrb	w12, [x11, #8]
 	tst	w12, #0xf
-	b.ne	.LBB321_76
+	b.ne	.LBB322_76
 // %bb.64:                              // %"$81"
-                                        //   in Loop: Header=BB321_57 Depth=2
+                                        //   in Loop: Header=BB322_57 Depth=2
 	ldp	w12, w13, [x11, #8]
 	bfi	x12, x13, #32, #32
 	ldp	w11, w13, [x12, #8]
 	bfi	x11, x13, #32, #32
 	ldrb	w13, [x11]
 	tst	w13, #0xf
-	b.eq	.LBB321_66
+	b.eq	.LBB322_66
 // %bb.65:                              // %"$82"
-                                        //   in Loop: Header=BB321_57 Depth=2
+                                        //   in Loop: Header=BB322_57 Depth=2
 	ldp	w13, w12, [x12]
 	stp	w13, w12, [x9]
 	ldp	w13, w12, [x9, #8]
 	bfi	x13, x12, #32, #32
 	ldp	w12, w11, [x11, #8]
 	stp	w12, w11, [x13, #8]
-	b	.LBB321_69
-.LBB321_66:                             // %"$83"
-                                        //   in Loop: Header=BB321_57 Depth=2
+	b	.LBB322_69
+.LBB322_66:                             // %"$83"
+                                        //   in Loop: Header=BB322_57 Depth=2
 	ldp	w14, w13, [x11]
 	bfi	x14, x13, #32, #32
-.LBB321_67:                             // %"$84"
-                                        //   Parent Loop BB321_56 Depth=1
-                                        //     Parent Loop BB321_57 Depth=2
+.LBB322_67:                             // %"$84"
+                                        //   Parent Loop BB322_56 Depth=1
+                                        //     Parent Loop BB322_57 Depth=2
                                         // =>    This Inner Loop Header: Depth=3
 	mov	x11, x14
 	mov	x13, x12
@@ -36105,9 +36138,9 @@ gc:                                     // @gc
 	bfi	x14, x12, #32, #32
 	tst	x14, #0xf
 	mov	x12, x11
-	b.eq	.LBB321_67
+	b.eq	.LBB322_67
 // %bb.68:                              // %"$87"
-                                        //   in Loop: Header=BB321_57 Depth=2
+                                        //   in Loop: Header=BB322_57 Depth=2
 	ldp	w12, w14, [x11]
 	stp	w12, w14, [x9]
 	ldp	w13, w12, [x13, #8]
@@ -36116,26 +36149,26 @@ gc:                                     // @gc
 	bfi	x11, x12, #32, #32
 	ldp	w12, w11, [x11, #8]
 	stp	w12, w11, [x13]
-.LBB321_69:                             // %"$-3"
-                                        //   in Loop: Header=BB321_57 Depth=2
+.LBB322_69:                             // %"$-3"
+                                        //   in Loop: Header=BB322_57 Depth=2
 	ldp	w11, w12, [x9, #8]
 	bfi	x11, x12, #32, #32
 	ldp	w12, w13, [x11]
 	bfi	x12, x13, #32, #32
 	tst	x12, #0xf
-	b.eq	.LBB321_75
-.LBB321_70:                             // %"$91.preheader"
-                                        //   in Loop: Header=BB321_57 Depth=2
+	b.eq	.LBB322_75
+.LBB322_70:                             // %"$91.preheader"
+                                        //   in Loop: Header=BB322_57 Depth=2
 	mov	x11, x9
 	mov	x9, x10
-	cbz	x9, .LBB321_77
-.LBB321_71:                             // %"$93"
-                                        //   Parent Loop BB321_56 Depth=1
-                                        //     Parent Loop BB321_57 Depth=2
+	cbz	x9, .LBB322_77
+.LBB322_71:                             // %"$93"
+                                        //   Parent Loop BB322_56 Depth=1
+                                        //     Parent Loop BB322_57 Depth=2
                                         // =>    This Inner Loop Header: Depth=3
-	tbz	w9, #3, .LBB321_73
+	tbz	w9, #3, .LBB322_73
 // %bb.72:                              // %"$94"
-                                        //   in Loop: Header=BB321_71 Depth=3
+                                        //   in Loop: Header=BB322_71 Depth=3
 	and	x10, x9, #0xfffffffffffffff7
 	ldp	w12, w9, [x10, #8]
 	bfi	x12, x9, #32, #32
@@ -36145,10 +36178,10 @@ gc:                                     // @gc
 	lsr	x11, x11, #32
 	str	w11, [x12, #4]
 	mov	x11, x10
-	cbnz	x9, .LBB321_71
-	b	.LBB321_77
-.LBB321_73:                             // %"$96"
-                                        //   in Loop: Header=BB321_57 Depth=2
+	cbnz	x9, .LBB322_71
+	b	.LBB322_77
+.LBB322_73:                             // %"$96"
+                                        //   in Loop: Header=BB322_57 Depth=2
 	ldp	w12, w10, [x9, #8]
 	bfi	x12, x10, #32, #32
 	ldr	w10, [x12, #8]!
@@ -36157,23 +36190,23 @@ gc:                                     // @gc
 	str	w11, [x12]
 	lsr	x11, x11, #32
 	str	w11, [x12, #4]
-	b	.LBB321_57
-.LBB321_74:                             // %"$71"
-                                        //   in Loop: Header=BB321_56 Depth=1
+	b	.LBB322_57
+.LBB322_74:                             // %"$71"
+                                        //   in Loop: Header=BB322_56 Depth=1
 	lsr	x13, x10, #32
 	stp	w10, w13, [x11, #8]
 	mov	x10, x9
 	mov	x9, x12
-	b	.LBB321_56
-.LBB321_75:                             // %"$90"
-                                        //   in Loop: Header=BB321_56 Depth=1
+	b	.LBB322_56
+.LBB322_75:                             // %"$90"
+                                        //   in Loop: Header=BB322_56 Depth=1
 	lsr	x13, x10, #32
 	stp	w10, w13, [x11]
 	orr	x10, x9, #0x8
 	mov	x9, x12
-	b	.LBB321_56
-.LBB321_76:                             // %"$80"
-                                        //   in Loop: Header=BB321_56 Depth=1
+	b	.LBB322_56
+.LBB322_76:                             // %"$80"
+                                        //   in Loop: Header=BB322_56 Depth=1
 	orr	w12, w11, #0x1
 	lsr	x13, x11, #32
 	stp	w12, w13, [x9, #8]
@@ -36182,66 +36215,66 @@ gc:                                     // @gc
 	bfi	x9, x12, #32, #32
 	orr	w12, w13, #0x1
 	str	w12, [x11]
-	b	.LBB321_56
-.LBB321_77:                             // %"$-5"
+	b	.LBB322_56
+.LBB322_77:                             // %"$-5"
 	str	x11, [x21, :lo12:($Extern)]
 	ldr	x21, [x19, :lo12:($Heaps)]
 	adrp	x8, ($GcCount)
 	ldr	x19, [x8, :lo12:($GcCount)]
-	cbz	x19, .LBB321_86
+	cbz	x19, .LBB322_86
 // %bb.78:                              // %"$112.preheader"
 	mov	x8, xzr
 	mov	w9, #1048560
-	b	.LBB321_80
-.LBB321_79:                             // %"$117"
-                                        //   in Loop: Header=BB321_80 Depth=1
+	b	.LBB322_80
+.LBB322_79:                             // %"$117"
+                                        //   in Loop: Header=BB322_80 Depth=1
 	add	x10, x21, #256, lsl #12         // =1048576
 	ldp	w21, w11, [x10]
 	bfi	x21, x11, #32, #32
-	cbz	x21, .LBB321_84
-.LBB321_80:                             // %"$112"
+	cbz	x21, .LBB322_84
+.LBB322_80:                             // %"$112"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB321_82 Depth 2
+                                        //     Child Loop BB322_82 Depth 2
 	add	x10, x21, x9
 	ldrb	w11, [x10, #8]
-	tbz	w11, #0, .LBB321_82
-.LBB321_81:                             // %"$114"
-                                        //   in Loop: Header=BB321_80 Depth=1
+	tbz	w11, #0, .LBB322_82
+.LBB322_81:                             // %"$114"
+                                        //   in Loop: Header=BB322_80 Depth=1
 	lsr	x11, x8, #32
 	stp	w8, w11, [x10]
 	sub	x19, x19, #1                    // =1
 	mov	x8, x10
-.LBB321_82:                             // %"$115"
-                                        //   Parent Loop BB321_80 Depth=1
+.LBB322_82:                             // %"$115"
+                                        //   Parent Loop BB322_80 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	cmp	x10, x21
-	b.eq	.LBB321_79
+	b.eq	.LBB322_79
 // %bb.83:                              // %"$116"
-                                        //   in Loop: Header=BB321_82 Depth=2
+                                        //   in Loop: Header=BB322_82 Depth=2
 	sub	x10, x10, #16                   // =16
 	ldrb	w11, [x10, #8]
-	tbnz	w11, #0, .LBB321_81
-	b	.LBB321_82
-.LBB321_84:                             // %"$119"
+	tbnz	w11, #0, .LBB322_81
+	b	.LBB322_82
+.LBB322_84:                             // %"$119"
 	adrp	x9, ($Avail)
 	str	x8, [x9, :lo12:($Avail)]
-	tbnz	x19, #63, .LBB321_95
-.LBB321_85:                             // %"$121"
+	tbnz	x19, #63, .LBB322_95
+.LBB322_85:                             // %"$121"
                                         // =>This Inner Loop Header: Depth=1
 	bl	heapAlloc
 	sub	x19, x19, #16, lsl #12          // =65536
-	tbz	x19, #63, .LBB321_85
-	b	.LBB321_95
-.LBB321_86:                             // %"$98"
+	tbz	x19, #63, .LBB322_85
+	b	.LBB322_95
+.LBB322_86:                             // %"$98"
 	mov	x23, xzr
 	adrp	x19, ($Heaps)
 	add	x19, x19, :lo12:($Heaps)
 	mov	w22, #1048560
 	adrp	x20, .L$130
 	add	x20, x20, :lo12:.L$130
-	b	.LBB321_88
-.LBB321_87:                             // %"$108"
-                                        //   in Loop: Header=BB321_88 Depth=1
+	b	.LBB322_88
+.LBB322_87:                             // %"$108"
+                                        //   in Loop: Header=BB322_88 Depth=1
 	add	x8, x21, #256, lsl #12          // =1048576
 	ldp	w25, w24, [x8]
 	mov	x21, x25
@@ -36253,53 +36286,53 @@ gc:                                     // @gc
 	bl	outWord
 	bl	newline
 	stp	w25, w24, [x19]
-	cbz	x21, .LBB321_94
-.LBB321_88:                             // %"$101"
+	cbz	x21, .LBB322_94
+.LBB322_88:                             // %"$101"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB321_90 Depth 2
+                                        //     Child Loop BB322_90 Depth 2
 	add	x9, x21, x22
 	mov	x8, x23
 	mov	w10, #65536
 	ldrb	w11, [x9, #8]
-	tbz	w11, #0, .LBB321_90
-.LBB321_89:                             // %"$103"
-                                        //   in Loop: Header=BB321_88 Depth=1
+	tbz	w11, #0, .LBB322_90
+.LBB322_89:                             // %"$103"
+                                        //   in Loop: Header=BB322_88 Depth=1
 	lsr	x11, x8, #32
 	stp	w8, w11, [x9]
 	sub	x10, x10, #1                    // =1
 	mov	x8, x9
-.LBB321_90:                             // %"$104"
-                                        //   Parent Loop BB321_88 Depth=1
+.LBB322_90:                             // %"$104"
+                                        //   Parent Loop BB322_88 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	cmp	x9, x21
-	b.eq	.LBB321_92
+	b.eq	.LBB322_92
 // %bb.91:                              // %"$105"
-                                        //   in Loop: Header=BB321_90 Depth=2
+                                        //   in Loop: Header=BB322_90 Depth=2
 	sub	x9, x9, #16                     // =16
 	ldrb	w11, [x9, #8]
-	tbnz	w11, #0, .LBB321_89
-	b	.LBB321_90
-.LBB321_92:                             // %"$106"
-                                        //   in Loop: Header=BB321_88 Depth=1
-	cbz	x10, .LBB321_87
+	tbnz	w11, #0, .LBB322_89
+	b	.LBB322_90
+.LBB322_92:                             // %"$106"
+                                        //   in Loop: Header=BB322_88 Depth=1
+	cbz	x10, .LBB322_87
 // %bb.93:                              // %"$107"
-                                        //   in Loop: Header=BB321_88 Depth=1
+                                        //   in Loop: Header=BB322_88 Depth=1
 	add	x19, x21, #256, lsl #12         // =1048576
 	ldp	w21, w9, [x19]
 	bfi	x21, x9, #32, #32
 	mov	x23, x8
-	cbnz	x21, .LBB321_88
-.LBB321_94:                             // %"$111"
+	cbnz	x21, .LBB322_88
+.LBB322_94:                             // %"$111"
 	adrp	x8, ($Avail)
 	str	x23, [x8, :lo12:($Avail)]
-.LBB321_95:                             // %"$100"
+.LBB322_95:                             // %"$100"
 	ldp	x20, x19, [sp, #48]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #32]             // 16-byte Folded Reload
 	ldp	x24, x23, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x25, [sp], #64             // 16-byte Folded Reload
 	ret
-.Lfunc_end321:
-	.size	gc, .Lfunc_end321-gc
+.Lfunc_end322:
+	.size	gc, .Lfunc_end322-gc
 	.cfi_endproc
                                         // -- End function
 	.globl	mark                            // -- Begin function mark
@@ -36309,40 +36342,40 @@ mark:                                   // @mark
 	.cfi_startproc
 // %bb.0:                               // %"$1"
 	mov	x8, xzr
-.LBB322_1:                              // %"$3"
+.LBB323_1:                              // %"$3"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB322_9 Depth 2
-                                        //     Child Loop BB322_3 Depth 2
+                                        //     Child Loop BB323_9 Depth 2
+                                        //     Child Loop BB323_3 Depth 2
 	mov	x9, x0
-	tbnz	w9, #1, .LBB322_3
+	tbnz	w9, #1, .LBB323_3
 // %bb.2:                               // %"$4"
-                                        //   in Loop: Header=BB322_1 Depth=1
+                                        //   in Loop: Header=BB323_1 Depth=1
 	and	x10, x9, #0xfffffffffffffff0
 	ldp	w12, w11, [x10, #8]
 	bfi	x12, x11, #32, #32
-	tbnz	w12, #0, .LBB322_7
-.LBB322_3:                              // %"$13"
-                                        //   Parent Loop BB322_1 Depth=1
+	tbnz	w12, #0, .LBB323_7
+.LBB323_3:                              // %"$13"
+                                        //   Parent Loop BB323_1 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	ands	x10, x8, #0xfffffffffffffff0
-	b.eq	.LBB322_12
+	b.eq	.LBB323_12
 // %bb.4:                               // %"$15"
-                                        //   in Loop: Header=BB322_3 Depth=2
+                                        //   in Loop: Header=BB323_3 Depth=2
 	ldp	w11, w12, [x10]
 	bfi	x11, x12, #32, #32
 	lsr	x12, x9, #32
-	tbnz	w11, #0, .LBB322_6
+	tbnz	w11, #0, .LBB323_6
 // %bb.5:                               // %"$16"
-                                        //   in Loop: Header=BB322_3 Depth=2
+                                        //   in Loop: Header=BB323_3 Depth=2
 	ldr	w11, [x10, #8]!
 	ldr	w13, [x10, #4]
 	bfi	x11, x13, #32, #32
 	stp	w9, w12, [x10]
 	mov	x9, x8
 	mov	x8, x11
-	b	.LBB322_3
-.LBB322_6:                              // %"$18"
-                                        //   in Loop: Header=BB322_1 Depth=1
+	b	.LBB323_3
+.LBB323_6:                              // %"$18"
+                                        //   in Loop: Header=BB323_1 Depth=1
 	stp	w9, w12, [x10]
 	ldr	w0, [x10, #8]!
 	ldr	w9, [x10, #4]
@@ -36350,43 +36383,43 @@ mark:                                   // @mark
 	lsr	x13, x11, #32
 	and	w9, w11, #0xfffffffe
 	stp	w9, w13, [x10]
-	b	.LBB322_1
-.LBB322_7:                              // %"$6"
-                                        //   in Loop: Header=BB322_1 Depth=1
+	b	.LBB323_1
+.LBB323_7:                              // %"$6"
+                                        //   in Loop: Header=BB323_1 Depth=1
 	and	x11, x12, #0xfffffffffffffffe
 	lsr	x12, x12, #32
 	stp	w11, w12, [x10, #8]
-	tbz	w9, #2, .LBB322_11
+	tbz	w9, #2, .LBB323_11
 // %bb.8:                               // %"$9"
-                                        //   in Loop: Header=BB322_1 Depth=1
-	tbnz	w11, #1, .LBB322_3
-.LBB322_9:                              // %"$10"
-                                        //   Parent Loop BB322_1 Depth=1
+                                        //   in Loop: Header=BB323_1 Depth=1
+	tbnz	w11, #1, .LBB323_3
+.LBB323_9:                              // %"$10"
+                                        //   Parent Loop BB323_1 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	ldp	w10, w12, [x11, #4]
 	bfi	x10, x12, #32, #32
-	tbz	w10, #0, .LBB322_3
+	tbz	w10, #0, .LBB323_3
 // %bb.10:                              // %"$12"
-                                        //   in Loop: Header=BB322_9 Depth=2
+                                        //   in Loop: Header=BB323_9 Depth=2
 	and	x12, x10, #0xfffffffffffffffe
 	lsr	x10, x10, #32
 	stp	w12, w10, [x11, #4]
 	mov	x11, x12
-	tbz	w11, #1, .LBB322_9
-	b	.LBB322_3
-.LBB322_11:                             // %"$7"
-                                        //   in Loop: Header=BB322_1 Depth=1
+	tbz	w11, #1, .LBB323_9
+	b	.LBB323_3
+.LBB323_11:                             // %"$7"
+                                        //   in Loop: Header=BB323_1 Depth=1
 	ldp	w0, w11, [x10]
 	bfi	x0, x11, #32, #32
 	lsr	x11, x8, #32
 	orr	w8, w8, #0x1
 	stp	w8, w11, [x10]
 	mov	x8, x9
-	b	.LBB322_1
-.LBB322_12:                             // %"$14"
+	b	.LBB323_1
+.LBB323_12:                             // %"$14"
 	ret
-.Lfunc_end322:
-	.size	mark, .Lfunc_end322-mark
+.Lfunc_end323:
+	.size	mark, .Lfunc_end323-mark
 	.cfi_endproc
                                         // -- End function
 	.globl	outString                       // -- Begin function outString
@@ -36404,20 +36437,20 @@ outString:                              // @outString
 	mov	x19, x0
 	adrp	x20, ($Put)
 	ldrb	w0, [x19]
-	cbz	w0, .LBB323_2
-.LBB323_1:                              // %"$3"
+	cbz	w0, .LBB324_2
+.LBB324_1:                              // %"$3"
                                         // =>This Inner Loop Header: Depth=1
 	ldr	x8, [x20, :lo12:($Put)]
 	blr	x8
 	add	x19, x19, #1                    // =1
 	ldrb	w0, [x19]
-	cbnz	w0, .LBB323_1
-.LBB323_2:                              // %"$4"
+	cbnz	w0, .LBB324_1
+.LBB324_2:                              // %"$4"
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #32                  // 8-byte Folded Reload
 	ret
-.Lfunc_end323:
-	.size	outString, .Lfunc_end323-outString
+.Lfunc_end324:
+	.size	outString, .Lfunc_end324-outString
 	.cfi_endproc
                                         // -- End function
 	.globl	heapAlloc                       // -- Begin function heapAlloc
@@ -36444,7 +36477,7 @@ heapAlloc:                              // @heapAlloc
 	str	x0, [x10, :lo12:($Heaps)]
 	add	x11, x0, x11
 	mov	x10, #-1048576
-.LBB324_1:                              // %"$2"
+.LBB325_1:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	mov	x12, x9
 	mov	x9, x11
@@ -36452,13 +36485,13 @@ heapAlloc:                              // @heapAlloc
 	stp	w12, w11, [x9]
 	sub	x11, x9, #16                    // =16
 	adds	x10, x10, #16                   // =16
-	b.ne	.LBB324_1
+	b.ne	.LBB325_1
 // %bb.2:                               // %"$4"
 	str	x9, [x8, :lo12:($Avail)]
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end324:
-	.size	heapAlloc, .Lfunc_end324-heapAlloc
+.Lfunc_end325:
+	.size	heapAlloc, .Lfunc_end325-heapAlloc
 	.cfi_endproc
                                         // -- End function
 	.globl	alloc                           // -- Begin function alloc
@@ -36472,8 +36505,8 @@ alloc:                                  // @alloc
 	add	x9, x0, x1, lsl #3
 	str	x9, [x8, :lo12:($Limit)]
 	ret
-.Lfunc_end325:
-	.size	alloc, .Lfunc_end325-alloc
+.Lfunc_end326:
+	.size	alloc, .Lfunc_end326-alloc
 	.cfi_endproc
                                         // -- End function
 	.globl	sighandler                      // -- Begin function sighandler
@@ -36491,11 +36524,11 @@ sighandler:                             // @sighandler
 	bl	outString
 	adrp	x19, env+136
 	ldr	w8, [x19, :lo12:env+136]
-	cbz	w8, .LBB326_2
+	cbz	w8, .LBB327_2
 // %bb.1:                               // %"$3"
 	ldp	x30, x19, [sp], #16             // 16-byte Folded Reload
 	ret
-.LBB326_2:                              // %"$2"
+.LBB327_2:                              // %"$2"
 	mov	w8, #1
 	str	w8, [x19, :lo12:env+136]
 	adrp	x8, ($Signal)
@@ -36508,8 +36541,8 @@ sighandler:                             // @sighandler
 	str	wzr, [x19, :lo12:env+136]
 	ldp	x30, x19, [sp], #16             // 16-byte Folded Reload
 	ret
-.Lfunc_end326:
-	.size	sighandler, .Lfunc_end326-sighandler
+.Lfunc_end327:
+	.size	sighandler, .Lfunc_end327-sighandler
 	.cfi_endproc
                                         // -- End function
 	.globl	evExpr                          // -- Begin function evExpr
@@ -36542,7 +36575,7 @@ evExpr:                                 // @evExpr
 	adrp	x10, ($StkLimit)
 	ldr	x10, [x10, :lo12:($StkLimit)]
 	cmp	x10, x9
-	b.hi	.LBB327_83
+	b.hi	.LBB328_83
 // %bb.1:                               // %"$3"
 	mov	x8, x1
 	ldp	w24, w9, [x1, #8]
@@ -36566,75 +36599,75 @@ evExpr:                                 // @evExpr
 	add	x25, x25, :lo12:SymTab+8
 	sub	x9, x11, #8                     // =8
 	stp	w10, w12, [x11, #-16]
-.LBB327_2:                              // %"$4.sink.split"
+.LBB328_2:                              // %"$4.sink.split"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB327_3 Depth 2
-                                        //       Child Loop BB327_9 Depth 3
+                                        //     Child Loop BB328_3 Depth 2
+                                        //       Child Loop BB328_9 Depth 3
 	lsr	x10, x8, #32
 	stp	w8, w10, [x9]
 	str	x23, [x21, :lo12:env+8]
-.LBB327_3:                              // %"$4"
-                                        //   Parent Loop BB327_2 Depth=1
+.LBB328_3:                              // %"$4"
+                                        //   Parent Loop BB328_2 Depth=1
                                         // =>  This Loop Header: Depth=2
-                                        //       Child Loop BB327_9 Depth 3
+                                        //       Child Loop BB328_9 Depth 3
 	tst	x20, #0xf
-	b.ne	.LBB327_23
+	b.ne	.LBB328_23
 // %bb.4:                               // %"$5"
-                                        //   in Loop: Header=BB327_3 Depth=2
+                                        //   in Loop: Header=BB328_3 Depth=2
 	ldp	w0, w8, [x24]
 	bfi	x0, x8, #32, #32
 	ldp	w24, w8, [x24, #8]
 	bfi	x24, x8, #32, #32
 	tst	x0, #0x6
-	b.ne	.LBB327_8
+	b.ne	.LBB328_8
 // %bb.5:                               // %"$8"
-                                        //   in Loop: Header=BB327_3 Depth=2
-	tbz	w0, #3, .LBB327_7
+                                        //   in Loop: Header=BB328_3 Depth=2
+	tbz	w0, #3, .LBB328_7
 // %bb.6:                               // %"$11"
-                                        //   in Loop: Header=BB327_3 Depth=2
+                                        //   in Loop: Header=BB328_3 Depth=2
 	ldp	w0, w8, [x0]
 	bfi	x0, x8, #32, #32
-	b	.LBB327_8
-.LBB327_7:                              // %"$10"
-                                        //   in Loop: Header=BB327_3 Depth=2
+	b	.LBB328_8
+.LBB328_7:                              // %"$10"
+                                        //   in Loop: Header=BB328_3 Depth=2
 	bl	evList
-.LBB327_8:                              // %"$7"
-                                        //   in Loop: Header=BB327_3 Depth=2
+.LBB328_8:                              // %"$7"
+                                        //   in Loop: Header=BB328_3 Depth=2
 	ldp	w1, w8, [x20]
 	bfi	x1, x8, #32, #32
 	ldp	w20, w8, [x20, #8]
 	bfi	x20, x8, #32, #32
 	tst	x1, #0xf
-	b.ne	.LBB327_19
-.LBB327_9:                              // %"$21"
-                                        //   Parent Loop BB327_2 Depth=1
-                                        //     Parent Loop BB327_3 Depth=2
+	b.ne	.LBB328_19
+.LBB328_9:                              // %"$21"
+                                        //   Parent Loop BB328_2 Depth=1
+                                        //     Parent Loop BB328_3 Depth=2
                                         // =>    This Inner Loop Header: Depth=3
 	tst	x0, #0xf
-	b.eq	.LBB327_11
-// %bb.10:                              //   in Loop: Header=BB327_9 Depth=3
+	b.eq	.LBB328_11
+// %bb.10:                              //   in Loop: Header=BB328_9 Depth=3
 	mov	x10, x25
-	b	.LBB327_12
-.LBB327_11:                             // %"$22"
-                                        //   in Loop: Header=BB327_9 Depth=3
+	b	.LBB328_12
+.LBB328_11:                             // %"$22"
+                                        //   in Loop: Header=BB328_9 Depth=3
 	ldp	w10, w8, [x0]
 	bfi	x10, x8, #32, #32
 	ldp	w0, w8, [x0, #8]
 	bfi	x0, x8, #32, #32
-.LBB327_12:                             // %"$24"
-                                        //   in Loop: Header=BB327_9 Depth=3
+.LBB328_12:                             // %"$24"
+                                        //   in Loop: Header=BB328_9 Depth=3
 	ldp	w8, w9, [x1]
 	bfi	x8, x9, #32, #32
 	tst	x8, #0x6
-	b.ne	.LBB327_79
+	b.ne	.LBB328_79
 // %bb.13:                              // %"$26"
-                                        //   in Loop: Header=BB327_9 Depth=3
+                                        //   in Loop: Header=BB328_9 Depth=3
 	add	x9, x25, #208                   // =208
 	cmp	x9, x8
 	ccmp	x8, x25, #0, hs
-	b.hs	.LBB327_80
+	b.hs	.LBB328_80
 // %bb.14:                              // %"$30"
-                                        //   in Loop: Header=BB327_9 Depth=3
+                                        //   in Loop: Header=BB328_9 Depth=3
 	ldp	w1, w9, [x1, #8]
 	bfi	x1, x9, #32, #32
 	mov	x11, sp
@@ -36649,44 +36682,44 @@ evExpr:                                 // @evExpr
 	tst	x1, #0xf
 	mov	x23, x9
 	str	x9, [x21, :lo12:env+8]
-	b.eq	.LBB327_9
+	b.eq	.LBB328_9
 // %bb.15:                              // %"$32"
-                                        //   in Loop: Header=BB327_3 Depth=2
+                                        //   in Loop: Header=BB328_3 Depth=2
 	cmp	x1, x25
 	mov	x23, x9
-	b.eq	.LBB327_3
+	b.eq	.LBB328_3
 // %bb.16:                              // %"$33"
-                                        //   in Loop: Header=BB327_2 Depth=1
+                                        //   in Loop: Header=BB328_2 Depth=1
 	tst	x1, #0x6
-	b.ne	.LBB327_81
+	b.ne	.LBB328_81
 // %bb.17:                              // %"$36"
-                                        //   in Loop: Header=BB327_2 Depth=1
+                                        //   in Loop: Header=BB328_2 Depth=1
 	add	x8, x25, #208                   // =208
 	cmp	x8, x1
 	ccmp	x1, x25, #0, hs
-	b.hs	.LBB327_82
+	b.hs	.LBB328_82
 // %bb.18:                              // %"$40"
-                                        //   in Loop: Header=BB327_2 Depth=1
+                                        //   in Loop: Header=BB328_2 Depth=1
 	sub	x10, sp, #32                    // =32
 	mov	sp, x10
 	mov	x23, x9
-	b	.LBB327_22
-.LBB327_19:                             // %"$12"
-                                        //   in Loop: Header=BB327_2 Depth=1
+	b	.LBB328_22
+.LBB328_19:                             // %"$12"
+                                        //   in Loop: Header=BB328_2 Depth=1
 	tst	x1, #0x6
-	b.ne	.LBB327_81
+	b.ne	.LBB328_81
 // %bb.20:                              // %"$16"
-                                        //   in Loop: Header=BB327_2 Depth=1
+                                        //   in Loop: Header=BB328_2 Depth=1
 	add	x8, x25, #208                   // =208
 	cmp	x8, x1
 	ccmp	x1, x25, #0, hs
-	b.hs	.LBB327_82
+	b.hs	.LBB328_82
 // %bb.21:                              // %"$20"
-                                        //   in Loop: Header=BB327_2 Depth=1
+                                        //   in Loop: Header=BB328_2 Depth=1
 	sub	x10, sp, #32                    // =32
 	mov	sp, x10
-.LBB327_22:                             // %"$14.sink.split"
-                                        //   in Loop: Header=BB327_2 Depth=1
+.LBB328_22:                             // %"$14.sink.split"
+                                        //   in Loop: Header=BB328_2 Depth=1
 	lsr	x8, x0, #32
 	lsr	x11, x1, #32
 	add	x9, x10, #16                    // =16
@@ -36694,18 +36727,18 @@ evExpr:                                 // @evExpr
 	mov	x8, x23
 	mov	x23, x10
 	stp	w1, w11, [x10, #8]
-	b	.LBB327_2
-.LBB327_23:                             // %"$6"
+	b	.LBB328_2
+.LBB328_23:                             // %"$6"
 	cmp	x20, x22
-	b.ne	.LBB327_28
+	b.ne	.LBB328_28
 // %bb.24:                              // %"$41"
 	tst	x24, #0xf
-	b.eq	.LBB327_48
+	b.eq	.LBB328_48
 // %bb.25:                              // %"$45"
 	adrp	x8, env+96
 	ldr	x20, [x8, :lo12:env+96]
 	str	x25, [x8, :lo12:env+96]
-.LBB327_26:                             // %"$74"
+.LBB328_26:                             // %"$74"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w9, w8, [x23, #8]
 	bfi	x9, x8, #32, #32
@@ -36714,23 +36747,23 @@ evExpr:                                 // @evExpr
 	stp	w12, w11, [x9]
 	stp	w8, w10, [x23]
 	cmp	x22, x9
-	b.eq	.LBB327_41
+	b.eq	.LBB328_41
 // %bb.27:                              // %"$75"
-                                        //   in Loop: Header=BB327_26 Depth=1
+                                        //   in Loop: Header=BB328_26 Depth=1
 	ldp	w23, w8, [x23, #16]
 	bfi	x23, x8, #32, #32
-	b	.LBB327_26
-.LBB327_28:                             // %"$42"
+	b	.LBB328_26
+.LBB328_28:                             // %"$42"
 	cmp	x20, x25
-	b.eq	.LBB327_33
+	b.eq	.LBB328_33
 // %bb.29:                              // %"$88"
 	tst	x20, #0x6
-	b.ne	.LBB327_84
+	b.ne	.LBB328_84
 // %bb.30:                              // %"$91"
 	add	x8, x25, #208                   // =208
 	cmp	x8, x20
 	ccmp	x20, x25, #0, hs
-	b.hs	.LBB327_85
+	b.hs	.LBB328_85
 // %bb.31:                              // %"$95"
 	ldp	w8, w9, [x20]
 	mov	x10, sp
@@ -36744,12 +36777,12 @@ evExpr:                                 // @evExpr
 	str	x11, [x21, :lo12:env+8]
 	lsr	x8, x24, #32
 	stp	w24, w8, [x20]
-	b	.LBB327_33
-.LBB327_32:                             // %"$97"
-                                        //   in Loop: Header=BB327_33 Depth=1
+	b	.LBB328_33
+.LBB328_32:                             // %"$97"
+                                        //   in Loop: Header=BB328_33 Depth=1
 	ldp	w23, w8, [x23, #16]
 	bfi	x23, x8, #32, #32
-.LBB327_33:                             // %"$96"
+.LBB328_33:                             // %"$96"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w9, w8, [x23, #8]
 	bfi	x9, x8, #32, #32
@@ -36758,100 +36791,100 @@ evExpr:                                 // @evExpr
 	stp	w12, w11, [x9]
 	stp	w8, w10, [x23]
 	cmp	x22, x9
-	b.ne	.LBB327_32
+	b.ne	.LBB328_32
 // %bb.34:                              // %"$98"
 	ldp	w19, w8, [x19, #8]
 	bfi	x19, x8, #32, #32
-.LBB327_35:                             // %"$99"
+.LBB328_35:                             // %"$99"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w0, w8, [x19]
 	bfi	x0, x8, #32, #32
 	ldp	w19, w8, [x19, #8]
 	bfi	x19, x8, #32, #32
 	tst	x19, #0xf
-	b.ne	.LBB327_38
+	b.ne	.LBB328_38
 // %bb.36:                              // %"$100"
-                                        //   in Loop: Header=BB327_35 Depth=1
+                                        //   in Loop: Header=BB328_35 Depth=1
 	tst	x0, #0xf
-	b.ne	.LBB327_35
+	b.ne	.LBB328_35
 // %bb.37:                              // %"$109"
-                                        //   in Loop: Header=BB327_35 Depth=1
+                                        //   in Loop: Header=BB328_35 Depth=1
 	bl	evList
-	b	.LBB327_35
-.LBB327_38:                             // %"$102"
+	b	.LBB328_35
+.LBB328_38:                             // %"$102"
 	tst	x0, #0x6
-	b.ne	.LBB327_75
+	b.ne	.LBB328_75
 // %bb.39:                              // %"$104"
-	tbz	w0, #3, .LBB327_51
+	tbz	w0, #3, .LBB328_51
 // %bb.40:                              // %"$107"
 	ldp	w0, w8, [x0]
 	bfi	x0, x8, #32, #32
-	b	.LBB327_75
-.LBB327_41:                             // %"$76"
+	b	.LBB328_75
+.LBB328_41:                             // %"$76"
 	ldp	w19, w8, [x19, #8]
 	bfi	x19, x8, #32, #32
-.LBB327_42:                             // %"$77"
+.LBB328_42:                             // %"$77"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w0, w8, [x19]
 	bfi	x0, x8, #32, #32
 	ldp	w19, w8, [x19, #8]
 	bfi	x19, x8, #32, #32
 	tst	x19, #0xf
-	b.ne	.LBB327_45
+	b.ne	.LBB328_45
 // %bb.43:                              // %"$78"
-                                        //   in Loop: Header=BB327_42 Depth=1
+                                        //   in Loop: Header=BB328_42 Depth=1
 	tst	x0, #0xf
-	b.ne	.LBB327_42
+	b.ne	.LBB328_42
 // %bb.44:                              // %"$87"
-                                        //   in Loop: Header=BB327_42 Depth=1
+                                        //   in Loop: Header=BB328_42 Depth=1
 	bl	evList
-	b	.LBB327_42
-.LBB327_45:                             // %"$80"
+	b	.LBB328_42
+.LBB328_45:                             // %"$80"
 	tst	x0, #0x6
-	b.ne	.LBB327_53
+	b.ne	.LBB328_53
 // %bb.46:                              // %"$82"
-	tbz	w0, #3, .LBB327_52
+	tbz	w0, #3, .LBB328_52
 // %bb.47:                              // %"$85"
 	ldp	w0, w8, [x0]
 	bfi	x0, x8, #32, #32
-	b	.LBB327_53
-.LBB327_48:                             // %"$44"
+	b	.LBB328_53
+.LBB328_48:                             // %"$44"
 	ldp	w0, w8, [x24]
 	bfi	x0, x8, #32, #32
 	tst	x0, #0x6
-	b.ne	.LBB327_55
+	b.ne	.LBB328_55
 // %bb.49:                              // %"$48"
-	tbz	w0, #3, .LBB327_54
+	tbz	w0, #3, .LBB328_54
 // %bb.50:                              // %"$51"
 	ldp	w0, w8, [x0]
 	bfi	x0, x8, #32, #32
-	b	.LBB327_55
-.LBB327_51:                             // %"$106"
+	b	.LBB328_55
+.LBB328_51:                             // %"$106"
 	bl	evList
-	b	.LBB327_75
-.LBB327_52:                             // %"$84"
+	b	.LBB328_75
+.LBB328_52:                             // %"$84"
 	bl	evList
-.LBB327_53:                             // %"$46"
+.LBB328_53:                             // %"$46"
 	adrp	x8, env+96
 	add	x8, x8, :lo12:env+96
-	b	.LBB327_74
-.LBB327_54:                             // %"$50"
+	b	.LBB328_74
+.LBB328_54:                             // %"$50"
 	bl	evList
-.LBB327_55:                             // %"$47"
+.LBB328_55:                             // %"$47"
 	mov	x8, sp
 	sub	x20, x8, #32                    // =32
 	mov	sp, x20
 	sub	x8, x8, #24                     // =24
 	adrp	x27, env
 	mov	x26, x20
-	b	.LBB327_58
-.LBB327_56:                             // %"$58"
-                                        //   in Loop: Header=BB327_58 Depth=1
+	b	.LBB328_58
+.LBB328_56:                             // %"$58"
+                                        //   in Loop: Header=BB328_58 Depth=1
 	mov	x0, x8
 	bl	evList
 	mov	x8, x0
-.LBB327_57:                             // %"$55"
-                                        //   in Loop: Header=BB327_58 Depth=1
+.LBB328_57:                             // %"$55"
+                                        //   in Loop: Header=BB328_58 Depth=1
 	mov	x9, sp
 	sub	x0, x9, #32                     // =32
 	mov	sp, x0
@@ -36859,7 +36892,7 @@ evExpr:                                 // @evExpr
 	stp	w8, w10, [x9, #-24]
 	mov	x8, x26
 	mov	x26, x0
-.LBB327_58:                             // %"$52"
+.LBB328_58:                             // %"$52"
                                         // =>This Inner Loop Header: Depth=1
 	lsr	x9, x0, #32
 	stp	w0, w9, [x8]
@@ -36871,28 +36904,28 @@ evExpr:                                 // @evExpr
 	ldp	w24, w8, [x24, #8]
 	bfi	x24, x8, #32, #32
 	tst	x24, #0xf
-	b.ne	.LBB327_62
+	b.ne	.LBB328_62
 // %bb.59:                              // %"$53"
-                                        //   in Loop: Header=BB327_58 Depth=1
+                                        //   in Loop: Header=BB328_58 Depth=1
 	ldp	w8, w9, [x24]
 	bfi	x8, x9, #32, #32
 	tst	x8, #0x6
-	b.ne	.LBB327_57
+	b.ne	.LBB328_57
 // %bb.60:                              // %"$56"
-                                        //   in Loop: Header=BB327_58 Depth=1
-	tbz	w8, #3, .LBB327_56
+                                        //   in Loop: Header=BB328_58 Depth=1
+	tbz	w8, #3, .LBB328_56
 // %bb.61:                              // %"$59"
-                                        //   in Loop: Header=BB327_58 Depth=1
+                                        //   in Loop: Header=BB328_58 Depth=1
 	ldp	w8, w9, [x8]
 	bfi	x8, x9, #32, #32
-	b	.LBB327_57
-.LBB327_62:                             // %"$54"
+	b	.LBB328_57
+.LBB328_62:                             // %"$54"
 	adrp	x8, env+96
 	ldr	x24, [x8, :lo12:env+96]
 	lsr	x9, x25, #32
 	stp	w25, w9, [x26]
 	str	x20, [x8, :lo12:env+96]
-.LBB327_63:                             // %"$60"
+.LBB328_63:                             // %"$60"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w9, w8, [x23, #8]
 	bfi	x9, x8, #32, #32
@@ -36901,55 +36934,55 @@ evExpr:                                 // @evExpr
 	stp	w12, w11, [x9]
 	stp	w8, w10, [x23]
 	cmp	x22, x9
-	b.eq	.LBB327_65
+	b.eq	.LBB328_65
 // %bb.64:                              // %"$61"
-                                        //   in Loop: Header=BB327_63 Depth=1
+                                        //   in Loop: Header=BB328_63 Depth=1
 	ldp	w23, w8, [x23, #16]
 	bfi	x23, x8, #32, #32
-	b	.LBB327_63
-.LBB327_65:                             // %"$62"
+	b	.LBB328_63
+.LBB328_65:                             // %"$62"
 	ldp	w19, w8, [x19, #8]
 	bfi	x19, x8, #32, #32
-.LBB327_66:                             // %"$63"
+.LBB328_66:                             // %"$63"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w0, w8, [x19]
 	bfi	x0, x8, #32, #32
 	ldp	w19, w8, [x19, #8]
 	bfi	x19, x8, #32, #32
 	tst	x19, #0xf
-	b.ne	.LBB327_69
+	b.ne	.LBB328_69
 // %bb.67:                              // %"$64"
-                                        //   in Loop: Header=BB327_66 Depth=1
+                                        //   in Loop: Header=BB328_66 Depth=1
 	tst	x0, #0xf
-	b.ne	.LBB327_66
+	b.ne	.LBB328_66
 // %bb.68:                              // %"$73"
-                                        //   in Loop: Header=BB327_66 Depth=1
+                                        //   in Loop: Header=BB328_66 Depth=1
 	bl	evList
-	b	.LBB327_66
-.LBB327_69:                             // %"$66"
+	b	.LBB328_66
+.LBB328_69:                             // %"$66"
 	tst	x0, #0x6
-	b.ne	.LBB327_73
+	b.ne	.LBB328_73
 // %bb.70:                              // %"$68"
-	tbz	w0, #3, .LBB327_72
+	tbz	w0, #3, .LBB328_72
 // %bb.71:                              // %"$71"
 	ldp	w0, w8, [x0]
 	bfi	x0, x8, #32, #32
-	b	.LBB327_73
-.LBB327_72:                             // %"$70"
+	b	.LBB328_73
+.LBB328_72:                             // %"$70"
 	bl	evList
-.LBB327_73:                             // %"$65"
+.LBB328_73:                             // %"$65"
 	adrp	x8, env
 	add	x8, x8, :lo12:env
 	str	x24, [x8, #96]
 	ldp	w20, w9, [x20, #16]
 	bfi	x20, x9, #32, #32
-.LBB327_74:                             // %"$46"
+.LBB328_74:                             // %"$46"
 	lsr	x9, x20, #32
 	stp	w20, w9, [x8]
-.LBB327_75:                             // %"$43"
+.LBB328_75:                             // %"$43"
 	adrp	x8, env+8
 	add	x8, x8, :lo12:env+8
-.LBB327_76:                             // %"$110"
+.LBB328_76:                             // %"$110"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w8, w9, [x8]
 	bfi	x8, x9, #32, #32
@@ -36958,12 +36991,12 @@ evExpr:                                 // @evExpr
 	ldp	w9, w11, [x8]
 	stp	w9, w11, [x10]
 	cmp	x22, x10
-	b.eq	.LBB327_78
+	b.eq	.LBB328_78
 // %bb.77:                              // %"$111"
-                                        //   in Loop: Header=BB327_76 Depth=1
+                                        //   in Loop: Header=BB328_76 Depth=1
 	add	x8, x8, #16                     // =16
-	b	.LBB327_76
-.LBB327_78:                             // %"$112"
+	b	.LBB328_76
+.LBB328_78:                             // %"$112"
 	ldp	w8, w9, [x8, #16]
 	bfi	x8, x9, #32, #32
 	str	x8, [x21, :lo12:env+8]
@@ -36975,33 +37008,33 @@ evExpr:                                 // @evExpr
 	ldr	x27, [sp, #16]                  // 8-byte Folded Reload
 	ldp	x29, x30, [sp], #96             // 16-byte Folded Reload
 	ret
-.LBB327_79:                             // %"$25"
+.LBB328_79:                             // %"$25"
 	mov	x0, x19
 	mov	x1, x8
 	bl	varErr
-.LBB327_80:                             // %"$29"
+.LBB328_80:                             // %"$29"
 	mov	x0, x19
 	mov	x1, x8
 	bl	protErr
-.LBB327_81:                             // %"$15"
+.LBB328_81:                             // %"$15"
 	mov	x0, x19
 	bl	varErr
-.LBB327_82:                             // %"$19"
+.LBB328_82:                             // %"$19"
 	mov	x0, x19
 	bl	protErr
-.LBB327_83:                             // %"$2"
+.LBB328_83:                             // %"$2"
 	mov	x0, x19
 	bl	stkErr
-.LBB327_84:                             // %"$90"
+.LBB328_84:                             // %"$90"
 	mov	x0, x19
 	mov	x1, x20
 	bl	varErr
-.LBB327_85:                             // %"$94"
+.LBB328_85:                             // %"$94"
 	mov	x0, x19
 	mov	x1, x20
 	bl	protErr
-.Lfunc_end327:
-	.size	evExpr, .Lfunc_end327-evExpr
+.Lfunc_end328:
+	.size	evExpr, .Lfunc_end328-evExpr
 	.cfi_endproc
                                         // -- End function
 	.globl	sharedLib                       // -- Begin function sharedLib
@@ -37012,8 +37045,8 @@ sharedLib:                              // @sharedLib
 // %bb.0:                               // %"$1"
 	mov	w0, wzr
 	ret
-.Lfunc_end328:
-	.size	sharedLib, .Lfunc_end328-sharedLib
+.Lfunc_end329:
+	.size	sharedLib, .Lfunc_end329-sharedLib
 	.cfi_endproc
                                         // -- End function
 	.globl	undefined                       // -- Begin function undefined
@@ -37032,8 +37065,8 @@ undefined:                              // @undefined
 	mov	x1, x8
 	mov	x3, xzr
 	bl	err
-.Lfunc_end329:
-	.size	undefined, .Lfunc_end329-undefined
+.Lfunc_end330:
+	.size	undefined, .Lfunc_end330-undefined
 	.cfi_endproc
                                         // -- End function
 	.globl	stkErr                          // -- Begin function stkErr
@@ -37052,8 +37085,8 @@ stkErr:                                 // @stkErr
 	mov	x1, xzr
 	mov	x3, xzr
 	bl	err
-.Lfunc_end330:
-	.size	stkErr, .Lfunc_end330-stkErr
+.Lfunc_end331:
+	.size	stkErr, .Lfunc_end331-stkErr
 	.cfi_endproc
                                         // -- End function
 	.globl	err                             // -- Begin function err
@@ -37087,7 +37120,7 @@ err:                                    // @err
 	cmp	x0, #0                          // =0
 	csel	x8, x0, x24, ne
 	str	x8, [x24, #624]
-	cbz	x1, .LBB331_2
+	cbz	x1, .LBB332_2
 // %bb.1:                               // %"$5"
 	mov	x8, sp
 	sub	x9, x8, #16                     // =16
@@ -37099,13 +37132,13 @@ err:                                    // @err
 	lsr	x12, x11, #32
 	stp	w11, w12, [x8, #-8]
 	str	x9, [x10, :lo12:env]
-.LBB331_2:                              // %"$6"
+.LBB332_2:                              // %"$6"
 	mov	x8, sp
 	sub	x22, x8, #240                   // =240
 	mov	sp, x22
 	ldrb	w9, [x19]
 	sturb	w9, [x8, #-240]
-	cbz	w9, .LBB331_12
+	cbz	w9, .LBB332_12
 // %bb.3:                               // %"$7"
 	mov	x0, x22
 	bl	mkStr
@@ -37113,81 +37146,81 @@ err:                                    // @err
 	str	x0, [x25, :lo12:SymTab+664]
 	adrp	x23, env+24
 	add	x23, x23, :lo12:env+24
-.LBB331_4:                              // %"$9"
+.LBB332_4:                              // %"$9"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB331_7 Depth 2
+                                        //     Child Loop BB332_7 Depth 2
 	ldr	x23, [x23]
-	cbz	x23, .LBB331_12
+	cbz	x23, .LBB332_12
 // %bb.5:                               // %"$10"
-                                        //   in Loop: Header=BB331_4 Depth=1
+                                        //   in Loop: Header=BB332_4 Depth=1
 	ldp	w26, w8, [x23, #8]
 	bfi	x26, x8, #32, #32
-	cbz	x26, .LBB331_4
+	cbz	x26, .LBB332_4
 // %bb.6:                               // %"$14"
-                                        //   in Loop: Header=BB331_4 Depth=1
+                                        //   in Loop: Header=BB332_4 Depth=1
 	tst	x26, #0xf
-	b.ne	.LBB331_4
-.LBB331_7:                              // %"$15"
-                                        //   Parent Loop BB331_4 Depth=1
+	b.ne	.LBB332_4
+.LBB332_7:                              // %"$15"
+                                        //   Parent Loop BB332_4 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	ldp	w0, w8, [x26]
 	bfi	x0, x8, #32, #32
 	ldr	x1, [x25, :lo12:SymTab+664]
 	bl	subStr
-	tbnz	w0, #0, .LBB331_9
+	tbnz	w0, #0, .LBB332_9
 // %bb.8:                               // %"$18"
-                                        //   in Loop: Header=BB331_7 Depth=2
+                                        //   in Loop: Header=BB332_7 Depth=2
 	ldp	w26, w8, [x26, #8]
 	bfi	x26, x8, #32, #32
 	tst	x26, #0xf
-	b.eq	.LBB331_7
-	b	.LBB331_4
-.LBB331_9:                              // %"$17"
+	b.eq	.LBB332_7
+	b	.LBB332_4
+.LBB332_9:                              // %"$17"
 	mov	x0, x23
 	bl	unwind
 	ldp	w8, w9, [x26]
 	bfi	x8, x9, #32, #32
 	cmp	x8, x24
-	b.ne	.LBB331_11
+	b.ne	.LBB332_11
 // %bb.10:                              // %"$19"
 	ldr	x8, [x25, :lo12:SymTab+664]
-.LBB331_11:                             // %"$21"
+.LBB332_11:                             // %"$21"
 	adrp	x9, ($Ret)
 	str	x8, [x9, :lo12:($Ret)]
 	add	x0, x23, #176                   // =176
 	mov	w1, #1
 	bl	longjmp
-.LBB331_12:                             // %"$8"
+.LBB332_12:                             // %"$8"
 	adrp	x8, ($ExtN)
 	str	wzr, [x8, :lo12:($ExtN)]
 	adrp	x8, ($Chr)
 	str	wzr, [x8, :lo12:($Chr)]
 	adrp	x8, env+16
 	str	xzr, [x8, :lo12:env+16]
-	cbnz	x21, .LBB331_15
+	cbnz	x21, .LBB332_15
 // %bb.13:                              // %"$23"
-	cbnz	x20, .LBB331_16
-.LBB331_14:                             // %"$25"
+	cbnz	x20, .LBB332_16
+.LBB332_14:                             // %"$25"
 	ldrb	w8, [x22]
-	cbnz	w8, .LBB331_17
-	b	.LBB331_20
-.LBB331_15:                             // %"$22"
+	cbnz	w8, .LBB332_17
+	b	.LBB332_20
+.LBB332_15:                             // %"$22"
 	adrp	x0, .L$104
 	add	x0, x0, :lo12:.L$104
 	bl	outString
 	mov	x0, x21
 	bl	print
 	bl	newline
-	cbz	x20, .LBB331_14
-.LBB331_16:                             // %"$24"
+	cbz	x20, .LBB332_14
+.LBB332_16:                             // %"$24"
 	mov	x0, x20
 	bl	print
 	adrp	x0, .L$105
 	add	x0, x0, :lo12:.L$105
 	bl	outString
 	ldrb	w8, [x22]
-	cbz	w8, .LBB331_20
-.LBB331_17:                             // %"$26"
+	cbz	w8, .LBB332_20
+.LBB332_17:                             // %"$26"
 	mov	x0, x19
 	bl	outString
 	bl	newline
@@ -37197,7 +37230,7 @@ err:                                    // @err
 	adrp	x19, ($Jam)
 	ldrb	w9, [x19, :lo12:($Jam)]
 	orr	w8, w8, w9
-	tbnz	w8, #0, .LBB331_19
+	tbnz	w8, #0, .LBB332_19
 // %bb.18:                              // %"$30"
 	mov	w8, #1
 	strb	w8, [x19, :lo12:($Jam)]
@@ -37205,7 +37238,7 @@ err:                                    // @err
 	ldr	x0, [x8, :lo12:SymTab+648]
 	bl	execAt
 	strb	wzr, [x19, :lo12:($Jam)]
-.LBB331_19:                             // %"$31"
+.LBB332_19:                             // %"$31"
 	adrp	x8, ($Get)
 	adrp	x9, _getStdin
 	add	x9, x9, :lo12:_getStdin
@@ -37216,7 +37249,7 @@ err:                                    // @err
 	add	x2, x2, :lo12:SymTab+8
 	mov	x0, xzr
 	bl	repl2
-.LBB331_20:                             // %"$27"
+.LBB332_20:                             // %"$27"
 	adrp	x0, .L$107
 	add	x0, x0, :lo12:.L$107
 	bl	outString
@@ -37239,8 +37272,8 @@ err:                                    // @err
 	add	x0, x0, :lo12:($QuitRst)
 	mov	w1, #1
 	bl	longjmp
-.Lfunc_end331:
-	.size	err, .Lfunc_end331-err
+.Lfunc_end332:
+	.size	err, .Lfunc_end332-err
 	.cfi_endproc
                                         // -- End function
 	.globl	mkStr                           // -- Begin function mkStr
@@ -37249,7 +37282,7 @@ err:                                    // @err
 mkStr:                                  // @mkStr
 	.cfi_startproc
 // %bb.0:                               // %"$1"
-	cbz	x0, .LBB332_4
+	cbz	x0, .LBB333_4
 // %bb.1:                               // %"$2"
 	stp	x29, x30, [sp, #-48]!           // 16-byte Folded Spill
 	str	x21, [sp, #16]                  // 8-byte Folded Spill
@@ -37277,15 +37310,15 @@ mkStr:                                  // @mkStr
 	stp	w9, w11, [x8, #-8]
 	str	x10, [x21, :lo12:env]
 	ldrb	w0, [x20]
-	cbz	w0, .LBB332_3
-.LBB332_2:                              // %"$6"
+	cbz	w0, .LBB333_3
+.LBB333_2:                              // %"$6"
                                         // =>This Inner Loop Header: Depth=1
 	mov	x1, x19
 	bl	byteSym
 	add	x20, x20, #1                    // =1
 	ldrb	w0, [x20]
-	cbnz	w0, .LBB332_2
-.LBB332_3:                              // %"$7"
+	cbnz	w0, .LBB333_2
+.LBB333_3:                              // %"$7"
 	ldp	w0, w8, [x19, #16]
 	bfi	x0, x8, #32, #32
 	bl	consStr
@@ -37297,12 +37330,12 @@ mkStr:                                  // @mkStr
 	ldr	x21, [sp, #16]                  // 8-byte Folded Reload
 	ldp	x29, x30, [sp], #48             // 16-byte Folded Reload
 	ret
-.LBB332_4:
+.LBB333_4:
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ret
-.Lfunc_end332:
-	.size	mkStr, .Lfunc_end332-mkStr
+.Lfunc_end333:
+	.size	mkStr, .Lfunc_end333-mkStr
 	.cfi_endproc
                                         // -- End function
 	.globl	subStr                          // -- Begin function subStr
@@ -37328,24 +37361,24 @@ subStr:                                 // @subStr
 	adrp	x8, SymTab+8
 	add	x8, x8, :lo12:SymTab+8
 	cmp	x0, x8
-	b.eq	.LBB333_2
+	b.eq	.LBB334_2
 // %bb.1:                               // %"$3"
 	mov	x20, x1
 	mov	x1, x0
 	mov	x0, xzr
 	bl	xName
 	cmp	x0, #2                          // =2
-	b.ne	.LBB333_4
-.LBB333_2:
+	b.ne	.LBB334_4
+.LBB334_2:
 	mov	w0, #1
-.LBB333_3:                              // %"$2"
+.LBB334_3:                              // %"$2"
 	mov	sp, x29
 	ldp	x20, x19, [sp, #48]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #32]             // 16-byte Folded Reload
 	ldp	x24, x23, [sp, #16]             // 16-byte Folded Reload
 	ldp	x29, x30, [sp], #64             // 16-byte Folded Reload
 	ret
-.LBB333_4:                              // %"$4"
+.LBB334_4:                              // %"$4"
 	mov	x19, x0
 	mov	x0, xzr
 	mov	x1, x20
@@ -37355,35 +37388,35 @@ subStr:                                 // @subStr
 	sub	x20, x8, #16                    // =16
 	mov	sp, x20
 	stp	wzr, wzr, [x8, #-16]
-.LBB333_5:                              // %"$5"
+.LBB334_5:                              // %"$5"
                                         // =>This Inner Loop Header: Depth=1
 	lsr	x8, x21, #32
 	stp	w21, w8, [x20, #8]
 	mov	x0, x20
 	bl	symByte
 	tst	w0, #0xff
-	b.eq	.LBB333_8
+	b.eq	.LBB334_8
 // %bb.6:                               // %"$6"
-                                        //   in Loop: Header=BB333_5 Depth=1
+                                        //   in Loop: Header=BB334_5 Depth=1
 	mov	w1, w0
 	ldp	w22, w24, [x20]
 	ldp	w21, w23, [x20, #8]
 	mov	x0, x19
 	mov	x2, x20
 	bl	preStr
-	tbnz	w0, #0, .LBB333_2
+	tbnz	w0, #0, .LBB334_2
 // %bb.7:                               // %"$9"
-                                        //   in Loop: Header=BB333_5 Depth=1
+                                        //   in Loop: Header=BB334_5 Depth=1
 	bfi	x22, x24, #32, #32
 	bfi	x21, x23, #32, #32
 	lsr	x8, x22, #32
 	stp	w22, w8, [x20]
-	b	.LBB333_5
-.LBB333_8:
+	b	.LBB334_5
+.LBB334_8:
 	mov	w0, wzr
-	b	.LBB333_3
-.Lfunc_end333:
-	.size	subStr, .Lfunc_end333-subStr
+	b	.LBB334_3
+.Lfunc_end334:
+	.size	subStr, .Lfunc_end334-subStr
 	.cfi_endproc
                                         // -- End function
 	.globl	unwind                          // -- Begin function unwind
@@ -37414,12 +37447,12 @@ unwind:                                 // @unwind
 	ldp	x0, x8, [x20]
 	cmp	x0, #0                          // =0
 	ccmp	x0, x8, #4, ne
-	b.eq	.LBB334_2
+	b.eq	.LBB335_2
 // %bb.1:                               // %"$4"
 	bl	stop
 	ldr	x8, [x20, #8]
 	str	x8, [x20]
-.LBB334_2:                              // %"$3"
+.LBB335_2:                              // %"$3"
 	adrp	x8, env+8
 	add	x8, x8, :lo12:env+8
 	ldr	x26, [x8, #16]
@@ -37431,92 +37464,92 @@ unwind:                                 // @unwind
 	adrp	x27, env+24
 	adrp	x20, env
 	add	x20, x20, :lo12:env
-	cbz	x26, .LBB334_23
-.LBB334_3:                              // %"$9"
+	cbz	x26, .LBB335_23
+.LBB335_3:                              // %"$9"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB334_8 Depth 2
-                                        //     Child Loop BB334_10 Depth 2
-                                        //     Child Loop BB334_12 Depth 2
-                                        //     Child Loop BB334_15 Depth 2
-	cbz	x25, .LBB334_5
-.LBB334_4:                              // %"$11"
-                                        //   in Loop: Header=BB334_3 Depth=1
+                                        //     Child Loop BB335_8 Depth 2
+                                        //     Child Loop BB335_10 Depth 2
+                                        //     Child Loop BB335_12 Depth 2
+                                        //     Child Loop BB335_15 Depth 2
+	cbz	x25, .LBB335_5
+.LBB335_4:                              // %"$11"
+                                        //   in Loop: Header=BB335_3 Depth=1
 	ldp	w9, w8, [x26, #32]
 	bfi	x9, x8, #32, #32
 	cmp	x25, x9
 	cset	w8, ne
-	tbnz	w8, #0, .LBB334_6
-	b	.LBB334_8
-.LBB334_5:                              //   in Loop: Header=BB334_3 Depth=1
+	tbnz	w8, #0, .LBB335_6
+	b	.LBB335_8
+.LBB335_5:                              //   in Loop: Header=BB335_3 Depth=1
 	mov	w8, wzr
-	tbz	w8, #0, .LBB334_8
-.LBB334_6:                              // %"$12"
-                                        //   in Loop: Header=BB334_3 Depth=1
+	tbz	w8, #0, .LBB335_8
+.LBB335_6:                              // %"$12"
+                                        //   in Loop: Header=BB335_3 Depth=1
 	ldp	w9, w8, [x25, #8]
 	bfi	x9, x8, #32, #32
 	ldp	w8, w10, [x25]
 	stp	w8, w10, [x9]
 	ldp	w25, w8, [x25, #16]
 	bfi	x25, x8, #32, #32
-	cbnz	x25, .LBB334_4
-	b	.LBB334_5
-.LBB334_7:                              // %"$15"
-                                        //   in Loop: Header=BB334_8 Depth=2
+	cbnz	x25, .LBB335_4
+	b	.LBB335_5
+.LBB335_7:                              // %"$15"
+                                        //   in Loop: Header=BB335_8 Depth=2
 	bl	popCtlFiles
-.LBB334_8:                              // %"$14"
-                                        //   Parent Loop BB334_3 Depth=1
+.LBB335_8:                              // %"$14"
+                                        //   Parent Loop BB335_3 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	ldr	x8, [x24, :lo12:env+72]
 	ldr	x9, [x26, #96]
 	cmp	x8, x9
-	b.ne	.LBB334_7
-	b	.LBB334_10
-.LBB334_9:                              // %"$18"
-                                        //   in Loop: Header=BB334_10 Depth=2
+	b.ne	.LBB335_7
+	b	.LBB335_10
+.LBB335_9:                              // %"$18"
+                                        //   in Loop: Header=BB335_10 Depth=2
 	bl	popErrFiles
-.LBB334_10:                             // %"$17"
-                                        //   Parent Loop BB334_3 Depth=1
+.LBB335_10:                             // %"$17"
+                                        //   Parent Loop BB335_3 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	ldr	x8, [x23, :lo12:env+64]
 	ldr	x9, [x26, #88]
 	cmp	x8, x9
-	b.ne	.LBB334_9
+	b.ne	.LBB335_9
 // %bb.11:                              // %"$19"
-                                        //   in Loop: Header=BB334_3 Depth=1
+                                        //   in Loop: Header=BB335_3 Depth=1
 	ldr	x8, [x22, :lo12:env+56]
 	ldr	x9, [x26, #80]
 	cmp	x8, x9
-	b.eq	.LBB334_14
-.LBB334_12:                             // %"$22"
-                                        //   Parent Loop BB334_3 Depth=1
+	b.eq	.LBB335_14
+.LBB335_12:                             // %"$22"
+                                        //   Parent Loop BB335_3 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	bl	popOutFiles
 	ldr	x8, [x22, :lo12:env+56]
 	ldr	x9, [x26, #80]
 	cmp	x8, x9
-	b.ne	.LBB334_12
+	b.ne	.LBB335_12
 // %bb.13:                              // %"$24"
-                                        //   in Loop: Header=BB334_3 Depth=1
+                                        //   in Loop: Header=BB335_3 Depth=1
 	bl	tosOutFile
-.LBB334_14:                             // %"$21"
-                                        //   in Loop: Header=BB334_3 Depth=1
+.LBB335_14:                             // %"$21"
+                                        //   in Loop: Header=BB335_3 Depth=1
 	ldr	x8, [x21, :lo12:env+48]
 	ldr	x9, [x26, #72]
 	cmp	x8, x9
-	b.eq	.LBB334_17
-.LBB334_15:                             // %"$27"
-                                        //   Parent Loop BB334_3 Depth=1
+	b.eq	.LBB335_17
+.LBB335_15:                             // %"$27"
+                                        //   Parent Loop BB335_3 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	bl	popInFiles
 	ldr	x8, [x21, :lo12:env+48]
 	ldr	x9, [x26, #72]
 	cmp	x8, x9
-	b.ne	.LBB334_15
+	b.ne	.LBB335_15
 // %bb.16:                              // %"$29"
-                                        //   in Loop: Header=BB334_3 Depth=1
+                                        //   in Loop: Header=BB335_3 Depth=1
 	bl	tosInFile
-.LBB334_17:                             // %"$26"
-                                        //   in Loop: Header=BB334_3 Depth=1
+.LBB335_17:                             // %"$26"
+                                        //   in Loop: Header=BB335_3 Depth=1
 	add	x1, x26, #24                    // =24
 	mov	x0, x20
 	mov	w2, #152
@@ -37524,92 +37557,92 @@ unwind:                                 // @unwind
 	ldp	w0, w8, [x26, #16]
 	bfi	x0, x8, #32, #32
 	tst	x0, #0x6
-	b.ne	.LBB334_20
+	b.ne	.LBB335_20
 // %bb.18:                              // %"$31"
-                                        //   in Loop: Header=BB334_3 Depth=1
-	tbnz	w0, #3, .LBB334_20
+                                        //   in Loop: Header=BB335_3 Depth=1
+	tbnz	w0, #3, .LBB335_20
 // %bb.19:                              // %"$33"
-                                        //   in Loop: Header=BB334_3 Depth=1
+                                        //   in Loop: Header=BB335_3 Depth=1
 	bl	evList
-.LBB334_20:                             // %"$30"
-                                        //   in Loop: Header=BB334_3 Depth=1
+.LBB335_20:                             // %"$30"
+                                        //   in Loop: Header=BB335_3 Depth=1
 	ldr	x8, [x26]
 	str	x8, [x27, :lo12:env+24]
 	cmp	x26, x19
-	b.eq	.LBB334_34
+	b.eq	.LBB335_34
 // %bb.21:                              // %"$36"
-                                        //   in Loop: Header=BB334_3 Depth=1
+                                        //   in Loop: Header=BB335_3 Depth=1
 	ldr	x26, [x26]
-	cbnz	x26, .LBB334_3
-	b	.LBB334_23
-.LBB334_22:                             // %"$38"
-                                        //   in Loop: Header=BB334_23 Depth=1
+	cbnz	x26, .LBB335_3
+	b	.LBB335_23
+.LBB335_22:                             // %"$38"
+                                        //   in Loop: Header=BB335_23 Depth=1
 	ldp	w9, w8, [x25, #8]
 	bfi	x9, x8, #32, #32
 	ldp	w8, w10, [x25]
 	stp	w8, w10, [x9]
 	ldp	w25, w8, [x25, #16]
 	bfi	x25, x8, #32, #32
-.LBB334_23:                             // %"$37"
+.LBB335_23:                             // %"$37"
                                         // =>This Inner Loop Header: Depth=1
-	cbnz	x25, .LBB334_22
+	cbnz	x25, .LBB335_22
 // %bb.24:                              // %"$39"
 	adrp	x8, env+8
 	str	xzr, [x8, :lo12:env+8]
 	ldr	x8, [x24, :lo12:env+72]
-	cbz	x8, .LBB334_27
-.LBB334_25:                             // %"$41"
+	cbz	x8, .LBB335_27
+.LBB335_25:                             // %"$41"
                                         // =>This Inner Loop Header: Depth=1
 	bl	popCtlFiles
 	ldr	x8, [x24, :lo12:env+72]
-	cbnz	x8, .LBB334_25
-	b	.LBB334_27
-.LBB334_26:                             // %"$44"
-                                        //   in Loop: Header=BB334_27 Depth=1
+	cbnz	x8, .LBB335_25
+	b	.LBB335_27
+.LBB335_26:                             // %"$44"
+                                        //   in Loop: Header=BB335_27 Depth=1
 	bl	popErrFiles
-.LBB334_27:                             // %"$43"
+.LBB335_27:                             // %"$43"
                                         // =>This Inner Loop Header: Depth=1
 	ldr	x8, [x23, :lo12:env+64]
-	cbnz	x8, .LBB334_26
+	cbnz	x8, .LBB335_26
 // %bb.28:                              // %"$45"
 	ldr	x8, [x22, :lo12:env+56]
 	adrp	x19, ($Stdout)
 	ldr	x9, [x19, :lo12:($Stdout)]
 	cmp	x8, x9
-	b.eq	.LBB334_31
-.LBB334_29:                             // %"$48"
+	b.eq	.LBB335_31
+.LBB335_29:                             // %"$48"
                                         // =>This Inner Loop Header: Depth=1
 	bl	popOutFiles
 	ldr	x8, [x22, :lo12:env+56]
 	ldr	x9, [x19, :lo12:($Stdout)]
 	cmp	x8, x9
-	b.ne	.LBB334_29
+	b.ne	.LBB335_29
 // %bb.30:                              // %"$50"
 	bl	tosOutFile
-.LBB334_31:                             // %"$47"
+.LBB335_31:                             // %"$47"
 	ldr	x8, [x21, :lo12:env+48]
 	adrp	x19, ($Stdin)
 	ldr	x9, [x19, :lo12:($Stdin)]
 	cmp	x8, x9
-	b.eq	.LBB334_34
-.LBB334_32:                             // %"$53"
+	b.eq	.LBB335_34
+.LBB335_32:                             // %"$53"
                                         // =>This Inner Loop Header: Depth=1
 	bl	popInFiles
 	ldr	x8, [x21, :lo12:env+48]
 	ldr	x9, [x19, :lo12:($Stdin)]
 	cmp	x8, x9
-	b.ne	.LBB334_32
+	b.ne	.LBB335_32
 // %bb.33:                              // %"$55"
 	bl	tosInFile
-.LBB334_34:                             // %"$35"
+.LBB335_34:                             // %"$35"
 	ldp	x20, x19, [sp, #64]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #48]             // 16-byte Folded Reload
 	ldp	x24, x23, [sp, #32]             // 16-byte Folded Reload
 	ldp	x26, x25, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x27, [sp], #80             // 16-byte Folded Reload
 	ret
-.Lfunc_end334:
-	.size	unwind, .Lfunc_end334-unwind
+.Lfunc_end335:
+	.size	unwind, .Lfunc_end335-unwind
 	.cfi_endproc
                                         // -- End function
 	.globl	print                           // -- Begin function print
@@ -37634,18 +37667,18 @@ print:                                  // @print
 	mov	x19, x0
 	adrp	x8, ($Signal)
 	ldr	w8, [x8, :lo12:($Signal)]
-	cbz	w8, .LBB335_2
+	cbz	w8, .LBB336_2
 // %bb.1:                               // %"$2"
 	mov	x0, xzr
 	bl	sighandler
-.LBB335_2:                              // %"$3"
-	tbz	w19, #1, .LBB335_4
+.LBB336_2:                              // %"$3"
+	tbz	w19, #1, .LBB336_4
 // %bb.3:                               // %"$6"
 	mov	x0, x19
 	bl	outNum
-	b	.LBB335_43
-.LBB335_4:                              // %"$5"
-	tbz	w19, #2, .LBB335_6
+	b	.LBB336_43
+.LBB336_4:                              // %"$5"
+	tbz	w19, #2, .LBB336_6
 // %bb.5:                               // %"$8"
 	mov	x0, x19
 	mov	x1, #-1
@@ -37653,13 +37686,13 @@ print:                                  // @print
 	mov	w3, wzr
 	mov	x4, xzr
 	bl	fmtNum
-	b	.LBB335_43
-.LBB335_6:                              // %"$7"
-	tbz	w19, #3, .LBB335_13
+	b	.LBB336_43
+.LBB336_6:                              // %"$7"
+	tbz	w19, #3, .LBB336_13
 // %bb.7:                               // %"$10"
 	ldp	w20, w8, [x19, #-8]
 	bfi	x20, x8, #32, #32
-	tbz	w20, #3, .LBB335_11
+	tbz	w20, #3, .LBB336_11
 // %bb.8:                               // %"$13"
 	adrp	x19, ($Put)
 	ldr	x8, [x19, :lo12:($Put)]
@@ -37667,46 +37700,46 @@ print:                                  // @print
 	blr	x8
 	and	x0, x20, #0xfffffffffffffff7
 	tst	x0, #0x6
-	b.ne	.LBB335_10
-.LBB335_9:                              // %"$15"
+	b.ne	.LBB336_10
+.LBB336_9:                              // %"$15"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w0, w8, [x0, #8]
 	bfi	x0, x8, #32, #32
 	tst	x0, #0x6
-	b.eq	.LBB335_9
-.LBB335_10:                             // %"$16"
+	b.eq	.LBB336_9
+.LBB336_10:                             // %"$16"
 	bl	prExt
 	ldr	x8, [x19, :lo12:($Put)]
 	mov	w0, #125
-	b	.LBB335_42
-.LBB335_11:                             // %"$17"
+	b	.LBB336_42
+.LBB336_11:                             // %"$17"
                                         // =>This Inner Loop Header: Depth=1
 	tst	x20, #0x6
-	b.ne	.LBB335_23
+	b.ne	.LBB336_23
 // %bb.12:                              // %"$18"
-                                        //   in Loop: Header=BB335_11 Depth=1
+                                        //   in Loop: Header=BB336_11 Depth=1
 	ldp	w20, w8, [x20, #8]
 	bfi	x20, x8, #32, #32
-	b	.LBB335_11
-.LBB335_13:                             // %"$9"
+	b	.LBB336_11
+.LBB336_13:                             // %"$9"
 	ldp	w9, w8, [x19]
 	bfi	x9, x8, #32, #32
 	adrp	x8, SymTab+200
 	add	x8, x8, :lo12:SymTab+200
 	cmp	x9, x8
-	b.ne	.LBB335_25
+	b.ne	.LBB336_25
 // %bb.14:                              // %"$49"
 	ldp	w9, w8, [x19, #8]
 	bfi	x9, x8, #32, #32
 	cmp	x19, x9
 	cset	w8, ne
-	cbnz	w8, .LBB335_26
-.LBB335_15:                             // %"$50"
+	cbnz	w8, .LBB336_26
+.LBB336_15:                             // %"$50"
 	mov	x8, sp
 	adrp	x9, ($StkLimit)
 	ldr	x9, [x9, :lo12:($StkLimit)]
 	cmp	x9, x8
-	b.hi	.LBB335_58
+	b.hi	.LBB336_58
 // %bb.16:                              // %"$53"
 	adrp	x21, ($Put)
 	ldr	x8, [x21, :lo12:($Put)]
@@ -37714,11 +37747,11 @@ print:                                  // @print
 	blr	x8
 	mov	x0, x19
 	bl	circ
-	cbz	x0, .LBB335_30
+	cbz	x0, .LBB336_30
 // %bb.17:                              // %"$55"
 	mov	x20, x0
 	mov	x22, x19
-.LBB335_18:                             // %"$62"
+.LBB336_18:                             // %"$62"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w0, w8, [x22]
 	bfi	x0, x8, #32, #32
@@ -37727,19 +37760,19 @@ print:                                  // @print
 	ldp	w22, w8, [x22, #8]
 	bfi	x22, x8, #32, #32
 	cmp	x20, x22
-	b.ne	.LBB335_18
+	b.ne	.LBB336_18
 // %bb.19:                              // %"$64"
 	ldr	x8, [x21, :lo12:($Put)]
 	mov	w0, #46
 	blr	x8
 	cmp	x20, x19
-	b.eq	.LBB335_41
+	b.eq	.LBB336_41
 // %bb.20:                              // %"$65"
 	bl	space
 	ldr	x8, [x21, :lo12:($Put)]
 	mov	w0, #40
 	blr	x8
-.LBB335_21:                             // %"$67"
+.LBB336_21:                             // %"$67"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w0, w8, [x22]
 	bfi	x0, x8, #32, #32
@@ -37748,7 +37781,7 @@ print:                                  // @print
 	ldp	w22, w8, [x22, #8]
 	bfi	x22, x8, #32, #32
 	cmp	x20, x22
-	b.ne	.LBB335_21
+	b.ne	.LBB336_21
 // %bb.22:                              // %"$69"
 	ldr	x8, [x21, :lo12:($Put)]
 	mov	w0, #46
@@ -37756,10 +37789,10 @@ print:                                  // @print
 	ldr	x8, [x21, :lo12:($Put)]
 	mov	w0, #41
 	blr	x8
-	b	.LBB335_41
-.LBB335_23:                             // %"$19"
+	b	.LBB336_41
+.LBB336_23:                             // %"$19"
 	cmp	x20, #2                         // =2
-	b.ne	.LBB335_27
+	b.ne	.LBB336_27
 // %bb.24:                              // %"$21"
 	adrp	x8, ($Put)
 	ldr	x8, [x8, :lo12:($Put)]
@@ -37767,11 +37800,11 @@ print:                                  // @print
 	blr	x8
 	lsr	x0, x19, #4
 	bl	outOct
-	b	.LBB335_43
-.LBB335_25:
+	b	.LBB336_43
+.LBB336_25:
 	mov	w8, wzr
-	cbz	w8, .LBB335_15
-.LBB335_26:                             // %"$51"
+	cbz	w8, .LBB336_15
+.LBB336_26:                             // %"$51"
 	adrp	x8, ($Put)
 	ldr	x8, [x8, :lo12:($Put)]
 	mov	w0, #39
@@ -37779,26 +37812,26 @@ print:                                  // @print
 	ldp	w0, w8, [x19, #8]
 	bfi	x0, x8, #32, #32
 	bl	print
-	b	.LBB335_43
-.LBB335_27:                             // %"$20"
+	b	.LBB336_43
+.LBB336_27:                             // %"$20"
 	adrp	x1, SymTab+112
 	add	x1, x1, :lo12:SymTab+112
 	mov	x0, x20
 	bl	isIntern
 	cmp	x19, x0
-	b.ne	.LBB335_34
+	b.ne	.LBB336_34
 // %bb.28:                              // %"$23"
 	adrp	x0, .L$156
 	add	x0, x0, :lo12:.L$156
 	bl	outString
-.LBB335_29:                             // %"$47"
+.LBB336_29:                             // %"$47"
 	mov	x0, x20
 	bl	printName
-	b	.LBB335_43
-.LBB335_30:                             // %"$57.preheader"
+	b	.LBB336_43
+.LBB336_30:                             // %"$57.preheader"
 	adrp	x20, SymTab+8
 	add	x20, x20, :lo12:SymTab+8
-.LBB335_31:                             // %"$57"
+.LBB336_31:                             // %"$57"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w0, w8, [x19]
 	bfi	x0, x8, #32, #32
@@ -37806,31 +37839,31 @@ print:                                  // @print
 	ldp	w19, w8, [x19, #8]
 	bfi	x19, x8, #32, #32
 	cmp	x19, x20
-	b.eq	.LBB335_41
+	b.eq	.LBB336_41
 // %bb.32:                              // %"$58"
-                                        //   in Loop: Header=BB335_31 Depth=1
+                                        //   in Loop: Header=BB336_31 Depth=1
 	tst	x19, #0xf
-	b.ne	.LBB335_40
+	b.ne	.LBB336_40
 // %bb.33:                              // %"$60"
-                                        //   in Loop: Header=BB335_31 Depth=1
+                                        //   in Loop: Header=BB336_31 Depth=1
 	bl	space
-	b	.LBB335_31
-.LBB335_34:                             // %"$22"
+	b	.LBB336_31
+.LBB336_34:                             // %"$22"
 	mov	w22, wzr
 	adrp	x8, env+88
 	add	x8, x8, :lo12:env+88
-	b	.LBB335_36
-.LBB335_35:                             // %"$43"
-                                        //   in Loop: Header=BB335_36 Depth=1
+	b	.LBB336_36
+.LBB336_35:                             // %"$43"
+                                        //   in Loop: Header=BB336_36 Depth=1
 	add	x8, x23, #8                     // =8
-.LBB335_36:                             // %"$25"
+.LBB336_36:                             // %"$25"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w23, w9, [x8]
 	bfi	x23, x9, #32, #32
 	tst	x23, #0xf
-	b.ne	.LBB335_44
+	b.ne	.LBB336_44
 // %bb.37:                              // %"$26"
-                                        //   in Loop: Header=BB335_36 Depth=1
+                                        //   in Loop: Header=BB336_36 Depth=1
 	ldp	w21, w8, [x23]
 	bfi	x21, x8, #32, #32
 	ldp	w9, w8, [x21]
@@ -37839,33 +37872,33 @@ print:                                  // @print
 	bfi	x1, x8, #32, #32
 	mov	x0, x20
 	bl	isIntern
-	cbz	x0, .LBB335_35
+	cbz	x0, .LBB336_35
 // %bb.38:                              // %"$42"
-                                        //   in Loop: Header=BB335_36 Depth=1
+                                        //   in Loop: Header=BB336_36 Depth=1
 	cmp	x0, x19
-	b.eq	.LBB335_56
-// %bb.39:                              //   in Loop: Header=BB335_36 Depth=1
+	b.eq	.LBB336_56
+// %bb.39:                              //   in Loop: Header=BB336_36 Depth=1
 	mov	w22, #1
-	b	.LBB335_35
-.LBB335_40:                             // %"$61"
+	b	.LBB336_35
+.LBB336_40:                             // %"$61"
 	adrp	x0, .L$157
 	add	x0, x0, :lo12:.L$157
 	bl	outString
 	mov	x0, x19
 	bl	print
-.LBB335_41:                             // %"$56"
+.LBB336_41:                             // %"$56"
 	ldr	x8, [x21, :lo12:($Put)]
 	mov	w0, #41
-.LBB335_42:                             // %"$4"
+.LBB336_42:                             // %"$4"
 	blr	x8
-.LBB335_43:                             // %"$4"
+.LBB336_43:                             // %"$4"
 	mov	sp, x29
 	ldp	x20, x19, [sp, #48]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #32]             // 16-byte Folded Reload
 	ldr	x23, [sp, #16]                  // 8-byte Folded Reload
 	ldp	x29, x30, [sp], #64             // 16-byte Folded Reload
 	ret
-.LBB335_44:                             // %"$28"
+.LBB336_44:                             // %"$28"
 	adrp	x21, ($Put)
 	ldr	x8, [x21, :lo12:($Put)]
 	mov	w0, #34
@@ -37879,14 +37912,14 @@ print:                                  // @print
 	mov	x0, x19
 	bl	symByte
 	mov	w20, w0
-	b	.LBB335_47
-.LBB335_45:                             // %"$35"
-                                        //   in Loop: Header=BB335_47 Depth=1
+	b	.LBB336_47
+.LBB336_45:                             // %"$35"
+                                        //   in Loop: Header=BB336_47 Depth=1
 	ldr	x8, [x21, :lo12:($Put)]
 	mov	w0, #92
 	blr	x8
-.LBB335_46:                             // %"$30"
-                                        //   in Loop: Header=BB335_47 Depth=1
+.LBB336_46:                             // %"$30"
+                                        //   in Loop: Header=BB336_47 Depth=1
 	ldr	x8, [x21, :lo12:($Put)]
 	mov	w0, w20
 	blr	x8
@@ -37894,55 +37927,55 @@ print:                                  // @print
 	bl	symByte
 	mov	w20, w0
 	tst	w0, #0xff
-	b.eq	.LBB335_55
-.LBB335_47:                             // %"$29"
+	b.eq	.LBB336_55
+.LBB336_47:                             // %"$29"
                                         // =>This Inner Loop Header: Depth=1
 	and	w8, w20, #0xff
 	cmp	w8, #92                         // =92
-	b.eq	.LBB335_49
+	b.eq	.LBB336_49
 // %bb.48:                              // %"$32"
-                                        //   in Loop: Header=BB335_47 Depth=1
+                                        //   in Loop: Header=BB336_47 Depth=1
 	cmp	w8, #94                         // =94
-	b.ne	.LBB335_50
-.LBB335_49:                             //   in Loop: Header=BB335_47 Depth=1
+	b.ne	.LBB336_50
+.LBB336_49:                             //   in Loop: Header=BB336_47 Depth=1
 	mov	w8, #1
-	cbnz	w8, .LBB335_45
-	b	.LBB335_51
-.LBB335_50:                             // %"$33"
-                                        //   in Loop: Header=BB335_47 Depth=1
+	cbnz	w8, .LBB336_45
+	b	.LBB336_51
+.LBB336_50:                             // %"$33"
+                                        //   in Loop: Header=BB336_47 Depth=1
 	and	w8, w20, #0xff
 	cmp	w8, #34                         // =34
 	cset	w8, eq
-	cbnz	w8, .LBB335_45
-.LBB335_51:                             // %"$34"
-                                        //   in Loop: Header=BB335_47 Depth=1
+	cbnz	w8, .LBB336_45
+.LBB336_51:                             // %"$34"
+                                        //   in Loop: Header=BB336_47 Depth=1
 	and	w8, w20, #0xff
 	cmp	w8, #127                        // =127
-	b.ne	.LBB335_53
+	b.ne	.LBB336_53
 // %bb.52:                              // %"$37"
-                                        //   in Loop: Header=BB335_47 Depth=1
+                                        //   in Loop: Header=BB336_47 Depth=1
 	ldr	x8, [x21, :lo12:($Put)]
 	mov	w0, #94
 	blr	x8
 	mov	w20, #63
-	b	.LBB335_46
-.LBB335_53:                             // %"$36"
-                                        //   in Loop: Header=BB335_47 Depth=1
+	b	.LBB336_46
+.LBB336_53:                             // %"$36"
+                                        //   in Loop: Header=BB336_47 Depth=1
 	cmp	w8, #31                         // =31
-	b.hi	.LBB335_46
+	b.hi	.LBB336_46
 // %bb.54:                              // %"$39"
-                                        //   in Loop: Header=BB335_47 Depth=1
+                                        //   in Loop: Header=BB336_47 Depth=1
 	ldr	x8, [x21, :lo12:($Put)]
 	mov	w0, #94
 	blr	x8
 	orr	w20, w20, #0x40
-	b	.LBB335_46
-.LBB335_55:                             // %"$41"
+	b	.LBB336_46
+.LBB336_55:                             // %"$41"
 	ldr	x8, [x21, :lo12:($Put)]
 	mov	w0, #34
-	b	.LBB335_42
-.LBB335_56:                             // %"$45"
-	tbz	w22, #0, .LBB335_29
+	b	.LBB336_42
+.LBB336_56:                             // %"$45"
+	tbz	w22, #0, .LBB336_29
 // %bb.57:                              // %"$46"
 	mov	x0, x21
 	bl	printSym
@@ -37950,12 +37983,12 @@ print:                                  // @print
 	ldr	x8, [x8, :lo12:($Put)]
 	mov	w0, #126
 	blr	x8
-	b	.LBB335_29
-.LBB335_58:                             // %"$52"
+	b	.LBB336_29
+.LBB336_58:                             // %"$52"
 	mov	x0, xzr
 	bl	stkErr
-.Lfunc_end335:
-	.size	print, .Lfunc_end335-print
+.Lfunc_end336:
+	.size	print, .Lfunc_end336-print
 	.cfi_endproc
                                         // -- End function
 	.globl	execAt                          // -- Begin function execAt
@@ -37982,24 +38015,24 @@ execAt:                                 // @execAt
 	stp	x8, x30, [sp, #8]               // 8-byte Folded Spill
 	mov	x8, sp
 	str	x8, [x22, :lo12:env]
-	b	.LBB336_2
-.LBB336_1:                              // %"$4"
-                                        //   in Loop: Header=BB336_2 Depth=1
+	b	.LBB337_2
+.LBB337_1:                              // %"$4"
+                                        //   in Loop: Header=BB337_2 Depth=1
 	tst	x19, #0xf
-	b.ne	.LBB336_4
-.LBB336_2:                              // %"$2"
+	b.ne	.LBB337_4
+.LBB337_2:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w0, w8, [x19]
 	bfi	x0, x8, #32, #32
 	ldp	w19, w8, [x19, #8]
 	bfi	x19, x8, #32, #32
 	tst	x0, #0xf
-	b.ne	.LBB336_1
+	b.ne	.LBB337_1
 // %bb.3:                               // %"$3"
-                                        //   in Loop: Header=BB336_2 Depth=1
+                                        //   in Loop: Header=BB337_2 Depth=1
 	bl	evList
-	b	.LBB336_1
-.LBB336_4:                              // %"$6"
+	b	.LBB337_1
+.LBB337_4:                              // %"$6"
 	str	x20, [x21, :lo12:SymTab+376]
 	ldp	x8, x30, [sp, #8]               // 8-byte Folded Reload
 	str	x8, [x22, :lo12:env]
@@ -38008,8 +38041,8 @@ execAt:                                 // @execAt
 	ldp	x22, x21, [sp, #32]             // 16-byte Folded Reload
 	add	sp, sp, #64                     // =64
 	ret
-.Lfunc_end336:
-	.size	execAt, .Lfunc_end336-execAt
+.Lfunc_end337:
+	.size	execAt, .Lfunc_end337-execAt
 	.cfi_endproc
                                         // -- End function
 	.globl	_getStdin                       // -- Begin function _getStdin
@@ -38024,10 +38057,10 @@ _getStdin:                              // @_getStdin
 	.cfi_offset w30, -16
 	mov	w8, #20544
 	movk	w8, #65057, lsl #16
-.LBB337_1:                              // %"$2"
+.LBB338_1:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	ldrb	w9, [x8, #20]
-	tbz	w9, #0, .LBB337_1
+	tbz	w9, #0, .LBB338_1
 // %bb.2:                               // %"$4"
 	ldr	w19, [x8]
 	adrp	x8, ($Put)
@@ -38039,8 +38072,8 @@ _getStdin:                              // @_getStdin
 	mov	w0, w19
 	ldp	x30, x19, [sp], #16             // 16-byte Folded Reload
 	ret
-.Lfunc_end337:
-	.size	_getStdin, .Lfunc_end337-_getStdin
+.Lfunc_end338:
+	.size	_getStdin, .Lfunc_end338-_getStdin
 	.cfi_endproc
                                         // -- End function
 	.globl	repl2                           // -- Begin function repl2
@@ -38110,14 +38143,14 @@ repl2:                                  // @repl2
 	add	x20, x20, :lo12:.L$158
 	adrp	x29, SymTab+376
 	mov	x22, x26
-	b	.LBB338_3
-.LBB338_1:                              // %"$8"
-                                        //   in Loop: Header=BB338_3 Depth=1
+	b	.LBB339_3
+.LBB339_1:                              // %"$8"
+                                        //   in Loop: Header=BB339_3 Depth=1
 	mov	x0, x21
 	bl	evList
 	mov	x21, x0
-.LBB338_2:                              // %"$5"
-                                        //   in Loop: Header=BB338_3 Depth=1
+.LBB339_2:                              // %"$5"
+                                        //   in Loop: Header=BB339_3 Depth=1
 	ldr	x8, [x27, #16]
 	str	x8, [x27, #32]
 	str	x22, [x27, #16]
@@ -38128,7 +38161,7 @@ repl2:                                  // @repl2
 	bl	print
 	bl	newline
 	mov	x22, x21
-.LBB338_3:                              // %"$2"
+.LBB339_3:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	mov	x0, x19
 	bl	outString
@@ -38136,24 +38169,24 @@ repl2:                                  // @repl2
 	bl	read1
 	str	wzr, [x25, :lo12:($Chr)]
 	cmp	x0, x26
-	b.eq	.LBB338_7
+	b.eq	.LBB339_7
 // %bb.4:                               // %"$3"
-                                        //   in Loop: Header=BB338_3 Depth=1
+                                        //   in Loop: Header=BB339_3 Depth=1
 	mov	x21, x0
 	str	x0, [sp, #48]
 	ldr	x22, [x29, :lo12:SymTab+376]
 	str	x22, [sp, #32]
 	tst	x0, #0x6
-	b.ne	.LBB338_2
+	b.ne	.LBB339_2
 // %bb.5:                               // %"$6"
-                                        //   in Loop: Header=BB338_3 Depth=1
-	tbz	w21, #3, .LBB338_1
+                                        //   in Loop: Header=BB339_3 Depth=1
+	tbz	w21, #3, .LBB339_1
 // %bb.6:                               // %"$9"
-                                        //   in Loop: Header=BB338_3 Depth=1
+                                        //   in Loop: Header=BB339_3 Depth=1
 	ldp	w21, w8, [x21]
 	bfi	x21, x8, #32, #32
-	b	.LBB338_2
-.LBB338_7:                              // %"$4"
+	b	.LBB339_2
+.LBB339_7:                              // %"$4"
 	ldr	x8, [sp]                        // 8-byte Folded Reload
 	stp	x8, x24, [x28]
 	adrp	x8, SymTab+112
@@ -38174,8 +38207,8 @@ repl2:                                  // @repl2
 	ldp	x29, x30, [sp, #144]            // 16-byte Folded Reload
 	add	sp, sp, #240                    // =240
 	ret
-.Lfunc_end338:
-	.size	repl2, .Lfunc_end338-repl2
+.Lfunc_end339:
+	.size	repl2, .Lfunc_end339-repl2
 	.cfi_endproc
                                         // -- End function
 	.globl	read1                           // -- Begin function read1
@@ -38193,28 +38226,28 @@ read1:                                  // @read1
 	mov	w19, w0
 	adrp	x20, ($Chr)
 	ldr	w8, [x20, :lo12:($Chr)]
-	cbnz	w8, .LBB339_2
+	cbnz	w8, .LBB340_2
 // %bb.1:                               // %"$2"
 	adrp	x8, ($Get)
 	ldr	x8, [x8, :lo12:($Get)]
 	blr	x8
-.LBB339_2:                              // %"$3"
+.LBB340_2:                              // %"$3"
 	ldr	w8, [x20, :lo12:($Chr)]
 	cmp	w19, w8
-	b.ne	.LBB339_4
+	b.ne	.LBB340_4
 // %bb.3:
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
-	b	.LBB339_5
-.LBB339_4:                              // %"$5"
+	b	.LBB340_5
+.LBB340_4:                              // %"$5"
 	mov	w0, #1
 	bl	read0
-.LBB339_5:                              // %"$6"
+.LBB340_5:                              // %"$6"
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #32                  // 8-byte Folded Reload
 	ret
-.Lfunc_end339:
-	.size	read1, .Lfunc_end339-read1
+.Lfunc_end340:
+	.size	read1, .Lfunc_end340-read1
 	.cfi_endproc
                                         // -- End function
 	.globl	read0                           // -- Begin function read0
@@ -38238,44 +38271,44 @@ read0:                                  // @read0
 	.cfi_offset w29, -64
 	mov	w20, w0
 	bl	skip
-	tbnz	w0, #31, .LBB340_4
+	tbnz	w0, #31, .LBB341_4
 // %bb.1:                               // %"$3"
 	cmp	w0, #40                         // =40
-	b.ne	.LBB340_6
+	b.ne	.LBB341_6
 // %bb.2:                               // %"$8"
 	bl	rdList
 	mov	x19, x0
-	tbz	w20, #0, .LBB340_38
+	tbz	w20, #0, .LBB341_38
 // %bb.3:                               // %"$10"
 	adrp	x8, ($Chr)
 	ldr	w8, [x8, :lo12:($Chr)]
 	cmp	w8, #93                         // =93
-	b.eq	.LBB340_8
-	b	.LBB340_38
-.LBB340_4:                              // %"$4"
-	tbz	w20, #0, .LBB340_31
-.LBB340_5:
+	b.eq	.LBB341_8
+	b	.LBB341_38
+.LBB341_4:                              // %"$4"
+	tbz	w20, #0, .LBB341_31
+.LBB341_5:
 	adrp	x19, SymTab+8
 	add	x19, x19, :lo12:SymTab+8
-	b	.LBB340_38
-.LBB340_6:                              // %"$7"
+	b	.LBB341_38
+.LBB341_6:                              // %"$7"
 	cmp	w0, #91                         // =91
-	b.ne	.LBB340_9
+	b.ne	.LBB341_9
 // %bb.7:                               // %"$13"
 	bl	rdList
 	mov	x19, x0
 	adrp	x8, ($Chr)
 	ldr	w8, [x8, :lo12:($Chr)]
 	cmp	w8, #93                         // =93
-	b.ne	.LBB340_52
-.LBB340_8:                              // %"$11"
+	b.ne	.LBB341_52
+.LBB341_8:                              // %"$11"
 	adrp	x8, ($Get)
 	ldr	x8, [x8, :lo12:($Get)]
 	blr	x8
-	b	.LBB340_38
-.LBB340_9:                              // %"$12"
+	b	.LBB341_38
+.LBB341_9:                              // %"$12"
 	cmp	w0, #39                         // =39
-	b.ne	.LBB340_12
+	b.ne	.LBB341_12
 // %bb.10:                              // %"$17"
 	adrp	x8, ($Get)
 	ldr	x8, [x8, :lo12:($Get)]
@@ -38286,12 +38319,12 @@ read0:                                  // @read0
 	adrp	x0, SymTab+200
 	add	x0, x0, :lo12:SymTab+200
 	bl	cons
-.LBB340_11:                             // %"$2"
+.LBB341_11:                             // %"$2"
 	mov	x19, x0
-	b	.LBB340_38
-.LBB340_12:                             // %"$16"
+	b	.LBB341_38
+.LBB341_12:                             // %"$16"
 	cmp	w0, #44                         // =44
-	b.ne	.LBB340_16
+	b.ne	.LBB341_16
 // %bb.13:                              // %"$19"
 	adrp	x8, ($Get)
 	ldr	x8, [x8, :lo12:($Get)]
@@ -38303,7 +38336,7 @@ read0:                                  // @read0
 	add	x8, x8, :lo12:SymTab+216
 	ldr	x9, [x8, #464]
 	cmp	x9, x8
-	b.eq	.LBB340_38
+	b.eq	.LBB341_38
 // %bb.14:                              // %"$21"
 	adrp	x20, env
 	ldr	x8, [x20, :lo12:env]
@@ -38320,13 +38353,13 @@ read0:                                  // @read0
 	mov	x1, x19
 	bl	idxPut
 	tst	x0, #0xf
-	b.ne	.LBB340_37
+	b.ne	.LBB341_37
 // %bb.15:                              // %"$23"
 	ldp	w19, w8, [x0]
-	b	.LBB340_20
-.LBB340_16:                             // %"$18"
+	b	.LBB341_20
+.LBB341_16:                             // %"$18"
 	cmp	w0, #96                         // =96
-	b.ne	.LBB340_21
+	b.ne	.LBB341_21
 // %bb.17:                              // %"$27"
 	adrp	x8, ($Get)
 	ldr	x8, [x8, :lo12:($Get)]
@@ -38345,45 +38378,45 @@ read0:                                  // @read0
 	stp	w8, w11, [x9, #-8]
 	tst	x0, #0x6
 	str	x21, [x20, :lo12:env]
-	b.ne	.LBB340_37
+	b.ne	.LBB341_37
 // %bb.18:                              // %"$29"
-	tbz	w19, #3, .LBB340_36
+	tbz	w19, #3, .LBB341_36
 // %bb.19:                              // %"$32"
 	ldp	w19, w8, [x19]
-.LBB340_20:                             // %"$25"
+.LBB341_20:                             // %"$25"
 	bfi	x19, x8, #32, #32
-	b	.LBB340_37
-.LBB340_21:                             // %"$26"
+	b	.LBB341_37
+.LBB341_21:                             // %"$26"
 	cmp	w0, #34                         // =34
-	b.ne	.LBB340_24
+	b.ne	.LBB341_24
 // %bb.22:                              // %"$34"
 	adrp	x20, ($Get)
 	ldr	x8, [x20, :lo12:($Get)]
 	blr	x8
 	cmp	w0, #34                         // =34
-	b.ne	.LBB340_27
+	b.ne	.LBB341_27
 // %bb.23:                              // %"$35"
 	ldr	x8, [x20, :lo12:($Get)]
 	blr	x8
-	b	.LBB340_5
-.LBB340_24:                             // %"$33"
+	b	.LBB341_5
+.LBB341_24:                             // %"$33"
 	cmp	w0, #123                        // =123
-	b.ne	.LBB340_32
+	b.ne	.LBB341_32
 // %bb.25:                              // %"$46"
 	adrp	x21, ($Get)
 	ldr	x8, [x21, :lo12:($Get)]
 	blr	x8
 	cmp	w0, #125                        // =125
-	b.ne	.LBB340_39
+	b.ne	.LBB341_39
 // %bb.26:                              // %"$47"
 	adrp	x1, SymTab+8
 	add	x1, x1, :lo12:SymTab+8
 	mov	w0, #2
 	bl	consSym
-	b	.LBB340_46
-.LBB340_27:                             // %"$36"
+	b	.LBB341_46
+.LBB341_27:                             // %"$36"
 	bl	testEsc
-	tbz	w0, #0, .LBB340_31
+	tbz	w0, #0, .LBB341_31
 // %bb.28:                              // %"$39"
 	mov	x8, sp
 	sub	x19, x8, #32                    // =32
@@ -38400,7 +38433,7 @@ read0:                                  // @read0
 	stp	w9, w10, [x8, #-8]
 	str	x22, [x21, :lo12:env]
 	adrp	x23, ($Chr)
-.LBB340_29:                             // %"$40"
+.LBB341_29:                             // %"$40"
                                         // =>This Inner Loop Header: Depth=1
 	ldr	w0, [x23, :lo12:($Chr)]
 	mov	x1, x19
@@ -38408,23 +38441,23 @@ read0:                                  // @read0
 	ldr	x8, [x20, :lo12:($Get)]
 	blr	x8
 	cmp	w0, #34                         // =34
-	b.eq	.LBB340_35
+	b.eq	.LBB341_35
 // %bb.30:                              // %"$41"
-                                        //   in Loop: Header=BB340_29 Depth=1
+                                        //   in Loop: Header=BB341_29 Depth=1
 	bl	testEsc
-	tbnz	w0, #0, .LBB340_29
-.LBB340_31:                             // %"$5"
+	tbnz	w0, #0, .LBB341_29
+.LBB341_31:                             // %"$5"
 	bl	eofErr
-.LBB340_32:                             // %"$45"
+.LBB341_32:                             // %"$45"
 	cmp	w0, #41                         // =41
-	b.eq	.LBB340_34
+	b.eq	.LBB341_34
 // %bb.33:                              // %"$63"
 	cmp	w0, #93                         // =93
-	b.ne	.LBB340_47
-.LBB340_34:
+	b.ne	.LBB341_47
+.LBB341_34:
 	mov	w8, #1
-	b	.LBB340_48
-.LBB340_35:                             // %"$42"
+	b	.LBB341_48
+.LBB341_35:                             // %"$42"
 	ldr	x8, [x20, :lo12:($Get)]
 	blr	x8
 	ldp	w2, w8, [x22]
@@ -38441,16 +38474,16 @@ read0:                                  // @read0
 	ldp	w9, w8, [x22, #8]
 	bfi	x9, x8, #32, #32
 	str	x9, [x21, :lo12:env]
-	b	.LBB340_38
-.LBB340_36:                             // %"$31"
+	b	.LBB341_38
+.LBB341_36:                             // %"$31"
 	mov	x0, x19
 	bl	evList
 	mov	x19, x0
-.LBB340_37:                             // %"$25"
+.LBB341_37:                             // %"$25"
 	ldp	w9, w8, [x21, #8]
 	bfi	x9, x8, #32, #32
 	str	x9, [x20, :lo12:env]
-.LBB340_38:                             // %"$2"
+.LBB341_38:                             // %"$2"
 	mov	x0, x19
 	mov	sp, x29
 	ldp	x20, x19, [sp, #48]             // 16-byte Folded Reload
@@ -38458,80 +38491,80 @@ read0:                                  // @read0
 	ldr	x23, [sp, #16]                  // 8-byte Folded Reload
 	ldp	x29, x30, [sp], #64             // 16-byte Folded Reload
 	ret
-.LBB340_39:                             // %"$50.preheader"
+.LBB341_39:                             // %"$50.preheader"
 	mov	w19, wzr
 	cmp	w0, #63                         // =63
-	b.le	.LBB340_42
-.LBB340_40:                             // %"$51"
+	b.le	.LBB341_42
+.LBB341_40:                             // %"$51"
                                         // =>This Inner Loop Header: Depth=1
 	cmp	w0, #80                         // =80
-	b.ge	.LBB340_53
+	b.ge	.LBB341_53
 // %bb.41:                              // %"$54"
-                                        //   in Loop: Header=BB340_40 Depth=1
+                                        //   in Loop: Header=BB341_40 Depth=1
 	sub	w8, w0, #64                     // =64
 	orr	w19, w8, w19, lsl #4
 	ldr	x8, [x21, :lo12:($Get)]
 	blr	x8
 	cmp	w0, #63                         // =63
-	b.gt	.LBB340_40
-.LBB340_42:                             // %"$55.preheader"
+	b.gt	.LBB341_40
+.LBB341_42:                             // %"$55.preheader"
 	mov	x20, xzr
-.LBB340_43:                             // %"$55"
+.LBB341_43:                             // %"$55"
                                         // =>This Inner Loop Header: Depth=1
 	cmp	w0, #56                         // =56
 	cset	w9, lt
 	subs	w8, w0, #48                     // =48
 	csel	w9, wzr, w9, lt
-	tbz	w9, #0, .LBB340_53
+	tbz	w9, #0, .LBB341_53
 // %bb.44:                              // %"$59"
-                                        //   in Loop: Header=BB340_43 Depth=1
+                                        //   in Loop: Header=BB341_43 Depth=1
 	sxtw	x8, w8
 	orr	x20, x8, x20, lsl #3
 	ldr	x8, [x21, :lo12:($Get)]
 	blr	x8
 	cmp	w0, #125                        // =125
-	b.ne	.LBB340_43
+	b.ne	.LBB341_43
 // %bb.45:                              // %"$61"
 	mov	w0, w19
 	mov	x1, x20
 	bl	extNm
 	bl	extern
-.LBB340_46:                             // %"$49"
+.LBB341_46:                             // %"$49"
 	mov	x19, x0
 	ldr	x8, [x21, :lo12:($Get)]
 	blr	x8
-	b	.LBB340_38
-.LBB340_47:                             // %"$64"
+	b	.LBB341_38
+.LBB341_47:                             // %"$64"
 	cmp	w0, #126                        // =126
 	cset	w8, eq
-.LBB340_48:                             // %"$62"
-	cbnz	w8, .LBB340_53
+.LBB341_48:                             // %"$62"
+	cbnz	w8, .LBB341_53
 // %bb.49:                              // %"$65"
 	cmp	w0, #92                         // =92
 	adrp	x20, ($Get)
-	b.ne	.LBB340_51
+	b.ne	.LBB341_51
 // %bb.50:                              // %"$67"
 	ldr	x8, [x20, :lo12:($Get)]
 	blr	x8
-.LBB340_51:                             // %"$68"
+.LBB341_51:                             // %"$68"
 	adrp	x8, ($Chr)
 	ldr	w19, [x8, :lo12:($Chr)]
 	ldr	x8, [x20, :lo12:($Get)]
 	blr	x8
 	mov	w0, w19
 	bl	rdAtom
-	b	.LBB340_11
-.LBB340_52:                             // %"$14"
+	b	.LBB341_11
+.LBB341_52:                             // %"$14"
 	adrp	x2, .L$155
 	add	x2, x2, :lo12:.L$155
 	mov	x0, xzr
 	mov	x1, x19
 	mov	x3, xzr
 	bl	err
-.LBB340_53:                             // %"$53"
+.LBB341_53:                             // %"$53"
 	bl	badInput
-.Lfunc_end340:
-	.size	read0, .Lfunc_end340-read0
+.Lfunc_end341:
+	.size	read0, .Lfunc_end341-read0
 	.cfi_endproc
                                         // -- End function
 	.globl	skip                            // -- Begin function skip
@@ -38549,32 +38582,32 @@ skip:                                   // @skip
 	adrp	x19, ($Chr)
 	adrp	x20, ($Get)
 	ldr	w0, [x19, :lo12:($Chr)]
-	tbnz	w0, #31, .LBB341_5
-.LBB341_1:                              // %"$5"
+	tbnz	w0, #31, .LBB342_5
+.LBB342_1:                              // %"$5"
                                         // =>This Inner Loop Header: Depth=1
 	cmp	w0, #32                         // =32
-	b.gt	.LBB341_3
+	b.gt	.LBB342_3
 // %bb.2:                               // %"$6"
-                                        //   in Loop: Header=BB341_1 Depth=1
+                                        //   in Loop: Header=BB342_1 Depth=1
 	ldr	x8, [x20, :lo12:($Get)]
 	blr	x8
-	tbz	w0, #31, .LBB341_1
-	b	.LBB341_5
-.LBB341_3:                              // %"$7"
-                                        //   in Loop: Header=BB341_1 Depth=1
+	tbz	w0, #31, .LBB342_1
+	b	.LBB342_5
+.LBB342_3:                              // %"$7"
+                                        //   in Loop: Header=BB342_1 Depth=1
 	cmp	w0, #35                         // =35
-	b.ne	.LBB341_5
+	b.ne	.LBB342_5
 // %bb.4:                               // %"$11"
-                                        //   in Loop: Header=BB341_1 Depth=1
+                                        //   in Loop: Header=BB342_1 Depth=1
 	bl	comment
 	ldr	w0, [x19, :lo12:($Chr)]
-	tbz	w0, #31, .LBB341_1
-.LBB341_5:                              // %"$3"
+	tbz	w0, #31, .LBB342_1
+.LBB342_5:                              // %"$3"
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #32                  // 8-byte Folded Reload
 	ret
-.Lfunc_end341:
-	.size	skip, .Lfunc_end341-skip
+.Lfunc_end342:
+	.size	skip, .Lfunc_end342-skip
 	.cfi_endproc
                                         // -- End function
 	.globl	eofErr                          // -- Begin function eofErr
@@ -38592,8 +38625,8 @@ eofErr:                                 // @eofErr
 	mov	x1, xzr
 	mov	x3, xzr
 	bl	err
-.Lfunc_end342:
-	.size	eofErr, .Lfunc_end342-eofErr
+.Lfunc_end343:
+	.size	eofErr, .Lfunc_end343-eofErr
 	.cfi_endproc
                                         // -- End function
 	.globl	rdList                          // -- Begin function rdList
@@ -38617,32 +38650,32 @@ rdList:                                 // @rdList
 	adrp	x9, ($StkLimit)
 	ldr	x9, [x9, :lo12:($StkLimit)]
 	cmp	x9, x8
-	b.hi	.LBB343_18
+	b.hi	.LBB344_18
 // %bb.1:                               // %"$3"
 	adrp	x21, ($Get)
 	ldr	x8, [x21, :lo12:($Get)]
 	blr	x8
 	adrp	x20, env
-	b	.LBB343_4
-.LBB343_2:                              // %"$15"
-                                        //   in Loop: Header=BB343_4 Depth=1
+	b	.LBB344_4
+.LBB344_2:                              // %"$15"
+                                        //   in Loop: Header=BB344_4 Depth=1
 	mov	x0, x19
 	bl	evList
 	mov	x19, x0
-.LBB343_3:                              // %"$12"
-                                        //   in Loop: Header=BB343_4 Depth=1
+.LBB344_3:                              // %"$12"
+                                        //   in Loop: Header=BB344_4 Depth=1
 	ldp	w9, w8, [x22, #8]
 	bfi	x9, x8, #32, #32
 	str	x9, [x20, :lo12:env]
 	tst	x19, #0xf
-	b.eq	.LBB343_12
-.LBB343_4:                              // %"$4"
+	b.eq	.LBB344_12
+.LBB344_4:                              // %"$4"
                                         // =>This Inner Loop Header: Depth=1
 	bl	skip
 	cmp	w0, #126                        // =126
-	b.ne	.LBB343_8
+	b.ne	.LBB344_8
 // %bb.5:                               // %"$10"
-                                        //   in Loop: Header=BB343_4 Depth=1
+                                        //   in Loop: Header=BB344_4 Depth=1
 	ldr	x8, [x21, :lo12:($Get)]
 	blr	x8
 	mov	w0, wzr
@@ -38658,29 +38691,29 @@ rdList:                                 // @rdList
 	stp	w8, w11, [x9, #-8]
 	tst	x0, #0x6
 	str	x22, [x20, :lo12:env]
-	b.ne	.LBB343_3
+	b.ne	.LBB344_3
 // %bb.6:                               // %"$13"
-                                        //   in Loop: Header=BB343_4 Depth=1
-	tbz	w19, #3, .LBB343_2
+                                        //   in Loop: Header=BB344_4 Depth=1
+	tbz	w19, #3, .LBB344_2
 // %bb.7:                               // %"$16"
-                                        //   in Loop: Header=BB343_4 Depth=1
+                                        //   in Loop: Header=BB344_4 Depth=1
 	ldp	w19, w8, [x19]
 	bfi	x19, x8, #32, #32
-	b	.LBB343_3
-.LBB343_8:                              // %"$4"
+	b	.LBB344_3
+.LBB344_8:                              // %"$4"
 	cmp	w0, #93                         // =93
-	b.eq	.LBB343_11
+	b.eq	.LBB344_11
 // %bb.9:                               // %"$4"
 	cmp	w0, #41                         // =41
-	b.ne	.LBB343_15
+	b.ne	.LBB344_15
 // %bb.10:                              // %"$7"
 	ldr	x8, [x21, :lo12:($Get)]
 	blr	x8
-.LBB343_11:                             // %"$6.loopexit"
+.LBB344_11:                             // %"$6.loopexit"
 	adrp	x19, SymTab+8
 	add	x19, x19, :lo12:SymTab+8
-	b	.LBB343_17
-.LBB343_12:                             // %"$18"
+	b	.LBB344_17
+.LBB344_12:                             // %"$18"
 	ldr	x8, [x20, :lo12:env]
 	mov	x9, sp
 	sub	x21, x9, #16                    // =16
@@ -38691,19 +38724,19 @@ rdList:                                 // @rdList
 	stp	w8, w11, [x9, #-8]
 	mov	x8, x19
 	str	x21, [x20, :lo12:env]
-.LBB343_13:                             // %"$19"
+.LBB344_13:                             // %"$19"
                                         // =>This Inner Loop Header: Depth=1
 	mov	x1, x8
 	ldp	w8, w9, [x8, #8]
 	bfi	x8, x9, #32, #32
 	tst	x8, #0xf
-	b.eq	.LBB343_13
+	b.eq	.LBB344_13
 // %bb.14:                              // %"$21"
 	mov	x0, x19
 	bl	rdl
 	ldp	w9, w8, [x21, #8]
-	b	.LBB343_16
-.LBB343_15:                             // %"$11"
+	b	.LBB344_16
+.LBB344_15:                             // %"$11"
 	mov	w0, wzr
 	bl	read0
 	adrp	x1, SymTab+8
@@ -38724,21 +38757,21 @@ rdList:                                 // @rdList
 	mov	x1, x0
 	bl	rdl
 	ldp	w9, w8, [x21]
-.LBB343_16:                             // %"$6"
+.LBB344_16:                             // %"$6"
 	bfi	x9, x8, #32, #32
 	str	x9, [x20, :lo12:env]
-.LBB343_17:                             // %"$6"
+.LBB344_17:                             // %"$6"
 	mov	x0, x19
 	mov	sp, x29
 	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #16]             // 16-byte Folded Reload
 	ldp	x29, x30, [sp], #48             // 16-byte Folded Reload
 	ret
-.LBB343_18:                             // %"$2"
+.LBB344_18:                             // %"$2"
 	mov	x0, xzr
 	bl	stkErr
-.Lfunc_end343:
-	.size	rdList, .Lfunc_end343-rdList
+.Lfunc_end344:
+	.size	rdList, .Lfunc_end344-rdList
 	.cfi_endproc
                                         // -- End function
 	.globl	idxPut                          // -- Begin function idxPut
@@ -38758,10 +38791,10 @@ idxPut:                                 // @idxPut
 	ldp	w19, w8, [x0]
 	bfi	x19, x8, #32, #32
 	tst	x19, #0xf
-	b.eq	.LBB344_9
+	b.eq	.LBB345_9
 // %bb.1:                               // %"$3"
 	mov	x21, x0
-.LBB344_2:                              // %"$4"
+.LBB345_2:                              // %"$4"
 	adrp	x19, SymTab+8
 	add	x19, x19, :lo12:SymTab+8
 	mov	x0, x20
@@ -38769,53 +38802,53 @@ idxPut:                                 // @idxPut
 	bl	cons
 	lsr	x8, x0, #32
 	stp	w0, w8, [x21]
-.LBB344_3:                              // %"$4"
+.LBB345_3:                              // %"$4"
 	mov	x0, x19
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x21, [sp], #32             // 16-byte Folded Reload
 	ret
-.LBB344_4:                              // %"$6"
-                                        //   in Loop: Header=BB344_9 Depth=1
+.LBB345_4:                              // %"$6"
+                                        //   in Loop: Header=BB345_9 Depth=1
 	ldp	w21, w8, [x19, #8]
 	bfi	x21, x8, #32, #32
 	tst	x21, #0xf
-	tbnz	x0, #63, .LBB344_7
+	tbnz	x0, #63, .LBB345_7
 // %bb.5:                               // %"$10"
-                                        //   in Loop: Header=BB344_9 Depth=1
-	b.ne	.LBB344_10
+                                        //   in Loop: Header=BB345_9 Depth=1
+	b.ne	.LBB345_10
 // %bb.6:                               // %"$16"
-                                        //   in Loop: Header=BB344_9 Depth=1
+                                        //   in Loop: Header=BB345_9 Depth=1
 	ldp	w19, w8, [x21]
 	bfi	x19, x8, #32, #32
 	tst	x19, #0xf
-	b.eq	.LBB344_9
-	b	.LBB344_2
-.LBB344_7:                              // %"$11"
-                                        //   in Loop: Header=BB344_9 Depth=1
-	b.ne	.LBB344_11
+	b.eq	.LBB345_9
+	b	.LBB345_2
+.LBB345_7:                              // %"$11"
+                                        //   in Loop: Header=BB345_9 Depth=1
+	b.ne	.LBB345_11
 // %bb.8:                               // %"$12"
-                                        //   in Loop: Header=BB344_9 Depth=1
+                                        //   in Loop: Header=BB345_9 Depth=1
 	ldp	w19, w8, [x21, #8]
 	bfi	x19, x8, #32, #32
 	tst	x19, #0xf
-	b.ne	.LBB344_13
-.LBB344_9:                              // %"$5"
+	b.ne	.LBB345_13
+.LBB345_9:                              // %"$5"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w0, w8, [x19]
 	bfi	x0, x8, #32, #32
 	mov	x1, x20
 	bl	compare
-	cbnz	x0, .LBB344_4
-	b	.LBB344_3
-.LBB344_10:                             // %"$17"
+	cbnz	x0, .LBB345_4
+	b	.LBB345_3
+.LBB345_10:                             // %"$17"
 	adrp	x21, SymTab+8
 	add	x21, x21, :lo12:SymTab+8
 	mov	x0, x20
 	mov	x1, x21
 	bl	cons
 	mov	x1, x21
-	b	.LBB344_12
-.LBB344_11:                             // %"$13"
+	b	.LBB345_12
+.LBB345_11:                             // %"$13"
 	adrp	x21, SymTab+8
 	add	x21, x21, :lo12:SymTab+8
 	mov	x0, x20
@@ -38823,13 +38856,13 @@ idxPut:                                 // @idxPut
 	bl	cons
 	mov	x1, x0
 	mov	x0, x21
-.LBB344_12:                             // %"$4"
+.LBB345_12:                             // %"$4"
 	bl	cons
 	lsr	x8, x0, #32
 	stp	w0, w8, [x19, #8]
 	mov	x19, x21
-	b	.LBB344_3
-.LBB344_13:                             // %"$15"
+	b	.LBB345_3
+.LBB345_13:                             // %"$15"
 	adrp	x19, SymTab+8
 	add	x19, x19, :lo12:SymTab+8
 	mov	x0, x20
@@ -38837,9 +38870,9 @@ idxPut:                                 // @idxPut
 	bl	cons
 	lsr	x8, x0, #32
 	stp	w0, w8, [x21, #8]
-	b	.LBB344_3
-.Lfunc_end344:
-	.size	idxPut, .Lfunc_end344-idxPut
+	b	.LBB345_3
+.Lfunc_end345:
+	.size	idxPut, .Lfunc_end345-idxPut
 	.cfi_endproc
                                         // -- End function
 	.globl	testEsc                         // -- Begin function testEsc
@@ -38858,150 +38891,150 @@ testEsc:                                // @testEsc
 	.cfi_offset w22, -32
 	.cfi_offset w30, -48
 	adrp	x20, ($Get)
-.LBB345_1:                              // %"$2"
+.LBB346_1:                              // %"$2"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB345_6 Depth 2
-	tbnz	w0, #31, .LBB345_8
+                                        //     Child Loop BB346_6 Depth 2
+	tbnz	w0, #31, .LBB346_8
 // %bb.2:                               // %"$3"
-                                        //   in Loop: Header=BB345_1 Depth=1
+                                        //   in Loop: Header=BB346_1 Depth=1
 	cmp	w0, #94                         // =94
-	b.eq	.LBB345_9
+	b.eq	.LBB346_9
 // %bb.3:                               // %"$6"
-                                        //   in Loop: Header=BB345_1 Depth=1
+                                        //   in Loop: Header=BB346_1 Depth=1
 	cmp	w0, #92                         // =92
-	b.ne	.LBB345_11
+	b.ne	.LBB346_11
 // %bb.4:                               // %"$13"
-                                        //   in Loop: Header=BB345_1 Depth=1
+                                        //   in Loop: Header=BB346_1 Depth=1
 	ldr	x8, [x20, :lo12:($Get)]
 	blr	x8
 	cmp	w0, #10                         // =10
-	b.eq	.LBB345_6
-	b	.LBB345_14
-.LBB345_5:                              //   in Loop: Header=BB345_6 Depth=2
+	b.eq	.LBB346_6
+	b	.LBB346_14
+.LBB346_5:                              //   in Loop: Header=BB346_6 Depth=2
 	mov	w8, wzr
-	tbnz	wzr, #0, .LBB345_1
-.LBB345_6:                              // %"$34"
-                                        //   Parent Loop BB345_1 Depth=1
+	tbnz	wzr, #0, .LBB346_1
+.LBB346_6:                              // %"$34"
+                                        //   Parent Loop BB346_1 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	ldr	x8, [x20, :lo12:($Get)]
 	blr	x8
 	cmp	w0, #32                         // =32
-	b.eq	.LBB345_5
+	b.eq	.LBB346_5
 // %bb.7:                               // %"$36"
-                                        //   in Loop: Header=BB345_6 Depth=2
+                                        //   in Loop: Header=BB346_6 Depth=2
 	cmp	w0, #9                          // =9
 	cset	w8, ne
-	tbz	w8, #0, .LBB345_6
-	b	.LBB345_1
-.LBB345_8:
+	tbz	w8, #0, .LBB346_6
+	b	.LBB346_1
+.LBB346_8:
 	mov	w0, wzr
-	b	.LBB345_13
-.LBB345_9:                              // %"$7"
+	b	.LBB346_13
+.LBB346_9:                              // %"$7"
 	ldr	x8, [x20, :lo12:($Get)]
 	blr	x8
 	cmp	w0, #64                         // =64
-	b.eq	.LBB345_30
+	b.eq	.LBB346_30
 // %bb.10:                              // %"$9"
 	mov	w8, #127
 	cmp	w0, #63                         // =63
 	and	w9, w0, #0x1f
 	csel	w19, w8, w9, eq
-	b	.LBB345_12
-.LBB345_11:                             // %"$14"
+	b	.LBB346_12
+.LBB346_11:                             // %"$14"
 	bl	getChar
 	mov	w19, w0
-.LBB345_12:                             // %"$4.sink.split"
+.LBB346_12:                             // %"$4.sink.split"
 	adrp	x8, ($Chr)
 	str	w19, [x8, :lo12:($Chr)]
 	mov	w0, #1
-.LBB345_13:                             // %"$4"
+.LBB346_13:                             // %"$4"
 	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #48                  // 8-byte Folded Reload
 	ret
-.LBB345_14:                             // %"$16"
+.LBB346_14:                             // %"$16"
 	sub	w8, w0, #98                     // =98
 	ror	w8, w8, #1
 	cmp	w8, #9                          // =9
-	b.hi	.LBB345_19
+	b.hi	.LBB346_19
 // %bb.15:                              // %"$16"
 	mov	w19, #98
-	adrp	x9, .LJTI345_0
-	add	x9, x9, :lo12:.LJTI345_0
-	adr	x10, .LBB345_12
+	adrp	x9, .LJTI346_0
+	add	x9, x9, :lo12:.LJTI346_0
+	adr	x10, .LBB346_12
 	ldrb	w11, [x9, x8]
 	add	x10, x10, x11, lsl #2
 	br	x10
-.LBB345_16:                             // %"$20"
+.LBB346_16:                             // %"$20"
 	mov	w19, #10
-	b	.LBB345_12
-.LBB345_17:                             // %"$21"
+	b	.LBB346_12
+.LBB346_17:                             // %"$21"
 	mov	w19, #13
-	b	.LBB345_12
-.LBB345_18:                             // %"$22"
+	b	.LBB346_12
+.LBB346_18:                             // %"$22"
 	mov	w19, #9
-	b	.LBB345_12
-.LBB345_19:                             // %"$17"
+	b	.LBB346_12
+.LBB346_19:                             // %"$17"
 	subs	w8, w0, #48                     // =48
-	b.lt	.LBB345_21
+	b.lt	.LBB346_21
 // %bb.20:                              // %"$24"
 	cmp	w0, #58                         // =58
 	cset	w9, lt
-	b	.LBB345_22
-.LBB345_21:
+	b	.LBB346_22
+.LBB346_21:
 	mov	w9, wzr
-.LBB345_22:                             // %"$23"
+.LBB346_22:                             // %"$23"
 	mov	w19, w0
-	cbz	w9, .LBB345_12
+	cbz	w9, .LBB346_12
 // %bb.23:                              // %"$25"
 	adrp	x21, ($Chr)
 	mov	w22, #10
 	mov	w19, w8
-.LBB345_24:                             // %"$27"
+.LBB346_24:                             // %"$27"
                                         // =>This Inner Loop Header: Depth=1
 	ldr	x8, [x20, :lo12:($Get)]
 	blr	x8
 	cmp	w0, #92                         // =92
-	b.eq	.LBB345_12
+	b.eq	.LBB346_12
 // %bb.25:                              // %"$28"
-                                        //   in Loop: Header=BB345_24 Depth=1
+                                        //   in Loop: Header=BB346_24 Depth=1
 	ldr	w8, [x21, :lo12:($Chr)]
 	cmp	w8, #48                         // =48
-	b.lt	.LBB345_27
+	b.lt	.LBB346_27
 // %bb.26:                              // %"$31"
-                                        //   in Loop: Header=BB345_24 Depth=1
+                                        //   in Loop: Header=BB346_24 Depth=1
 	ldr	w8, [x21, :lo12:($Chr)]
 	cmp	w8, #58                         // =58
 	cset	w8, lt
-	b	.LBB345_28
-.LBB345_27:                             //   in Loop: Header=BB345_24 Depth=1
+	b	.LBB346_28
+.LBB346_27:                             //   in Loop: Header=BB346_24 Depth=1
 	mov	w8, wzr
-.LBB345_28:                             // %"$30"
-                                        //   in Loop: Header=BB345_24 Depth=1
-	tbz	w8, #0, .LBB345_30
+.LBB346_28:                             // %"$30"
+                                        //   in Loop: Header=BB346_24 Depth=1
+	tbz	w8, #0, .LBB346_30
 // %bb.29:                              // %"$33"
-                                        //   in Loop: Header=BB345_24 Depth=1
+                                        //   in Loop: Header=BB346_24 Depth=1
 	ldr	w8, [x21, :lo12:($Chr)]
 	madd	w8, w19, w22, w8
 	sub	w19, w8, #48                    // =48
-	b	.LBB345_24
-.LBB345_30:                             // %"$8"
+	b	.LBB346_24
+.LBB346_30:                             // %"$8"
 	bl	badInput
-.Lfunc_end345:
-	.size	testEsc, .Lfunc_end345-testEsc
+.Lfunc_end346:
+	.size	testEsc, .Lfunc_end346-testEsc
 	.cfi_endproc
 	.section	.rodata,"a",@progbits
-.LJTI345_0:
-	.byte	(.LBB345_12-.LBB345_12)>>2
-	.byte	(.LBB345_19-.LBB345_12)>>2
-	.byte	(.LBB345_19-.LBB345_12)>>2
-	.byte	(.LBB345_19-.LBB345_12)>>2
-	.byte	(.LBB345_19-.LBB345_12)>>2
-	.byte	(.LBB345_19-.LBB345_12)>>2
-	.byte	(.LBB345_16-.LBB345_12)>>2
-	.byte	(.LBB345_19-.LBB345_12)>>2
-	.byte	(.LBB345_17-.LBB345_12)>>2
-	.byte	(.LBB345_18-.LBB345_12)>>2
+.LJTI346_0:
+	.byte	(.LBB346_12-.LBB346_12)>>2
+	.byte	(.LBB346_19-.LBB346_12)>>2
+	.byte	(.LBB346_19-.LBB346_12)>>2
+	.byte	(.LBB346_19-.LBB346_12)>>2
+	.byte	(.LBB346_19-.LBB346_12)>>2
+	.byte	(.LBB346_19-.LBB346_12)>>2
+	.byte	(.LBB346_16-.LBB346_12)>>2
+	.byte	(.LBB346_19-.LBB346_12)>>2
+	.byte	(.LBB346_17-.LBB346_12)>>2
+	.byte	(.LBB346_18-.LBB346_12)>>2
                                         // -- End function
 	.text
 	.globl	charSym                         // -- Begin function charSym
@@ -39019,59 +39052,59 @@ charSym:                                // @charSym
 	mov	x19, x1
 	mov	w20, w0
 	cmp	w0, #127                        // =127
-	b.gt	.LBB346_2
+	b.gt	.LBB347_2
 // %bb.1:                               // %"$4"
 	mov	w0, w20
-	b	.LBB346_11
-.LBB346_2:                              // %"$3"
+	b	.LBB347_11
+.LBB347_2:                              // %"$3"
 	cmp	w20, #272, lsl #12              // =1114112
-	b.ne	.LBB346_4
+	b.ne	.LBB347_4
 // %bb.3:
 	mov	w0, #255
-	b	.LBB346_11
-.LBB346_4:                              // %"$5"
+	b	.LBB347_11
+.LBB347_4:                              // %"$5"
 	cmp	w20, #2048                      // =2048
-	b.ge	.LBB346_6
+	b.ge	.LBB347_6
 // %bb.5:
 	mov	w8, #192
 	mov	w9, #31
-	b	.LBB346_10
-.LBB346_6:                              // %"$8"
+	b	.LBB347_10
+.LBB347_6:                              // %"$8"
 	cmp	w20, #16, lsl #12               // =65536
-	b.ge	.LBB346_8
+	b.ge	.LBB347_8
 // %bb.7:
 	mov	w8, #224
 	mov	w9, #15
-	b	.LBB346_9
-.LBB346_8:                              // %"$10"
+	b	.LBB347_9
+.LBB347_8:                              // %"$10"
 	mov	w0, #240
 	bfxil	w0, w20, #18, #3
 	mov	x1, x19
 	bl	byteSym
 	mov	w8, #128
 	mov	w9, #63
-.LBB346_9:                              // %"$7.sink.split"
+.LBB347_9:                              // %"$7.sink.split"
 	and	w9, w9, w20, lsr #12
 	orr	w0, w8, w9
 	mov	x1, x19
 	bl	byteSym
 	mov	w8, #128
 	mov	w9, #63
-.LBB346_10:                             // %"$7"
+.LBB347_10:                             // %"$7"
 	and	w9, w9, w20, lsr #6
 	orr	w0, w8, w9
 	mov	x1, x19
 	bl	byteSym
 	mov	w0, #128
 	bfxil	w0, w20, #0, #6
-.LBB346_11:                             // %"$2"
+.LBB347_11:                             // %"$2"
 	mov	x1, x19
 	bl	byteSym
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #32                  // 8-byte Folded Reload
 	ret
-.Lfunc_end346:
-	.size	charSym, .Lfunc_end346-charSym
+.Lfunc_end347:
+	.size	charSym, .Lfunc_end347-charSym
 	.cfi_endproc
                                         // -- End function
 	.globl	intern                          // -- Begin function intern
@@ -39101,196 +39134,196 @@ intern:                                 // @intern
 	mov	x21, x2
 	mov	x20, x1
 	mov	x19, x0
-	tbz	w21, #1, .LBB347_15
+	tbz	w21, #1, .LBB348_15
 // %bb.1:                               // %"$2"
 	ldp	w26, w8, [x25]
 	bfi	x26, x8, #32, #32
 	tst	x26, #0xf
-	b.eq	.LBB347_11
-.LBB347_2:                              // %"$6"
+	b.eq	.LBB348_11
+.LBB348_2:                              // %"$6"
 	mov	x0, x21
 	mov	x1, x22
 	bl	isLstIntern
 	mov	x24, x0
-	cbnz	x0, .LBB347_41
+	cbnz	x0, .LBB348_41
 // %bb.3:                               // %"$50"
-	cbnz	x19, .LBB347_5
+	cbnz	x19, .LBB348_5
 // %bb.4:                               // %"$47"
 	mov	x0, x21
 	mov	x1, x20
 	bl	consSym
 	mov	x19, x0
-.LBB347_5:                              // %"$48"
+.LBB348_5:                              // %"$48"
 	adrp	x1, SymTab+8
 	add	x1, x1, :lo12:SymTab+8
 	mov	x0, x19
 	bl	cons
 	lsr	x8, x0, #32
 	stp	w0, w8, [x25]
-	b	.LBB347_40
-.LBB347_6:                              // %"$12"
-                                        //   in Loop: Header=BB347_11 Depth=1
+	b	.LBB348_40
+.LBB348_6:                              // %"$12"
+                                        //   in Loop: Header=BB348_11 Depth=1
 	ldp	w25, w9, [x26, #8]
 	bfi	x25, x9, #32, #32
 	cmp	x21, x8
-	b.ls	.LBB347_9
+	b.ls	.LBB348_9
 // %bb.7:                               // %"$20"
-                                        //   in Loop: Header=BB347_11 Depth=1
+                                        //   in Loop: Header=BB348_11 Depth=1
 	tst	x25, #0xf
-	b.ne	.LBB347_35
+	b.ne	.LBB348_35
 // %bb.8:                               // %"$21"
-                                        //   in Loop: Header=BB347_11 Depth=1
+                                        //   in Loop: Header=BB348_11 Depth=1
 	ldp	w26, w8, [x25, #8]
 	bfi	x26, x8, #32, #32
 	tst	x26, #0xf
-	b.eq	.LBB347_11
-	b	.LBB347_16
-.LBB347_9:                              // %"$19"
-                                        //   in Loop: Header=BB347_11 Depth=1
+	b.eq	.LBB348_11
+	b	.LBB348_16
+.LBB348_9:                              // %"$19"
+                                        //   in Loop: Header=BB348_11 Depth=1
 	tst	x25, #0xf
-	b.ne	.LBB347_31
+	b.ne	.LBB348_31
 // %bb.10:                              // %"$35"
-                                        //   in Loop: Header=BB347_11 Depth=1
+                                        //   in Loop: Header=BB348_11 Depth=1
 	ldp	w26, w8, [x25]
 	bfi	x26, x8, #32, #32
 	tst	x26, #0xf
-	b.ne	.LBB347_2
-.LBB347_11:                             // %"$8"
+	b.ne	.LBB348_2
+.LBB348_11:                             // %"$8"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB347_12 Depth 2
+                                        //     Child Loop BB348_12 Depth 2
 	ldp	w24, w8, [x26]
 	bfi	x24, x8, #32, #32
 	sub	x8, x24, #8                     // =8
-.LBB347_12:                             // %"$9"
-                                        //   Parent Loop BB347_11 Depth=1
+.LBB348_12:                             // %"$9"
+                                        //   Parent Loop BB348_11 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	ldp	w8, w9, [x8]
 	bfi	x8, x9, #32, #32
 	tst	x8, #0x6
-	b.ne	.LBB347_14
+	b.ne	.LBB348_14
 // %bb.13:                              // %"$10"
-                                        //   in Loop: Header=BB347_12 Depth=2
+                                        //   in Loop: Header=BB348_12 Depth=2
 	add	x8, x8, #8                      // =8
-	b	.LBB347_12
-.LBB347_14:                             // %"$11"
-                                        //   in Loop: Header=BB347_11 Depth=1
+	b	.LBB348_12
+.LBB348_14:                             // %"$11"
+                                        //   in Loop: Header=BB348_11 Depth=1
 	cmp	x21, x8
-	b.ne	.LBB347_6
-	b	.LBB347_29
-.LBB347_15:                             // %"$3"
+	b.ne	.LBB348_6
+	b	.LBB348_29
+.LBB348_15:                             // %"$3"
 	ldp	w26, w8, [x25, #8]
 	bfi	x26, x8, #32, #32
 	tst	x26, #0xf
-	b.eq	.LBB347_25
-.LBB347_16:                             // %"$55"
+	b.eq	.LBB348_25
+.LBB348_16:                             // %"$55"
 	mov	x0, x21
 	mov	x1, x22
 	bl	isLstIntern
 	mov	x24, x0
-	cbnz	x0, .LBB347_41
+	cbnz	x0, .LBB348_41
 // %bb.17:                              // %"$99"
-	cbnz	x19, .LBB347_19
+	cbnz	x19, .LBB348_19
 // %bb.18:                              // %"$101"
 	mov	x0, x21
 	mov	x1, x20
 	bl	consSym
 	mov	x19, x0
-.LBB347_19:                             // %"$102"
+.LBB348_19:                             // %"$102"
 	adrp	x1, SymTab+8
 	add	x1, x1, :lo12:SymTab+8
 	mov	x0, x19
 	bl	cons
 	lsr	x8, x0, #32
 	stp	w0, w8, [x25, #8]
-	b	.LBB347_40
-.LBB347_20:                             // %"$61"
-                                        //   in Loop: Header=BB347_25 Depth=1
+	b	.LBB348_40
+.LBB348_20:                             // %"$61"
+                                        //   in Loop: Header=BB348_25 Depth=1
 	ldp	w25, w8, [x26, #8]
 	bfi	x25, x8, #32, #32
 	tst	x25, #0xf
-	tbnz	x0, #63, .LBB347_23
+	tbnz	x0, #63, .LBB348_23
 // %bb.21:                              // %"$68"
-                                        //   in Loop: Header=BB347_25 Depth=1
-	b.ne	.LBB347_31
+                                        //   in Loop: Header=BB348_25 Depth=1
+	b.ne	.LBB348_31
 // %bb.22:                              // %"$84"
-                                        //   in Loop: Header=BB347_25 Depth=1
+                                        //   in Loop: Header=BB348_25 Depth=1
 	ldp	w26, w8, [x25]
 	bfi	x26, x8, #32, #32
 	tst	x26, #0xf
-	b.eq	.LBB347_25
-	b	.LBB347_2
-.LBB347_23:                             // %"$69"
-                                        //   in Loop: Header=BB347_25 Depth=1
-	b.ne	.LBB347_35
+	b.eq	.LBB348_25
+	b	.LBB348_2
+.LBB348_23:                             // %"$69"
+                                        //   in Loop: Header=BB348_25 Depth=1
+	b.ne	.LBB348_35
 // %bb.24:                              // %"$70"
-                                        //   in Loop: Header=BB347_25 Depth=1
+                                        //   in Loop: Header=BB348_25 Depth=1
 	ldp	w26, w8, [x25, #8]
 	bfi	x26, x8, #32, #32
 	tst	x26, #0xf
-	b.ne	.LBB347_16
-.LBB347_25:                             // %"$57"
+	b.ne	.LBB348_16
+.LBB348_25:                             // %"$57"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB347_26 Depth 2
+                                        //     Child Loop BB348_26 Depth 2
 	ldp	w24, w8, [x26]
 	bfi	x24, x8, #32, #32
 	sub	x8, x24, #8                     // =8
-.LBB347_26:                             // %"$58"
-                                        //   Parent Loop BB347_25 Depth=1
+.LBB348_26:                             // %"$58"
+                                        //   Parent Loop BB348_25 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	ldp	w0, w9, [x8]
 	bfi	x0, x9, #32, #32
 	tst	x0, #0x6
-	b.ne	.LBB347_28
+	b.ne	.LBB348_28
 // %bb.27:                              // %"$59"
-                                        //   in Loop: Header=BB347_26 Depth=2
+                                        //   in Loop: Header=BB348_26 Depth=2
 	add	x8, x0, #8                      // =8
-	b	.LBB347_26
-.LBB347_28:                             // %"$60"
-                                        //   in Loop: Header=BB347_25 Depth=1
+	b	.LBB348_26
+.LBB348_28:                             // %"$60"
+                                        //   in Loop: Header=BB348_25 Depth=1
 	mov	x1, x21
 	bl	cmpLong
-	cbnz	x0, .LBB347_20
-.LBB347_29:                             // %"$63"
-	tbz	w23, #0, .LBB347_41
+	cbnz	x0, .LBB348_20
+.LBB348_29:                             // %"$63"
+	tbz	w23, #0, .LBB348_41
 // %bb.30:                              // %"$15"
 	lsr	x8, x19, #32
 	stp	w19, w8, [x26]
-	b	.LBB347_40
-.LBB347_31:                             // %"$85"
+	b	.LBB348_40
+.LBB348_31:                             // %"$85"
 	mov	x0, x21
 	mov	x1, x22
 	bl	isLstIntern
 	mov	x24, x0
-	cbnz	x0, .LBB347_41
+	cbnz	x0, .LBB348_41
 // %bb.32:                              // %"$87"
-	cbnz	x19, .LBB347_34
+	cbnz	x19, .LBB348_34
 // %bb.33:                              // %"$40"
 	mov	x0, x21
 	mov	x1, x20
 	bl	consSym
 	mov	x19, x0
-.LBB347_34:                             // %"$41"
+.LBB348_34:                             // %"$41"
 	adrp	x20, SymTab+8
 	add	x20, x20, :lo12:SymTab+8
 	mov	x0, x19
 	mov	x1, x20
 	bl	cons
 	mov	x1, x20
-	b	.LBB347_39
-.LBB347_35:                             // %"$22"
+	b	.LBB348_39
+.LBB348_35:                             // %"$22"
 	mov	x0, x21
 	mov	x1, x22
 	bl	isLstIntern
 	mov	x24, x0
-	cbnz	x0, .LBB347_41
+	cbnz	x0, .LBB348_41
 // %bb.36:                              // %"$24"
-	cbnz	x19, .LBB347_38
+	cbnz	x19, .LBB348_38
 // %bb.37:                              // %"$26"
 	mov	x0, x21
 	mov	x1, x20
 	bl	consSym
 	mov	x19, x0
-.LBB347_38:                             // %"$27"
+.LBB348_38:                             // %"$27"
 	adrp	x20, SymTab+8
 	add	x20, x20, :lo12:SymTab+8
 	mov	x0, x19
@@ -39298,13 +39331,13 @@ intern:                                 // @intern
 	bl	cons
 	mov	x1, x0
 	mov	x0, x20
-.LBB347_39:                             // %"$4"
+.LBB348_39:                             // %"$4"
 	bl	cons
 	lsr	x8, x0, #32
 	stp	w0, w8, [x26, #8]
-.LBB347_40:                             // %"$4"
+.LBB348_40:                             // %"$4"
 	mov	x24, x19
-.LBB347_41:                             // %"$4"
+.LBB348_41:                             // %"$4"
 	mov	x0, x24
 	ldp	x20, x19, [sp, #64]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #48]             // 16-byte Folded Reload
@@ -39312,8 +39345,8 @@ intern:                                 // @intern
 	ldp	x26, x25, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #80                  // 8-byte Folded Reload
 	ret
-.Lfunc_end347:
-	.size	intern, .Lfunc_end347-intern
+.Lfunc_end348:
+	.size	intern, .Lfunc_end348-intern
 	.cfi_endproc
                                         // -- End function
 	.globl	consSym                         // -- Begin function consSym
@@ -39341,10 +39374,10 @@ consSym:                                // @consSym
 	adrp	x22, ($Avail)
 	ldr	x8, [x22, :lo12:($Avail)]
 	lsr	x21, x0, #32
-	cbnz	x8, .LBB348_5
+	cbnz	x8, .LBB349_5
 // %bb.1:                               // %"$2"
 	adrp	x23, env
-	cbz	x19, .LBB348_3
+	cbz	x19, .LBB349_3
 // %bb.2:                               // %"$4"
 	ldr	x9, [x23, :lo12:env]
 	mov	x10, sp
@@ -39357,14 +39390,14 @@ consSym:                                // @consSym
 	mov	sp, x9
 	mov	x10, x19
 	mov	x24, x8
-	b	.LBB348_4
-.LBB348_3:                              // %"$5"
+	b	.LBB349_4
+.LBB349_3:                              // %"$5"
 	ldr	x8, [x23, :lo12:env]
 	sub	x9, sp, #16                     // =16
 	mov	sp, x9
 	mov	x10, x20
 	mov	x24, x9
-.LBB348_4:                              // %"$6"
+.LBB349_4:                              // %"$6"
 	lsr	x11, x10, #32
 	lsr	x12, x8, #32
 	stp	w10, w11, [x9]
@@ -39375,7 +39408,7 @@ consSym:                                // @consSym
 	bfi	x9, x8, #32, #32
 	str	x9, [x23, :lo12:env]
 	ldr	x8, [x22, :lo12:($Avail)]
-.LBB348_5:                              // %"$3"
+.LBB349_5:                              // %"$3"
 	ldp	w10, w9, [x8]
 	bfi	x10, x9, #32, #32
 	str	x10, [x22, :lo12:($Avail)]
@@ -39391,8 +39424,8 @@ consSym:                                // @consSym
 	ldp	x24, x23, [sp, #16]             // 16-byte Folded Reload
 	ldp	x29, x30, [sp], #64             // 16-byte Folded Reload
 	ret
-.Lfunc_end348:
-	.size	consSym, .Lfunc_end348-consSym
+.Lfunc_end349:
+	.size	consSym, .Lfunc_end349-consSym
 	.cfi_endproc
                                         // -- End function
 	.globl	badInput                        // -- Begin function badInput
@@ -39414,8 +39447,8 @@ badInput:                               // @badInput
 	mov	x0, xzr
 	mov	x1, xzr
 	bl	err
-.Lfunc_end349:
-	.size	badInput, .Lfunc_end349-badInput
+.Lfunc_end350:
+	.size	badInput, .Lfunc_end350-badInput
 	.cfi_endproc
                                         // -- End function
 	.globl	extNm                           // -- Begin function extNm
@@ -39436,8 +39469,8 @@ extNm:                                  // @extNm
 	mov	w0, #2
 	bfi	x0, x9, #4, #60
 	ret
-.Lfunc_end350:
-	.size	extNm, .Lfunc_end350-extNm
+.Lfunc_end351:
+	.size	extNm, .Lfunc_end351-extNm
 	.cfi_endproc
                                         // -- End function
 	.globl	extern                          // -- Begin function extern
@@ -39466,9 +39499,9 @@ extern:                                 // @extern
 	mov	x24, xzr
 	adrp	x23, ($Extern)
 	ldr	x25, [x23, :lo12:($Extern)]
-.LBB351_1:                              // %"$2"
+.LBB352_1:                              // %"$2"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB351_2 Depth 2
+                                        //     Child Loop BB352_2 Depth 2
 	add	x24, x24, #1                    // =1
 	ldp	w20, w8, [x25]
 	bfi	x20, x8, #32, #32
@@ -39476,46 +39509,46 @@ extern:                                 // @extern
 	bfi	x9, x8, #32, #32
 	and	x8, x9, #0xfffffffffffffff7
 	tst	x8, #0x6
-	b.ne	.LBB351_3
-.LBB351_2:                              // %"$4"
-                                        //   Parent Loop BB351_1 Depth=1
+	b.ne	.LBB352_3
+.LBB352_2:                              // %"$4"
+                                        //   Parent Loop BB352_1 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	ldp	w8, w9, [x8, #8]
 	bfi	x8, x9, #32, #32
 	tst	x8, #0x6
-	b.eq	.LBB351_2
-.LBB351_3:                              // %"$5"
-                                        //   in Loop: Header=BB351_1 Depth=1
+	b.eq	.LBB352_2
+.LBB352_3:                              // %"$5"
+                                        //   in Loop: Header=BB352_1 Depth=1
 	and	x8, x8, x22
 	cmp	x8, x19
-	b.eq	.LBB351_14
+	b.eq	.LBB352_14
 // %bb.4:                               // %"$6"
-                                        //   in Loop: Header=BB351_1 Depth=1
+                                        //   in Loop: Header=BB352_1 Depth=1
 	ldp	w21, w9, [x25, #8]
 	bfi	x21, x9, #32, #32
 	cmp	x19, x8
-	b.ls	.LBB351_7
+	b.ls	.LBB352_7
 // %bb.5:                               // %"$10"
-                                        //   in Loop: Header=BB351_1 Depth=1
+                                        //   in Loop: Header=BB352_1 Depth=1
 	tst	x21, #0xf
-	b.ne	.LBB351_10
+	b.ne	.LBB352_10
 // %bb.6:                               // %"$11"
-                                        //   in Loop: Header=BB351_1 Depth=1
+                                        //   in Loop: Header=BB352_1 Depth=1
 	ldp	w25, w8, [x21, #8]
 	bfi	x25, x8, #32, #32
 	tst	x25, #0xf
-	b.eq	.LBB351_1
-	b	.LBB351_11
-.LBB351_7:                              // %"$9"
-                                        //   in Loop: Header=BB351_1 Depth=1
+	b.eq	.LBB352_1
+	b	.LBB352_11
+.LBB352_7:                              // %"$9"
+                                        //   in Loop: Header=BB352_1 Depth=1
 	tst	x21, #0xf
-	b.ne	.LBB351_12
+	b.ne	.LBB352_12
 // %bb.8:                               // %"$15"
-                                        //   in Loop: Header=BB351_1 Depth=1
+                                        //   in Loop: Header=BB352_1 Depth=1
 	ldp	w25, w8, [x21]
 	bfi	x25, x8, #32, #32
 	tst	x25, #0xf
-	b.eq	.LBB351_1
+	b.eq	.LBB352_1
 // %bb.9:                               // %"$18"
 	mov	x0, x19
 	bl	consExt
@@ -39525,8 +39558,8 @@ extern:                                 // @extern
 	bl	cons
 	lsr	x8, x0, #32
 	stp	w0, w8, [x21]
-	b	.LBB351_14
-.LBB351_10:                             // %"$12"
+	b	.LBB352_14
+.LBB352_10:                             // %"$12"
 	mov	x0, x19
 	bl	consExt
 	mov	x20, x0
@@ -39536,8 +39569,8 @@ extern:                                 // @extern
 	bl	cons
 	mov	x1, x0
 	mov	x0, x21
-	b	.LBB351_13
-.LBB351_11:                             // %"$14"
+	b	.LBB352_13
+.LBB352_11:                             // %"$14"
 	mov	x0, x19
 	bl	consExt
 	mov	x20, x0
@@ -39546,8 +39579,8 @@ extern:                                 // @extern
 	bl	cons
 	lsr	x8, x0, #32
 	stp	w0, w8, [x21, #8]
-	b	.LBB351_14
-.LBB351_12:                             // %"$16"
+	b	.LBB352_14
+.LBB352_12:                             // %"$16"
 	mov	x0, x19
 	bl	consExt
 	mov	x20, x0
@@ -39556,64 +39589,64 @@ extern:                                 // @extern
 	mov	x1, x21
 	bl	cons
 	mov	x1, x21
-.LBB351_13:                             // %"$7"
+.LBB352_13:                             // %"$7"
 	bl	cons
 	lsr	x8, x0, #32
 	stp	w0, w8, [x25, #8]
-.LBB351_14:                             // %"$7"
+.LBB352_14:                             // %"$7"
 	lsr	x9, x24, #1
 	mov	w8, #1
 	lsl	x8, x8, x9
 	adrp	x10, ($ExtCnt)
 	ldr	x10, [x10, :lo12:($ExtCnt)]
 	cmp	x8, x10
-	b.ls	.LBB351_25
+	b.ls	.LBB352_25
 // %bb.15:                              // %"$19"
 	ldr	x8, [x23, :lo12:($Extern)]
 	adrp	x10, ($ExtSkip)
 	ldr	x11, [x10, :lo12:($ExtSkip)]
 	add	x11, x11, #1                    // =1
 	cmp	x11, x9
-	b.ls	.LBB351_26
+	b.ls	.LBB352_26
 // %bb.16:                              // %"$21"
 	str	xzr, [x10, :lo12:($ExtSkip)]
-.LBB351_17:                             // %"$33"
+.LBB352_17:                             // %"$33"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB351_18 Depth 2
+                                        //     Child Loop BB352_18 Depth 2
 	ldp	w10, w9, [x8]
 	bfi	x10, x9, #32, #32
 	ldp	w10, w9, [x10, #-8]
 	bfi	x10, x9, #32, #32
 	and	x9, x10, #0xfffffffffffffff7
 	tst	x9, #0x6
-	b.ne	.LBB351_19
-.LBB351_18:                             // %"$35"
-                                        //   Parent Loop BB351_17 Depth=1
+	b.ne	.LBB352_19
+.LBB352_18:                             // %"$35"
+                                        //   Parent Loop BB352_17 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	ldp	w9, w10, [x9, #8]
 	bfi	x9, x10, #32, #32
 	tst	x9, #0x6
-	b.eq	.LBB351_18
-.LBB351_19:                             // %"$36"
-                                        //   in Loop: Header=BB351_17 Depth=1
+	b.eq	.LBB352_18
+.LBB352_19:                             // %"$36"
+                                        //   in Loop: Header=BB352_17 Depth=1
 	and	x10, x9, x22
 	cmp	x10, x19
-	b.eq	.LBB351_25
+	b.eq	.LBB352_25
 // %bb.20:                              // %"$37"
-                                        //   in Loop: Header=BB351_17 Depth=1
+                                        //   in Loop: Header=BB352_17 Depth=1
 	ldp	w9, w11, [x8, #8]
 	bfi	x9, x11, #32, #32
 	cmp	x19, x10
-	b.ls	.LBB351_23
+	b.ls	.LBB352_23
 // %bb.21:                              // %"$39"
-                                        //   in Loop: Header=BB351_17 Depth=1
+                                        //   in Loop: Header=BB352_17 Depth=1
 	ldp	w10, w11, [x9, #8]
 	bfi	x10, x11, #32, #32
 	ldrb	w11, [x10, #8]
 	tst	w11, #0xf
-	b.ne	.LBB351_25
+	b.ne	.LBB352_25
 // %bb.22:                              // %"$42"
-                                        //   in Loop: Header=BB351_17 Depth=1
+                                        //   in Loop: Header=BB352_17 Depth=1
 	ldp	w11, w12, [x10]
 	ldp	w14, w13, [x8]
 	stp	w14, w13, [x10]
@@ -39634,16 +39667,16 @@ extern:                                 // @extern
 	stp	w11, w12, [x8]
 	mov	x8, x11
 	bfi	x8, x12, #32, #32
-	b	.LBB351_17
-.LBB351_23:                             // %"$40"
-                                        //   in Loop: Header=BB351_17 Depth=1
+	b	.LBB352_17
+.LBB352_23:                             // %"$40"
+                                        //   in Loop: Header=BB352_17 Depth=1
 	ldp	w10, w11, [x9]
 	bfi	x10, x11, #32, #32
 	ldrb	w11, [x10, #8]
 	tst	w11, #0xf
-	b.ne	.LBB351_25
+	b.ne	.LBB352_25
 // %bb.24:                              // %"$43"
-                                        //   in Loop: Header=BB351_17 Depth=1
+                                        //   in Loop: Header=BB352_17 Depth=1
 	ldp	w11, w12, [x10]
 	ldp	w14, w13, [x8]
 	stp	w14, w13, [x10]
@@ -39663,19 +39696,19 @@ extern:                                 // @extern
 	stp	w12, w13, [x10]
 	stp	w8, w11, [x9]
 	bfi	x8, x11, #32, #32
-	b	.LBB351_17
-.LBB351_25:                             // %"$20"
+	b	.LBB352_17
+.LBB352_25:                             // %"$20"
 	mov	x0, x20
 	ldp	x20, x19, [sp, #48]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #32]             // 16-byte Folded Reload
 	ldp	x24, x23, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x25, [sp], #64             // 16-byte Folded Reload
 	ret
-.LBB351_26:                             // %"$22"
+.LBB352_26:                             // %"$22"
 	str	x11, [x10, :lo12:($ExtSkip)]
-	b	.LBB351_28
-.LBB351_27:                             // %"$27"
-                                        //   in Loop: Header=BB351_28 Depth=1
+	b	.LBB352_28
+.LBB352_27:                             // %"$27"
+                                        //   in Loop: Header=BB352_28 Depth=1
 	and	x10, x10, x22
 	cmp	x19, x10
 	add	x10, x8, #8                     // =8
@@ -39683,10 +39716,10 @@ extern:                                 // @extern
 	ldp	w8, w10, [x8]
 	bfi	x8, x10, #32, #32
 	subs	x9, x9, #1                      // =1
-	b.eq	.LBB351_17
-.LBB351_28:                             // %"$24"
+	b.eq	.LBB352_17
+.LBB352_28:                             // %"$24"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB351_29 Depth 2
+                                        //     Child Loop BB352_29 Depth 2
 	ldp	w11, w10, [x8]
 	bfi	x11, x10, #32, #32
 	ldp	w8, w10, [x8, #8]
@@ -39695,17 +39728,17 @@ extern:                                 // @extern
 	bfi	x11, x10, #32, #32
 	and	x10, x11, #0xfffffffffffffff7
 	tst	x10, #0x6
-	b.ne	.LBB351_27
-.LBB351_29:                             // %"$26"
-                                        //   Parent Loop BB351_28 Depth=1
+	b.ne	.LBB352_27
+.LBB352_29:                             // %"$26"
+                                        //   Parent Loop BB352_28 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	ldp	w10, w11, [x10, #8]
 	bfi	x10, x11, #32, #32
 	tst	x10, #0x6
-	b.eq	.LBB351_29
-	b	.LBB351_27
-.Lfunc_end351:
-	.size	extern, .Lfunc_end351-extern
+	b.eq	.LBB352_29
+	b	.LBB352_27
+.Lfunc_end352:
+	.size	extern, .Lfunc_end352-extern
 	.cfi_endproc
                                         // -- End function
 	.globl	rdAtom                          // -- Begin function rdAtom
@@ -39754,14 +39787,14 @@ rdAtom:                                 // @rdAtom
 	str	x9, [sp, #16]
 	adrp	x23, env+88
 	adrp	x24, ($Get)
-	cbz	w10, .LBB352_3
+	cbz	w10, .LBB353_3
 // %bb.1:                               // %"$4"
 	ldp	w8, w9, [x22, #8]
 	bfi	x8, x9, #32, #32
 	adrp	x9, SymTab+8
 	add	x9, x9, :lo12:SymTab+8
 	cmp	x8, x9
-	b.eq	.LBB352_27
+	b.eq	.LBB353_27
 // %bb.2:                               // %"$7"
 	str	x8, [x23, :lo12:env+88]
 	ldr	x8, [x24, :lo12:($Get)]
@@ -39770,7 +39803,7 @@ rdAtom:                                 // @rdAtom
 	ldr	x8, [x24, :lo12:($Get)]
 	blr	x8
 	mov	w20, w0
-.LBB352_3:                              // %"$5"
+.LBB353_3:                              // %"$5"
 	mov	x8, sp
 	adrp	x9, env
 	ldr	x10, [x9, :lo12:env]
@@ -39789,70 +39822,70 @@ rdAtom:                                 // @rdAtom
 	mov	w29, #2
 	adrp	x19, ($Delim)
 	add	x19, x19, :lo12:($Delim)
-	b	.LBB352_6
-.LBB352_4:                              // %"$20"
-                                        //   in Loop: Header=BB352_6 Depth=1
+	b	.LBB353_6
+.LBB353_4:                              // %"$20"
+                                        //   in Loop: Header=BB353_6 Depth=1
 	mov	x1, sp
 	mov	w0, w20
 	bl	charSym
-.LBB352_5:                              // %"$13"
-                                        //   in Loop: Header=BB352_6 Depth=1
+.LBB353_5:                              // %"$13"
+                                        //   in Loop: Header=BB353_6 Depth=1
 	ldr	x8, [x24, :lo12:($Get)]
 	blr	x8
 	mov	w20, w0
-.LBB352_6:                              // %"$8"
+.LBB353_6:                              // %"$8"
                                         // =>This Inner Loop Header: Depth=1
-	tbnz	w20, #31, .LBB352_14
+	tbnz	w20, #31, .LBB353_14
 // %bb.7:                               // %"$9"
-                                        //   in Loop: Header=BB352_6 Depth=1
+                                        //   in Loop: Header=BB353_6 Depth=1
 	cmp	w20, #126                       // =126
-	b.ne	.LBB352_11
+	b.ne	.LBB353_11
 // %bb.8:                               // %"$11"
-                                        //   in Loop: Header=BB352_6 Depth=1
+                                        //   in Loop: Header=BB353_6 Depth=1
 	ldr	x0, [sp, #16]
 	bl	requestSym
 	mov	x1, x0
 	ldp	w8, w9, [x0]
 	bfi	x8, x9, #32, #32
 	tst	x8, #0xf
-	b.ne	.LBB352_28
+	b.ne	.LBB353_28
 // %bb.9:                               // %"$15"
-                                        //   in Loop: Header=BB352_6 Depth=1
+                                        //   in Loop: Header=BB353_6 Depth=1
 	ldp	w8, w9, [x8]
 	bfi	x8, x9, #32, #32
 	cmp	x26, x8
-	b.ne	.LBB352_28
+	b.ne	.LBB353_28
 // %bb.10:                              // %"$17"
-                                        //   in Loop: Header=BB352_6 Depth=1
+                                        //   in Loop: Header=BB353_6 Depth=1
 	str	x25, [x23, :lo12:env+88]
 	str	x1, [x27, :lo12:($Cell)]
 	str	x28, [sp]
 	str	x29, [sp, #16]
-	b	.LBB352_5
-.LBB352_11:                             // %"$12"
-                                        //   in Loop: Header=BB352_6 Depth=1
+	b	.LBB353_5
+.LBB353_11:                             // %"$12"
+                                        //   in Loop: Header=BB353_6 Depth=1
 	mov	x0, x19
 	mov	w1, w20
 	bl	strchr2
-	cbnz	x0, .LBB352_14
+	cbnz	x0, .LBB353_14
 // %bb.12:                              // %"$18"
-                                        //   in Loop: Header=BB352_6 Depth=1
+                                        //   in Loop: Header=BB353_6 Depth=1
 	cmp	w20, #92                        // =92
-	b.ne	.LBB352_4
+	b.ne	.LBB353_4
 // %bb.13:                              // %"$19"
-                                        //   in Loop: Header=BB352_6 Depth=1
+                                        //   in Loop: Header=BB353_6 Depth=1
 	ldr	x8, [x24, :lo12:($Get)]
 	blr	x8
 	mov	w20, w0
-	b	.LBB352_4
-.LBB352_14:                             // %"$10"
+	b	.LBB353_4
+.LBB353_14:                             // %"$10"
 	ldr	x19, [sp, #16]
 	cmp	x19, #2                         // =2
-	b.eq	.LBB352_26
+	b.eq	.LBB353_26
 // %bb.15:                              // %"$22"
 	ldr	x20, [x23, :lo12:env+88]
 	cmp	x20, x25
-	b.ne	.LBB352_18
+	b.ne	.LBB353_18
 // %bb.16:                              // %"$25"
 	ldp	w9, w8, [x20]
 	bfi	x9, x8, #32, #32
@@ -39866,10 +39899,10 @@ rdAtom:                                 // @rdAtom
 	mov	x2, x19
 	mov	x4, x1
 	mov	w5, wzr
-.LBB352_17:                             // %"$21"
+.LBB353_17:                             // %"$21"
 	bl	intern
-	b	.LBB352_23
-.LBB352_18:                             // %"$24"
+	b	.LBB353_23
+.LBB353_18:                             // %"$24"
 	adrp	x8, SymTab+488
 	ldr	x8, [x8, :lo12:SymTab+488]
 	lsr	x1, x8, #4
@@ -39877,18 +39910,18 @@ rdAtom:                                 // @rdAtom
 	mov	w2, #46
 	mov	w3, wzr
 	bl	symToNum
-	cbnz	x0, .LBB352_23
+	cbnz	x0, .LBB353_23
 // %bb.19:                              // %"$26"
 	mov	x0, x19
 	bl	anonymous
-	cbnz	x0, .LBB352_23
+	cbnz	x0, .LBB353_23
 // %bb.20:                              // %"$28"
 	ldp	w9, w8, [x20]
 	bfi	x9, x8, #32, #32
 	adrp	x8, SymTab+152
 	add	x8, x8, :lo12:SymTab+152
 	cmp	x9, x8
-	b.ne	.LBB352_24
+	b.ne	.LBB353_24
 // %bb.21:                              // %"$31"
 	ldp	w9, w8, [x20, #8]
 	adrp	x10, SymTab+8
@@ -39896,11 +39929,11 @@ rdAtom:                                 // @rdAtom
 	bfi	x9, x8, #32, #32
 	cmp	x9, x10
 	cset	w8, eq
-	cbnz	w8, .LBB352_25
-.LBB352_22:                             // %"$32"
+	cbnz	w8, .LBB353_25
+.LBB353_22:                             // %"$32"
 	mov	x0, x19
 	bl	requestSym
-.LBB352_23:                             // %"$21"
+.LBB353_23:                             // %"$21"
 	str	x22, [x21, #88]
 	ldr	x8, [sp, #40]
 	str	x8, [x21]
@@ -39912,10 +39945,10 @@ rdAtom:                                 // @rdAtom
 	ldp	x29, x30, [sp, #48]             // 16-byte Folded Reload
 	add	sp, sp, #144                    // =144
 	ret
-.LBB352_24:
+.LBB353_24:
 	mov	w8, wzr
-	cbz	w8, .LBB352_22
-.LBB352_25:                             // %"$33"
+	cbz	w8, .LBB353_22
+.LBB353_25:                             // %"$33"
 	adrp	x20, SymTab+8
 	add	x20, x20, :lo12:SymTab+8
 	mov	x0, x19
@@ -39926,17 +39959,17 @@ rdAtom:                                 // @rdAtom
 	mov	x2, x19
 	mov	x4, x20
 	mov	w5, #1
-	b	.LBB352_17
-.LBB352_26:                             // %"$23"
+	b	.LBB353_17
+.LBB353_26:                             // %"$23"
 	bl	badInput
-.LBB352_27:                             // %"$6"
+.LBB353_27:                             // %"$6"
 	adrp	x1, SymTab+952
 	add	x1, x1, :lo12:SymTab+952
-.LBB352_28:                             // %"$16"
+.LBB353_28:                             // %"$16"
 	mov	x0, xzr
 	bl	symNspErr
-.Lfunc_end352:
-	.size	rdAtom, .Lfunc_end352-rdAtom
+.Lfunc_end353:
+	.size	rdAtom, .Lfunc_end353-rdAtom
 	.cfi_endproc
                                         // -- End function
 	.globl	symNspErr                       // -- Begin function symNspErr
@@ -39952,8 +39985,8 @@ symNspErr:                              // @symNspErr
 	add	x2, x2, :lo12:.L$125
 	mov	x3, xzr
 	bl	err
-.Lfunc_end353:
-	.size	symNspErr, .Lfunc_end353-symNspErr
+.Lfunc_end354:
+	.size	symNspErr, .Lfunc_end354-symNspErr
 	.cfi_endproc
                                         // -- End function
 	.globl	requestSym                      // -- Begin function requestSym
@@ -39970,11 +40003,11 @@ requestSym:                             // @requestSym
 	adrp	x1, SymTab+112
 	add	x1, x1, :lo12:SymTab+112
 	bl	isIntern
-	cbz	x0, .LBB354_2
+	cbz	x0, .LBB355_2
 // %bb.1:                               // %"$4"
 	ldp	x30, x19, [sp], #16             // 16-byte Folded Reload
 	ret
-.LBB354_2:                              // %"$3"
+.LBB355_2:                              // %"$3"
 	adrp	x8, env+88
 	ldr	x8, [x8, :lo12:env+88]
 	ldp	w10, w9, [x8]
@@ -39992,8 +40025,8 @@ requestSym:                             // @requestSym
 	bl	intern
 	ldp	x30, x19, [sp], #16             // 16-byte Folded Reload
 	ret
-.Lfunc_end354:
-	.size	requestSym, .Lfunc_end354-requestSym
+.Lfunc_end355:
+	.size	requestSym, .Lfunc_end355-requestSym
 	.cfi_endproc
                                         // -- End function
 	.globl	strchr2                         // -- Begin function strchr2
@@ -40003,22 +40036,22 @@ strchr2:                                // @strchr2
 	.cfi_startproc
 // %bb.0:                               // %"$1"
 	ldrb	w8, [x0]
-	cbz	w8, .LBB355_3
-.LBB355_1:                              // %"$3"
+	cbz	w8, .LBB356_3
+.LBB356_1:                              // %"$3"
                                         // =>This Inner Loop Header: Depth=1
 	cmp	w8, w1, uxtb
-	b.eq	.LBB355_4
+	b.eq	.LBB356_4
 // %bb.2:                               // %"$5"
-                                        //   in Loop: Header=BB355_1 Depth=1
+                                        //   in Loop: Header=BB356_1 Depth=1
 	add	x0, x0, #1                      // =1
 	ldrb	w8, [x0]
-	cbnz	w8, .LBB355_1
-.LBB355_3:                              // %"$4"
+	cbnz	w8, .LBB356_1
+.LBB356_3:                              // %"$4"
 	mov	x0, xzr
-.LBB355_4:                              // %"$6"
+.LBB356_4:                              // %"$6"
 	ret
-.Lfunc_end355:
-	.size	strchr2, .Lfunc_end355-strchr2
+.Lfunc_end356:
+	.size	strchr2, .Lfunc_end356-strchr2
 	.cfi_endproc
                                         // -- End function
 	.globl	symToNum                        // -- Begin function symToNum
@@ -40047,43 +40080,43 @@ symToNum:                               // @symToNum
 	stp	xzr, x0, [sp, #16]
 	mov	w8, #2
 	str	x8, [sp]
-.LBB356_1:                              // %"$2"
+.LBB357_1:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	add	x0, sp, #16                     // =16
 	bl	symByte
 	and	w8, w0, #0xff
 	cmp	w8, #32                         // =32
-	b.hi	.LBB356_3
+	b.hi	.LBB357_3
 // %bb.2:                               // %"$3"
-                                        //   in Loop: Header=BB356_1 Depth=1
+                                        //   in Loop: Header=BB357_1 Depth=1
 	tst	w0, #0xff
-	b.ne	.LBB356_1
-	b	.LBB356_27
-.LBB356_3:                              // %"$4"
+	b.ne	.LBB357_1
+	b	.LBB357_27
+.LBB357_3:                              // %"$4"
 	cmp	w8, #43                         // =43
-	b.ne	.LBB356_5
+	b.ne	.LBB357_5
 // %bb.4:
 	mov	w22, wzr
-	b	.LBB356_7
-.LBB356_5:                              // %"$8"
+	b	.LBB357_7
+.LBB357_5:                              // %"$8"
 	and	w8, w0, #0xff
 	cmp	w8, #45                         // =45
-	b.ne	.LBB356_8
+	b.ne	.LBB357_8
 // %bb.6:
 	mov	w22, #1
-.LBB356_7:                              // %"$-1"
+.LBB357_7:                              // %"$-1"
 	add	x0, sp, #16                     // =16
 	bl	symByte
 	tst	w0, #0xff
-	b.ne	.LBB356_9
-	b	.LBB356_27
-.LBB356_8:
+	b.ne	.LBB357_9
+	b	.LBB357_27
+.LBB357_8:
 	mov	w22, wzr
-.LBB356_9:                              // %"$7"
+.LBB357_9:                              // %"$7"
 	sub	w9, w0, #48                     // =48
 	and	w8, w9, #0xff
 	cmp	w8, #10                         // =10
-	b.hs	.LBB356_27
+	b.hs	.LBB357_27
 // %bb.10:                              // %"$15"
 	mov	w8, wzr
 	adrp	x23, env
@@ -40094,48 +40127,48 @@ symToNum:                               // @symToNum
 	mov	w11, #2
 	bfi	x11, x9, #4, #8
 	stp	x11, x10, [sp]
-	b	.LBB356_12
-.LBB356_11:                             // %"$34"
-                                        //   in Loop: Header=BB356_12 Depth=1
+	b	.LBB357_12
+.LBB357_11:                             // %"$34"
+                                        //   in Loop: Header=BB357_12 Depth=1
 	mov	w8, #1
-	tbnz	w24, #0, .LBB356_26
-.LBB356_12:                             // %"$16"
+	tbnz	w24, #0, .LBB357_26
+.LBB357_12:                             // %"$16"
                                         // =>This Inner Loop Header: Depth=1
 	mov	w24, w8
 	add	x0, sp, #16                     // =16
 	bl	symByte
 	tst	w0, #0xff
-	b.eq	.LBB356_29
+	b.eq	.LBB357_29
 // %bb.13:                              // %"$17"
-                                        //   in Loop: Header=BB356_12 Depth=1
-	tbz	w24, #0, .LBB356_15
+                                        //   in Loop: Header=BB357_12 Depth=1
+	tbz	w24, #0, .LBB357_15
 // %bb.14:                              // %"$20"
-                                        //   in Loop: Header=BB356_12 Depth=1
+                                        //   in Loop: Header=BB357_12 Depth=1
 	cmp	x19, #0                         // =0
 	cset	w8, eq
-	cbz	w8, .LBB356_16
-	b	.LBB356_21
-.LBB356_15:                             //   in Loop: Header=BB356_12 Depth=1
+	cbz	w8, .LBB357_16
+	b	.LBB357_21
+.LBB357_15:                             //   in Loop: Header=BB357_12 Depth=1
 	mov	w8, wzr
-	cbnz	w8, .LBB356_21
-.LBB356_16:                             // %"$21"
-                                        //   in Loop: Header=BB356_12 Depth=1
+	cbnz	w8, .LBB357_21
+.LBB357_16:                             // %"$21"
+                                        //   in Loop: Header=BB357_12 Depth=1
 	and	w8, w0, #0xff
 	cmp	w8, w21, uxtb
-	b.eq	.LBB356_11
+	b.eq	.LBB357_11
 // %bb.17:                              // %"$33"
-                                        //   in Loop: Header=BB356_12 Depth=1
+                                        //   in Loop: Header=BB357_12 Depth=1
 	cmp	w8, w20, uxtb
 	mov	w8, w24
-	b.eq	.LBB356_12
+	b.eq	.LBB357_12
 // %bb.18:                              // %"$38"
-                                        //   in Loop: Header=BB356_12 Depth=1
+                                        //   in Loop: Header=BB357_12 Depth=1
 	sub	w25, w0, #48                    // =48
 	and	w8, w25, #0xff
 	cmp	w8, #10                         // =10
-	b.hs	.LBB356_26
+	b.hs	.LBB357_26
 // %bb.19:                              // %"$40"
-                                        //   in Loop: Header=BB356_12 Depth=1
+                                        //   in Loop: Header=BB357_12 Depth=1
 	ldr	x0, [sp]
 	bl	tenfold
 	and	x8, x25, #0xff
@@ -40144,62 +40177,62 @@ symToNum:                               // @symToNum
 	bl	addu
 	str	x0, [sp]
 	mov	w8, w24
-	tbz	w24, #0, .LBB356_12
+	tbz	w24, #0, .LBB357_12
 // %bb.20:                              // %"$41"
-                                        //   in Loop: Header=BB356_12 Depth=1
+                                        //   in Loop: Header=BB357_12 Depth=1
 	sub	x19, x19, #1                    // =1
 	mov	w8, w24
-	b	.LBB356_12
-.LBB356_21:                             // %"$22"
+	b	.LBB357_12
+.LBB357_21:                             // %"$22"
 	sub	w8, w0, #48                     // =48
 	and	w8, w8, #0xff
 	cmp	w8, #10                         // =10
-	b.hs	.LBB356_26
+	b.hs	.LBB357_26
 // %bb.22:                              // %"$24"
 	cmp	w8, #5                          // =5
-	b.lo	.LBB356_24
+	b.lo	.LBB357_24
 // %bb.23:                              // %"$25"
 	ldr	x0, [sp]
 	mov	w1, #18
 	bl	addu
 	str	x0, [sp]
-.LBB356_24:                             // %"$27"
+.LBB357_24:                             // %"$27"
                                         // =>This Inner Loop Header: Depth=1
 	add	x0, sp, #16                     // =16
 	bl	symByte
 	tst	w0, #0xff
-	b.eq	.LBB356_29
+	b.eq	.LBB357_29
 // %bb.25:                              // %"$28"
-                                        //   in Loop: Header=BB356_24 Depth=1
+                                        //   in Loop: Header=BB357_24 Depth=1
 	sub	w8, w0, #48                     // =48
 	and	w8, w8, #0xff
 	cmp	w8, #10                         // =10
-	b.lo	.LBB356_24
-.LBB356_26:                             // %"$23"
+	b.lo	.LBB357_24
+.LBB357_26:                             // %"$23"
 	ldr	x8, [sp, #8]
 	str	x8, [x23, :lo12:env]
-.LBB356_27:                             // %"$5"
+.LBB357_27:                             // %"$5"
 	mov	x0, xzr
-.LBB356_28:                             // %"$5"
+.LBB357_28:                             // %"$5"
 	ldp	x20, x19, [sp, #80]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #64]             // 16-byte Folded Reload
 	ldp	x24, x23, [sp, #48]             // 16-byte Folded Reload
 	ldp	x30, x25, [sp, #32]             // 16-byte Folded Reload
 	add	sp, sp, #96                     // =96
 	ret
-.LBB356_29:                             // %"$18"
-	tbz	w24, #0, .LBB356_32
+.LBB357_29:                             // %"$18"
+	tbz	w24, #0, .LBB357_32
 // %bb.30:                              // %"$45.preheader"
 	sub	x19, x19, #1                    // =1
-	tbnz	x19, #63, .LBB356_32
-.LBB356_31:                             // %"$46"
+	tbnz	x19, #63, .LBB357_32
+.LBB357_31:                             // %"$46"
                                         // =>This Inner Loop Header: Depth=1
 	ldr	x0, [sp]
 	bl	tenfold
 	str	x0, [sp]
 	sub	x19, x19, #1                    // =1
-	tbz	x19, #63, .LBB356_31
-.LBB356_32:                             // %"$44"
+	tbz	x19, #63, .LBB357_31
+.LBB357_32:                             // %"$44"
 	ldp	x8, x9, [sp]
 	eor	x10, x8, #0x8
 	cmp	x8, #2                          // =2
@@ -40207,9 +40240,9 @@ symToNum:                               // @symToNum
 	cmp	w22, #0                         // =0
 	csel	x0, x8, x10, eq
 	str	x9, [x23, :lo12:env]
-	b	.LBB356_28
-.Lfunc_end356:
-	.size	symToNum, .Lfunc_end356-symToNum
+	b	.LBB357_28
+.Lfunc_end357:
+	.size	symToNum, .Lfunc_end357-symToNum
 	.cfi_endproc
                                         // -- End function
 	.globl	anonymous                       // -- Begin function anonymous
@@ -40228,45 +40261,45 @@ anonymous:                              // @anonymous
 	bl	symByte
 	and	w8, w0, #0xff
 	cmp	w8, #36                         // =36
-	b.ne	.LBB357_6
+	b.ne	.LBB358_6
 // %bb.1:                               // %"$3"
 	mov	x0, sp
 	bl	symByte
 	sub	w8, w0, #48                     // =48
 	and	w9, w8, #0xff
 	cmp	w9, #7                          // =7
-	b.hi	.LBB357_6
+	b.hi	.LBB358_6
 // %bb.2:                               // %"$5"
 	and	x19, x8, #0xff
-.LBB357_3:                              // %"$6"
+.LBB358_3:                              // %"$6"
                                         // =>This Inner Loop Header: Depth=1
 	mov	x0, sp
 	bl	symByte
 	tst	w0, #0xff
-	b.eq	.LBB357_8
+	b.eq	.LBB358_8
 // %bb.4:                               // %"$7"
-                                        //   in Loop: Header=BB357_3 Depth=1
+                                        //   in Loop: Header=BB358_3 Depth=1
 	sub	w8, w0, #48                     // =48
 	and	w9, w8, #0xff
 	cmp	w9, #7                          // =7
-	b.hi	.LBB357_6
+	b.hi	.LBB358_6
 // %bb.5:                               // %"$10"
-                                        //   in Loop: Header=BB357_3 Depth=1
+                                        //   in Loop: Header=BB358_3 Depth=1
 	and	x8, x8, #0xff
 	orr	x19, x8, x19, lsl #3
-	b	.LBB357_3
-.LBB357_6:
+	b	.LBB358_3
+.LBB358_6:
 	mov	x0, xzr
-.LBB357_7:                              // %"$8"
+.LBB358_7:                              // %"$8"
 	ldp	x30, x19, [sp, #16]             // 16-byte Folded Reload
 	add	sp, sp, #32                     // =32
 	ret
-.LBB357_8:                              // %"$9"
+.LBB358_8:                              // %"$9"
 	mov	w0, #8
 	bfi	x0, x19, #4, #60
-	b	.LBB357_7
-.Lfunc_end357:
-	.size	anonymous, .Lfunc_end357-anonymous
+	b	.LBB358_7
+.Lfunc_end358:
+	.size	anonymous, .Lfunc_end358-anonymous
 	.cfi_endproc
                                         // -- End function
 	.globl	symByte                         // -- Begin function symByte
@@ -40277,38 +40310,38 @@ symByte:                                // @symByte
 // %bb.0:                               // %"$1"
 	ldp	w8, w9, [x0]
 	bfi	x8, x9, #32, #32
-	cbnz	x8, .LBB358_7
+	cbnz	x8, .LBB359_7
 // %bb.1:                               // %"$2"
 	ldp	w9, w8, [x0, #8]
 	bfi	x9, x8, #32, #32
 	cmp	x9, #2                          // =2
-	b.ne	.LBB358_3
+	b.ne	.LBB359_3
 // %bb.2:                               // %"$6"
 	mov	w0, wzr
 	ret
-.LBB358_3:                              // %"$5"
-	tbz	w9, #1, .LBB358_5
+.LBB359_3:                              // %"$5"
+	tbz	w9, #1, .LBB359_5
 // %bb.4:                               // %"$8"
 	lsr	x8, x9, #4
 	mov	w9, #2
-	b	.LBB358_6
-.LBB358_5:                              // %"$7"
+	b	.LBB359_6
+.LBB359_5:                              // %"$7"
 	ldp	w8, w10, [x9, #-4]
 	stp	w8, w10, [x0]
 	bfi	x8, x10, #32, #32
 	ldp	w9, w10, [x9, #4]
 	bfi	x9, x10, #32, #32
-.LBB358_6:                              // %"$4"
+.LBB359_6:                              // %"$4"
 	lsr	x10, x9, #32
 	stp	w9, w10, [x0, #8]
-.LBB358_7:                              // %"$3"
+.LBB359_7:                              // %"$3"
 	lsr	x9, x8, #8
 	lsr	x10, x8, #40
 	stp	w9, w10, [x0]
 	mov	w0, w8
 	ret
-.Lfunc_end358:
-	.size	symByte, .Lfunc_end358-symByte
+.Lfunc_end359:
+	.size	symByte, .Lfunc_end359-symByte
 	.cfi_endproc
                                         // -- End function
 	.globl	addu                            // -- Begin function addu
@@ -40335,31 +40368,31 @@ addu:                                   // @addu
 	.cfi_offset w29, -80
 	mov	x20, x1
 	mov	x21, x0
-	tbz	w21, #1, .LBB359_4
+	tbz	w21, #1, .LBB360_4
 // %bb.1:                               // %"$4"
-	tbz	w20, #1, .LBB359_6
+	tbz	w20, #1, .LBB360_6
 // %bb.2:                               // %"$5"
 	lsr	x8, x21, #4
 	add	x0, x8, x20, lsr #4
-	tbz	x0, #60, .LBB359_30
+	tbz	x0, #60, .LBB360_30
 // %bb.3:                               // %"$8"
 	bl	boxNum
-	b	.LBB359_17
-.LBB359_4:                              // %"$3"
-	tbz	w20, #1, .LBB359_12
+	b	.LBB360_17
+.LBB360_4:                              // %"$3"
+	tbz	w20, #1, .LBB360_12
 // %bb.5:
 	mov	x8, x21
-	b	.LBB359_7
-.LBB359_6:
+	b	.LBB360_7
+.LBB360_6:
 	mov	x8, x20
 	mov	x20, x21
-.LBB359_7:                              // %"$-1"
+.LBB360_7:                              // %"$-1"
 	ldp	w21, w9, [x8, #4]
 	ldp	w8, w10, [x8, #-4]
 	bfi	x21, x9, #32, #32
 	bfi	x8, x10, #32, #32
 	adds	x0, x8, x20, lsr #4
-	b.lo	.LBB359_16
+	b.lo	.LBB360_16
 // %bb.8:                               // %"$14"
 	mov	x1, x21
 	bl	consNum
@@ -40376,27 +40409,27 @@ addu:                                   // @addu
 	stp	w19, w8, [x10, #-16]
 	mov	x8, x19
 	stp	w9, w11, [x10, #-8]
-.LBB359_9:                              // %"$16"
+.LBB360_9:                              // %"$16"
                                         // =>This Inner Loop Header: Depth=1
 	lsr	x9, x0, #32
 	stp	w0, w9, [x22]
-	tbnz	w21, #1, .LBB359_18
+	tbnz	w21, #1, .LBB360_18
 // %bb.10:                              // %"$17"
-                                        //   in Loop: Header=BB359_9 Depth=1
+                                        //   in Loop: Header=BB360_9 Depth=1
 	ldp	w10, w9, [x21, #-4]
 	bfi	x10, x9, #32, #32
 	ldp	w21, w9, [x21, #4]
 	bfi	x21, x9, #32, #32
 	add	x22, x8, #4                     // =4
 	adds	x0, x10, #1                     // =1
-	b.lo	.LBB359_23
+	b.lo	.LBB360_23
 // %bb.11:                              // %"$23"
-                                        //   in Loop: Header=BB359_9 Depth=1
+                                        //   in Loop: Header=BB360_9 Depth=1
 	mov	x1, x21
 	bl	consNum
 	mov	x8, x0
-	b	.LBB359_9
-.LBB359_12:                             // %"$11"
+	b	.LBB360_9
+.LBB360_12:                             // %"$11"
 	ldp	w9, w8, [x21, #-4]
 	bfi	x9, x8, #32, #32
 	ldp	w10, w8, [x20, #-4]
@@ -40417,7 +40450,7 @@ addu:                                   // @addu
 	stp	w19, w10, [x9, #-16]
 	mov	x25, x19
 	stp	w8, w11, [x9, #-8]
-.LBB359_13:                             // %"$25"
+.LBB360_13:                             // %"$25"
                                         // =>This Inner Loop Header: Depth=1
 	lsr	x8, x0, #32
 	stp	w0, w8, [x22]
@@ -40425,12 +40458,12 @@ addu:                                   // @addu
 	bfi	x21, x8, #32, #32
 	ldp	w20, w8, [x20, #4]
 	bfi	x20, x8, #32, #32
-	tbnz	w21, #1, .LBB359_20
+	tbnz	w21, #1, .LBB360_20
 // %bb.14:                              // %"$26"
-                                        //   in Loop: Header=BB359_13 Depth=1
-	tbnz	w20, #1, .LBB359_25
+                                        //   in Loop: Header=BB360_13 Depth=1
+	tbnz	w20, #1, .LBB360_25
 // %bb.15:                              // %"$35"
-                                        //   in Loop: Header=BB359_13 Depth=1
+                                        //   in Loop: Header=BB360_13 Depth=1
 	ldp	w9, w8, [x21, #-4]
 	bfi	x9, x8, #32, #32
 	ldp	w10, w8, [x20, #-4]
@@ -40444,26 +40477,26 @@ addu:                                   // @addu
 	add	x22, x25, #4                    // =4
 	bl	boxNum
 	mov	x25, x0
-	b	.LBB359_13
-.LBB359_16:                             // %"$13"
+	b	.LBB360_13
+.LBB360_16:                             // %"$13"
 	mov	x1, x21
 	bl	consNum
-.LBB359_17:                             // %"$2"
+.LBB360_17:                             // %"$2"
 	mov	x19, x0
-	b	.LBB359_36
-.LBB359_18:                             // %"$19"
+	b	.LBB360_36
+.LBB360_18:                             // %"$19"
 	adds	x0, x21, #16                    // =16
 	add	x22, x8, #4                     // =4
-	b.lo	.LBB359_24
+	b.lo	.LBB360_24
 // %bb.19:                              // %"$21"
 	mov	x8, #1152921504606846976
 	bfxil	x8, x0, #4, #60
 	mov	x0, x8
 	bl	boxNum
-	b	.LBB359_24
-.LBB359_20:                             // %"$28"
+	b	.LBB360_24
+.LBB360_20:                             // %"$28"
 	mov	x22, x20
-	tbz	w20, #1, .LBB359_26
+	tbz	w20, #1, .LBB360_26
 // %bb.21:                              // %"$29"
 	add	x25, x25, #4                    // =4
 	lsr	x8, x21, #4
@@ -40471,23 +40504,23 @@ addu:                                   // @addu
 	and	x9, x24, #0x1
 	add	x8, x8, x9
 	tst	x8, #0x3000000000000000
-	b.ne	.LBB359_32
-.LBB359_22:                             // %"$33"
+	b.ne	.LBB360_32
+.LBB360_22:                             // %"$33"
 	mov	w0, #2
 	bfi	x0, x8, #4, #60
-	b	.LBB359_33
-.LBB359_23:                             // %"$24"
+	b	.LBB360_33
+.LBB360_23:                             // %"$24"
 	mov	x1, x21
 	bl	consNum
-.LBB359_24:                             // %"$18"
+.LBB360_24:                             // %"$18"
 	lsr	x8, x0, #32
 	stp	w0, w8, [x22]
 	ldp	w9, w8, [x20, #8]
-	b	.LBB359_35
-.LBB359_25:
+	b	.LBB360_35
+.LBB360_25:
 	mov	x22, x21
 	mov	x21, x20
-.LBB359_26:                             // %"$-2"
+.LBB360_26:                             // %"$-2"
 	ldp	w9, w8, [x22, #-4]
 	bfi	x9, x8, #32, #32
 	adds	x8, x9, x21, lsr #4
@@ -40496,7 +40529,7 @@ addu:                                   // @addu
 	adds	x0, x8, x10
 	cset	w8, hs
 	orr	w20, w9, w8
-.LBB359_27:                             // %"$37"
+.LBB360_27:                             // %"$37"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w22, w8, [x22, #4]
 	bfi	x22, x8, #32, #32
@@ -40505,40 +40538,40 @@ addu:                                   // @addu
 	mov	x8, x0
 	lsr	x9, x0, #32
 	stp	w8, w9, [x25, #4]
-	tbz	w20, #0, .LBB359_34
+	tbz	w20, #0, .LBB360_34
 // %bb.28:                              // %"$38"
-                                        //   in Loop: Header=BB359_27 Depth=1
-	tbnz	w22, #1, .LBB359_31
+                                        //   in Loop: Header=BB360_27 Depth=1
+	tbnz	w22, #1, .LBB360_31
 // %bb.29:                              // %"$40"
-                                        //   in Loop: Header=BB359_27 Depth=1
+                                        //   in Loop: Header=BB360_27 Depth=1
 	ldp	w10, w9, [x22, #-4]
 	bfi	x10, x9, #32, #32
 	adds	x0, x10, #1                     // =1
 	cset	w20, hs
 	mov	x25, x8
-	b	.LBB359_27
-.LBB359_30:                             // %"$9"
+	b	.LBB360_27
+.LBB360_30:                             // %"$9"
 	mov	w19, #2
 	bfi	x19, x0, #4, #60
-	b	.LBB359_36
-.LBB359_31:                             // %"$41"
+	b	.LBB360_36
+.LBB360_31:                             // %"$41"
 	add	x25, x8, #4                     // =4
 	and	x8, x20, #0x1
 	add	x8, x8, x22, lsr #4
-	tbz	x8, #60, .LBB359_22
-.LBB359_32:                             // %"$32"
+	tbz	x8, #60, .LBB360_22
+.LBB360_32:                             // %"$32"
 	mov	x0, x8
 	bl	boxNum
-.LBB359_33:                             // %"$27.sink.split"
+.LBB360_33:                             // %"$27.sink.split"
 	lsr	x8, x0, #32
 	stp	w0, w8, [x25]
-.LBB359_34:                             // %"$27"
+.LBB360_34:                             // %"$27"
 	ldp	w9, w8, [x23, #8]
-.LBB359_35:                             // %"$2"
+.LBB360_35:                             // %"$2"
 	bfi	x9, x8, #32, #32
 	adrp	x8, env
 	str	x9, [x8, :lo12:env]
-.LBB359_36:                             // %"$2"
+.LBB360_36:                             // %"$2"
 	mov	x0, x19
 	mov	sp, x29
 	ldp	x20, x19, [sp, #64]             // 16-byte Folded Reload
@@ -40547,8 +40580,8 @@ addu:                                   // @addu
 	ldr	x25, [sp, #16]                  // 8-byte Folded Reload
 	ldp	x29, x30, [sp], #80             // 16-byte Folded Reload
 	ret
-.Lfunc_end359:
-	.size	addu, .Lfunc_end359-addu
+.Lfunc_end360:
+	.size	addu, .Lfunc_end360-addu
 	.cfi_endproc
                                         // -- End function
 	.globl	tenfold                         // -- Begin function tenfold
@@ -40564,18 +40597,18 @@ tenfold:                                // @tenfold
 	.cfi_offset w20, -16
 	.cfi_offset w30, -32
 	mov	x19, x0
-	tbz	w19, #1, .LBB360_3
+	tbz	w19, #1, .LBB361_3
 // %bb.1:                               // %"$2"
 	lsr	x8, x19, #4
 	add	x8, x8, x8, lsl #2
 	lsl	x0, x8, #1
 	tst	x0, #0xf000000000000000
-	b.eq	.LBB360_8
+	b.eq	.LBB361_8
 // %bb.2:                               // %"$5"
 	bl	boxNum
 	mov	x19, x0
-	b	.LBB360_11
-.LBB360_3:                              // %"$3"
+	b	.LBB361_11
+.LBB361_3:                              // %"$3"
 	ldp	w10, w8, [x19, #-4]
 	bfi	x10, x8, #32, #32
 	mov	w9, #10
@@ -40583,15 +40616,15 @@ tenfold:                                // @tenfold
 	add	x10, x10, x10, lsl #2
 	lsl	x11, x10, #1
 	mov	x20, x19
-.LBB360_4:                              // %"$8"
+.LBB361_4:                              // %"$8"
                                         // =>This Inner Loop Header: Depth=1
 	lsr	x10, x11, #32
 	stp	w11, w10, [x20, #-4]
 	ldp	w10, w11, [x20, #4]
 	bfi	x10, x11, #32, #32
-	tbnz	w10, #1, .LBB360_6
+	tbnz	w10, #1, .LBB361_6
 // %bb.5:                               // %"$9"
-                                        //   in Loop: Header=BB360_4 Depth=1
+                                        //   in Loop: Header=BB361_4 Depth=1
 	ldp	w12, w11, [x10, #-4]
 	bfi	x12, x11, #32, #32
 	umulh	x13, x12, x9
@@ -40599,34 +40632,34 @@ tenfold:                                // @tenfold
 	adds	x11, x8, x11, lsl #1
 	cinc	x8, x13, hs
 	mov	x20, x10
-	b	.LBB360_4
-.LBB360_6:                              // %"$11"
+	b	.LBB361_4
+.LBB361_6:                              // %"$11"
 	lsr	x9, x10, #4
 	mov	w10, #10
 	madd	x8, x9, x10, x8
 	tst	x8, #0xf000000000000000
-	b.eq	.LBB360_9
+	b.eq	.LBB361_9
 // %bb.7:                               // %"$12"
 	mov	x0, x8
 	bl	boxNum
-	b	.LBB360_10
-.LBB360_8:                              // %"$6"
+	b	.LBB361_10
+.LBB361_8:                              // %"$6"
 	mov	w19, #2
 	bfi	x19, x0, #4, #60
-	b	.LBB360_11
-.LBB360_9:                              // %"$13"
+	b	.LBB361_11
+.LBB361_9:                              // %"$13"
 	mov	w0, #2
 	bfi	x0, x8, #4, #60
-.LBB360_10:                             // %"$14"
+.LBB361_10:                             // %"$14"
 	lsr	x8, x0, #32
 	stp	w0, w8, [x20, #4]
-.LBB360_11:                             // %"$4"
+.LBB361_11:                             // %"$4"
 	mov	x0, x19
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #32                  // 8-byte Folded Reload
 	ret
-.Lfunc_end360:
-	.size	tenfold, .Lfunc_end360-tenfold
+.Lfunc_end361:
+	.size	tenfold, .Lfunc_end361-tenfold
 	.cfi_endproc
                                         // -- End function
 	.globl	boxNum                          // -- Begin function boxNum
@@ -40644,11 +40677,11 @@ boxNum:                                 // @boxNum
 	mov	x19, x0
 	adrp	x20, ($Avail)
 	ldr	x8, [x20, :lo12:($Avail)]
-	cbnz	x8, .LBB361_2
+	cbnz	x8, .LBB362_2
 // %bb.1:                               // %"$2"
 	bl	gc
 	ldr	x8, [x20, :lo12:($Avail)]
-.LBB361_2:                              // %"$3"
+.LBB362_2:                              // %"$3"
 	mov	x0, x8
 	ldr	w9, [x0, #4]!
 	ldr	w10, [x8]
@@ -40662,8 +40695,8 @@ boxNum:                                 // @boxNum
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #32                  // 8-byte Folded Reload
 	ret
-.Lfunc_end361:
-	.size	boxNum, .Lfunc_end361-boxNum
+.Lfunc_end362:
+	.size	boxNum, .Lfunc_end362-boxNum
 	.cfi_endproc
                                         // -- End function
 	.globl	consNum                         // -- Begin function consNum
@@ -40691,7 +40724,7 @@ consNum:                                // @consNum
 	adrp	x22, ($Avail)
 	ldr	x8, [x22, :lo12:($Avail)]
 	lsr	x21, x1, #32
-	cbnz	x8, .LBB362_2
+	cbnz	x8, .LBB363_2
 // %bb.1:                               // %"$2"
 	adrp	x23, env
 	ldr	x8, [x23, :lo12:env]
@@ -40709,7 +40742,7 @@ consNum:                                // @consNum
 	bfi	x9, x8, #32, #32
 	str	x9, [x23, :lo12:env]
 	ldr	x8, [x22, :lo12:($Avail)]
-.LBB362_2:                              // %"$3"
+.LBB363_2:                              // %"$3"
 	mov	x0, x8
 	ldr	w9, [x0, #4]!
 	ldr	w10, [x8]
@@ -40725,8 +40758,8 @@ consNum:                                // @consNum
 	ldp	x24, x23, [sp, #16]             // 16-byte Folded Reload
 	ldp	x29, x30, [sp], #64             // 16-byte Folded Reload
 	ret
-.Lfunc_end362:
-	.size	consNum, .Lfunc_end362-consNum
+.Lfunc_end363:
+	.size	consNum, .Lfunc_end363-consNum
 	.cfi_endproc
                                         // -- End function
 	.globl	isIntern                        // -- Begin function isIntern
@@ -40743,100 +40776,100 @@ isIntern:                               // @isIntern
 	.cfi_offset w21, -24
 	.cfi_offset w30, -32
 	mov	x19, x0
-	tbnz	w19, #1, .LBB363_11
+	tbnz	w19, #1, .LBB364_11
 // %bb.1:                               // %"$3"
 	add	x8, x1, #8                      // =8
-	b	.LBB363_3
-.LBB363_2:                              // %"$27"
-                                        //   in Loop: Header=BB363_3 Depth=1
+	b	.LBB364_3
+.LBB364_2:                              // %"$27"
+                                        //   in Loop: Header=BB364_3 Depth=1
 	ldp	w8, w9, [x21, #8]
 	bfi	x8, x9, #32, #32
-.LBB363_3:                              // %"$17"
+.LBB364_3:                              // %"$17"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB363_5 Depth 2
+                                        //     Child Loop BB364_5 Depth 2
 	ldp	w21, w9, [x8]
 	bfi	x21, x9, #32, #32
 	tst	x21, #0xf
-	b.ne	.LBB363_18
+	b.ne	.LBB364_18
 // %bb.4:                               // %"$18"
-                                        //   in Loop: Header=BB363_3 Depth=1
+                                        //   in Loop: Header=BB364_3 Depth=1
 	ldp	w20, w8, [x21]
 	bfi	x20, x8, #32, #32
 	sub	x8, x20, #8                     // =8
-.LBB363_5:                              // %"$21"
-                                        //   Parent Loop BB363_3 Depth=1
+.LBB364_5:                              // %"$21"
+                                        //   Parent Loop BB364_3 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	ldp	w0, w9, [x8]
 	bfi	x0, x9, #32, #32
 	tst	x0, #0x6
-	b.ne	.LBB363_7
+	b.ne	.LBB364_7
 // %bb.6:                               // %"$22"
-                                        //   in Loop: Header=BB363_5 Depth=2
+                                        //   in Loop: Header=BB364_5 Depth=2
 	add	x8, x0, #8                      // =8
-	b	.LBB363_5
-.LBB363_7:                              // %"$23"
-                                        //   in Loop: Header=BB363_3 Depth=1
+	b	.LBB364_5
+.LBB364_7:                              // %"$23"
+                                        //   in Loop: Header=BB364_3 Depth=1
 	mov	x1, x19
 	bl	cmpLong
-	cbz	x0, .LBB363_19
+	cbz	x0, .LBB364_19
 // %bb.8:                               // %"$24"
-                                        //   in Loop: Header=BB363_3 Depth=1
-	tbz	x0, #63, .LBB363_2
+                                        //   in Loop: Header=BB364_3 Depth=1
+	tbz	x0, #63, .LBB364_2
 // %bb.9:                               // %"$26"
-                                        //   in Loop: Header=BB363_3 Depth=1
+                                        //   in Loop: Header=BB364_3 Depth=1
 	ldp	w9, w8, [x21, #8]
 	bfi	x9, x8, #32, #32
 	add	x8, x9, #8                      // =8
-	b	.LBB363_3
-.LBB363_10:                             // %"$15"
-                                        //   in Loop: Header=BB363_11 Depth=1
+	b	.LBB364_3
+.LBB364_10:                             // %"$15"
+                                        //   in Loop: Header=BB364_11 Depth=1
 	ldp	w1, w9, [x8, #8]
 	bfi	x1, x9, #32, #32
-.LBB363_11:                             // %"$5"
+.LBB364_11:                             // %"$5"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB363_13 Depth 2
+                                        //     Child Loop BB364_13 Depth 2
 	ldp	w8, w9, [x1]
 	bfi	x8, x9, #32, #32
 	tst	x8, #0xf
-	b.ne	.LBB363_18
+	b.ne	.LBB364_18
 // %bb.12:                              // %"$6"
-                                        //   in Loop: Header=BB363_11 Depth=1
+                                        //   in Loop: Header=BB364_11 Depth=1
 	ldp	w20, w9, [x8]
 	bfi	x20, x9, #32, #32
 	sub	x9, x20, #8                     // =8
-.LBB363_13:                             // %"$9"
-                                        //   Parent Loop BB363_11 Depth=1
+.LBB364_13:                             // %"$9"
+                                        //   Parent Loop BB364_11 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	ldp	w9, w10, [x9]
 	bfi	x9, x10, #32, #32
 	tst	x9, #0x6
-	b.ne	.LBB363_15
+	b.ne	.LBB364_15
 // %bb.14:                              // %"$10"
-                                        //   in Loop: Header=BB363_13 Depth=2
+                                        //   in Loop: Header=BB364_13 Depth=2
 	add	x9, x9, #8                      // =8
-	b	.LBB363_13
-.LBB363_15:                             // %"$11"
-                                        //   in Loop: Header=BB363_11 Depth=1
+	b	.LBB364_13
+.LBB364_15:                             // %"$11"
+                                        //   in Loop: Header=BB364_11 Depth=1
 	cmp	x19, x9
-	b.eq	.LBB363_19
+	b.eq	.LBB364_19
 // %bb.16:                              // %"$12"
-                                        //   in Loop: Header=BB363_11 Depth=1
-	b.ls	.LBB363_10
+                                        //   in Loop: Header=BB364_11 Depth=1
+	b.ls	.LBB364_10
 // %bb.17:                              // %"$14"
-                                        //   in Loop: Header=BB363_11 Depth=1
+                                        //   in Loop: Header=BB364_11 Depth=1
 	ldp	w8, w9, [x8, #8]
 	bfi	x8, x9, #32, #32
 	add	x1, x8, #8                      // =8
-	b	.LBB363_11
-.LBB363_18:
+	b	.LBB364_11
+.LBB364_18:
 	mov	x20, xzr
-.LBB363_19:                             // %"$4"
+.LBB364_19:                             // %"$4"
 	mov	x0, x20
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x21, [sp], #32             // 16-byte Folded Reload
 	ret
-.Lfunc_end363:
-	.size	isIntern, .Lfunc_end363-isIntern
+.Lfunc_end364:
+	.size	isIntern, .Lfunc_end364-isIntern
 	.cfi_endproc
                                         // -- End function
 	.globl	cmpLong                         // -- Begin function cmpLong
@@ -40847,7 +40880,7 @@ cmpLong:                                // @cmpLong
 // %bb.0:                               // %"$1"
 	mov	x8, x0
 	mov	w0, #1
-.LBB364_1:                              // %"$2"
+.LBB365_1:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w10, w9, [x8, #-4]
 	bfi	x10, x9, #32, #32
@@ -40855,40 +40888,40 @@ cmpLong:                                // @cmpLong
 	bfi	x11, x9, #32, #32
 	subs	x10, x10, x11
 	cset	w9, lo
-	cbnz	x10, .LBB364_5
+	cbnz	x10, .LBB365_5
 // %bb.2:                               // %"$3"
-                                        //   in Loop: Header=BB364_1 Depth=1
+                                        //   in Loop: Header=BB365_1 Depth=1
 	ldp	w8, w9, [x8, #4]
 	bfi	x8, x9, #32, #32
 	ldp	w1, w9, [x1, #4]
 	bfi	x1, x9, #32, #32
-	tbnz	w8, #1, .LBB364_6
+	tbnz	w8, #1, .LBB365_6
 // %bb.3:                               // %"$9"
-                                        //   in Loop: Header=BB364_1 Depth=1
-	tbz	w1, #1, .LBB364_1
+                                        //   in Loop: Header=BB365_1 Depth=1
+	tbz	w1, #1, .LBB365_1
 // %bb.4:                               // %"$4"
 	ret
-.LBB364_5:                              // %"$5"
-	tbz	w9, #0, .LBB364_11
-	b	.LBB364_10
-.LBB364_6:                              // %"$10"
-	tbnz	w1, #2, .LBB364_10
+.LBB365_5:                              // %"$5"
+	tbz	w9, #0, .LBB365_11
+	b	.LBB365_10
+.LBB365_6:                              // %"$10"
+	tbnz	w1, #2, .LBB365_10
 // %bb.7:                               // %"$12"
 	cmp	x1, x8
-	b.ne	.LBB364_9
+	b.ne	.LBB365_9
 // %bb.8:
 	mov	x0, xzr
 	ret
-.LBB364_9:                              // %"$14"
-	b.ls	.LBB364_11
-.LBB364_10:
+.LBB365_9:                              // %"$14"
+	b.ls	.LBB365_11
+.LBB365_10:
 	mov	x0, #-1
 	ret
-.LBB364_11:                             // %"$7"
+.LBB365_11:                             // %"$7"
 	mov	w0, #1
 	ret
-.Lfunc_end364:
-	.size	cmpLong, .Lfunc_end364-cmpLong
+.Lfunc_end365:
+	.size	cmpLong, .Lfunc_end365-cmpLong
 	.cfi_endproc
                                         // -- End function
 	.globl	need3                           // -- Begin function need3
@@ -40902,25 +40935,25 @@ need3:                                  // @need3
 	.cfi_offset w30, -16
 	adrp	x8, ($Avail)
 	ldr	x8, [x8, :lo12:($Avail)]
-	cbz	x8, .LBB365_3
+	cbz	x8, .LBB366_3
 // %bb.1:                               // %"$3"
 	ldp	w8, w9, [x8]
 	bfi	x8, x9, #32, #32
-	cbz	x8, .LBB365_3
+	cbz	x8, .LBB366_3
 // %bb.2:                               // %"$4"
 	ldp	w8, w9, [x8]
 	bfi	x8, x9, #32, #32
 	cmp	x8, #0                          // =0
 	cset	w8, ne
-.LBB365_3:                              // %"$2"
-	tbnz	w8, #0, .LBB365_5
+.LBB366_3:                              // %"$2"
+	tbnz	w8, #0, .LBB366_5
 // %bb.4:                               // %"$5"
 	bl	gc
-.LBB365_5:                              // %"$6"
+.LBB366_5:                              // %"$6"
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end365:
-	.size	need3, .Lfunc_end365-need3
+.Lfunc_end366:
+	.size	need3, .Lfunc_end366-need3
 	.cfi_endproc
                                         // -- End function
 	.globl	consExt                         // -- Begin function consExt
@@ -40937,8 +40970,8 @@ consExt:                                // @consExt
 	str	x9, [x8, :lo12:($ExtCnt)]
 	orr	x0, x0, #0x8
 	b	consSym
-.Lfunc_end366:
-	.size	consExt, .Lfunc_end366-consExt
+.Lfunc_end367:
+	.size	consExt, .Lfunc_end367-consExt
 	.cfi_endproc
                                         // -- End function
 	.globl	isLstIntern                     // -- Begin function isLstIntern
@@ -40956,8 +40989,8 @@ isLstIntern:                            // @isLstIntern
 	mov	x19, x1
 	mov	x20, x0
 	tst	x19, #0xf
-	b.ne	.LBB367_3
-.LBB367_1:                              // %"$3"
+	b.ne	.LBB368_3
+.LBB368_1:                              // %"$3"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w9, w8, [x19]
 	bfi	x9, x8, #32, #32
@@ -40967,21 +41000,21 @@ isLstIntern:                            // @isLstIntern
 	bfi	x1, x8, #32, #32
 	mov	x0, x20
 	bl	isIntern
-	cbnz	x0, .LBB367_4
+	cbnz	x0, .LBB368_4
 // %bb.2:                               // %"$6"
-                                        //   in Loop: Header=BB367_1 Depth=1
+                                        //   in Loop: Header=BB368_1 Depth=1
 	ldp	w19, w8, [x19, #8]
 	bfi	x19, x8, #32, #32
 	tst	x19, #0xf
-	b.eq	.LBB367_1
-.LBB367_3:
+	b.eq	.LBB368_1
+.LBB368_3:
 	mov	x0, xzr
-.LBB367_4:                              // %"$4"
+.LBB368_4:                              // %"$4"
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #32                  // 8-byte Folded Reload
 	ret
-.Lfunc_end367:
-	.size	isLstIntern, .Lfunc_end367-isLstIntern
+.Lfunc_end368:
+	.size	isLstIntern, .Lfunc_end368-isLstIntern
 	.cfi_endproc
                                         // -- End function
 	.globl	byteSym                         // -- Begin function byteSym
@@ -41002,10 +41035,10 @@ byteSym:                                // @byteSym
 	bfi	x8, x9, #32, #32
 	ldp	w9, w10, [x1, #16]
 	bfi	x9, x10, #32, #32
-	tbz	w9, #1, .LBB368_3
+	tbz	w9, #1, .LBB369_3
 // %bb.1:                               // %"$2"
 	cmp	x8, #59                         // =59
-	b.hi	.LBB368_5
+	b.hi	.LBB369_5
 // %bb.2:                               // %"$5"
 	and	x10, x0, #0xff
 	lsl	x10, x10, x8
@@ -41013,14 +41046,14 @@ byteSym:                                // @byteSym
 	lsr	x10, x9, #32
 	stp	w9, w10, [x19, #16]
 	add	x8, x8, #8                      // =8
-	b	.LBB368_7
-.LBB368_3:                              // %"$3"
+	b	.LBB369_7
+.LBB369_3:                              // %"$3"
 	ldp	w20, w9, [x19, #8]
 	bfi	x20, x9, #32, #32
 	ldp	w9, w10, [x20, #4]
 	bfi	x9, x10, #32, #32
 	cmp	x8, #59                         // =59
-	b.hi	.LBB368_6
+	b.hi	.LBB369_6
 // %bb.4:                               // %"$8"
 	and	x10, x0, #0xff
 	lsl	x10, x10, x8
@@ -41028,8 +41061,8 @@ byteSym:                                // @byteSym
 	lsr	x10, x9, #32
 	stp	w9, w10, [x20, #4]
 	add	x8, x8, #8                      // =8
-	b	.LBB368_7
-.LBB368_5:                              // %"$6"
+	b	.LBB369_7
+.LBB369_5:                              // %"$6"
 	lsr	x8, x9, #4
 	orr	x0, x8, x0, lsl #56
 	bl	boxNum
@@ -41037,8 +41070,8 @@ byteSym:                                // @byteSym
 	stp	w0, w9, [x19, #8]
 	mov	w8, #4
 	stp	w0, w9, [x19, #16]
-	b	.LBB368_7
-.LBB368_6:                              // %"$9"
+	b	.LBB369_7
+.LBB369_6:                              // %"$9"
 	lsr	x8, x9, #4
 	orr	x0, x8, x0, lsl #56
 	bl	boxNum
@@ -41046,14 +41079,14 @@ byteSym:                                // @byteSym
 	stp	w0, w9, [x20, #4]
 	mov	w8, #4
 	stp	w0, w9, [x19, #8]
-.LBB368_7:                              // %"$4"
+.LBB369_7:                              // %"$4"
 	lsr	x9, x8, #32
 	stp	w8, w9, [x19]
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #32                  // 8-byte Folded Reload
 	ret
-.Lfunc_end368:
-	.size	byteSym, .Lfunc_end368-byteSym
+.Lfunc_end369:
+	.size	byteSym, .Lfunc_end369-byteSym
 	.cfi_endproc
                                         // -- End function
 	.globl	getChar                         // -- Begin function getChar
@@ -41063,14 +41096,14 @@ getChar:                                // @getChar
 	.cfi_startproc
 // %bb.0:                               // %"$1"
 	cmp	w0, #128                        // =128
-	b.lt	.LBB369_10
+	b.lt	.LBB370_10
 // %bb.1:                               // %"$3"
 	cmp	w0, #255                        // =255
-	b.ne	.LBB369_3
+	b.ne	.LBB370_3
 // %bb.2:
 	mov	w0, #1114112
 	ret
-.LBB369_3:                              // %"$5"
+.LBB370_3:                              // %"$5"
 	stp	x30, x21, [sp, #-32]!           // 16-byte Folded Spill
 	stp	x20, x19, [sp, #16]             // 16-byte Folded Spill
 	.cfi_def_cfa_offset 32
@@ -41079,37 +41112,37 @@ getChar:                                // @getChar
 	.cfi_offset w21, -24
 	.cfi_offset w30, -32
 	adrp	x19, ($Get)
-	tbz	w0, #5, .LBB369_6
+	tbz	w0, #5, .LBB370_6
 // %bb.4:                               // %"$8"
-	tbz	w0, #4, .LBB369_7
+	tbz	w0, #4, .LBB370_7
 // %bb.5:                               // %"$11"
 	and	w21, w0, #0x7
 	ldr	x8, [x19, :lo12:($Get)]
 	blr	x8
 	and	w20, w0, #0x3f
 	bfi	w20, w21, #6, #3
-	b	.LBB369_8
-.LBB369_6:                              // %"$7"
+	b	.LBB370_8
+.LBB370_6:                              // %"$7"
 	and	w21, w0, #0x1f
-	b	.LBB369_9
-.LBB369_7:                              // %"$10"
+	b	.LBB370_9
+.LBB370_7:                              // %"$10"
 	and	w20, w0, #0xf
-.LBB369_8:                              // %"$12"
+.LBB370_8:                              // %"$12"
 	ldr	x8, [x19, :lo12:($Get)]
 	blr	x8
 	and	w21, w0, #0x3f
 	bfi	w21, w20, #6, #9
-.LBB369_9:                              // %"$9"
+.LBB370_9:                              // %"$9"
 	ldr	x8, [x19, :lo12:($Get)]
 	blr	x8
 	and	w0, w0, #0x3f
 	bfi	w0, w21, #6, #15
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x21, [sp], #32             // 16-byte Folded Reload
-.LBB369_10:                             // %"$2"
+.LBB370_10:                             // %"$2"
 	ret
-.Lfunc_end369:
-	.size	getChar, .Lfunc_end369-getChar
+.Lfunc_end370:
+	.size	getChar, .Lfunc_end370-getChar
 	.cfi_endproc
                                         // -- End function
 	.globl	compare                         // -- Begin function compare
@@ -41131,274 +41164,274 @@ compare:                                // @compare
 	.cfi_offset w24, -48
 	.cfi_offset w30, -64
 	cmp	x0, x1
-	b.ne	.LBB370_2
-.LBB370_1:                              // %"$72"
+	b.ne	.LBB371_2
+.LBB371_1:                              // %"$72"
 	mov	x0, xzr
-	b	.LBB370_9
-.LBB370_2:                              // %"$3"
+	b	.LBB371_9
+.LBB371_2:                              // %"$3"
 	mov	x20, x0
 	adrp	x8, SymTab+8
 	add	x8, x8, :lo12:SymTab+8
 	cmp	x0, x8
-	b.ne	.LBB370_4
-.LBB370_3:
+	b.ne	.LBB371_4
+.LBB371_3:
 	mov	x0, #-1
-	b	.LBB370_9
-.LBB370_4:                              // %"$5"
+	b	.LBB371_9
+.LBB371_4:                              // %"$5"
 	adrp	x22, SymTab+216
 	add	x22, x22, :lo12:SymTab+216
 	cmp	x20, x22
-	b.ne	.LBB370_6
-.LBB370_5:
+	b.ne	.LBB371_6
+.LBB371_5:
 	mov	w0, #1
-	b	.LBB370_9
-.LBB370_6:                              // %"$7"
+	b	.LBB371_9
+.LBB371_6:                              // %"$7"
 	mov	x19, x1
 	tst	x20, #0x6
-	b.eq	.LBB370_10
+	b.eq	.LBB371_10
 // %bb.7:                               // %"$10"
 	tst	x19, #0x6
-	b.eq	.LBB370_13
+	b.eq	.LBB371_13
 // %bb.8:                               // %"$13"
 	mov	x0, x20
 	mov	x1, x19
 	bl	cmpNum
-.LBB370_9:                              // %"$73"
+.LBB371_9:                              // %"$73"
 	ldp	x20, x19, [sp, #48]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #32]             // 16-byte Folded Reload
 	ldp	x24, x23, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #64                  // 8-byte Folded Reload
 	ret
-.LBB370_10:                             // %"$9"
-	tbz	w20, #3, .LBB370_14
+.LBB371_10:                             // %"$9"
+	tbz	w20, #3, .LBB371_14
 // %bb.11:                              // %"$17"
 	tst	x19, #0x6
-	b.eq	.LBB370_16
+	b.eq	.LBB371_16
 // %bb.12:
 	mov	w8, #1
-	b	.LBB370_17
-.LBB370_13:                             // %"$12"
+	b	.LBB371_17
+.LBB371_13:                             // %"$12"
 	cmp	x19, x8
-	b.ne	.LBB370_3
-	b	.LBB370_5
-.LBB370_14:                             // %"$16"
+	b.ne	.LBB371_3
+	b	.LBB371_5
+.LBB371_14:                             // %"$16"
 	tst	x19, #0xf
-	b.eq	.LBB370_20
+	b.eq	.LBB371_20
 // %bb.15:                              // %"$79"
 	cmp	x19, x22
-	b.eq	.LBB370_3
-	b	.LBB370_5
-.LBB370_16:                             // %"$20"
+	b.eq	.LBB371_3
+	b	.LBB371_5
+.LBB371_16:                             // %"$20"
 	cmp	x19, x8
 	cset	w8, eq
-.LBB370_17:                             // %"$19"
-	tbnz	w8, #0, .LBB370_5
+.LBB371_17:                             // %"$19"
+	tbnz	w8, #0, .LBB371_5
 // %bb.18:                              // %"$21"
 	tst	x19, #0xf
-	b.eq	.LBB370_31
+	b.eq	.LBB371_31
 // %bb.19:                              // %"$24"
 	cmp	x19, x22
 	cset	w8, eq
-	b	.LBB370_32
-.LBB370_20:                             // %"$78"
+	b	.LBB371_32
+.LBB371_20:                             // %"$78"
 	mov	x8, sp
 	adrp	x9, ($StkLimit)
 	ldr	x9, [x9, :lo12:($StkLimit)]
 	cmp	x9, x8
-	b.hi	.LBB370_62
+	b.hi	.LBB371_62
 // %bb.21:
 	adrp	x24, ($Signal)
 	mov	x21, x20
 	mov	x23, x19
-.LBB370_22:                             // %"$85"
+.LBB371_22:                             // %"$85"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w0, w8, [x21]
 	bfi	x0, x8, #32, #32
 	ldp	w1, w8, [x23]
 	bfi	x1, x8, #32, #32
 	bl	compare
-	cbnz	x0, .LBB370_9
+	cbnz	x0, .LBB371_9
 // %bb.23:                              // %"$86"
-                                        //   in Loop: Header=BB370_22 Depth=1
+                                        //   in Loop: Header=BB371_22 Depth=1
 	ldp	w21, w8, [x21, #8]
 	bfi	x21, x8, #32, #32
 	tst	x21, #0xf
-	b.ne	.LBB370_58
+	b.ne	.LBB371_58
 // %bb.24:                              // %"$89"
-                                        //   in Loop: Header=BB370_22 Depth=1
+                                        //   in Loop: Header=BB371_22 Depth=1
 	ldp	w23, w8, [x23, #8]
 	bfi	x23, x8, #32, #32
 	tst	x23, #0xf
-	b.ne	.LBB370_59
+	b.ne	.LBB371_59
 // %bb.25:                              // %"$91"
-                                        //   in Loop: Header=BB370_22 Depth=1
+                                        //   in Loop: Header=BB371_22 Depth=1
 	cmp	x21, x20
-	b.ne	.LBB370_27
+	b.ne	.LBB371_27
 // %bb.26:                              // %"$97"
-                                        //   in Loop: Header=BB370_22 Depth=1
+                                        //   in Loop: Header=BB371_22 Depth=1
 	cmp	x23, x19
 	cset	w8, eq
-	b	.LBB370_28
-.LBB370_27:                             //   in Loop: Header=BB370_22 Depth=1
+	b	.LBB371_28
+.LBB371_27:                             //   in Loop: Header=BB371_22 Depth=1
 	mov	w8, wzr
-.LBB370_28:                             // %"$96"
-                                        //   in Loop: Header=BB370_22 Depth=1
-	tbnz	w8, #0, .LBB370_1
+.LBB371_28:                             // %"$96"
+                                        //   in Loop: Header=BB371_22 Depth=1
+	tbnz	w8, #0, .LBB371_1
 // %bb.29:                              // %"$98"
-                                        //   in Loop: Header=BB370_22 Depth=1
+                                        //   in Loop: Header=BB371_22 Depth=1
 	ldr	w8, [x24, :lo12:($Signal)]
-	cbz	w8, .LBB370_22
+	cbz	w8, .LBB371_22
 // %bb.30:                              // %"$100"
-                                        //   in Loop: Header=BB370_22 Depth=1
+                                        //   in Loop: Header=BB371_22 Depth=1
 	mov	x0, xzr
 	bl	sighandler
-	b	.LBB370_22
-.LBB370_31:
+	b	.LBB371_22
+.LBB371_31:
 	mov	w8, #1
-.LBB370_32:                             // %"$23"
-	tbnz	w8, #0, .LBB370_3
+.LBB371_32:                             // %"$23"
+	tbnz	w8, #0, .LBB371_3
 // %bb.33:                              // %"$25"
 	ldp	w9, w8, [x20, #-8]
 	bfi	x9, x8, #32, #32
 	and	x8, x9, #0xfffffffffffffff7
 	tst	x8, #0x6
-	b.ne	.LBB370_35
-.LBB370_34:                             // %"$28"
+	b.ne	.LBB371_35
+.LBB371_34:                             // %"$28"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w8, w9, [x8, #8]
 	bfi	x8, x9, #32, #32
 	tst	x8, #0x6
-	b.eq	.LBB370_34
-.LBB370_35:                             // %"$29"
+	b.eq	.LBB371_34
+.LBB371_35:                             // %"$29"
 	ldp	w10, w9, [x19, #-8]
 	bfi	x10, x9, #32, #32
 	and	x9, x10, #0xfffffffffffffff7
 	tst	x9, #0x6
-	b.ne	.LBB370_37
-.LBB370_36:                             // %"$31"
+	b.ne	.LBB371_37
+.LBB371_36:                             // %"$31"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w9, w10, [x9, #8]
 	bfi	x9, x10, #32, #32
 	tst	x9, #0x6
-	b.eq	.LBB370_36
-.LBB370_37:                             // %"$32"
+	b.eq	.LBB371_36
+.LBB371_37:                             // %"$32"
 	cmp	x8, #2                          // =2
-	b.ne	.LBB370_41
+	b.ne	.LBB371_41
 // %bb.38:                              // %"$35"
 	cmp	x9, #2                          // =2
-	b.ne	.LBB370_3
+	b.ne	.LBB371_3
 // %bb.39:                              // %"$37"
 	cmp	x20, x19
-	b.ne	.LBB370_1
+	b.ne	.LBB371_1
 // %bb.40:                              // %"$39"
-	b.hi	.LBB370_3
-	b	.LBB370_5
-.LBB370_41:                             // %"$34"
+	b.hi	.LBB371_3
+	b	.LBB371_5
+.LBB371_41:                             // %"$34"
 	cmp	x9, #2                          // =2
-	b.eq	.LBB370_5
-.LBB370_42:                             // %"$45"
+	b.eq	.LBB371_5
+.LBB371_42:                             // %"$45"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB370_44 Depth 2
-                                        //     Child Loop BB370_49 Depth 2
-                                        //     Child Loop BB370_52 Depth 2
-	tbz	w8, #1, .LBB370_46
+                                        //     Child Loop BB371_44 Depth 2
+                                        //     Child Loop BB371_49 Depth 2
+                                        //     Child Loop BB371_52 Depth 2
+	tbz	w8, #1, .LBB371_46
 // %bb.43:                              // %"$49"
-                                        //   in Loop: Header=BB370_42 Depth=1
+                                        //   in Loop: Header=BB371_42 Depth=1
 	tst	x8, #0x6
-	b.ne	.LBB370_45
-.LBB370_44:                             // %"$50"
-                                        //   Parent Loop BB370_42 Depth=1
+	b.ne	.LBB371_45
+.LBB371_44:                             // %"$50"
+                                        //   Parent Loop BB371_42 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	ldp	w8, w10, [x8, #8]
 	bfi	x8, x10, #32, #32
 	tst	x8, #0x6
-	b.eq	.LBB370_44
-.LBB370_45:                             // %"$51"
-                                        //   in Loop: Header=BB370_42 Depth=1
+	b.eq	.LBB371_44
+.LBB371_45:                             // %"$51"
+                                        //   in Loop: Header=BB371_42 Depth=1
 	ubfx	x10, x8, #4, #58
 	mov	x8, xzr
-	b	.LBB370_47
-.LBB370_46:                             // %"$47"
-                                        //   in Loop: Header=BB370_42 Depth=1
+	b	.LBB371_47
+.LBB371_46:                             // %"$47"
+                                        //   in Loop: Header=BB371_42 Depth=1
 	ldp	w10, w11, [x8, #-4]
 	bfi	x10, x11, #32, #32
 	ldp	w8, w11, [x8, #4]
 	bfi	x8, x11, #32, #32
-.LBB370_47:                             // %"$48"
-                                        //   in Loop: Header=BB370_42 Depth=1
-	tbz	w9, #1, .LBB370_51
+.LBB371_47:                             // %"$48"
+                                        //   in Loop: Header=BB371_42 Depth=1
+	tbz	w9, #1, .LBB371_51
 // %bb.48:                              // %"$55"
-                                        //   in Loop: Header=BB370_42 Depth=1
+                                        //   in Loop: Header=BB371_42 Depth=1
 	tst	x9, #0x6
-	b.ne	.LBB370_50
-.LBB370_49:                             // %"$56"
-                                        //   Parent Loop BB370_42 Depth=1
+	b.ne	.LBB371_50
+.LBB371_49:                             // %"$56"
+                                        //   Parent Loop BB371_42 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	ldp	w9, w11, [x9, #8]
 	bfi	x9, x11, #32, #32
 	tst	x9, #0x6
-	b.eq	.LBB370_49
-.LBB370_50:                             // %"$57"
-                                        //   in Loop: Header=BB370_42 Depth=1
+	b.eq	.LBB371_49
+.LBB371_50:                             // %"$57"
+                                        //   in Loop: Header=BB371_42 Depth=1
 	ubfx	x11, x9, #4, #58
 	mov	x9, xzr
-	b	.LBB370_52
-.LBB370_51:                             // %"$53"
-                                        //   in Loop: Header=BB370_42 Depth=1
+	b	.LBB371_52
+.LBB371_51:                             // %"$53"
+                                        //   in Loop: Header=BB371_42 Depth=1
 	ldp	w11, w12, [x9, #-4]
 	bfi	x11, x12, #32, #32
 	ldp	w9, w12, [x9, #4]
 	bfi	x9, x12, #32, #32
-.LBB370_52:                             // %"$58"
-                                        //   Parent Loop BB370_42 Depth=1
+.LBB371_52:                             // %"$58"
+                                        //   Parent Loop BB371_42 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	and	x12, x10, #0xff
 	subs	x12, x12, w11, uxtb
-	b.ne	.LBB370_60
+	b.ne	.LBB371_60
 // %bb.53:                              // %"$60"
-                                        //   in Loop: Header=BB370_52 Depth=2
+                                        //   in Loop: Header=BB371_52 Depth=2
 	lsr	x10, x10, #8
-	cbz	x10, .LBB370_55
+	cbz	x10, .LBB371_55
 // %bb.54:                              // %"$64"
-                                        //   in Loop: Header=BB370_52 Depth=2
+                                        //   in Loop: Header=BB371_52 Depth=2
 	lsr	x11, x11, #8
-	cbnz	x11, .LBB370_52
-	b	.LBB370_5
-.LBB370_55:                             // %"$66"
-                                        //   in Loop: Header=BB370_42 Depth=1
+	cbnz	x11, .LBB371_52
+	b	.LBB371_5
+.LBB371_55:                             // %"$66"
+                                        //   in Loop: Header=BB371_42 Depth=1
 	lsr	x10, x11, #8
-	cbnz	x10, .LBB370_3
+	cbnz	x10, .LBB371_3
 // %bb.56:                              // %"$68"
-                                        //   in Loop: Header=BB370_42 Depth=1
-	cbz	x8, .LBB370_61
+                                        //   in Loop: Header=BB371_42 Depth=1
+	cbz	x8, .LBB371_61
 // %bb.57:                              // %"$70"
-                                        //   in Loop: Header=BB370_42 Depth=1
-	cbnz	x9, .LBB370_42
-	b	.LBB370_5
-.LBB370_58:                             // %"$90"
+                                        //   in Loop: Header=BB371_42 Depth=1
+	cbnz	x9, .LBB371_42
+	b	.LBB371_5
+.LBB371_58:                             // %"$90"
 	ldp	w1, w8, [x23, #8]
 	bfi	x1, x8, #32, #32
 	mov	x0, x21
 	bl	compare
-	b	.LBB370_9
-.LBB370_59:                             // %"$92"
+	b	.LBB371_9
+.LBB371_59:                             // %"$92"
 	cmp	x23, x22
-	b.eq	.LBB370_3
-	b	.LBB370_5
-.LBB370_60:                             // %"$59"
+	b.eq	.LBB371_3
+	b	.LBB371_5
+.LBB371_60:                             // %"$59"
 	mov	w8, #1
 	cmp	x12, #0                         // =0
 	mov	x9, #-1
 	csel	x0, x8, x9, gt
-	b	.LBB370_9
-.LBB370_61:                             // %"$69"
-	cbnz	x9, .LBB370_3
-	b	.LBB370_1
-.LBB370_62:                             // %"$83"
+	b	.LBB371_9
+.LBB371_61:                             // %"$69"
+	cbnz	x9, .LBB371_3
+	b	.LBB371_1
+.LBB371_62:                             // %"$83"
 	mov	x0, xzr
 	bl	stkErr
-.Lfunc_end370:
-	.size	compare, .Lfunc_end370-compare
+.Lfunc_end371:
+	.size	compare, .Lfunc_end371-compare
 	.cfi_endproc
                                         // -- End function
 	.globl	cmpNum                          // -- Begin function cmpNum
@@ -41410,30 +41443,30 @@ cmpNum:                                 // @cmpNum
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	tbz	w0, #3, .LBB371_3
+	tbz	w0, #3, .LBB372_3
 // %bb.1:                               // %"$3"
-	tbz	w1, #3, .LBB371_6
+	tbz	w1, #3, .LBB372_6
 // %bb.2:                               // %"$9"
 	and	x8, x1, #0xfffffffffffffff7
 	and	x1, x0, #0xfffffffffffffff7
 	mov	x0, x8
-	b	.LBB371_5
-.LBB371_3:                              // %"$2"
-	tbz	w1, #3, .LBB371_5
+	b	.LBB372_5
+.LBB372_3:                              // %"$2"
+	tbz	w1, #3, .LBB372_5
 // %bb.4:
 	mov	w0, #1
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.LBB371_5:                              // %"$4"
+.LBB372_5:                              // %"$4"
 	bl	cmpu
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.LBB371_6:
+.LBB372_6:
 	mov	x0, #-1
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end371:
-	.size	cmpNum, .Lfunc_end371-cmpNum
+.Lfunc_end372:
+	.size	cmpNum, .Lfunc_end372-cmpNum
 	.cfi_endproc
                                         // -- End function
 	.globl	cmpu                            // -- Begin function cmpu
@@ -41443,24 +41476,24 @@ cmpu:                                   // @cmpu
 	.cfi_startproc
 // %bb.0:                               // %"$1"
 	mov	x8, x0
-	tbz	w8, #1, .LBB372_3
+	tbz	w8, #1, .LBB373_3
 // %bb.1:                               // %"$2"
 	mov	w9, #1
 	cmp	x1, x8
 	cset	w10, hi
 	tst	w1, #0x4
 	csel	w9, w9, w10, ne
-	tbz	w9, #0, .LBB372_9
+	tbz	w9, #0, .LBB373_9
 // %bb.2:
 	mov	x0, #-1
 	ret
-.LBB372_3:                              // %"$3"
-	tbnz	w1, #1, .LBB372_11
+.LBB373_3:                              // %"$3"
+	tbnz	w1, #1, .LBB373_11
 // %bb.4:                               // %"$15.preheader"
 	mov	x10, xzr
 	mov	x9, xzr
 	mov	w0, #1
-.LBB372_5:                              // %"$15"
+.LBB373_5:                              // %"$15"
                                         // =>This Inner Loop Header: Depth=1
 	mov	x11, x1
 	mov	x12, x8
@@ -41469,50 +41502,50 @@ cmpu:                                   // @cmpu
 	ldp	w1, w13, [x1, #4]
 	bfi	x1, x13, #32, #32
 	cmp	x8, x1
-	b.eq	.LBB372_12
+	b.eq	.LBB373_12
 // %bb.6:                               // %"$16"
-                                        //   in Loop: Header=BB372_5 Depth=1
-	tbnz	w8, #1, .LBB372_17
+                                        //   in Loop: Header=BB373_5 Depth=1
+	tbnz	w8, #1, .LBB373_17
 // %bb.7:                               // %"$27"
-                                        //   in Loop: Header=BB372_5 Depth=1
-	tbnz	w1, #1, .LBB372_25
+                                        //   in Loop: Header=BB373_5 Depth=1
+	tbnz	w1, #1, .LBB373_25
 // %bb.8:                               // %"$36"
-                                        //   in Loop: Header=BB372_5 Depth=1
+                                        //   in Loop: Header=BB373_5 Depth=1
 	lsr	x13, x10, #32
 	lsr	x14, x9, #32
 	stp	w10, w13, [x12, #4]
 	mov	x10, x12
 	stp	w9, w14, [x11, #4]
 	mov	x9, x11
-	b	.LBB372_5
-.LBB372_9:                              // %"$8"
+	b	.LBB373_5
+.LBB373_9:                              // %"$8"
 	cmp	x1, x8
-	b.ne	.LBB372_11
+	b.ne	.LBB373_11
 // %bb.10:
 	mov	x0, xzr
 	ret
-.LBB372_11:                             // %"$10"
+.LBB373_11:                             // %"$10"
 	mov	w0, #1
-	b	.LBB372_26
-.LBB372_12:                             // %"$19.preheader"
+	b	.LBB373_26
+.LBB373_12:                             // %"$19.preheader"
 	mov	w0, #1
-.LBB372_13:                             // %"$19"
+.LBB373_13:                             // %"$19"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w8, w13, [x12, #-4]
 	bfi	x8, x13, #32, #32
 	ldp	w13, w14, [x11, #-4]
 	bfi	x13, x14, #32, #32
 	cmp	x13, x8
-	b.hi	.LBB372_21
+	b.hi	.LBB373_21
 // %bb.14:                              // %"$20"
-                                        //   in Loop: Header=BB372_13 Depth=1
+                                        //   in Loop: Header=BB373_13 Depth=1
 	cmp	x8, x13
-	b.hi	.LBB372_25
+	b.hi	.LBB373_25
 // %bb.15:                              // %"$23"
-                                        //   in Loop: Header=BB372_13 Depth=1
-	cbz	x10, .LBB372_22
+                                        //   in Loop: Header=BB373_13 Depth=1
+	cbz	x10, .LBB373_22
 // %bb.16:                              // %"$25"
-                                        //   in Loop: Header=BB372_13 Depth=1
+                                        //   in Loop: Header=BB373_13 Depth=1
 	mov	x8, x10
 	ldr	w13, [x8, #4]!
 	ldr	w14, [x8, #4]
@@ -41530,34 +41563,34 @@ cmpu:                                   // @cmpu
 	mov	x11, x9
 	mov	x10, x13
 	mov	x9, x14
-	b	.LBB372_13
-.LBB372_17:                             // %"$28"
+	b	.LBB373_13
+.LBB373_17:                             // %"$28"
 	mov	w13, #1
 	cmp	x1, x8
 	cset	w14, hi
 	tst	w1, #0x4
 	csel	w13, w13, w14, ne
-	tbz	w13, #0, .LBB372_19
+	tbz	w13, #0, .LBB373_19
 // %bb.18:
 	mov	x0, #-1
-	b	.LBB372_25
-.LBB372_19:                             // %"$32"
+	b	.LBB373_25
+.LBB373_19:                             // %"$32"
 	cmp	x1, x8
-	b.ne	.LBB372_23
+	b.ne	.LBB373_23
 // %bb.20:
 	mov	x0, xzr
-	b	.LBB372_25
-.LBB372_21:
+	b	.LBB373_25
+.LBB373_21:
 	mov	x0, #-1
-	b	.LBB372_25
-.LBB372_22:
+	b	.LBB373_25
+.LBB373_22:
 	mov	x0, xzr
-	b	.LBB372_25
-.LBB372_23:                             // %"$34"
+	b	.LBB373_25
+.LBB373_23:                             // %"$34"
 	mov	w0, #1
-	b	.LBB372_25
-.LBB372_24:                             // %"$39"
-                                        //   in Loop: Header=BB372_25 Depth=1
+	b	.LBB373_25
+.LBB373_24:                             // %"$39"
+                                        //   in Loop: Header=BB373_25 Depth=1
 	mov	x8, x10
 	ldr	w13, [x8, #4]!
 	ldr	w14, [x8, #4]
@@ -41575,13 +41608,13 @@ cmpu:                                   // @cmpu
 	mov	x11, x9
 	mov	x10, x13
 	mov	x9, x14
-.LBB372_25:                             // %"$38"
+.LBB373_25:                             // %"$38"
                                         // =>This Inner Loop Header: Depth=1
-	cbnz	x10, .LBB372_24
-.LBB372_26:                             // %"$4"
+	cbnz	x10, .LBB373_24
+.LBB373_26:                             // %"$4"
 	ret
-.Lfunc_end372:
-	.size	cmpu, .Lfunc_end372-cmpu
+.Lfunc_end373:
+	.size	cmpu, .Lfunc_end373-cmpu
 	.cfi_endproc
                                         // -- End function
 	.globl	rdl                             // -- Begin function rdl
@@ -41607,51 +41640,51 @@ rdl:                                    // @rdl
 	add	x21, x21, :lo12:($Delim)
 	adrp	x22, SymTab+8
 	add	x22, x22, :lo12:SymTab+8
-	b	.LBB373_3
-.LBB373_1:                              // %"$22"
-                                        //   in Loop: Header=BB373_3 Depth=1
+	b	.LBB374_3
+.LBB374_1:                              // %"$22"
+                                        //   in Loop: Header=BB374_3 Depth=1
 	mov	w0, wzr
 	bl	read0
-.LBB373_2:                              // %"$7.sink.split"
-                                        //   in Loop: Header=BB373_3 Depth=1
+.LBB374_2:                              // %"$7.sink.split"
+                                        //   in Loop: Header=BB374_3 Depth=1
 	mov	x1, x22
 	bl	cons
 	lsr	x8, x0, #32
 	stp	w0, w8, [x20, #8]
 	mov	x20, x0
-.LBB373_3:                              // %"$2"
+.LBB374_3:                              // %"$2"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB373_14 Depth 2
+                                        //     Child Loop BB374_14 Depth 2
 	bl	skip
 	cmp	w0, #41                         // =41
-	b.eq	.LBB373_21
+	b.eq	.LBB374_21
 // %bb.4:                               // %"$3"
-                                        //   in Loop: Header=BB373_3 Depth=1
+                                        //   in Loop: Header=BB374_3 Depth=1
 	cmp	w0, #93                         // =93
-	b.eq	.LBB373_22
+	b.eq	.LBB374_22
 // %bb.5:                               // %"$6"
-                                        //   in Loop: Header=BB373_3 Depth=1
+                                        //   in Loop: Header=BB374_3 Depth=1
 	cmp	w0, #46                         // =46
-	b.ne	.LBB373_8
+	b.ne	.LBB374_8
 // %bb.6:                               // %"$9"
-                                        //   in Loop: Header=BB373_3 Depth=1
+                                        //   in Loop: Header=BB374_3 Depth=1
 	ldr	x8, [x23, :lo12:($Get)]
 	blr	x8
 	mov	w1, w0
 	mov	x0, x21
 	bl	strchr2
-	cbnz	x0, .LBB373_16
+	cbnz	x0, .LBB374_16
 // %bb.7:                               // %"$10"
-                                        //   in Loop: Header=BB373_3 Depth=1
+                                        //   in Loop: Header=BB374_3 Depth=1
 	mov	w0, #46
 	bl	rdAtom
-	b	.LBB373_2
-.LBB373_8:                              // %"$8"
-                                        //   in Loop: Header=BB373_3 Depth=1
+	b	.LBB374_2
+.LBB374_8:                              // %"$8"
+                                        //   in Loop: Header=BB374_3 Depth=1
 	cmp	w0, #126                        // =126
-	b.ne	.LBB373_1
+	b.ne	.LBB374_1
 // %bb.9:                               // %"$23"
-                                        //   in Loop: Header=BB373_3 Depth=1
+                                        //   in Loop: Header=BB374_3 Depth=1
 	ldr	x8, [x23, :lo12:($Get)]
 	blr	x8
 	mov	w0, wzr
@@ -41659,68 +41692,68 @@ rdl:                                    // @rdl
 	lsr	x8, x0, #32
 	stp	w0, w8, [x20, #8]
 	tst	x0, #0x6
-	b.ne	.LBB373_13
+	b.ne	.LBB374_13
 // %bb.10:                              // %"$25"
-                                        //   in Loop: Header=BB373_3 Depth=1
-	tbz	w0, #3, .LBB373_12
+                                        //   in Loop: Header=BB374_3 Depth=1
+	tbz	w0, #3, .LBB374_12
 // %bb.11:                              // %"$28"
-                                        //   in Loop: Header=BB373_3 Depth=1
+                                        //   in Loop: Header=BB374_3 Depth=1
 	ldp	w0, w8, [x0]
 	bfi	x0, x8, #32, #32
-	b	.LBB373_13
-.LBB373_12:                             // %"$27"
-                                        //   in Loop: Header=BB373_3 Depth=1
+	b	.LBB374_13
+.LBB374_12:                             // %"$27"
+                                        //   in Loop: Header=BB374_3 Depth=1
 	bl	evList
-.LBB373_13:                             // %"$24"
-                                        //   in Loop: Header=BB373_3 Depth=1
+.LBB374_13:                             // %"$24"
+                                        //   in Loop: Header=BB374_3 Depth=1
 	lsr	x8, x0, #32
 	stp	w0, w8, [x20, #8]
-.LBB373_14:                             // %"$29"
-                                        //   Parent Loop BB373_3 Depth=1
+.LBB374_14:                             // %"$29"
+                                        //   Parent Loop BB374_3 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	ldrb	w8, [x20, #8]
 	tst	w8, #0xf
-	b.ne	.LBB373_3
+	b.ne	.LBB374_3
 // %bb.15:                              // %"$30"
-                                        //   in Loop: Header=BB373_14 Depth=2
+                                        //   in Loop: Header=BB374_14 Depth=2
 	ldp	w20, w8, [x20, #8]
 	bfi	x20, x8, #32, #32
-	b	.LBB373_14
-.LBB373_16:                             // %"$11"
+	b	.LBB374_14
+.LBB374_16:                             // %"$11"
 	bl	skip
 	cmp	w0, #41                         // =41
-	b.ne	.LBB373_18
+	b.ne	.LBB374_18
 // %bb.17:
 	mov	w8, #1
-	tbz	w8, #0, .LBB373_19
-	b	.LBB373_20
-.LBB373_18:                             // %"$13"
+	tbz	w8, #0, .LBB374_19
+	b	.LBB374_20
+.LBB374_18:                             // %"$13"
 	cmp	w0, #93                         // =93
 	cset	w8, eq
-	tbnz	w8, #0, .LBB373_20
-.LBB373_19:                             // %"$15"
+	tbnz	w8, #0, .LBB374_20
+.LBB374_19:                             // %"$15"
 	mov	w0, wzr
 	bl	read0
 	mov	x19, x0
-.LBB373_20:                             // %"$16"
+.LBB374_20:                             // %"$16"
 	lsr	x8, x19, #32
 	stp	w19, w8, [x20, #8]
 	bl	skip
 	cmp	w0, #41                         // =41
-	b.ne	.LBB373_23
-.LBB373_21:                             // %"$5"
+	b.ne	.LBB374_23
+.LBB374_21:                             // %"$5"
 	ldr	x8, [x23, :lo12:($Get)]
 	blr	x8
-.LBB373_22:                             // %"$4"
+.LBB374_22:                             // %"$4"
 	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x23, [sp], #48             // 16-byte Folded Reload
 	ret
-.LBB373_23:                             // %"$18"
+.LBB374_23:                             // %"$18"
 	adrp	x8, ($Chr)
 	ldr	w8, [x8, :lo12:($Chr)]
 	cmp	w8, #93                         // =93
-	b.eq	.LBB373_22
+	b.eq	.LBB374_22
 // %bb.24:                              // %"$21"
 	adrp	x2, .L$154
 	add	x2, x2, :lo12:.L$154
@@ -41728,8 +41761,8 @@ rdl:                                    // @rdl
 	mov	x1, x19
 	mov	x3, xzr
 	bl	err
-.Lfunc_end373:
-	.size	rdl, .Lfunc_end373-rdl
+.Lfunc_end374:
+	.size	rdl, .Lfunc_end374-rdl
 	.cfi_endproc
                                         // -- End function
 	.globl	comment                         // -- Begin function comment
@@ -41748,76 +41781,76 @@ comment:                                // @comment
 	ldr	x8, [x19, :lo12:($Get)]
 	blr	x8
 	cmp	w0, #123                        // =123
-	b.ne	.LBB374_2
+	b.ne	.LBB375_2
 // %bb.1:                               // %"$5.preheader"
 	mov	x20, xzr
-	b	.LBB374_6
-.LBB374_2:                              // %"$17"
+	b	.LBB375_6
+.LBB375_2:                              // %"$17"
                                         // =>This Inner Loop Header: Depth=1
 	cmp	w0, #10                         // =10
-	b.eq	.LBB374_15
+	b.eq	.LBB375_15
 // %bb.3:                               // %"$18"
-                                        //   in Loop: Header=BB374_2 Depth=1
-	tbnz	w0, #31, .LBB374_15
+                                        //   in Loop: Header=BB375_2 Depth=1
+	tbnz	w0, #31, .LBB375_15
 // %bb.4:                               // %"$20"
-                                        //   in Loop: Header=BB374_2 Depth=1
+                                        //   in Loop: Header=BB375_2 Depth=1
 	ldr	x8, [x19, :lo12:($Get)]
 	blr	x8
-	b	.LBB374_2
-.LBB374_5:                              // %"$10"
-                                        //   in Loop: Header=BB374_6 Depth=1
+	b	.LBB375_2
+.LBB375_5:                              // %"$10"
+                                        //   in Loop: Header=BB375_6 Depth=1
 	add	x20, x20, #1                    // =1
-.LBB374_6:                              // %"$5"
+.LBB375_6:                              // %"$5"
                                         // =>This Inner Loop Header: Depth=1
 	ldr	x8, [x19, :lo12:($Get)]
 	blr	x8
-	tbnz	w0, #31, .LBB374_15
+	tbnz	w0, #31, .LBB375_15
 // %bb.7:                               // %"$6"
-                                        //   in Loop: Header=BB374_6 Depth=1
+                                        //   in Loop: Header=BB375_6 Depth=1
 	cmp	w0, #35                         // =35
-	b.ne	.LBB374_9
+	b.ne	.LBB375_9
 // %bb.8:                               // %"$9"
-                                        //   in Loop: Header=BB374_6 Depth=1
+                                        //   in Loop: Header=BB375_6 Depth=1
 	ldr	x8, [x19, :lo12:($Get)]
 	blr	x8
 	cmp	w0, #123                        // =123
 	cset	w8, eq
-	cbnz	w8, .LBB374_5
-	b	.LBB374_10
-.LBB374_9:                              //   in Loop: Header=BB374_6 Depth=1
+	cbnz	w8, .LBB375_5
+	b	.LBB375_10
+.LBB375_9:                              //   in Loop: Header=BB375_6 Depth=1
 	mov	w8, wzr
-	cbnz	w8, .LBB374_5
-.LBB374_10:                             // %"$11"
-                                        //   in Loop: Header=BB374_6 Depth=1
+	cbnz	w8, .LBB375_5
+.LBB375_10:                             // %"$11"
+                                        //   in Loop: Header=BB375_6 Depth=1
 	cmp	w0, #125                        // =125
-	b.ne	.LBB374_13
+	b.ne	.LBB375_13
 // %bb.11:                              // %"$14"
-                                        //   in Loop: Header=BB374_6 Depth=1
+                                        //   in Loop: Header=BB375_6 Depth=1
 	ldr	x8, [x19, :lo12:($Get)]
 	blr	x8
 	cmp	w0, #35                         // =35
-	b.ne	.LBB374_14
+	b.ne	.LBB375_14
 // %bb.12:                              // %"$15"
-                                        //   in Loop: Header=BB374_6 Depth=1
+                                        //   in Loop: Header=BB375_6 Depth=1
 	sub	x20, x20, #1                    // =1
 	lsr	x8, x20, #63
-	tbz	w8, #0, .LBB374_6
-	b	.LBB374_15
-.LBB374_13:                             //   in Loop: Header=BB374_6 Depth=1
+	tbz	w8, #0, .LBB375_6
+	b	.LBB375_15
+.LBB375_13:                             //   in Loop: Header=BB375_6 Depth=1
 	mov	w8, wzr
-	tbz	w8, #0, .LBB374_6
-	b	.LBB374_15
-.LBB374_14:                             //   in Loop: Header=BB374_6 Depth=1
+	tbz	w8, #0, .LBB375_6
+	b	.LBB375_15
+.LBB375_14:                             //   in Loop: Header=BB375_6 Depth=1
 	mov	w8, wzr
-	tbz	w8, #0, .LBB374_6
-.LBB374_15:                             // %"$4"
+	tbz	w8, #0, .LBB375_6
+.LBB375_15:                             // %"$4"
 	ldr	x8, [x19, :lo12:($Get)]
 	blr	x8
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #32                  // 8-byte Folded Reload
 	ret
-.Lfunc_end374:
-	.size	comment, .Lfunc_end374-comment
+.Lfunc_end375:
+	.size	comment, .Lfunc_end375-comment
 	.cfi_endproc
                                         // -- End function
 	.globl	outNum                          // -- Begin function outNum
@@ -41831,19 +41864,19 @@ outNum:                                 // @outNum
 	.cfi_offset w19, -8
 	.cfi_offset w30, -16
 	mov	x19, x0
-	tbz	w19, #3, .LBB375_2
+	tbz	w19, #3, .LBB376_2
 // %bb.1:                               // %"$2"
 	adrp	x8, ($Put)
 	ldr	x8, [x8, :lo12:($Put)]
 	mov	w0, #45
 	blr	x8
-.LBB375_2:                              // %"$3"
+.LBB376_2:                              // %"$3"
 	lsr	x0, x19, #4
 	bl	outWord
 	ldp	x30, x19, [sp], #16             // 16-byte Folded Reload
 	ret
-.Lfunc_end375:
-	.size	outNum, .Lfunc_end375-outNum
+.Lfunc_end376:
+	.size	outNum, .Lfunc_end376-outNum
 	.cfi_endproc
                                         // -- End function
 	.globl	fmtNum                          // -- Begin function fmtNum
@@ -41879,14 +41912,14 @@ fmtNum:                                 // @fmtNum
 	and	x8, x0, #0xfffffffffffffff7
 	mov	w10, #36
 	mov	x9, x8
-	tbnz	w9, #1, .LBB376_2
-.LBB376_1:                              // %"$3"
+	tbnz	w9, #1, .LBB377_2
+.LBB377_1:                              // %"$3"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w9, w11, [x9, #4]
 	bfi	x9, x11, #32, #32
 	add	x10, x10, #20                   // =20
-	tbz	w9, #1, .LBB376_1
-.LBB376_2:                              // %"$4"
+	tbz	w9, #1, .LBB377_1
+.LBB377_2:                              // %"$4"
 	mov	x9, #2808348672
 	movk	x9, #46771, lsl #32
 	movk	x9, #3552, lsl #48
@@ -41910,38 +41943,38 @@ fmtNum:                                 // @fmtNum
 	mov	x24, x23
 	mov	x12, x10
 	stp	w11, wzr, [x10]
-	tbz	w8, #2, .LBB376_4
-	b	.LBB376_5
-.LBB376_3:                              // %"$31"
+	tbz	w8, #2, .LBB377_4
+	b	.LBB377_5
+.LBB377_3:                              // %"$31"
 	ldp	w8, w13, [x8, #4]
 	bfi	x8, x13, #32, #32
-	tbnz	w8, #2, .LBB376_5
-.LBB376_4:
+	tbnz	w8, #2, .LBB377_5
+.LBB377_4:
 	mov	x13, x8
 	mov	w14, #16
-	b	.LBB376_7
-.LBB376_5:                              // %"$6"
+	b	.LBB377_7
+.LBB377_5:                              // %"$6"
 	ldp	w13, w14, [x8, #-4]
 	bfi	x13, x14, #32, #32
 	mov	w14, #1
-	b	.LBB376_7
-.LBB376_6:                              // %"$28"
-                                        //   in Loop: Header=BB376_7 Depth=1
+	b	.LBB377_7
+.LBB377_6:                              // %"$28"
+                                        //   in Loop: Header=BB377_7 Depth=1
 	lsl	x14, x14, #1
-	cbz	x14, .LBB376_18
-.LBB376_7:                              // %"$8"
+	cbz	x14, .LBB377_18
+.LBB377_7:                              // %"$8"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB376_9 Depth 2
-                                        //     Child Loop BB376_15 Depth 2
+                                        //     Child Loop BB377_9 Depth 2
+                                        //     Child Loop BB377_15 Depth 2
 	tst	x13, x14
-	b.eq	.LBB376_14
+	b.eq	.LBB377_14
 // %bb.8:                               // %"$11.preheader"
-                                        //   in Loop: Header=BB376_7 Depth=1
+                                        //   in Loop: Header=BB377_7 Depth=1
 	mov	x17, xzr
 	mov	x15, x23
 	mov	x16, x10
-.LBB376_9:                              // %"$11"
-                                        //   Parent Loop BB376_7 Depth=1
+.LBB377_9:                              // %"$11"
+                                        //   Parent Loop BB377_7 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	ldp	w1, w18, [x15]
 	bfi	x1, x18, #32, #32
@@ -41957,30 +41990,30 @@ fmtNum:                                 // @fmtNum
 	lsr	x18, x18, #32
 	str	w18, [x15, #4]
 	cmp	x16, x12
-	b.hi	.LBB376_12
+	b.hi	.LBB377_12
 // %bb.10:                              // %"$15"
-                                        //   in Loop: Header=BB376_9 Depth=2
+                                        //   in Loop: Header=BB377_9 Depth=2
 	add	x15, x15, #8                    // =8
 	cmp	x15, x24
-	b.ls	.LBB376_9
+	b.ls	.LBB377_9
 // %bb.11:                              // %"$17"
-                                        //   in Loop: Header=BB376_9 Depth=2
+                                        //   in Loop: Header=BB377_9 Depth=2
 	add	x24, x24, #8                    // =8
 	stp	wzr, wzr, [x15]
-	b	.LBB376_9
-.LBB376_12:                             // %"$16"
-                                        //   in Loop: Header=BB376_7 Depth=1
-	cbz	x17, .LBB376_14
+	b	.LBB377_9
+.LBB377_12:                             // %"$16"
+                                        //   in Loop: Header=BB377_7 Depth=1
+	cbz	x17, .LBB377_14
 // %bb.13:                              // %"$19"
-                                        //   in Loop: Header=BB376_7 Depth=1
+                                        //   in Loop: Header=BB377_7 Depth=1
 	str	w11, [x24, #8]!
 	str	wzr, [x24, #4]
-.LBB376_14:                             // %"$21.preheader"
-                                        //   in Loop: Header=BB376_7 Depth=1
+.LBB377_14:                             // %"$21.preheader"
+                                        //   in Loop: Header=BB377_7 Depth=1
 	mov	x16, xzr
 	mov	x15, x10
-.LBB376_15:                             // %"$21"
-                                        //   Parent Loop BB376_7 Depth=1
+.LBB377_15:                             // %"$21"
+                                        //   Parent Loop BB377_7 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	ldp	w18, w17, [x15]
 	bfi	x18, x17, #32, #32
@@ -41995,26 +42028,26 @@ fmtNum:                                 // @fmtNum
 	str	w17, [x15, #4]
 	add	x15, x15, #8                    // =8
 	cmp	x15, x12
-	b.ls	.LBB376_15
+	b.ls	.LBB377_15
 // %bb.16:                              // %"$26"
-                                        //   in Loop: Header=BB376_7 Depth=1
-	cbz	x16, .LBB376_6
+                                        //   in Loop: Header=BB377_7 Depth=1
+	cbz	x16, .LBB377_6
 // %bb.17:                              // %"$27"
-                                        //   in Loop: Header=BB376_7 Depth=1
+                                        //   in Loop: Header=BB377_7 Depth=1
 	add	x12, x12, #8                    // =8
 	stp	w11, wzr, [x15]
-	b	.LBB376_6
-.LBB376_18:                             // %"$30"
-	tbz	w8, #1, .LBB376_3
+	b	.LBB377_6
+.LBB377_18:                             // %"$30"
+	tbz	w8, #1, .LBB377_3
 // %bb.19:                              // %"$32"
-	tbnz	x22, #63, .LBB376_25
+	tbnz	x22, #63, .LBB377_25
 // %bb.20:                              // %"$35"
-	tbz	w0, #3, .LBB376_22
+	tbz	w0, #3, .LBB377_22
 // %bb.21:                              // %"$36"
 	mov	w0, #45
 	mov	x1, x19
 	bl	byteSym
-.LBB376_22:                             // %"$37"
+.LBB377_22:                             // %"$37"
 	sub	x8, x24, x23
 	lsr	x8, x8, #3
 	add	x8, x8, x8, lsl #3
@@ -42023,18 +42056,18 @@ fmtNum:                                 // @fmtNum
 	bfi	x9, x10, #32, #32
 	mov	x10, #-3689348814741910324
 	movk	x10, #52429
-.LBB376_23:                             // %"$38"
+.LBB377_23:                             // %"$38"
                                         // =>This Inner Loop Header: Depth=1
 	umulh	x9, x9, x10
 	lsr	x9, x9, #3
-	cbz	x9, .LBB376_29
+	cbz	x9, .LBB377_29
 // %bb.24:                              // %"$39"
-                                        //   in Loop: Header=BB376_23 Depth=1
+                                        //   in Loop: Header=BB377_23 Depth=1
 	add	x8, x8, #1                      // =1
-	b	.LBB376_23
-.LBB376_25:                             // %"$34"
+	b	.LBB377_23
+.LBB377_25:                             // %"$34"
 	cmn	x22, #1                         // =1
-	b.eq	.LBB376_41
+	b.eq	.LBB377_41
 // %bb.26:                              // %"$60"
 	sub	x8, x24, x23
 	lsr	x8, x8, #3
@@ -42044,24 +42077,24 @@ fmtNum:                                 // @fmtNum
 	bfi	x9, x10, #32, #32
 	mov	x10, #-3689348814741910324
 	movk	x10, #52429
-.LBB376_27:                             // %"$70"
+.LBB377_27:                             // %"$70"
                                         // =>This Inner Loop Header: Depth=1
 	mov	x11, x8
 	add	x8, x8, #1                      // =1
 	umulh	x9, x9, x10
 	lsr	x9, x9, #3
-	cbnz	x9, .LBB376_27
+	cbnz	x9, .LBB377_27
 // %bb.28:                              // %"$72"
 	add	x8, x8, #1                      // =1
 	tst	w0, #0x8
 	csinc	x8, x8, x11, ne
 	mov	w0, #2
 	bfi	x0, x8, #4, #60
-	b	.LBB376_49
-.LBB376_29:                             // %"$40"
+	b	.LBB377_49
+.LBB377_29:                             // %"$40"
 	subs	x22, x8, x22
-	b.mi	.LBB376_50
-.LBB376_30:                             // %"$42"
+	b.mi	.LBB377_50
+.LBB377_30:                             // %"$42"
 	ldp	w0, w8, [x24]
 	bfi	x0, x8, #32, #32
 	mov	x1, x22
@@ -42072,32 +42105,32 @@ fmtNum:                                 // @fmtNum
 	mov	x22, x0
 	mov	x25, #-3689348814741910324
 	movk	x25, #52429
-	b	.LBB376_32
-.LBB376_31:                             // %"$59"
-                                        //   in Loop: Header=BB376_32 Depth=1
+	b	.LBB377_32
+.LBB377_31:                             // %"$59"
+                                        //   in Loop: Header=BB377_32 Depth=1
 	add	w0, w28, #48                    // =48
 	mov	x1, x19
 	bl	byteSym
-.LBB376_32:                             // %"$46"
+.LBB377_32:                             // %"$46"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB376_36 Depth 2
+                                        //     Child Loop BB377_36 Depth 2
 	sub	x24, x24, #8                    // =8
 	cmp	x24, x23
-	b.lo	.LBB376_48
+	b.lo	.LBB377_48
 // %bb.33:                              // %"$47"
-                                        //   in Loop: Header=BB376_32 Depth=1
+                                        //   in Loop: Header=BB377_32 Depth=1
 	ldp	w28, w8, [x24]
 	bfi	x28, x8, #32, #32
 	mov	x26, #1569325056
 	movk	x26, #17784, lsl #32
 	movk	x26, #355, lsl #48
-	b	.LBB376_36
-.LBB376_34:                             // %"$50.sink.split"
-                                        //   in Loop: Header=BB376_36 Depth=2
+	b	.LBB377_36
+.LBB377_34:                             // %"$50.sink.split"
+                                        //   in Loop: Header=BB377_36 Depth=2
 	mov	x1, x19
 	bl	byteSym
-.LBB376_35:                             // %"$50"
-                                        //   in Loop: Header=BB376_36 Depth=2
+.LBB377_35:                             // %"$50"
+                                        //   in Loop: Header=BB377_36 Depth=2
 	sub	x22, x22, #1                    // =1
 	udiv	x27, x28, x26
 	add	w0, w27, #48                    // =48
@@ -42107,22 +42140,22 @@ fmtNum:                                 // @fmtNum
 	umulh	x8, x26, x25
 	lsr	x26, x8, #3
 	cmp	x26, #1                         // =1
-	b.eq	.LBB376_31
-.LBB376_36:                             // %"$49"
-                                        //   Parent Loop BB376_32 Depth=1
+	b.eq	.LBB377_31
+.LBB377_36:                             // %"$49"
+                                        //   Parent Loop BB377_32 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	mov	w0, w21
-	cbz	x22, .LBB376_34
+	cbz	x22, .LBB377_34
 // %bb.37:                              // %"$51"
-                                        //   in Loop: Header=BB376_36 Depth=2
+                                        //   in Loop: Header=BB377_36 Depth=2
 	tst	w20, #0xff
-	b.eq	.LBB376_40
+	b.eq	.LBB377_40
 // %bb.38:                              // %"$54"
-                                        //   in Loop: Header=BB376_36 Depth=2
+                                        //   in Loop: Header=BB377_36 Depth=2
 	cmp	x22, #1                         // =1
-	b.lt	.LBB376_40
+	b.lt	.LBB377_40
 // %bb.39:                              // %"$55"
-                                        //   in Loop: Header=BB376_36 Depth=2
+                                        //   in Loop: Header=BB377_36 Depth=2
 	mov	x8, #-6148914691236517206
 	movk	x8, #43691
 	mul	x8, x22, x8
@@ -42131,41 +42164,41 @@ fmtNum:                                 // @fmtNum
 	cmp	x8, x9
 	cset	w8, lo
 	mov	w0, w20
-	cbnz	w8, .LBB376_34
-	b	.LBB376_35
-.LBB376_40:                             //   in Loop: Header=BB376_36 Depth=2
+	cbnz	w8, .LBB377_34
+	b	.LBB377_35
+.LBB377_40:                             //   in Loop: Header=BB377_36 Depth=2
 	mov	w8, wzr
 	mov	w0, w20
-	cbz	w8, .LBB376_35
-	b	.LBB376_34
-.LBB376_41:                             // %"$61"
+	cbz	w8, .LBB377_35
+	b	.LBB377_34
+.LBB377_41:                             // %"$61"
 	adrp	x19, ($Put)
-	tbz	w0, #3, .LBB376_43
+	tbz	w0, #3, .LBB377_43
 // %bb.42:                              // %"$62"
 	ldr	x8, [x19, :lo12:($Put)]
 	mov	w0, #45
 	blr	x8
-.LBB376_43:                             // %"$63"
+.LBB377_43:                             // %"$63"
 	ldp	w0, w8, [x24]
 	bfi	x0, x8, #32, #32
 	bl	outWord
 	mov	x20, #-3689348814741910324
 	movk	x20, #52429
-.LBB376_44:                             // %"$64"
+.LBB377_44:                             // %"$64"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB376_46 Depth 2
+                                        //     Child Loop BB377_46 Depth 2
 	sub	x24, x24, #8                    // =8
 	cmp	x24, x23
-	b.lo	.LBB376_48
+	b.lo	.LBB377_48
 // %bb.45:                              // %"$65"
-                                        //   in Loop: Header=BB376_44 Depth=1
+                                        //   in Loop: Header=BB377_44 Depth=1
 	ldp	w21, w8, [x24]
 	bfi	x21, x8, #32, #32
 	mov	x22, #1569325056
 	movk	x22, #17784, lsl #32
 	movk	x22, #355, lsl #48
-.LBB376_46:                             // %"$67"
-                                        //   Parent Loop BB376_44 Depth=1
+.LBB377_46:                             // %"$67"
+                                        //   Parent Loop BB377_44 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	udiv	x25, x21, x22
 	add	w0, w25, #48                    // =48
@@ -42175,16 +42208,16 @@ fmtNum:                                 // @fmtNum
 	umulh	x8, x22, x20
 	lsr	x22, x8, #3
 	cmp	x22, #1                         // =1
-	b.ne	.LBB376_46
+	b.ne	.LBB377_46
 // %bb.47:                              // %"$69"
-                                        //   in Loop: Header=BB376_44 Depth=1
+                                        //   in Loop: Header=BB377_44 Depth=1
 	add	w0, w21, #48                    // =48
 	ldr	x8, [x19, :lo12:($Put)]
 	blr	x8
-	b	.LBB376_44
-.LBB376_48:
+	b	.LBB377_44
+.LBB377_48:
 	mov	x0, xzr
-.LBB376_49:                             // %"$33"
+.LBB377_49:                             // %"$33"
 	mov	sp, x29
 	ldp	x20, x19, [sp, #80]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #64]             // 16-byte Folded Reload
@@ -42193,24 +42226,24 @@ fmtNum:                                 // @fmtNum
 	ldp	x28, x27, [sp, #16]             // 16-byte Folded Reload
 	ldp	x29, x30, [sp], #96             // 16-byte Folded Reload
 	ret
-.LBB376_50:                             // %"$41"
+.LBB377_50:                             // %"$41"
 	mov	w0, #48
 	mov	x1, x19
 	bl	byteSym
 	mov	w0, w21
-.LBB376_51:                             // %"$43"
+.LBB377_51:                             // %"$43"
                                         // =>This Inner Loop Header: Depth=1
 	mov	x1, x19
 	bl	byteSym
 	cmn	x22, #1                         // =1
-	b.eq	.LBB376_30
+	b.eq	.LBB377_30
 // %bb.52:                              // %"$44"
-                                        //   in Loop: Header=BB376_51 Depth=1
+                                        //   in Loop: Header=BB377_51 Depth=1
 	add	x22, x22, #1                    // =1
 	mov	w0, #48
-	b	.LBB376_51
-.Lfunc_end376:
-	.size	fmtNum, .Lfunc_end376-fmtNum
+	b	.LBB377_51
+.Lfunc_end377:
+	.size	fmtNum, .Lfunc_end377-fmtNum
 	.cfi_endproc
                                         // -- End function
 	.globl	prExt                           // -- Begin function prExt
@@ -42225,17 +42258,17 @@ prExt:                                  // @prExt
 	.cfi_offset w30, -16
 	mov	x19, x0
 	bl	objFile
-	cbz	w0, .LBB377_2
+	cbz	w0, .LBB378_2
 // %bb.1:                               // %"$2"
 	bl	outAo
-.LBB377_2:                              // %"$3"
+.LBB378_2:                              // %"$3"
 	mov	x0, x19
 	bl	objId
 	bl	outOct
 	ldp	x30, x19, [sp], #16             // 16-byte Folded Reload
 	ret
-.Lfunc_end377:
-	.size	prExt, .Lfunc_end377-prExt
+.Lfunc_end378:
+	.size	prExt, .Lfunc_end378-prExt
 	.cfi_endproc
                                         // -- End function
 	.globl	outOct                          // -- Begin function outOct
@@ -42250,20 +42283,20 @@ outOct:                                 // @outOct
 	.cfi_offset w30, -16
 	mov	x19, x0
 	cmp	x0, #8                          // =8
-	b.lo	.LBB378_2
+	b.lo	.LBB379_2
 // %bb.1:                               // %"$2"
 	lsr	x0, x19, #3
 	bl	outOct
 	and	x19, x19, #0x7
-.LBB378_2:                              // %"$3"
+.LBB379_2:                              // %"$3"
 	add	w0, w19, #48                    // =48
 	adrp	x8, ($Put)
 	ldr	x8, [x8, :lo12:($Put)]
 	blr	x8
 	ldp	x30, x19, [sp], #16             // 16-byte Folded Reload
 	ret
-.Lfunc_end378:
-	.size	outOct, .Lfunc_end378-outOct
+.Lfunc_end379:
+	.size	outOct, .Lfunc_end379-outOct
 	.cfi_endproc
                                         // -- End function
 	.globl	printSym                        // -- Begin function printSym
@@ -42276,22 +42309,22 @@ printSym:                               // @printSym
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
 	sub	x8, x0, #8                      // =8
-.LBB379_1:                              // %"$2"
+.LBB380_1:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w0, w9, [x8]
 	bfi	x0, x9, #32, #32
 	tst	x0, #0x6
-	b.ne	.LBB379_3
+	b.ne	.LBB380_3
 // %bb.2:                               // %"$3"
-                                        //   in Loop: Header=BB379_1 Depth=1
+                                        //   in Loop: Header=BB380_1 Depth=1
 	add	x8, x0, #8                      // =8
-	b	.LBB379_1
-.LBB379_3:                              // %"$4"
+	b	.LBB380_1
+.LBB380_3:                              // %"$4"
 	bl	printName
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end379:
-	.size	printSym, .Lfunc_end379-printSym
+.Lfunc_end380:
+	.size	printSym, .Lfunc_end380-printSym
 	.cfi_endproc
                                         // -- End function
 	.globl	printName                       // -- Begin function printName
@@ -42312,7 +42345,7 @@ printName:                              // @printName
 	.cfi_offset w30, -40
 	.cfi_offset w29, -48
 	cmp	x0, #738                        // =738
-	b.ne	.LBB380_3
+	b.ne	.LBB381_3
 // %bb.1:                               // %"$3"
 	adrp	x19, ($Put)
 	ldr	x8, [x19, :lo12:($Put)]
@@ -42321,13 +42354,13 @@ printName:                              // @printName
 	ldr	x8, [x19, :lo12:($Put)]
 	mov	w0, #46
 	blr	x8
-.LBB380_2:                              // %"$4"
+.LBB381_2:                              // %"$4"
 	mov	sp, x29
 	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #16]             // 16-byte Folded Reload
 	ldp	x29, x30, [sp], #48             // 16-byte Folded Reload
 	ret
-.LBB380_3:                              // %"$2"
+.LBB381_3:                              // %"$2"
 	mov	x8, sp
 	sub	x19, x8, #16                    // =16
 	mov	sp, x19
@@ -42340,17 +42373,17 @@ printName:                              // @printName
 	and	w8, w0, #0xff
 	cmp	w8, #35                         // =35
 	adrp	x22, ($Put)
-	b.ne	.LBB380_5
+	b.ne	.LBB381_5
 // %bb.4:                               // %"$5"
 	ldr	x8, [x22, :lo12:($Put)]
 	mov	w0, #92
 	blr	x8
-.LBB380_5:                              // %"$7.preheader"
+.LBB381_5:                              // %"$7.preheader"
 	adrp	x21, ($Delim)
 	add	x21, x21, :lo12:($Delim)
-	b	.LBB380_7
-.LBB380_6:                              // %"$11"
-                                        //   in Loop: Header=BB380_7 Depth=1
+	b	.LBB381_7
+.LBB381_6:                              // %"$11"
+                                        //   in Loop: Header=BB381_7 Depth=1
 	ldr	x8, [x22, :lo12:($Put)]
 	mov	w0, w20
 	blr	x8
@@ -42358,31 +42391,31 @@ printName:                              // @printName
 	bl	symByte
 	mov	w20, w0
 	tst	w0, #0xff
-	b.eq	.LBB380_2
-.LBB380_7:                              // %"$7"
+	b.eq	.LBB381_2
+.LBB381_7:                              // %"$7"
                                         // =>This Inner Loop Header: Depth=1
 	and	w1, w20, #0xff
 	cmp	w1, #92                         // =92
-	b.ne	.LBB380_9
-// %bb.8:                               //   in Loop: Header=BB380_7 Depth=1
+	b.ne	.LBB381_9
+// %bb.8:                               //   in Loop: Header=BB381_7 Depth=1
 	mov	w8, #1
-	cbz	w8, .LBB380_6
-	b	.LBB380_10
-.LBB380_9:                              // %"$9"
-                                        //   in Loop: Header=BB380_7 Depth=1
+	cbz	w8, .LBB381_6
+	b	.LBB381_10
+.LBB381_9:                              // %"$9"
+                                        //   in Loop: Header=BB381_7 Depth=1
 	mov	x0, x21
 	bl	strchr2
 	cmp	x0, #0                          // =0
 	cset	w8, ne
-	cbz	w8, .LBB380_6
-.LBB380_10:                             // %"$10"
-                                        //   in Loop: Header=BB380_7 Depth=1
+	cbz	w8, .LBB381_6
+.LBB381_10:                             // %"$10"
+                                        //   in Loop: Header=BB381_7 Depth=1
 	ldr	x8, [x22, :lo12:($Put)]
 	mov	w0, #92
 	blr	x8
-	b	.LBB380_6
-.Lfunc_end380:
-	.size	printName, .Lfunc_end380-printName
+	b	.LBB381_6
+.Lfunc_end381:
+	.size	printName, .Lfunc_end381-printName
 	.cfi_endproc
                                         // -- End function
 	.globl	circ                            // -- Begin function circ
@@ -42392,13 +42425,13 @@ circ:                                   // @circ
 	.cfi_startproc
 // %bb.0:                               // %"$1"
 	tst	x0, #0xf
-	b.eq	.LBB381_2
+	b.eq	.LBB382_2
 // %bb.1:
 	mov	x0, xzr
 	ret
-.LBB381_2:                              // %"$5.preheader"
+.LBB382_2:                              // %"$5.preheader"
 	mov	x8, x0
-.LBB381_3:                              // %"$5"
+.LBB382_3:                              // %"$5"
                                         // =>This Inner Loop Header: Depth=1
 	ldr	w9, [x8]
 	orr	w9, w9, #0x1
@@ -42406,13 +42439,13 @@ circ:                                   // @circ
 	ldp	w8, w9, [x8, #8]
 	bfi	x8, x9, #32, #32
 	tst	x8, #0xf
-	b.ne	.LBB381_5
+	b.ne	.LBB382_5
 // %bb.4:                               // %"$6"
-                                        //   in Loop: Header=BB381_3 Depth=1
+                                        //   in Loop: Header=BB382_3 Depth=1
 	ldrb	w9, [x8]
-	tbz	w9, #0, .LBB381_3
-	b	.LBB381_8
-.LBB381_5:                              // %"$9"
+	tbz	w9, #0, .LBB382_3
+	b	.LBB382_8
+.LBB382_5:                              // %"$9"
                                         // =>This Inner Loop Header: Depth=1
 	ldr	w8, [x0]
 	and	w8, w8, #0xfffffffe
@@ -42420,22 +42453,22 @@ circ:                                   // @circ
 	ldp	w0, w8, [x0, #8]
 	bfi	x0, x8, #32, #32
 	tst	x0, #0xf
-	b.eq	.LBB381_5
+	b.eq	.LBB382_5
 // %bb.6:
 	mov	x0, xzr
 	ret
-.LBB381_7:                              // %"$15"
-                                        //   in Loop: Header=BB381_8 Depth=1
+.LBB382_7:                              // %"$15"
+                                        //   in Loop: Header=BB382_8 Depth=1
 	ldr	w9, [x0]
 	and	w9, w9, #0xfffffffe
 	str	w9, [x0]
 	ldp	w0, w9, [x0, #8]
 	bfi	x0, x9, #32, #32
-.LBB381_8:                              // %"$14"
+.LBB382_8:                              // %"$14"
                                         // =>This Inner Loop Header: Depth=1
 	cmp	x0, x8
-	b.ne	.LBB381_7
-.LBB381_9:                              // %"$17"
+	b.ne	.LBB382_7
+.LBB382_9:                              // %"$17"
                                         // =>This Inner Loop Header: Depth=1
 	ldr	w9, [x0]
 	and	w9, w9, #0xfffffffe
@@ -42443,12 +42476,12 @@ circ:                                   // @circ
 	ldp	w0, w9, [x0, #8]
 	bfi	x0, x9, #32, #32
 	cmp	x8, x0
-	b.ne	.LBB381_9
+	b.ne	.LBB382_9
 // %bb.10:                              // %"$4"
 	mov	x0, x8
 	ret
-.Lfunc_end381:
-	.size	circ, .Lfunc_end381-circ
+.Lfunc_end382:
+	.size	circ, .Lfunc_end382-circ
 	.cfi_endproc
                                         // -- End function
 	.globl	space                           // -- Begin function space
@@ -42466,8 +42499,8 @@ space:                                  // @space
 	blr	x8
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end382:
-	.size	space, .Lfunc_end382-space
+.Lfunc_end383:
+	.size	space, .Lfunc_end383-space
 	.cfi_endproc
                                         // -- End function
 	.globl	objFile                         // -- Begin function objFile
@@ -42482,8 +42515,8 @@ objFile:                                // @objFile
 	and	w8, w8, #0xff00
 	orr	w0, w9, w8
 	ret
-.Lfunc_end383:
-	.size	objFile, .Lfunc_end383-objFile
+.Lfunc_end384:
+	.size	objFile, .Lfunc_end384-objFile
 	.cfi_endproc
                                         // -- End function
 	.globl	outAo                           // -- Begin function outAo
@@ -42498,20 +42531,20 @@ outAo:                                  // @outAo
 	.cfi_offset w30, -16
 	mov	w19, w0
 	cmp	w0, #16                         // =16
-	b.lt	.LBB384_2
+	b.lt	.LBB385_2
 // %bb.1:                               // %"$2"
 	lsr	w0, w19, #4
 	bl	outAo
 	and	w19, w19, #0xf
-.LBB384_2:                              // %"$3"
+.LBB385_2:                              // %"$3"
 	add	w0, w19, #64                    // =64
 	adrp	x8, ($Put)
 	ldr	x8, [x8, :lo12:($Put)]
 	blr	x8
 	ldp	x30, x19, [sp], #16             // 16-byte Folded Reload
 	ret
-.Lfunc_end384:
-	.size	outAo, .Lfunc_end384-outAo
+.Lfunc_end385:
+	.size	outAo, .Lfunc_end385-outAo
 	.cfi_endproc
                                         // -- End function
 	.globl	objId                           // -- Begin function objId
@@ -42527,8 +42560,8 @@ objId:                                  // @objId
 	and	x9, x9, #0x3ff00000000
 	orr	x0, x8, x9
 	ret
-.Lfunc_end385:
-	.size	objId, .Lfunc_end385-objId
+.Lfunc_end386:
+	.size	objId, .Lfunc_end386-objId
 	.cfi_endproc
                                         // -- End function
 	.globl	fmtWord                         // -- Begin function fmtWord
@@ -42551,7 +42584,7 @@ fmtWord:                                // @fmtWord
 	mov	x20, x0
 	mov	x22, x1
 	cmp	x0, #10                         // =10
-	b.lo	.LBB386_6
+	b.lo	.LBB387_6
 // %bb.1:                               // %"$2"
 	mov	w21, w3
 	mov	w23, w2
@@ -42563,10 +42596,10 @@ fmtWord:                                // @fmtWord
 	mov	x4, x19
 	bl	fmtWord
 	mov	x22, x0
-	cbz	x0, .LBB386_4
+	cbz	x0, .LBB387_4
 // %bb.2:                               // %"$5"
 	tst	w21, #0xff
-	b.eq	.LBB386_7
+	b.eq	.LBB387_7
 // %bb.3:                               // %"$8"
 	mov	x8, #-6148914691236517206
 	movk	x8, #43691
@@ -42578,12 +42611,12 @@ fmtWord:                                // @fmtWord
 	cmp	x22, #1                         // =1
 	csel	w8, wzr, w8, lt
 	mov	w23, w21
-	cbz	w8, .LBB386_5
-.LBB386_4:                              // %"$4.sink.split"
+	cbz	w8, .LBB387_5
+.LBB387_4:                              // %"$4.sink.split"
 	mov	w0, w23
 	mov	x1, x19
 	bl	byteSym
-.LBB386_5:                              // %"$4"
+.LBB387_5:                              // %"$4"
 	sub	x22, x22, #1                    // =1
 	mov	x8, #-3689348814741910324
 	movk	x8, #52429
@@ -42591,7 +42624,7 @@ fmtWord:                                // @fmtWord
 	lsr	x8, x8, #3
 	mov	w9, #10
 	msub	x20, x8, x9, x20
-.LBB386_6:                              // %"$3"
+.LBB387_6:                              // %"$3"
 	add	w0, w20, #48                    // =48
 	mov	x1, x19
 	bl	byteSym
@@ -42600,13 +42633,13 @@ fmtWord:                                // @fmtWord
 	ldp	x22, x21, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x23, [sp], #48             // 16-byte Folded Reload
 	ret
-.LBB386_7:
+.LBB387_7:
 	mov	w8, wzr
 	mov	w23, w21
-	cbnz	w8, .LBB386_4
-	b	.LBB386_5
-.Lfunc_end386:
-	.size	fmtWord, .Lfunc_end386-fmtWord
+	cbnz	w8, .LBB387_4
+	b	.LBB387_5
+.Lfunc_end387:
+	.size	fmtWord, .Lfunc_end387-fmtWord
 	.cfi_endproc
                                         // -- End function
 	.globl	stop                            // -- Begin function stop
@@ -42616,25 +42649,25 @@ stop:                                   // @stop
 	.cfi_startproc
 // %bb.0:                               // %"$1"
 	stp	wzr, wzr, [x0]
-.LBB387_1:                              // %"$2"
+.LBB388_1:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	mov	x8, x0
 	ldr	x0, [x0, #16]
-	cbnz	x0, .LBB387_1
-	b	.LBB387_3
-.LBB387_2:                              // %"$6"
-                                        //   in Loop: Header=BB387_3 Depth=1
+	cbnz	x0, .LBB388_1
+	b	.LBB388_3
+.LBB388_2:                              // %"$6"
+                                        //   in Loop: Header=BB388_3 Depth=1
 	ldr	x8, [x8, #8]
 	str	xzr, [x8, #16]
-.LBB387_3:                              // %"$5"
+.LBB388_3:                              // %"$5"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w10, w9, [x8]
 	bfi	x10, x9, #32, #32
-	cbz	x10, .LBB387_2
+	cbz	x10, .LBB388_2
 // %bb.4:                               // %"$7"
 	ret
-.Lfunc_end387:
-	.size	stop, .Lfunc_end387-stop
+.Lfunc_end388:
+	.size	stop, .Lfunc_end388-stop
 	.cfi_endproc
                                         // -- End function
 	.globl	popCtlFiles                     // -- Begin function popCtlFiles
@@ -42652,22 +42685,22 @@ popCtlFiles:                            // @popCtlFiles
 	adrp	x19, env+72
 	ldr	x20, [x19, :lo12:env+72]
 	ldr	w8, [x20, #8]
-	tbnz	w8, #31, .LBB388_2
+	tbnz	w8, #31, .LBB389_2
 // %bb.1:                               // %"$2"
 	bl	close
-	b	.LBB388_3
-.LBB388_2:                              // %"$3"
+	b	.LBB389_3
+.LBB389_2:                              // %"$3"
 	mov	x0, xzr
 	bl	currFd
 	bl	unLock
-.LBB388_3:                              // %"$4"
+.LBB389_3:                              // %"$4"
 	ldr	x8, [x20]
 	str	x8, [x19, :lo12:env+72]
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #32                  // 8-byte Folded Reload
 	ret
-.Lfunc_end388:
-	.size	popCtlFiles, .Lfunc_end388-popCtlFiles
+.Lfunc_end389:
+	.size	popCtlFiles, .Lfunc_end389-popCtlFiles
 	.cfi_endproc
                                         // -- End function
 	.globl	popErrFiles                     // -- Begin function popErrFiles
@@ -42691,8 +42724,8 @@ popErrFiles:                            // @popErrFiles
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #32                  // 8-byte Folded Reload
 	ret
-.Lfunc_end389:
-	.size	popErrFiles, .Lfunc_end389-popErrFiles
+.Lfunc_end390:
+	.size	popErrFiles, .Lfunc_end390-popErrFiles
 	.cfi_endproc
                                         // -- End function
 	.globl	popOutFiles                     // -- Begin function popOutFiles
@@ -42715,27 +42748,27 @@ popOutFiles:                            // @popOutFiles
 	ldr	x20, [x19, :lo12:env+56]
 	ldr	x21, [x20, #8]
 	ldr	w8, [x21]
-	tbnz	w8, #31, .LBB390_4
+	tbnz	w8, #31, .LBB391_4
 // %bb.1:                               // %"$2"
 	ldr	w8, [x20, #24]
-	cbz	w8, .LBB390_4
+	cbz	w8, .LBB391_4
 // %bb.2:                               // %"$4"
 	bl	close
 	ldr	w0, [x21]
 	bl	closeOutFile
 	ldr	w0, [x20, #24]
 	cmp	w0, #2                          // =2
-	b.lt	.LBB390_4
+	b.lt	.LBB391_4
 // %bb.3:                               // %"$6"
 	bl	waitFile
-.LBB390_4:                              // %"$3"
+.LBB391_4:                              // %"$3"
 	ldr	x8, [x20]
 	str	x8, [x19, :lo12:env+56]
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x21, [sp], #32             // 16-byte Folded Reload
 	ret
-.Lfunc_end390:
-	.size	popOutFiles, .Lfunc_end390-popOutFiles
+.Lfunc_end391:
+	.size	popOutFiles, .Lfunc_end391-popOutFiles
 	.cfi_endproc
                                         // -- End function
 	.globl	tosOutFile                      // -- Begin function tosOutFile
@@ -42753,8 +42786,8 @@ tosOutFile:                             // @tosOutFile
 	ldr	x8, [x8, #16]
 	str	x8, [x9, :lo12:($Put)]
 	ret
-.Lfunc_end391:
-	.size	tosOutFile, .Lfunc_end391-tosOutFile
+.Lfunc_end392:
+	.size	tosOutFile, .Lfunc_end392-tosOutFile
 	.cfi_endproc
                                         // -- End function
 	.globl	popInFiles                      // -- Begin function popInFiles
@@ -42774,32 +42807,32 @@ popInFiles:                             // @popInFiles
 	ldr	x20, [x19, :lo12:env+48]
 	ldr	x21, [x20, #8]
 	ldr	w8, [x21, #8]
-	tbnz	w8, #31, .LBB392_5
+	tbnz	w8, #31, .LBB393_5
 // %bb.1:                               // %"$2"
 	ldr	w8, [x20, #24]
-	cbz	w8, .LBB392_4
+	cbz	w8, .LBB393_4
 // %bb.2:                               // %"$5"
 	bl	close
 	ldr	w0, [x21, #8]
 	bl	closeInFile
 	ldr	w0, [x20, #24]
 	cmp	w0, #2                          // =2
-	b.lt	.LBB392_5
+	b.lt	.LBB393_5
 // %bb.3:                               // %"$7"
 	bl	waitFile
-	b	.LBB392_5
-.LBB392_4:                              // %"$4"
+	b	.LBB393_5
+.LBB393_4:                              // %"$4"
 	adrp	x8, ($Chr)
 	ldr	w8, [x8, :lo12:($Chr)]
 	str	w8, [x21, #12]
-.LBB392_5:                              // %"$3"
+.LBB393_5:                              // %"$3"
 	ldr	x8, [x20]
 	str	x8, [x19, :lo12:env+48]
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x21, [sp], #32             // 16-byte Folded Reload
 	ret
-.Lfunc_end392:
-	.size	popInFiles, .Lfunc_end392-popInFiles
+.Lfunc_end393:
+	.size	popInFiles, .Lfunc_end393-popInFiles
 	.cfi_endproc
                                         // -- End function
 	.globl	tosInFile                       // -- Begin function tosInFile
@@ -42820,8 +42853,8 @@ tosInFile:                              // @tosInFile
 	ldr	x8, [x8, #16]
 	str	x8, [x9, :lo12:($Get)]
 	ret
-.Lfunc_end393:
-	.size	tosInFile, .Lfunc_end393-tosInFile
+.Lfunc_end394:
+	.size	tosInFile, .Lfunc_end394-tosInFile
 	.cfi_endproc
                                         // -- End function
 	.globl	memcpy2                         // -- Begin function memcpy2
@@ -42832,18 +42865,18 @@ memcpy2:                                // @memcpy2
 // %bb.0:                               // %"$1"
 	mov	x8, xzr
 	cmp	x2, x8
-	b.eq	.LBB394_2
-.LBB394_1:                              // %"$3"
+	b.eq	.LBB395_2
+.LBB395_1:                              // %"$3"
                                         // =>This Inner Loop Header: Depth=1
 	ldrb	w9, [x1, x8]
 	strb	w9, [x0, x8]
 	add	x8, x8, #1                      // =1
 	cmp	x2, x8
-	b.ne	.LBB394_1
-.LBB394_2:                              // %"$4"
+	b.ne	.LBB395_1
+.LBB395_2:                              // %"$4"
 	ret
-.Lfunc_end394:
-	.size	memcpy2, .Lfunc_end394-memcpy2
+.Lfunc_end395:
+	.size	memcpy2, .Lfunc_end395-memcpy2
 	.cfi_endproc
                                         // -- End function
 	.globl	close                           // -- Begin function close
@@ -42861,8 +42894,8 @@ close:                                  // @close
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end395:
-	.size	close, .Lfunc_end395-close
+.Lfunc_end396:
+	.size	close, .Lfunc_end396-close
 	.cfi_endproc
                                         // -- End function
 	.globl	closeInFile                     // -- Begin function closeInFile
@@ -42872,8 +42905,8 @@ closeInFile:                            // @closeInFile
 	.cfi_startproc
 // %bb.0:                               // %"$1"
 	ret
-.Lfunc_end396:
-	.size	closeInFile, .Lfunc_end396-closeInFile
+.Lfunc_end397:
+	.size	closeInFile, .Lfunc_end397-closeInFile
 	.cfi_endproc
                                         // -- End function
 	.globl	waitFile                        // -- Begin function waitFile
@@ -42888,25 +42921,25 @@ waitFile:                               // @waitFile
 	.cfi_offset w19, -8
 	.cfi_offset w30, -16
 	adrp	x19, ($Signal)
-.LBB397_1:                              // %"$2"
+.LBB398_1:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	bl	waitpid
-	tbz	w0, #31, .LBB397_5
+	tbz	w0, #31, .LBB398_5
 // %bb.2:                               // %"$3"
-                                        //   in Loop: Header=BB397_1 Depth=1
+                                        //   in Loop: Header=BB398_1 Depth=1
 	bl	gErrno
 	cmp	w0, #2                          // =2
-	b.ne	.LBB397_6
+	b.ne	.LBB398_6
 // %bb.3:                               // %"$6"
-                                        //   in Loop: Header=BB397_1 Depth=1
+                                        //   in Loop: Header=BB398_1 Depth=1
 	ldr	w8, [x19, :lo12:($Signal)]
-	cbz	w8, .LBB397_1
+	cbz	w8, .LBB398_1
 // %bb.4:                               // %"$7"
-                                        //   in Loop: Header=BB397_1 Depth=1
+                                        //   in Loop: Header=BB398_1 Depth=1
 	mov	x0, xzr
 	bl	sighandler
-	b	.LBB397_1
-.LBB397_5:                              // %"$4"
+	b	.LBB398_1
+.LBB398_5:                              // %"$4"
 	ldrsw	x8, [sp, #12]
 	mov	w9, #2
 	bfi	x9, x8, #4, #60
@@ -42915,10 +42948,10 @@ waitFile:                               // @waitFile
 	ldp	x30, x19, [sp, #16]             // 16-byte Folded Reload
 	add	sp, sp, #32                     // =32
 	ret
-.LBB397_6:                              // %"$5"
+.LBB398_6:                              // %"$5"
 	bl	closeErr
-.Lfunc_end397:
-	.size	waitFile, .Lfunc_end397-waitFile
+.Lfunc_end398:
+	.size	waitFile, .Lfunc_end398-waitFile
 	.cfi_endproc
                                         // -- End function
 	.globl	waitpid                         // -- Begin function waitpid
@@ -42936,8 +42969,8 @@ waitpid:                                // @waitpid
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end398:
-	.size	waitpid, .Lfunc_end398-waitpid
+.Lfunc_end399:
+	.size	waitpid, .Lfunc_end399-waitpid
 	.cfi_endproc
                                         // -- End function
 	.globl	gErrno                          // -- Begin function gErrno
@@ -42955,8 +42988,8 @@ gErrno:                                 // @gErrno
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end399:
-	.size	gErrno, .Lfunc_end399-gErrno
+.Lfunc_end400:
+	.size	gErrno, .Lfunc_end400-gErrno
 	.cfi_endproc
                                         // -- End function
 	.globl	closeErr                        // -- Begin function closeErr
@@ -42975,8 +43008,8 @@ closeErr:                               // @closeErr
 	mov	x0, xzr
 	mov	x1, xzr
 	bl	err
-.Lfunc_end400:
-	.size	closeErr, .Lfunc_end400-closeErr
+.Lfunc_end401:
+	.size	closeErr, .Lfunc_end401-closeErr
 	.cfi_endproc
                                         // -- End function
 	.globl	strErrno                        // -- Begin function strErrno
@@ -42994,8 +43027,8 @@ strErrno:                               // @strErrno
 	mov	x0, xzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end401:
-	.size	strErrno, .Lfunc_end401-strErrno
+.Lfunc_end402:
+	.size	strErrno, .Lfunc_end402-strErrno
 	.cfi_endproc
                                         // -- End function
 	.globl	"pr-libc"                       // -- Begin function pr-libc
@@ -43005,8 +43038,8 @@ strErrno:                               // @strErrno
 	.cfi_startproc
 // %bb.0:                               // %"$1"
 	ret
-.Lfunc_end402:
-	.size	"pr-libc", .Lfunc_end402-"pr-libc"
+.Lfunc_end403:
+	.size	"pr-libc", .Lfunc_end403-"pr-libc"
 	.cfi_endproc
                                         // -- End function
 	.globl	flush                           // -- Begin function flush
@@ -43024,8 +43057,8 @@ flush:                                  // @flush
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end403:
-	.size	flush, .Lfunc_end403-flush
+.Lfunc_end404:
+	.size	flush, .Lfunc_end404-flush
 	.cfi_endproc
                                         // -- End function
 	.globl	closeOutFile                    // -- Begin function closeOutFile
@@ -43035,8 +43068,8 @@ closeOutFile:                           // @closeOutFile
 	.cfi_startproc
 // %bb.0:                               // %"$1"
 	ret
-.Lfunc_end404:
-	.size	closeOutFile, .Lfunc_end404-closeOutFile
+.Lfunc_end405:
+	.size	closeOutFile, .Lfunc_end405-closeOutFile
 	.cfi_endproc
                                         // -- End function
 	.globl	dup2                            // -- Begin function dup2
@@ -43054,8 +43087,8 @@ dup2:                                   // @dup2
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end405:
-	.size	dup2, .Lfunc_end405-dup2
+.Lfunc_end406:
+	.size	dup2, .Lfunc_end406-dup2
 	.cfi_endproc
                                         // -- End function
 	.globl	currFd                          // -- Begin function currFd
@@ -43071,11 +43104,11 @@ currFd:                                 // @currFd
 	add	x9, x9, :lo12:env+48
 	ldp	x8, x9, [x9]
 	orr	x10, x8, x9
-	cbz	x10, .LBB406_7
+	cbz	x10, .LBB407_7
 // %bb.1:                               // %"$5"
-	cbz	x9, .LBB406_4
+	cbz	x9, .LBB407_4
 // %bb.2:                               // %"$7"
-	cbz	x8, .LBB406_5
+	cbz	x8, .LBB407_5
 // %bb.3:                               // %"$9"
 	mov	x10, sp
 	cmp	x9, x8
@@ -43085,26 +43118,26 @@ currFd:                                 // @currFd
 	cmp	x8, x10
 	csel	w10, w11, w12, hi
 	cmp	w10, #1                         // =1
-	b.ne	.LBB406_5
-.LBB406_4:                              // %"$8"
+	b.ne	.LBB407_5
+.LBB407_4:                              // %"$8"
 	ldr	x8, [x8, #8]
 	add	x8, x8, #8                      // =8
-	b	.LBB406_6
-.LBB406_5:                              // %"$15"
+	b	.LBB407_6
+.LBB407_5:                              // %"$15"
 	ldr	x8, [x9, #8]
-.LBB406_6:                              // %"$2"
+.LBB407_6:                              // %"$2"
 	ldr	w0, [x8]
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.LBB406_7:                              // %"$6"
+.LBB407_7:                              // %"$6"
 	adrp	x2, .L$148
 	add	x2, x2, :lo12:.L$148
 	mov	x0, xzr
 	mov	x1, xzr
 	mov	x3, xzr
 	bl	err
-.Lfunc_end406:
-	.size	currFd, .Lfunc_end406-currFd
+.Lfunc_end407:
+	.size	currFd, .Lfunc_end407-currFd
 	.cfi_endproc
                                         // -- End function
 	.globl	unLock                          // -- Begin function unLock
@@ -43122,8 +43155,8 @@ unLock:                                 // @unLock
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end407:
-	.size	unLock, .Lfunc_end407-unLock
+.Lfunc_end408:
+	.size	unLock, .Lfunc_end408-unLock
 	.cfi_endproc
                                         // -- End function
 	.globl	xName                           // -- Begin function xName
@@ -43138,32 +43171,32 @@ xName:                                  // @xName
 	adrp	x9, SymTab+8
 	add	x9, x9, :lo12:SymTab+8
 	cmp	x1, x9
-	b.ne	.LBB408_3
+	b.ne	.LBB409_3
 // %bb.1:
 	mov	w0, #2
-.LBB408_2:                              // %"$2"
+.LBB409_2:                              // %"$2"
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.LBB408_3:                              // %"$3"
+.LBB409_3:                              // %"$3"
 	mov	x8, x0
 	ldp	w0, w9, [x1, #-8]
 	bfi	x0, x9, #32, #32
-	tbnz	w0, #3, .LBB408_6
+	tbnz	w0, #3, .LBB409_6
 // %bb.4:                               // %"$7"
 	tst	x0, #0x6
-	b.ne	.LBB408_2
-.LBB408_5:                              // %"$8"
+	b.ne	.LBB409_2
+.LBB409_5:                              // %"$8"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w0, w8, [x0, #8]
 	bfi	x0, x8, #32, #32
 	tst	x0, #0x6
-	b.eq	.LBB408_5
-	b	.LBB408_2
-.LBB408_6:                              // %"$6"
+	b.eq	.LBB409_5
+	b	.LBB409_2
+.LBB409_6:                              // %"$6"
 	mov	x0, x8
 	bl	nameErr
-.Lfunc_end408:
-	.size	xName, .Lfunc_end408-xName
+.Lfunc_end409:
+	.size	xName, .Lfunc_end409-xName
 	.cfi_endproc
                                         // -- End function
 	.globl	preStr                          // -- Begin function preStr
@@ -43186,37 +43219,37 @@ preStr:                                 // @preStr
 	mov	x0, sp
 	bl	symByte
 	mov	w21, w0
-.LBB409_1:                              // %"$2"
+.LBB410_1:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	and	w8, w20, #0xff
 	cmp	w8, w21, uxtb
-	b.ne	.LBB409_4
+	b.ne	.LBB410_4
 // %bb.2:                               // %"$3"
-                                        //   in Loop: Header=BB409_1 Depth=1
+                                        //   in Loop: Header=BB410_1 Depth=1
 	mov	x0, sp
 	bl	symByte
 	tst	w0, #0xff
-	b.eq	.LBB409_5
+	b.eq	.LBB410_5
 // %bb.3:                               // %"$6"
-                                        //   in Loop: Header=BB409_1 Depth=1
+                                        //   in Loop: Header=BB410_1 Depth=1
 	mov	w21, w0
 	mov	x0, x19
 	bl	symByte
 	mov	w20, w0
 	tst	w0, #0xff
-	b.ne	.LBB409_1
-.LBB409_4:
+	b.ne	.LBB410_1
+.LBB410_4:
 	mov	w0, wzr
-	b	.LBB409_6
-.LBB409_5:
+	b	.LBB410_6
+.LBB410_5:
 	mov	w0, #1
-.LBB409_6:                              // %"$4"
+.LBB410_6:                              // %"$4"
 	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
 	ldp	x30, x21, [sp, #16]             // 16-byte Folded Reload
 	add	sp, sp, #48                     // =48
 	ret
-.Lfunc_end409:
-	.size	preStr, .Lfunc_end409-preStr
+.Lfunc_end410:
+	.size	preStr, .Lfunc_end410-preStr
 	.cfi_endproc
                                         // -- End function
 	.globl	nameErr                         // -- Begin function nameErr
@@ -43232,8 +43265,8 @@ nameErr:                                // @nameErr
 	add	x2, x2, :lo12:.L$116
 	mov	x3, xzr
 	bl	err
-.Lfunc_end410:
-	.size	nameErr, .Lfunc_end410-nameErr
+.Lfunc_end411:
+	.size	nameErr, .Lfunc_end411-nameErr
 	.cfi_endproc
                                         // -- End function
 	.globl	consStr                         // -- Begin function consStr
@@ -43243,16 +43276,16 @@ consStr:                                // @consStr
 	.cfi_startproc
 // %bb.0:                               // %"$1"
 	cmp	x0, #2                          // =2
-	b.ne	.LBB411_2
+	b.ne	.LBB412_2
 // %bb.1:                               // %"$4"
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ret
-.LBB411_2:                              // %"$3"
+.LBB412_2:                              // %"$3"
 	mov	x1, xzr
 	b	consSym
-.Lfunc_end411:
-	.size	consStr, .Lfunc_end411-consStr
+.Lfunc_end412:
+	.size	consStr, .Lfunc_end412-consStr
 	.cfi_endproc
                                         // -- End function
 	.globl	varErr                          // -- Begin function varErr
@@ -43268,8 +43301,8 @@ varErr:                                 // @varErr
 	add	x2, x2, :lo12:.L$120
 	mov	x3, xzr
 	bl	err
-.Lfunc_end412:
-	.size	varErr, .Lfunc_end412-varErr
+.Lfunc_end413:
+	.size	varErr, .Lfunc_end413-varErr
 	.cfi_endproc
                                         // -- End function
 	.globl	protErr                         // -- Begin function protErr
@@ -43285,8 +43318,8 @@ protErr:                                // @protErr
 	add	x2, x2, :lo12:.L$122
 	mov	x3, xzr
 	bl	err
-.Lfunc_end413:
-	.size	protErr, .Lfunc_end413-protErr
+.Lfunc_end414:
+	.size	protErr, .Lfunc_end414-protErr
 	.cfi_endproc
                                         // -- End function
 	.globl	evCnt                           // -- Begin function evCnt
@@ -43303,24 +43336,24 @@ evCnt:                                  // @evCnt
 	ldp	w1, w8, [x1]
 	bfi	x1, x8, #32, #32
 	tst	x1, #0x6
-	b.ne	.LBB414_4
+	b.ne	.LBB415_4
 // %bb.1:                               // %"$3"
-	tbz	w1, #3, .LBB414_3
+	tbz	w1, #3, .LBB415_3
 // %bb.2:                               // %"$6"
 	ldp	w1, w8, [x1]
 	bfi	x1, x8, #32, #32
-	b	.LBB414_4
-.LBB414_3:                              // %"$5"
+	b	.LBB415_4
+.LBB415_3:                              // %"$5"
 	mov	x0, x1
 	bl	evList
 	mov	x1, x0
-.LBB414_4:                              // %"$2"
+.LBB415_4:                              // %"$2"
 	mov	x0, x19
 	bl	xCnt
 	ldp	x30, x19, [sp], #16             // 16-byte Folded Reload
 	ret
-.Lfunc_end414:
-	.size	evCnt, .Lfunc_end414-evCnt
+.Lfunc_end415:
+	.size	evCnt, .Lfunc_end415-evCnt
 	.cfi_endproc
                                         // -- End function
 	.globl	xCnt                            // -- Begin function xCnt
@@ -43329,19 +43362,19 @@ evCnt:                                  // @evCnt
 xCnt:                                   // @xCnt
 	.cfi_startproc
 // %bb.0:                               // %"$1"
-	tbz	w1, #1, .LBB415_2
+	tbz	w1, #1, .LBB416_2
 // %bb.1:                               // %"$3"
 	lsr	x8, x1, #4
 	tst	x1, #0x8
 	cneg	x0, x8, ne
 	ret
-.LBB415_2:                              // %"$2"
+.LBB416_2:                              // %"$2"
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
 	bl	cntErr
-.Lfunc_end415:
-	.size	xCnt, .Lfunc_end415-xCnt
+.Lfunc_end416:
+	.size	xCnt, .Lfunc_end416-xCnt
 	.cfi_endproc
                                         // -- End function
 	.globl	cntErr                          // -- Begin function cntErr
@@ -43357,8 +43390,8 @@ cntErr:                                 // @cntErr
 	add	x2, x2, :lo12:.L$112
 	mov	x3, xzr
 	bl	err
-.Lfunc_end416:
-	.size	cntErr, .Lfunc_end416-cntErr
+.Lfunc_end417:
+	.size	cntErr, .Lfunc_end417-cntErr
 	.cfi_endproc
                                         // -- End function
 	.globl	loadKern                        // -- Begin function loadKern
@@ -43422,17 +43455,17 @@ loadKern:                               // @loadKern
 	ldr	x8, [x23, #736]
 	sub	x8, x8, #8                      // =8
 	str	x23, [x24]
-.LBB417_1:                              // %"$2"
+.LBB418_1:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w8, w9, [x8]
 	bfi	x8, x9, #32, #32
 	tst	x8, #0x6
-	b.ne	.LBB417_3
+	b.ne	.LBB418_3
 // %bb.2:                               // %"$3"
-                                        //   in Loop: Header=BB417_1 Depth=1
+                                        //   in Loop: Header=BB418_1 Depth=1
 	add	x8, x8, #8                      // =8
-	b	.LBB417_1
-.LBB417_3:                              // %"$4"
+	b	.LBB418_1
+.LBB418_3:                              // %"$4"
 	adrp	x9, ($Chr)
 	ldr	w28, [x9, :lo12:($Chr)]
 	adrp	x21, ($Get)
@@ -43458,25 +43491,25 @@ loadKern:                               // @loadKern
 	mov	w8, #23818
 	stp	w8, wzr, [x9, #-16]
 	str	x10, [x20, #80]
-.LBB417_4:                              // %"$5"
+.LBB418_4:                              // %"$5"
                                         // =>This Inner Loop Header: Depth=1
 	mov	w0, wzr
 	bl	read1
 	cmp	x0, x23
-	b.eq	.LBB417_8
+	b.eq	.LBB418_8
 // %bb.5:                               // %"$6"
-                                        //   in Loop: Header=BB417_4 Depth=1
+                                        //   in Loop: Header=BB418_4 Depth=1
 	stur	x0, [x29, #-96]
 	tst	x0, #0x6
-	b.ne	.LBB417_4
+	b.ne	.LBB418_4
 // %bb.6:                               // %"$9"
-                                        //   in Loop: Header=BB417_4 Depth=1
-	tbnz	w0, #3, .LBB417_4
+                                        //   in Loop: Header=BB418_4 Depth=1
+	tbnz	w0, #3, .LBB418_4
 // %bb.7:                               // %"$11"
-                                        //   in Loop: Header=BB417_4 Depth=1
+                                        //   in Loop: Header=BB418_4 Depth=1
 	bl	evList
-	b	.LBB417_4
-.LBB417_8:                              // %"$7"
+	b	.LBB418_4
+.LBB418_8:                              // %"$7"
 	str	x22, [x21, :lo12:($Get)]
 	adrp	x8, ($Chr)
 	str	w28, [x8, :lo12:($Chr)]
@@ -43498,8 +43531,8 @@ loadKern:                               // @loadKern
 	ldp	x28, x27, [sp, #16]             // 16-byte Folded Reload
 	ldp	x29, x30, [sp], #96             // 16-byte Folded Reload
 	ret
-.Lfunc_end417:
-	.size	loadKern, .Lfunc_end417-loadKern
+.Lfunc_end418:
+	.size	loadKern, .Lfunc_end418-loadKern
 	.cfi_endproc
                                         // -- End function
 	.globl	getParse                        // -- Begin function getParse
@@ -43517,7 +43550,7 @@ getParse:                               // @getParse
 	mov	x0, x19
 	bl	symByte
 	ands	w0, w0, #0xff
-	b.ne	.LBB418_2
+	b.ne	.LBB419_2
 // %bb.1:                               // %"$3"
 	ldr	w8, [x19, #16]!
 	ldr	w9, [x19, #4]
@@ -43528,13 +43561,13 @@ getParse:                               // @getParse
 	stp	w11, w9, [x19]
 	cmp	x8, #0                          // =0
 	csinv	w0, w10, wzr, ne
-.LBB418_2:                              // %"$4"
+.LBB419_2:                              // %"$4"
 	adrp	x8, ($Chr)
 	str	w0, [x8, :lo12:($Chr)]
 	ldp	x30, x19, [sp], #16             // 16-byte Folded Reload
 	ret
-.Lfunc_end418:
-	.size	getParse, .Lfunc_end418-getParse
+.Lfunc_end419:
+	.size	getParse, .Lfunc_end419-getParse
 	.cfi_endproc
                                         // -- End function
 	.globl	evSym                           // -- Begin function evSym
@@ -43549,21 +43582,21 @@ evSym:                                  // @evSym
 	ldp	w0, w8, [x0]
 	bfi	x0, x8, #32, #32
 	tst	x0, #0x6
-	b.ne	.LBB419_4
+	b.ne	.LBB420_4
 // %bb.1:                               // %"$3"
-	tbz	w0, #3, .LBB419_3
+	tbz	w0, #3, .LBB420_3
 // %bb.2:                               // %"$6"
 	ldp	w0, w8, [x0]
 	bfi	x0, x8, #32, #32
-	b	.LBB419_4
-.LBB419_3:                              // %"$5"
+	b	.LBB420_4
+.LBB420_3:                              // %"$5"
 	bl	evList
-.LBB419_4:                              // %"$2"
+.LBB420_4:                              // %"$2"
 	bl	xSym
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end419:
-	.size	evSym, .Lfunc_end419-evSym
+.Lfunc_end420:
+	.size	evSym, .Lfunc_end420-evSym
 	.cfi_endproc
                                         // -- End function
 	.globl	_cb1                            // -- Begin function _cb1
@@ -43585,8 +43618,8 @@ _cb1:                                   // @_cb1
 	bl	cbl
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end420:
-	.size	_cb1, .Lfunc_end420-_cb1
+.Lfunc_end421:
+	.size	_cb1, .Lfunc_end421-_cb1
 	.cfi_endproc
                                         // -- End function
 	.globl	_cb2                            // -- Begin function _cb2
@@ -43608,8 +43641,8 @@ _cb2:                                   // @_cb2
 	bl	cbl
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end421:
-	.size	_cb2, .Lfunc_end421-_cb2
+.Lfunc_end422:
+	.size	_cb2, .Lfunc_end422-_cb2
 	.cfi_endproc
                                         // -- End function
 	.globl	_cb3                            // -- Begin function _cb3
@@ -43631,8 +43664,8 @@ _cb3:                                   // @_cb3
 	bl	cbl
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end422:
-	.size	_cb3, .Lfunc_end422-_cb3
+.Lfunc_end423:
+	.size	_cb3, .Lfunc_end423-_cb3
 	.cfi_endproc
                                         // -- End function
 	.globl	_cb4                            // -- Begin function _cb4
@@ -43654,8 +43687,8 @@ _cb4:                                   // @_cb4
 	bl	cbl
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end423:
-	.size	_cb4, .Lfunc_end423-_cb4
+.Lfunc_end424:
+	.size	_cb4, .Lfunc_end424-_cb4
 	.cfi_endproc
                                         // -- End function
 	.globl	_cb5                            // -- Begin function _cb5
@@ -43677,8 +43710,8 @@ _cb5:                                   // @_cb5
 	bl	cbl
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end424:
-	.size	_cb5, .Lfunc_end424-_cb5
+.Lfunc_end425:
+	.size	_cb5, .Lfunc_end425-_cb5
 	.cfi_endproc
                                         // -- End function
 	.globl	_cb6                            // -- Begin function _cb6
@@ -43700,8 +43733,8 @@ _cb6:                                   // @_cb6
 	bl	cbl
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end425:
-	.size	_cb6, .Lfunc_end425-_cb6
+.Lfunc_end426:
+	.size	_cb6, .Lfunc_end426-_cb6
 	.cfi_endproc
                                         // -- End function
 	.globl	_cb7                            // -- Begin function _cb7
@@ -43723,8 +43756,8 @@ _cb7:                                   // @_cb7
 	bl	cbl
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end426:
-	.size	_cb7, .Lfunc_end426-_cb7
+.Lfunc_end427:
+	.size	_cb7, .Lfunc_end427-_cb7
 	.cfi_endproc
                                         // -- End function
 	.globl	_cb8                            // -- Begin function _cb8
@@ -43746,8 +43779,8 @@ _cb8:                                   // @_cb8
 	bl	cbl
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end427:
-	.size	_cb8, .Lfunc_end427-_cb8
+.Lfunc_end428:
+	.size	_cb8, .Lfunc_end428-_cb8
 	.cfi_endproc
                                         // -- End function
 	.globl	_cb9                            // -- Begin function _cb9
@@ -43769,8 +43802,8 @@ _cb9:                                   // @_cb9
 	bl	cbl
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end428:
-	.size	_cb9, .Lfunc_end428-_cb9
+.Lfunc_end429:
+	.size	_cb9, .Lfunc_end429-_cb9
 	.cfi_endproc
                                         // -- End function
 	.globl	_cb10                           // -- Begin function _cb10
@@ -43792,8 +43825,8 @@ _cb10:                                  // @_cb10
 	bl	cbl
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end429:
-	.size	_cb10, .Lfunc_end429-_cb10
+.Lfunc_end430:
+	.size	_cb10, .Lfunc_end430-_cb10
 	.cfi_endproc
                                         // -- End function
 	.globl	_cb11                           // -- Begin function _cb11
@@ -43815,8 +43848,8 @@ _cb11:                                  // @_cb11
 	bl	cbl
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end430:
-	.size	_cb11, .Lfunc_end430-_cb11
+.Lfunc_end431:
+	.size	_cb11, .Lfunc_end431-_cb11
 	.cfi_endproc
                                         // -- End function
 	.globl	_cb12                           // -- Begin function _cb12
@@ -43838,8 +43871,8 @@ _cb12:                                  // @_cb12
 	bl	cbl
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end431:
-	.size	_cb12, .Lfunc_end431-_cb12
+.Lfunc_end432:
+	.size	_cb12, .Lfunc_end432-_cb12
 	.cfi_endproc
                                         // -- End function
 	.globl	_cb13                           // -- Begin function _cb13
@@ -43861,8 +43894,8 @@ _cb13:                                  // @_cb13
 	bl	cbl
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end432:
-	.size	_cb13, .Lfunc_end432-_cb13
+.Lfunc_end433:
+	.size	_cb13, .Lfunc_end433-_cb13
 	.cfi_endproc
                                         // -- End function
 	.globl	_cb14                           // -- Begin function _cb14
@@ -43884,8 +43917,8 @@ _cb14:                                  // @_cb14
 	bl	cbl
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end433:
-	.size	_cb14, .Lfunc_end433-_cb14
+.Lfunc_end434:
+	.size	_cb14, .Lfunc_end434-_cb14
 	.cfi_endproc
                                         // -- End function
 	.globl	_cb15                           // -- Begin function _cb15
@@ -43907,8 +43940,8 @@ _cb15:                                  // @_cb15
 	bl	cbl
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end434:
-	.size	_cb15, .Lfunc_end434-_cb15
+.Lfunc_end435:
+	.size	_cb15, .Lfunc_end435-_cb15
 	.cfi_endproc
                                         // -- End function
 	.globl	_cb16                           // -- Begin function _cb16
@@ -43930,8 +43963,8 @@ _cb16:                                  // @_cb16
 	bl	cbl
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end435:
-	.size	_cb16, .Lfunc_end435-_cb16
+.Lfunc_end436:
+	.size	_cb16, .Lfunc_end436-_cb16
 	.cfi_endproc
                                         // -- End function
 	.globl	_cb17                           // -- Begin function _cb17
@@ -43953,8 +43986,8 @@ _cb17:                                  // @_cb17
 	bl	cbl
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end436:
-	.size	_cb17, .Lfunc_end436-_cb17
+.Lfunc_end437:
+	.size	_cb17, .Lfunc_end437-_cb17
 	.cfi_endproc
                                         // -- End function
 	.globl	_cb18                           // -- Begin function _cb18
@@ -43976,8 +44009,8 @@ _cb18:                                  // @_cb18
 	bl	cbl
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end437:
-	.size	_cb18, .Lfunc_end437-_cb18
+.Lfunc_end438:
+	.size	_cb18, .Lfunc_end438-_cb18
 	.cfi_endproc
                                         // -- End function
 	.globl	_cb19                           // -- Begin function _cb19
@@ -43999,8 +44032,8 @@ _cb19:                                  // @_cb19
 	bl	cbl
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end438:
-	.size	_cb19, .Lfunc_end438-_cb19
+.Lfunc_end439:
+	.size	_cb19, .Lfunc_end439-_cb19
 	.cfi_endproc
                                         // -- End function
 	.globl	_cb20                           // -- Begin function _cb20
@@ -44022,8 +44055,8 @@ _cb20:                                  // @_cb20
 	bl	cbl
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end439:
-	.size	_cb20, .Lfunc_end439-_cb20
+.Lfunc_end440:
+	.size	_cb20, .Lfunc_end440-_cb20
 	.cfi_endproc
                                         // -- End function
 	.globl	_cb21                           // -- Begin function _cb21
@@ -44045,8 +44078,8 @@ _cb21:                                  // @_cb21
 	bl	cbl
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end440:
-	.size	_cb21, .Lfunc_end440-_cb21
+.Lfunc_end441:
+	.size	_cb21, .Lfunc_end441-_cb21
 	.cfi_endproc
                                         // -- End function
 	.globl	_cb22                           // -- Begin function _cb22
@@ -44068,8 +44101,8 @@ _cb22:                                  // @_cb22
 	bl	cbl
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end441:
-	.size	_cb22, .Lfunc_end441-_cb22
+.Lfunc_end442:
+	.size	_cb22, .Lfunc_end442-_cb22
 	.cfi_endproc
                                         // -- End function
 	.globl	_cb23                           // -- Begin function _cb23
@@ -44091,8 +44124,8 @@ _cb23:                                  // @_cb23
 	bl	cbl
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end442:
-	.size	_cb23, .Lfunc_end442-_cb23
+.Lfunc_end443:
+	.size	_cb23, .Lfunc_end443-_cb23
 	.cfi_endproc
                                         // -- End function
 	.globl	_cb24                           // -- Begin function _cb24
@@ -44114,8 +44147,8 @@ _cb24:                                  // @_cb24
 	bl	cbl
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end443:
-	.size	_cb24, .Lfunc_end443-_cb24
+.Lfunc_end444:
+	.size	_cb24, .Lfunc_end444-_cb24
 	.cfi_endproc
                                         // -- End function
 	.globl	cbl                             // -- Begin function cbl
@@ -44191,8 +44224,8 @@ cbl:                                    // @cbl
 	ldp	x30, x23, [sp, #192]            // 16-byte Folded Reload
 	add	sp, sp, #240                    // =240
 	ret
-.Lfunc_end444:
-	.size	cbl, .Lfunc_end444-cbl
+.Lfunc_end445:
+	.size	cbl, .Lfunc_end445-cbl
 	.cfi_endproc
                                         // -- End function
 	.globl	box                             // -- Begin function box
@@ -44205,37 +44238,37 @@ box:                                    // @box
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
 	mov	x8, x0
-	tbnz	x0, #63, .LBB445_3
+	tbnz	x0, #63, .LBB446_3
 // %bb.1:                               // %"$2"
 	tst	x8, #0xf000000000000000
-	b.eq	.LBB445_5
+	b.eq	.LBB446_5
 // %bb.2:                               // %"$5"
 	mov	x0, x8
 	bl	boxNum
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.LBB445_3:                              // %"$3"
+.LBB446_3:                              // %"$3"
 	neg	x8, x8
 	tst	x8, #0xf000000000000000
-	b.eq	.LBB445_6
+	b.eq	.LBB446_6
 // %bb.4:                               // %"$8"
 	mov	x0, x8
 	bl	boxNum
-	b	.LBB445_7
-.LBB445_5:                              // %"$6"
+	b	.LBB446_7
+.LBB446_5:                              // %"$6"
 	mov	w0, #2
 	bfi	x0, x8, #4, #60
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.LBB445_6:                              // %"$9"
+.LBB446_6:                              // %"$9"
 	mov	w0, #2
 	bfi	x0, x8, #4, #60
-.LBB445_7:                              // %"$10"
+.LBB446_7:                              // %"$10"
 	orr	x0, x0, #0x8
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end445:
-	.size	box, .Lfunc_end445-box
+.Lfunc_end446:
+	.size	box, .Lfunc_end446-box
 	.cfi_endproc
                                         // -- End function
 	.globl	xSym                            // -- Begin function xSym
@@ -44246,7 +44279,7 @@ xSym:                                   // @xSym
 // %bb.0:                               // %"$1"
 	eor	w8, w0, #0x8
 	tst	x8, #0xe
-	b.eq	.LBB446_2
+	b.eq	.LBB447_2
 // %bb.1:                               // %"$3"
 	stp	x29, x30, [sp, #-48]!           // 16-byte Folded Spill
 	str	x21, [sp, #16]                  // 8-byte Folded Spill
@@ -44285,10 +44318,10 @@ xSym:                                   // @xSym
 	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
 	ldr	x21, [sp, #16]                  // 8-byte Folded Reload
 	ldp	x29, x30, [sp], #48             // 16-byte Folded Reload
-.LBB446_2:                              // %"$4"
+.LBB447_2:                              // %"$4"
 	ret
-.Lfunc_end446:
-	.size	xSym, .Lfunc_end446-xSym
+.Lfunc_end447:
+	.size	xSym, .Lfunc_end447-xSym
 	.cfi_endproc
                                         // -- End function
 	.globl	pack                            // -- Begin function pack
@@ -44310,14 +44343,14 @@ pack:                                   // @pack
 	mov	x19, x1
 	mov	x20, x0
 	tst	x0, #0xf
-	b.ne	.LBB447_3
+	b.ne	.LBB448_3
 // %bb.1:                               // %"$2"
 	mov	x8, sp
 	adrp	x9, ($StkLimit)
 	ldr	x9, [x9, :lo12:($StkLimit)]
 	cmp	x9, x8
-	b.hi	.LBB447_16
-.LBB447_2:                              // %"$6"
+	b.hi	.LBB448_16
+.LBB448_2:                              // %"$6"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w0, w8, [x20]
 	bfi	x0, x8, #32, #32
@@ -44326,15 +44359,15 @@ pack:                                   // @pack
 	mov	x1, x19
 	bl	pack
 	tst	x20, #0xf
-	b.eq	.LBB447_2
-.LBB447_3:                              // %"$3"
+	b.eq	.LBB448_2
+.LBB448_3:                              // %"$3"
 	adrp	x8, SymTab+8
 	add	x8, x8, :lo12:SymTab+8
 	cmp	x20, x8
-	b.eq	.LBB447_10
+	b.eq	.LBB448_10
 // %bb.4:                               // %"$10"
 	tst	x20, #0x6
-	b.eq	.LBB447_6
+	b.eq	.LBB448_6
 // %bb.5:                               // %"$12"
 	mov	x0, x20
 	mov	x1, xzr
@@ -44342,69 +44375,69 @@ pack:                                   // @pack
 	mov	w3, wzr
 	mov	x4, x19
 	bl	fmtNum
-	b	.LBB447_10
-.LBB447_6:                              // %"$11"
+	b	.LBB448_10
+.LBB448_6:                              // %"$11"
 	ldp	w21, w8, [x20, #-8]
 	bfi	x21, x8, #32, #32
-	tbz	w21, #3, .LBB447_11
+	tbz	w21, #3, .LBB448_11
 // %bb.7:                               // %"$14"
 	mov	w0, #123
 	mov	x1, x19
 	bl	byteSym
 	and	x8, x21, #0xfffffffffffffff7
 	tst	x8, #0x6
-	b.ne	.LBB447_9
-.LBB447_8:                              // %"$16"
+	b.ne	.LBB448_9
+.LBB448_8:                              // %"$16"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w8, w9, [x8, #8]
 	bfi	x8, x9, #32, #32
 	tst	x8, #0x6
-	b.eq	.LBB447_8
-.LBB447_9:                              // %"$17"
+	b.eq	.LBB448_8
+.LBB448_9:                              // %"$17"
 	and	x0, x8, #0xfffffffffffffff7
 	mov	x1, x19
 	bl	packExtNm
 	mov	w0, #125
 	mov	x1, x19
 	bl	byteSym
-.LBB447_10:                             // %"$9"
+.LBB448_10:                             // %"$9"
 	mov	sp, x29
 	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
 	ldr	x21, [sp, #16]                  // 8-byte Folded Reload
 	ldp	x29, x30, [sp], #48             // 16-byte Folded Reload
 	ret
-.LBB447_11:                             // %"$18"
+.LBB448_11:                             // %"$18"
                                         // =>This Inner Loop Header: Depth=1
 	tst	x21, #0x6
-	b.ne	.LBB447_13
+	b.ne	.LBB448_13
 // %bb.12:                              // %"$19"
-                                        //   in Loop: Header=BB447_11 Depth=1
+                                        //   in Loop: Header=BB448_11 Depth=1
 	ldp	w21, w8, [x21, #8]
 	bfi	x21, x8, #32, #32
-	b	.LBB447_11
-.LBB447_13:                             // %"$20"
+	b	.LBB448_11
+.LBB448_13:                             // %"$20"
 	mov	x8, sp
 	sub	x20, x8, #16                    // =16
 	mov	sp, x20
 	stp	wzr, wzr, [x8, #-16]
 	lsr	x9, x21, #32
 	stp	w21, w9, [x8, #-8]
-.LBB447_14:                             // %"$21"
+.LBB448_14:                             // %"$21"
                                         // =>This Inner Loop Header: Depth=1
 	mov	x0, x20
 	bl	symByte
 	tst	w0, #0xff
-	b.eq	.LBB447_10
+	b.eq	.LBB448_10
 // %bb.15:                              // %"$22"
-                                        //   in Loop: Header=BB447_14 Depth=1
+                                        //   in Loop: Header=BB448_14 Depth=1
 	mov	x1, x19
 	bl	byteSym
-	b	.LBB447_14
-.LBB447_16:                             // %"$4"
+	b	.LBB448_14
+.LBB448_16:                             // %"$4"
 	mov	x0, xzr
 	bl	stkErr
-.Lfunc_end447:
-	.size	pack, .Lfunc_end447-pack
+.Lfunc_end448:
+	.size	pack, .Lfunc_end448-pack
 	.cfi_endproc
                                         // -- End function
 	.globl	packExtNm                       // -- Begin function packExtNm
@@ -44422,11 +44455,11 @@ packExtNm:                              // @packExtNm
 	mov	x19, x1
 	mov	x20, x0
 	bl	objFile
-	cbz	w0, .LBB448_2
+	cbz	w0, .LBB449_2
 // %bb.1:                               // %"$2"
 	mov	x1, x19
 	bl	packAO
-.LBB448_2:                              // %"$3"
+.LBB449_2:                              // %"$3"
 	mov	x0, x20
 	bl	objId
 	mov	x1, x19
@@ -44434,8 +44467,8 @@ packExtNm:                              // @packExtNm
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #32                  // 8-byte Folded Reload
 	ret
-.Lfunc_end448:
-	.size	packExtNm, .Lfunc_end448-packExtNm
+.Lfunc_end449:
+	.size	packExtNm, .Lfunc_end449-packExtNm
 	.cfi_endproc
                                         // -- End function
 	.globl	packAO                          // -- Begin function packAO
@@ -44453,12 +44486,12 @@ packAO:                                 // @packAO
 	mov	x19, x1
 	mov	w20, w0
 	cmp	w0, #16                         // =16
-	b.lt	.LBB449_2
+	b.lt	.LBB450_2
 // %bb.1:                               // %"$2"
 	lsr	w0, w20, #4
 	mov	x1, x19
 	bl	packAO
-.LBB449_2:                              // %"$3"
+.LBB450_2:                              // %"$3"
 	mov	w0, #64
 	bfxil	w0, w20, #0, #4
 	mov	x1, x19
@@ -44466,8 +44499,8 @@ packAO:                                 // @packAO
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #32                  // 8-byte Folded Reload
 	ret
-.Lfunc_end449:
-	.size	packAO, .Lfunc_end449-packAO
+.Lfunc_end450:
+	.size	packAO, .Lfunc_end450-packAO
 	.cfi_endproc
                                         // -- End function
 	.globl	packOct                         // -- Begin function packOct
@@ -44485,12 +44518,12 @@ packOct:                                // @packOct
 	mov	x19, x1
 	mov	x20, x0
 	cmp	x0, #8                          // =8
-	b.lo	.LBB450_2
+	b.lo	.LBB451_2
 // %bb.1:                               // %"$2"
 	lsr	x0, x20, #3
 	mov	x1, x19
 	bl	packOct
-.LBB450_2:                              // %"$3"
+.LBB451_2:                              // %"$3"
 	mov	w0, #48
 	bfxil	w0, w20, #0, #3
 	mov	x1, x19
@@ -44498,8 +44531,8 @@ packOct:                                // @packOct
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #32                  // 8-byte Folded Reload
 	ret
-.Lfunc_end450:
-	.size	packOct, .Lfunc_end450-packOct
+.Lfunc_end451:
+	.size	packOct, .Lfunc_end451-packOct
 	.cfi_endproc
                                         // -- End function
 	.globl	numErr                          // -- Begin function numErr
@@ -44515,8 +44548,8 @@ numErr:                                 // @numErr
 	add	x2, x2, :lo12:.L$113
 	mov	x3, xzr
 	bl	err
-.Lfunc_end451:
-	.size	numErr, .Lfunc_end451-numErr
+.Lfunc_end452:
+	.size	numErr, .Lfunc_end452-numErr
 	.cfi_endproc
                                         // -- End function
 	.globl	natBuf                          // -- Begin function natBuf
@@ -44528,8 +44561,8 @@ natBuf:                                 // @natBuf
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ret
-.Lfunc_end452:
-	.size	natBuf, .Lfunc_end452-natBuf
+.Lfunc_end453:
+	.size	natBuf, .Lfunc_end453-natBuf
 	.cfi_endproc
                                         // -- End function
 	.globl	natRetBuf                       // -- Begin function natRetBuf
@@ -44541,8 +44574,8 @@ natRetBuf:                              // @natRetBuf
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ret
-.Lfunc_end453:
-	.size	natRetBuf, .Lfunc_end453-natRetBuf
+.Lfunc_end454:
+	.size	natRetBuf, .Lfunc_end454-natRetBuf
 	.cfi_endproc
                                         // -- End function
 	.globl	equal                           // -- Begin function equal
@@ -44561,142 +44594,142 @@ equal:                                  // @equal
 	.cfi_offset w22, -32
 	.cfi_offset w30, -48
 	cmp	x0, x1
-	b.ne	.LBB454_2
-.LBB454_1:
+	b.ne	.LBB455_2
+.LBB455_1:
 	mov	w0, #1
 	and	w0, w0, #0x1
-	b	.LBB454_4
-.LBB454_2:                              // %"$3"
+	b	.LBB455_4
+.LBB455_2:                              // %"$3"
 	mov	x19, x0
-	tbz	w19, #1, .LBB454_5
-.LBB454_3:
+	tbz	w19, #1, .LBB455_5
+.LBB455_3:
 	mov	w0, wzr
 	and	w0, wzr, #0x1
-.LBB454_4:                              // %"$14"
+.LBB455_4:                              // %"$14"
 	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #48                  // 8-byte Folded Reload
 	ret
-.LBB454_5:                              // %"$5"
+.LBB455_5:                              // %"$5"
 	mov	x20, x1
-	tbz	w19, #2, .LBB454_14
+	tbz	w19, #2, .LBB455_14
 // %bb.6:                               // %"$8"
-	tbnz	w20, #1, .LBB454_3
+	tbnz	w20, #1, .LBB455_3
 // %bb.7:                               // %"$10"
-	tbz	w19, #3, .LBB454_10
+	tbz	w19, #3, .LBB455_10
 // %bb.8:                               // %"$12"
-	tbz	w20, #3, .LBB454_42
+	tbz	w20, #3, .LBB455_42
 // %bb.9:                               // %"$15"
 	and	x19, x19, #0xfffffffffffffff7
 	and	x20, x20, #0xfffffffffffffff7
-.LBB454_10:                             // %"$16"
+.LBB455_10:                             // %"$16"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w9, w8, [x19, #-4]
 	bfi	x9, x8, #32, #32
 	ldp	w10, w8, [x20, #-4]
 	bfi	x10, x8, #32, #32
 	cmp	x9, x10
-	b.ne	.LBB454_3
+	b.ne	.LBB455_3
 // %bb.11:                              // %"$17"
-                                        //   in Loop: Header=BB454_10 Depth=1
+                                        //   in Loop: Header=BB455_10 Depth=1
 	ldp	w19, w8, [x19, #4]
 	bfi	x19, x8, #32, #32
 	ldp	w20, w8, [x20, #4]
 	bfi	x20, x8, #32, #32
 	cmp	x19, x20
-	b.eq	.LBB454_1
+	b.eq	.LBB455_1
 // %bb.12:                              // %"$20"
-                                        //   in Loop: Header=BB454_10 Depth=1
+                                        //   in Loop: Header=BB455_10 Depth=1
 	mov	w0, wzr
-	tbnz	w19, #1, .LBB454_54
+	tbnz	w19, #1, .LBB455_54
 // %bb.13:                              // %"$22"
-                                        //   in Loop: Header=BB454_10 Depth=1
-	tbz	w20, #1, .LBB454_10
-	b	.LBB454_54
-.LBB454_14:                             // %"$7"
-	tbz	w19, #3, .LBB454_32
+                                        //   in Loop: Header=BB455_10 Depth=1
+	tbz	w20, #1, .LBB455_10
+	b	.LBB455_54
+.LBB455_14:                             // %"$7"
+	tbz	w19, #3, .LBB455_32
 // %bb.15:                              // %"$27"
 	tst	x20, #0x6
-	b.ne	.LBB454_3
+	b.ne	.LBB455_3
 // %bb.16:                              // %"$29"
 	tst	x20, #0xf
-	b.eq	.LBB454_3
+	b.eq	.LBB455_3
 // %bb.17:                              // %"$31"
 	ldp	w8, w9, [x19, #-8]
 	bfi	x8, x9, #32, #32
-	tbnz	w8, #3, .LBB454_3
+	tbnz	w8, #3, .LBB455_3
 // %bb.18:                              // %"$35"
 	tst	x8, #0x6
-	b.ne	.LBB454_20
-.LBB454_19:                             // %"$36"
+	b.ne	.LBB455_20
+.LBB455_19:                             // %"$36"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w8, w9, [x8, #8]
 	bfi	x8, x9, #32, #32
 	tst	x8, #0x6
-	b.eq	.LBB454_19
-.LBB454_20:                             // %"$37"
+	b.eq	.LBB455_19
+.LBB455_20:                             // %"$37"
 	cmp	x8, #2                          // =2
-	b.eq	.LBB454_3
+	b.eq	.LBB455_3
 // %bb.21:                              // %"$38"
 	ldp	w9, w10, [x20, #-8]
 	bfi	x9, x10, #32, #32
-	tbnz	w9, #3, .LBB454_3
+	tbnz	w9, #3, .LBB455_3
 // %bb.22:                              // %"$42"
 	tst	x9, #0x6
-	b.ne	.LBB454_24
-.LBB454_23:                             // %"$43"
+	b.ne	.LBB455_24
+.LBB455_23:                             // %"$43"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w9, w10, [x9, #8]
 	bfi	x9, x10, #32, #32
 	tst	x9, #0x6
-	b.eq	.LBB454_23
-.LBB454_24:                             // %"$44"
+	b.eq	.LBB455_23
+.LBB455_24:                             // %"$44"
 	cmp	x9, #2                          // =2
-	b.eq	.LBB454_3
+	b.eq	.LBB455_3
 // %bb.25:                              // %"$45"
 	cmp	x8, x9
-	b.eq	.LBB454_1
+	b.eq	.LBB455_1
 // %bb.26:                              // %"$47"
-	tbnz	w8, #1, .LBB454_3
+	tbnz	w8, #1, .LBB455_3
 // %bb.27:                              // %"$49"
-	tbnz	w9, #1, .LBB454_3
-.LBB454_28:                             // %"$53"
+	tbnz	w9, #1, .LBB455_3
+.LBB455_28:                             // %"$53"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w11, w10, [x8, #-4]
 	bfi	x11, x10, #32, #32
 	ldp	w12, w10, [x9, #-4]
 	bfi	x12, x10, #32, #32
 	cmp	x11, x12
-	b.ne	.LBB454_3
+	b.ne	.LBB455_3
 // %bb.29:                              // %"$54"
-                                        //   in Loop: Header=BB454_28 Depth=1
+                                        //   in Loop: Header=BB455_28 Depth=1
 	ldp	w8, w10, [x8, #4]
 	bfi	x8, x10, #32, #32
 	ldp	w9, w10, [x9, #4]
 	bfi	x9, x10, #32, #32
 	cmp	x8, x9
-	b.eq	.LBB454_1
+	b.eq	.LBB455_1
 // %bb.30:                              // %"$57"
-                                        //   in Loop: Header=BB454_28 Depth=1
+                                        //   in Loop: Header=BB455_28 Depth=1
 	mov	w0, wzr
-	tbnz	w8, #1, .LBB454_54
+	tbnz	w8, #1, .LBB455_54
 // %bb.31:                              // %"$59"
-                                        //   in Loop: Header=BB454_28 Depth=1
-	tbz	w9, #1, .LBB454_28
-	b	.LBB454_54
-.LBB454_32:                             // %"$26"
+                                        //   in Loop: Header=BB455_28 Depth=1
+	tbz	w9, #1, .LBB455_28
+	b	.LBB455_54
+.LBB455_32:                             // %"$26"
 	tst	x20, #0xf
-	b.ne	.LBB454_3
+	b.ne	.LBB455_3
 // %bb.33:                              // %"$63"
 	mov	x8, sp
 	adrp	x9, ($StkLimit)
 	ldr	x9, [x9, :lo12:($StkLimit)]
 	cmp	x9, x8
-	b.hi	.LBB454_51
+	b.hi	.LBB455_51
 // %bb.34:
 	mov	x21, x19
 	mov	x22, x20
-.LBB454_35:                             // %"$67"
+.LBB455_35:                             // %"$67"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w0, w8, [x21]
 	bfi	x0, x8, #32, #32
@@ -44704,19 +44737,19 @@ equal:                                  // @equal
 	bfi	x9, x8, #32, #32
 	and	x1, x9, #0xfffffffffffffffe
 	bl	equal
-	tbz	w0, #0, .LBB454_43
+	tbz	w0, #0, .LBB455_43
 // %bb.36:                              // %"$68"
-                                        //   in Loop: Header=BB454_35 Depth=1
+                                        //   in Loop: Header=BB455_35 Depth=1
 	ldrb	w8, [x21, #8]
 	tst	w8, #0xf
-	b.ne	.LBB454_44
+	b.ne	.LBB455_44
 // %bb.37:                              // %"$71"
-                                        //   in Loop: Header=BB454_35 Depth=1
+                                        //   in Loop: Header=BB455_35 Depth=1
 	ldrb	w8, [x22, #8]
 	tst	w8, #0xf
-	b.ne	.LBB454_43
+	b.ne	.LBB455_43
 // %bb.38:                              // %"$73"
-                                        //   in Loop: Header=BB454_35 Depth=1
+                                        //   in Loop: Header=BB455_35 Depth=1
 	ldr	w8, [x21]
 	orr	w8, w8, #0x1
 	str	w8, [x21]
@@ -44725,10 +44758,10 @@ equal:                                  // @equal
 	ldp	w22, w8, [x22, #8]
 	bfi	x22, x8, #32, #32
 	ldrb	w8, [x21]
-	tbz	w8, #0, .LBB454_35
-	b	.LBB454_40
-.LBB454_39:                             // %"$90"
-                                        //   in Loop: Header=BB454_40 Depth=1
+	tbz	w8, #0, .LBB455_35
+	b	.LBB455_40
+.LBB455_39:                             // %"$90"
+                                        //   in Loop: Header=BB455_40 Depth=1
 	ldr	w8, [x19]
 	and	w8, w8, #0xfffffffe
 	str	w8, [x19]
@@ -44736,70 +44769,70 @@ equal:                                  // @equal
 	bfi	x19, x8, #32, #32
 	ldp	w20, w8, [x20, #8]
 	bfi	x20, x8, #32, #32
-.LBB454_40:                             // %"$77"
+.LBB455_40:                             // %"$77"
                                         // =>This Inner Loop Header: Depth=1
 	cmp	x19, x21
-	b.eq	.LBB454_45
+	b.eq	.LBB455_45
 // %bb.41:                              // %"$78"
-                                        //   in Loop: Header=BB454_40 Depth=1
+                                        //   in Loop: Header=BB455_40 Depth=1
 	cmp	x20, x22
-	b.ne	.LBB454_39
-	b	.LBB454_49
-.LBB454_42:                             // %"$14"
+	b.ne	.LBB455_39
+	b	.LBB455_49
+.LBB455_42:                             // %"$14"
 	mov	w0, wzr
-	b	.LBB454_4
-.LBB454_43:
+	b	.LBB455_4
+.LBB455_43:
 	mov	w0, wzr
-	b	.LBB454_53
-.LBB454_44:                             // %"$72"
+	b	.LBB455_53
+.LBB455_44:                             // %"$72"
 	ldp	w0, w8, [x21, #8]
 	bfi	x0, x8, #32, #32
 	ldp	w1, w8, [x22, #8]
 	bfi	x1, x8, #32, #32
 	bl	equal
-	b	.LBB454_53
-.LBB454_45:                             // %"$80"
+	b	.LBB455_53
+.LBB455_45:                             // %"$80"
 	cmp	x20, x22
-	b.ne	.LBB454_49
-.LBB454_46:                             // %"$84"
+	b.ne	.LBB455_49
+.LBB455_46:                             // %"$84"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w19, w8, [x19, #8]
 	bfi	x19, x8, #32, #32
 	ldp	w20, w8, [x20, #8]
 	bfi	x20, x8, #32, #32
 	cmp	x20, x22
-	b.eq	.LBB454_50
+	b.eq	.LBB455_50
 // %bb.47:                              // %"$85"
-                                        //   in Loop: Header=BB454_46 Depth=1
+                                        //   in Loop: Header=BB455_46 Depth=1
 	cmp	x19, x21
-	b.ne	.LBB454_46
+	b.ne	.LBB455_46
 // %bb.48:
 	mov	w0, #1
-	b	.LBB454_52
-.LBB454_49:
+	b	.LBB455_52
+.LBB455_49:
 	mov	w0, wzr
-	b	.LBB454_52
-.LBB454_50:                             // %"$87"
+	b	.LBB455_52
+.LBB455_50:                             // %"$87"
 	cmp	x19, x21
 	cset	w0, eq
-	b	.LBB454_52
-.LBB454_51:                             // %"$65"
+	b	.LBB455_52
+.LBB455_51:                             // %"$65"
 	mov	x0, xzr
 	bl	stkErr
-.LBB454_52:                             // %"$79"
+.LBB455_52:                             // %"$79"
 	ldr	w8, [x19]
 	and	w8, w8, #0xfffffffe
 	str	w8, [x19]
 	ldp	w19, w8, [x19, #8]
 	bfi	x19, x8, #32, #32
-.LBB454_53:                             // %"$92"
+.LBB455_53:                             // %"$92"
 	cmp	x19, x21
-	b.ne	.LBB454_52
-.LBB454_54:                             // %"$2"
+	b.ne	.LBB455_52
+.LBB455_54:                             // %"$2"
 	and	w0, w0, #0x1
-	b	.LBB454_4
-.Lfunc_end454:
-	.size	equal, .Lfunc_end454-equal
+	b	.LBB455_4
+.Lfunc_end455:
+	.size	equal, .Lfunc_end455-equal
 	.cfi_endproc
                                         // -- End function
 	.globl	unify                           // -- Begin function unify
@@ -44827,226 +44860,226 @@ unify:                                  // @unify
 	mov	x20, x0
 	adrp	x8, ($Penv)
 	ldr	x23, [x8, :lo12:($Penv)]
-.LBB455_1:                              // %"$-1"
+.LBB456_1:                              // %"$-1"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB455_7 Depth 2
+                                        //     Child Loop BB456_7 Depth 2
 	eor	w8, w22, #0x8
 	tst	x8, #0xe
-	b.eq	.LBB455_3
-// %bb.2:                               //   in Loop: Header=BB455_1 Depth=1
+	b.eq	.LBB456_3
+// %bb.2:                               //   in Loop: Header=BB456_1 Depth=1
 	mov	w8, wzr
-	tbnz	w8, #0, .LBB455_4
-	b	.LBB455_12
-.LBB455_3:                              // %"$3"
-                                        //   in Loop: Header=BB455_1 Depth=1
+	tbnz	w8, #0, .LBB456_4
+	b	.LBB456_12
+.LBB456_3:                              // %"$3"
+                                        //   in Loop: Header=BB456_1 Depth=1
 	mov	x0, x22
 	bl	firstByte
 	and	w8, w0, #0xff
 	cmp	w8, #64                         // =64
 	cset	w8, eq
-	tbz	w8, #0, .LBB455_12
-.LBB455_4:                              // %"$4"
-                                        //   in Loop: Header=BB455_1 Depth=1
+	tbz	w8, #0, .LBB456_12
+.LBB456_4:                              // %"$4"
+                                        //   in Loop: Header=BB456_1 Depth=1
 	mov	x8, x23
-	b	.LBB455_7
-.LBB455_5:                              //   in Loop: Header=BB455_7 Depth=2
+	b	.LBB456_7
+.LBB456_5:                              //   in Loop: Header=BB456_7 Depth=2
 	mov	w10, wzr
-	cbnz	w10, .LBB455_10
-.LBB455_6:                              // %"$12"
-                                        //   in Loop: Header=BB455_7 Depth=2
+	cbnz	w10, .LBB456_10
+.LBB456_6:                              // %"$12"
+                                        //   in Loop: Header=BB456_7 Depth=2
 	add	x8, x8, #8                      // =8
-.LBB455_7:                              // %"$6"
-                                        //   Parent Loop BB455_1 Depth=1
+.LBB456_7:                              // %"$6"
+                                        //   Parent Loop BB456_1 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	ldp	w8, w9, [x8]
 	bfi	x8, x9, #32, #32
 	ldp	w9, w10, [x8]
 	bfi	x9, x10, #32, #32
 	tst	x9, #0xf
-	b.ne	.LBB455_12
+	b.ne	.LBB456_12
 // %bb.8:                               // %"$7"
-                                        //   in Loop: Header=BB455_7 Depth=2
+                                        //   in Loop: Header=BB456_7 Depth=2
 	ldp	w10, w11, [x9]
 	bfi	x10, x11, #32, #32
 	ldp	w12, w11, [x10]
 	bfi	x12, x11, #32, #32
 	cmp	x20, x12
-	b.ne	.LBB455_5
+	b.ne	.LBB456_5
 // %bb.9:                               // %"$10"
-                                        //   in Loop: Header=BB455_7 Depth=2
+                                        //   in Loop: Header=BB456_7 Depth=2
 	ldp	w10, w11, [x10, #8]
 	bfi	x10, x11, #32, #32
 	cmp	x22, x10
 	cset	w10, eq
-	cbz	w10, .LBB455_6
-.LBB455_10:                             // %"$11"
-                                        //   in Loop: Header=BB455_1 Depth=1
+	cbz	w10, .LBB456_6
+.LBB456_10:                             // %"$11"
+                                        //   in Loop: Header=BB456_1 Depth=1
 	ldp	w9, w8, [x9, #8]
 	bfi	x9, x8, #32, #32
 	ldp	w20, w8, [x9]
 	bfi	x20, x8, #32, #32
 	ldp	w22, w8, [x9, #8]
 	bfi	x22, x8, #32, #32
-	b	.LBB455_1
-.LBB455_11:                             // %"$22"
-                                        //   in Loop: Header=BB455_12 Depth=1
+	b	.LBB456_1
+.LBB456_11:                             // %"$22"
+                                        //   in Loop: Header=BB456_12 Depth=1
 	ldp	w9, w8, [x9, #8]
 	bfi	x9, x8, #32, #32
 	ldp	w19, w8, [x9]
 	bfi	x19, x8, #32, #32
 	ldp	w21, w8, [x9, #8]
 	bfi	x21, x8, #32, #32
-.LBB455_12:                             // %"$-2"
+.LBB456_12:                             // %"$-2"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB455_18 Depth 2
+                                        //     Child Loop BB456_18 Depth 2
 	eor	w8, w21, #0x8
 	tst	x8, #0xe
-	b.eq	.LBB455_14
-// %bb.13:                              //   in Loop: Header=BB455_12 Depth=1
+	b.eq	.LBB456_14
+// %bb.13:                              //   in Loop: Header=BB456_12 Depth=1
 	mov	w8, wzr
-	cbnz	w8, .LBB455_15
-	b	.LBB455_21
-.LBB455_14:                             // %"$14"
-                                        //   in Loop: Header=BB455_12 Depth=1
+	cbnz	w8, .LBB456_15
+	b	.LBB456_21
+.LBB456_14:                             // %"$14"
+                                        //   in Loop: Header=BB456_12 Depth=1
 	mov	x0, x21
 	bl	firstByte
 	and	w8, w0, #0xff
 	cmp	w8, #64                         // =64
 	cset	w8, eq
-	cbz	w8, .LBB455_21
-.LBB455_15:                             // %"$15"
-                                        //   in Loop: Header=BB455_12 Depth=1
+	cbz	w8, .LBB456_21
+.LBB456_15:                             // %"$15"
+                                        //   in Loop: Header=BB456_12 Depth=1
 	mov	x8, x23
-	b	.LBB455_18
-.LBB455_16:                             //   in Loop: Header=BB455_18 Depth=2
+	b	.LBB456_18
+.LBB456_16:                             //   in Loop: Header=BB456_18 Depth=2
 	mov	w10, wzr
-	cbnz	w10, .LBB455_11
-.LBB455_17:                             // %"$23"
-                                        //   in Loop: Header=BB455_18 Depth=2
+	cbnz	w10, .LBB456_11
+.LBB456_17:                             // %"$23"
+                                        //   in Loop: Header=BB456_18 Depth=2
 	add	x8, x8, #8                      // =8
-.LBB455_18:                             // %"$17"
-                                        //   Parent Loop BB455_12 Depth=1
+.LBB456_18:                             // %"$17"
+                                        //   Parent Loop BB456_12 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	ldp	w8, w9, [x8]
 	bfi	x8, x9, #32, #32
 	ldp	w9, w10, [x8]
 	bfi	x9, x10, #32, #32
 	tst	x9, #0xf
-	b.ne	.LBB455_21
+	b.ne	.LBB456_21
 // %bb.19:                              // %"$18"
-                                        //   in Loop: Header=BB455_18 Depth=2
+                                        //   in Loop: Header=BB456_18 Depth=2
 	ldp	w10, w11, [x9]
 	bfi	x10, x11, #32, #32
 	ldp	w12, w11, [x10]
 	bfi	x12, x11, #32, #32
 	cmp	x19, x12
-	b.ne	.LBB455_16
+	b.ne	.LBB456_16
 // %bb.20:                              // %"$21"
-                                        //   in Loop: Header=BB455_18 Depth=2
+                                        //   in Loop: Header=BB456_18 Depth=2
 	ldp	w10, w11, [x10, #8]
 	bfi	x10, x11, #32, #32
 	cmp	x21, x10
 	cset	w10, eq
-	cbz	w10, .LBB455_17
-	b	.LBB455_11
-.LBB455_21:                             // %"$16"
+	cbz	w10, .LBB456_17
+	b	.LBB456_11
+.LBB456_21:                             // %"$16"
 	cmp	x20, x19
-	b.ne	.LBB455_23
+	b.ne	.LBB456_23
 // %bb.22:                              // %"$26"
 	mov	x0, x22
 	mov	x1, x21
 	bl	equal
-	tbnz	w0, #0, .LBB455_34
-	b	.LBB455_24
-.LBB455_23:
+	tbnz	w0, #0, .LBB456_34
+	b	.LBB456_24
+.LBB456_23:
 	mov	w0, wzr
-	tbnz	w0, #0, .LBB455_34
-.LBB455_24:                             // %"$27"
+	tbnz	w0, #0, .LBB456_34
+.LBB456_24:                             // %"$27"
 	eor	w8, w22, #0x8
 	tst	x8, #0xe
-	b.eq	.LBB455_28
+	b.eq	.LBB456_28
 // %bb.25:
 	mov	w8, wzr
-	cbz	w8, .LBB455_29
-.LBB455_26:                             // %"$32"
+	cbz	w8, .LBB456_29
+.LBB456_26:                             // %"$32"
 	adrp	x8, SymTab+376
 	add	x8, x8, :lo12:SymTab+376
 	cmp	x22, x8
-	b.eq	.LBB455_34
+	b.eq	.LBB456_34
 // %bb.27:                              // %"$33"
 	mov	x0, x20
 	mov	x1, x22
 	mov	x2, x19
 	mov	x3, x21
-	b	.LBB455_33
-.LBB455_28:                             // %"$30"
+	b	.LBB456_33
+.LBB456_28:                             // %"$30"
 	mov	x0, x22
 	bl	firstByte
 	and	w8, w0, #0xff
 	cmp	w8, #64                         // =64
 	cset	w8, eq
-	cbnz	w8, .LBB455_26
-.LBB455_29:                             // %"$31"
+	cbnz	w8, .LBB456_26
+.LBB456_29:                             // %"$31"
 	eor	w8, w21, #0x8
 	tst	x8, #0xe
-	b.eq	.LBB455_36
+	b.eq	.LBB456_36
 // %bb.30:
 	mov	w8, wzr
-	cbz	w8, .LBB455_37
-.LBB455_31:                             // %"$38"
+	cbz	w8, .LBB456_37
+.LBB456_31:                             // %"$38"
 	adrp	x8, SymTab+376
 	add	x8, x8, :lo12:SymTab+376
 	cmp	x21, x8
-	b.eq	.LBB455_34
+	b.eq	.LBB456_34
 // %bb.32:                              // %"$39"
 	mov	x0, x19
 	mov	x1, x21
 	mov	x2, x20
 	mov	x3, x22
-.LBB455_33:                             // %"$24"
+.LBB456_33:                             // %"$24"
 	bl	cons3
 	ldp	w1, w8, [x23]
 	bfi	x1, x8, #32, #32
 	bl	cons
 	lsr	x8, x0, #32
 	stp	w0, w8, [x23]
-.LBB455_34:                             // %"$24"
+.LBB456_34:                             // %"$24"
 	mov	w0, #1
-.LBB455_35:                             // %"$24"
+.LBB456_35:                             // %"$24"
 	and	w0, w0, #0x1
 	ldp	x20, x19, [sp, #48]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #32]             // 16-byte Folded Reload
 	ldp	x24, x23, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x25, [sp], #64             // 16-byte Folded Reload
 	ret
-.LBB455_36:                             // %"$36"
+.LBB456_36:                             // %"$36"
 	mov	x0, x21
 	bl	firstByte
 	and	w8, w0, #0xff
 	cmp	w8, #64                         // =64
 	cset	w8, eq
-	cbnz	w8, .LBB455_31
-.LBB455_37:                             // %"$37"
+	cbnz	w8, .LBB456_31
+.LBB456_37:                             // %"$37"
 	tst	x22, #0xf
-	b.eq	.LBB455_40
+	b.eq	.LBB456_40
 // %bb.38:
 	mov	w8, #1
-	cbz	w8, .LBB455_41
-.LBB455_39:                             // %"$44"
+	cbz	w8, .LBB456_41
+.LBB456_39:                             // %"$44"
 	mov	x0, x22
 	mov	x1, x21
 	bl	equal
-	b	.LBB455_35
-.LBB455_40:                             // %"$42"
+	b	.LBB456_35
+.LBB456_40:                             // %"$42"
 	tst	x21, #0xf
 	cset	w8, ne
-	cbnz	w8, .LBB455_39
-.LBB455_41:                             // %"$43"
+	cbnz	w8, .LBB456_39
+.LBB456_41:                             // %"$43"
 	mov	x8, sp
 	adrp	x9, ($StkLimit)
 	ldr	x9, [x9, :lo12:($StkLimit)]
 	cmp	x9, x8
-	b.hi	.LBB455_46
+	b.hi	.LBB456_46
 // %bb.42:                              // %"$46"
 	ldp	w1, w8, [x22]
 	bfi	x1, x8, #32, #32
@@ -45056,7 +45089,7 @@ unify:                                  // @unify
 	mov	x0, x20
 	mov	x2, x19
 	bl	unify
-	tbz	w0, #0, .LBB455_44
+	tbz	w0, #0, .LBB456_44
 // %bb.43:                              // %"$49"
 	ldp	w1, w8, [x22, #8]
 	bfi	x1, x8, #32, #32
@@ -45065,22 +45098,22 @@ unify:                                  // @unify
 	mov	x0, x20
 	mov	x2, x19
 	bl	unify
-	tbnz	w0, #0, .LBB455_34
-	b	.LBB455_45
-.LBB455_44:
+	tbnz	w0, #0, .LBB456_34
+	b	.LBB456_45
+.LBB456_44:
 	mov	w0, wzr
-	tbnz	w0, #0, .LBB455_34
-.LBB455_45:                             // %"$50"
+	tbnz	w0, #0, .LBB456_34
+.LBB456_45:                             // %"$50"
 	mov	w0, wzr
 	bfi	x24, x25, #32, #32
 	lsr	x8, x24, #32
 	stp	w24, w8, [x23]
-	b	.LBB455_35
-.LBB455_46:                             // %"$45"
+	b	.LBB456_35
+.LBB456_46:                             // %"$45"
 	mov	x0, xzr
 	bl	stkErr
-.Lfunc_end455:
-	.size	unify, .Lfunc_end455-unify
+.Lfunc_end456:
+	.size	unify, .Lfunc_end456-unify
 	.cfi_endproc
                                         // -- End function
 	.globl	firstByte                       // -- Begin function firstByte
@@ -45092,37 +45125,37 @@ firstByte:                              // @firstByte
 	adrp	x8, SymTab+8
 	add	x8, x8, :lo12:SymTab+8
 	cmp	x0, x8
-	b.eq	.LBB456_2
+	b.eq	.LBB457_2
 // %bb.1:                               // %"$3"
 	ldp	w8, w9, [x0, #-8]
 	bfi	x8, x9, #32, #32
-	tbz	w8, #3, .LBB456_3
-.LBB456_2:
+	tbz	w8, #3, .LBB457_3
+.LBB457_2:
 	mov	x0, xzr
                                         // kill: def $w0 killed $w0 killed $x0
 	ret
-.LBB456_3:                              // %"$7"
+.LBB457_3:                              // %"$7"
                                         // =>This Inner Loop Header: Depth=1
 	tst	x8, #0x6
-	b.ne	.LBB456_5
+	b.ne	.LBB457_5
 // %bb.4:                               // %"$8"
-                                        //   in Loop: Header=BB456_3 Depth=1
+                                        //   in Loop: Header=BB457_3 Depth=1
 	ldp	w8, w9, [x8, #8]
 	bfi	x8, x9, #32, #32
-	b	.LBB456_3
-.LBB456_5:                              // %"$9"
-	tbz	w8, #1, .LBB456_7
+	b	.LBB457_3
+.LBB457_5:                              // %"$9"
+	tbz	w8, #1, .LBB457_7
 // %bb.6:                               // %"$11"
 	lsr	x0, x8, #4
                                         // kill: def $w0 killed $w0 killed $x0
 	ret
-.LBB456_7:                              // %"$10"
+.LBB457_7:                              // %"$10"
 	ldp	w0, w9, [x8, #-4]
 	bfi	x0, x9, #32, #32
                                         // kill: def $w0 killed $w0 killed $x0
 	ret
-.Lfunc_end456:
-	.size	firstByte, .Lfunc_end456-firstByte
+.Lfunc_end457:
+	.size	firstByte, .Lfunc_end457-firstByte
 	.cfi_endproc
                                         // -- End function
 	.globl	cons3                           // -- Begin function cons3
@@ -45158,15 +45191,15 @@ cons3:                                  // @cons3
 	mov	x22, x0
 	adrp	x12, ($Avail)
 	ldr	x8, [x12, :lo12:($Avail)]
-	cbz	x8, .LBB457_4
+	cbz	x8, .LBB458_4
 // %bb.1:                               // %"$2"
 	ldp	w9, w10, [x8]
 	bfi	x9, x10, #32, #32
-	cbz	x9, .LBB457_4
+	cbz	x9, .LBB458_4
 // %bb.2:                               // %"$4"
 	ldp	w0, w10, [x9]
 	bfi	x0, x10, #32, #32
-	cbz	x0, .LBB457_4
+	cbz	x0, .LBB458_4
 // %bb.3:                               // %"$6"
 	ldp	w11, w10, [x0]
 	bfi	x11, x10, #32, #32
@@ -45182,8 +45215,8 @@ cons3:                                  // @cons3
 	lsr	x10, x8, #32
 	stp	w8, w10, [x0]
 	lsr	x8, x9, #32
-	b	.LBB457_5
-.LBB457_4:                              // %"$3"
+	b	.LBB458_5
+.LBB458_4:                              // %"$3"
 	adrp	x25, env
 	ldr	x8, [x25, :lo12:env]
 	mov	x9, sp
@@ -45245,7 +45278,7 @@ cons3:                                  // @cons3
 	stp	w19, w24, [x10, #8]
 	lsr	x10, x12, #32
 	stp	w12, w10, [x0]
-.LBB457_5:                              // %"$6"
+.LBB458_5:                              // %"$6"
 	stp	w9, w8, [x0, #8]
 	mov	sp, x29
 	ldp	x20, x19, [sp, #80]             // 16-byte Folded Reload
@@ -45255,8 +45288,8 @@ cons3:                                  // @cons3
 	ldp	x28, x27, [sp, #16]             // 16-byte Folded Reload
 	ldp	x29, x30, [sp], #96             // 16-byte Folded Reload
 	ret
-.Lfunc_end457:
-	.size	cons3, .Lfunc_end457-cons3
+.Lfunc_end458:
+	.size	cons3, .Lfunc_end458-cons3
 	.cfi_endproc
                                         // -- End function
 	.globl	lookup                          // -- Begin function lookup
@@ -45273,25 +45306,25 @@ lookup:                                 // @lookup
 	mov	x19, x0
 	eor	w8, w19, #0x8
 	tst	x8, #0xe
-	b.eq	.LBB458_2
+	b.eq	.LBB459_2
 // %bb.1:
 	mov	w8, wzr
-	b	.LBB458_3
-.LBB458_2:                              // %"$3"
+	b	.LBB459_3
+.LBB459_2:                              // %"$3"
 	mov	x0, x19
 	bl	firstByte
 	and	w8, w0, #0xff
 	cmp	w8, #64                         // =64
 	cset	w8, eq
-.LBB458_3:                              // %"$2"
+.LBB459_3:                              // %"$2"
 	adrp	x9, SymTab+8
 	add	x9, x9, :lo12:SymTab+8
 	tst	w8, #0x1
 	csel	x0, x9, x19, ne
 	ldp	x30, x19, [sp], #16             // 16-byte Folded Reload
 	ret
-.Lfunc_end458:
-	.size	lookup, .Lfunc_end458-lookup
+.Lfunc_end459:
+	.size	lookup, .Lfunc_end459-lookup
 	.cfi_endproc
                                         // -- End function
 	.globl	lup                             // -- Begin function lup
@@ -45317,77 +45350,77 @@ lup:                                    // @lup
 	adrp	x9, ($StkLimit)
 	ldr	x9, [x9, :lo12:($StkLimit)]
 	cmp	x9, x8
-	b.hi	.LBB459_15
+	b.hi	.LBB460_15
 // %bb.1:                               // %"$3"
 	mov	x19, x1
 	mov	x20, x0
 	adrp	x8, ($Penv)
 	ldr	x21, [x8, :lo12:($Penv)]
-.LBB459_2:                              // %"$-1"
+.LBB460_2:                              // %"$-1"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB459_6 Depth 2
+                                        //     Child Loop BB460_6 Depth 2
 	eor	w8, w19, #0x8
 	tst	x8, #0xe
-	b.eq	.LBB459_4
-// %bb.3:                               //   in Loop: Header=BB459_2 Depth=1
+	b.eq	.LBB460_4
+// %bb.3:                               //   in Loop: Header=BB460_2 Depth=1
 	mov	w8, wzr
-	cbnz	w8, .LBB459_5
-	b	.LBB459_12
-.LBB459_4:                              // %"$5"
-                                        //   in Loop: Header=BB459_2 Depth=1
+	cbnz	w8, .LBB460_5
+	b	.LBB460_12
+.LBB460_4:                              // %"$5"
+                                        //   in Loop: Header=BB460_2 Depth=1
 	mov	x0, x19
 	bl	firstByte
 	and	w8, w0, #0xff
 	cmp	w8, #64                         // =64
 	cset	w8, eq
-	cbz	w8, .LBB459_12
-.LBB459_5:                              // %"$6"
-                                        //   in Loop: Header=BB459_2 Depth=1
+	cbz	w8, .LBB460_12
+.LBB460_5:                              // %"$6"
+                                        //   in Loop: Header=BB460_2 Depth=1
 	mov	x8, x21
-.LBB459_6:                              // %"$8"
-                                        //   Parent Loop BB459_2 Depth=1
+.LBB460_6:                              // %"$8"
+                                        //   Parent Loop BB460_2 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	ldp	w8, w9, [x8]
 	bfi	x8, x9, #32, #32
 	ldp	w9, w10, [x8]
 	bfi	x9, x10, #32, #32
 	tst	x9, #0xf
-	b.ne	.LBB459_12
+	b.ne	.LBB460_12
 // %bb.7:                               // %"$9"
-                                        //   in Loop: Header=BB459_6 Depth=2
+                                        //   in Loop: Header=BB460_6 Depth=2
 	ldp	w10, w11, [x9]
 	bfi	x10, x11, #32, #32
 	ldp	w12, w11, [x10]
 	bfi	x12, x11, #32, #32
 	cmp	x20, x12
-	b.ne	.LBB459_9
+	b.ne	.LBB460_9
 // %bb.8:                               // %"$12"
-                                        //   in Loop: Header=BB459_6 Depth=2
+                                        //   in Loop: Header=BB460_6 Depth=2
 	ldp	w10, w11, [x10, #8]
 	bfi	x10, x11, #32, #32
 	cmp	x19, x10
 	cset	w10, eq
-	cbz	w10, .LBB459_10
-	b	.LBB459_11
-.LBB459_9:                              //   in Loop: Header=BB459_6 Depth=2
+	cbz	w10, .LBB460_10
+	b	.LBB460_11
+.LBB460_9:                              //   in Loop: Header=BB460_6 Depth=2
 	mov	w10, wzr
-	cbnz	w10, .LBB459_11
-.LBB459_10:                             // %"$14"
-                                        //   in Loop: Header=BB459_6 Depth=2
+	cbnz	w10, .LBB460_11
+.LBB460_10:                             // %"$14"
+                                        //   in Loop: Header=BB460_6 Depth=2
 	add	x8, x8, #8                      // =8
-	b	.LBB459_6
-.LBB459_11:                             // %"$13"
-                                        //   in Loop: Header=BB459_2 Depth=1
+	b	.LBB460_6
+.LBB460_11:                             // %"$13"
+                                        //   in Loop: Header=BB460_2 Depth=1
 	ldp	w9, w8, [x9, #8]
 	bfi	x9, x8, #32, #32
 	ldp	w20, w8, [x9]
 	bfi	x20, x8, #32, #32
 	ldp	w19, w8, [x9, #8]
 	bfi	x19, x8, #32, #32
-	b	.LBB459_2
-.LBB459_12:                             // %"$7"
+	b	.LBB460_2
+.LBB460_12:                             // %"$7"
 	tst	x19, #0xf
-	b.ne	.LBB459_14
+	b.ne	.LBB460_14
 // %bb.13:                              // %"$16"
 	ldp	w1, w8, [x19]
 	bfi	x1, x8, #32, #32
@@ -45417,7 +45450,7 @@ lup:                                    // @lup
 	ldp	w9, w8, [x23]
 	bfi	x9, x8, #32, #32
 	str	x9, [x22, :lo12:env]
-.LBB459_14:                             // %"$17"
+.LBB460_14:                             // %"$17"
 	mov	x0, x19
 	mov	sp, x29
 	ldp	x20, x19, [sp, #48]             // 16-byte Folded Reload
@@ -45425,11 +45458,11 @@ lup:                                    // @lup
 	ldr	x23, [sp, #16]                  // 8-byte Folded Reload
 	ldp	x29, x30, [sp], #64             // 16-byte Folded Reload
 	ret
-.LBB459_15:                             // %"$2"
+.LBB460_15:                             // %"$2"
 	mov	x0, xzr
 	bl	stkErr
-.Lfunc_end459:
-	.size	lup, .Lfunc_end459-lup
+.Lfunc_end460:
+	.size	lup, .Lfunc_end460-lup
 	.cfi_endproc
                                         // -- End function
 	.globl	get                             // -- Begin function get
@@ -45439,101 +45472,101 @@ get:                                    // @get
 	.cfi_startproc
 // %bb.0:                               // %"$1"
 	cmp	x1, #2                          // =2
-	b.ne	.LBB460_2
+	b.ne	.LBB461_2
 // %bb.1:                               // %"$2"
 	ldp	w0, w8, [x0]
 	bfi	x0, x8, #32, #32
 	ret
-.LBB460_2:                              // %"$3"
+.LBB461_2:                              // %"$3"
 	ldp	w9, w8, [x0, #-8]
 	bfi	x9, x8, #32, #32
 	tst	x9, #0x6
-	b.eq	.LBB460_4
-.LBB460_3:
+	b.eq	.LBB461_4
+.LBB461_3:
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ret
-.LBB460_4:                              // %"$5"
+.LBB461_4:                              // %"$5"
 	and	x8, x9, #0xfffffffffffffff7
 	ldp	w10, w11, [x8]
 	bfi	x10, x11, #32, #32
 	tst	x10, #0xf
-	b.eq	.LBB460_6
+	b.eq	.LBB461_6
 // %bb.5:                               // %"$7"
 	cmp	x1, x10
-	b.ne	.LBB460_8
-	b	.LBB460_17
-.LBB460_6:                              // %"$8"
+	b.ne	.LBB461_8
+	b	.LBB461_17
+.LBB461_6:                              // %"$8"
 	ldp	w12, w11, [x10, #8]
 	bfi	x12, x11, #32, #32
 	cmp	x1, x12
-	b.ne	.LBB460_8
-	b	.LBB460_20
-.LBB460_7:                              // %"$18"
-                                        //   in Loop: Header=BB460_8 Depth=1
+	b.ne	.LBB461_8
+	b	.LBB461_20
+.LBB461_7:                              // %"$18"
+                                        //   in Loop: Header=BB461_8 Depth=1
 	ldp	w13, w12, [x10, #8]
 	bfi	x13, x12, #32, #32
 	cmp	x1, x13
-	b.eq	.LBB460_13
-.LBB460_8:                              // %"$14"
+	b.eq	.LBB461_13
+.LBB461_8:                              // %"$14"
                                         // =>This Inner Loop Header: Depth=1
 	mov	x11, x8
 	ldp	w8, w10, [x8, #8]
 	bfi	x8, x10, #32, #32
 	tst	x8, #0xf
-	b.ne	.LBB460_3
+	b.ne	.LBB461_3
 // %bb.9:                               // %"$15"
-                                        //   in Loop: Header=BB460_8 Depth=1
+                                        //   in Loop: Header=BB461_8 Depth=1
 	ldp	w10, w12, [x8]
 	bfi	x10, x12, #32, #32
 	tst	x10, #0xf
-	b.eq	.LBB460_7
+	b.eq	.LBB461_7
 // %bb.10:                              // %"$17"
-                                        //   in Loop: Header=BB460_8 Depth=1
+                                        //   in Loop: Header=BB461_8 Depth=1
 	cmp	x1, x10
-	b.ne	.LBB460_8
+	b.ne	.LBB461_8
 // %bb.11:                              // %"$20"
 	ldp	w10, w12, [x8, #8]
 	stp	w10, w12, [x11, #8]
-	tbz	w9, #3, .LBB460_15
+	tbz	w9, #3, .LBB461_15
 // %bb.12:                              // %"$23"
 	and	x10, x9, #0xfffffffffffffff7
 	lsr	x9, x9, #32
 	stp	w10, w9, [x8, #8]
 	orr	x8, x8, #0x8
-	b	.LBB460_16
-.LBB460_13:                             // %"$25"
+	b	.LBB461_16
+.LBB461_13:                             // %"$25"
 	ldp	w12, w13, [x8, #8]
 	stp	w12, w13, [x11, #8]
-	tbz	w9, #3, .LBB460_18
+	tbz	w9, #3, .LBB461_18
 // %bb.14:                              // %"$28"
 	and	x11, x9, #0xfffffffffffffff7
 	lsr	x9, x9, #32
 	stp	w11, w9, [x8, #8]
 	orr	x8, x8, #0x8
-	b	.LBB460_19
-.LBB460_15:                             // %"$22"
+	b	.LBB461_19
+.LBB461_15:                             // %"$22"
 	lsr	x10, x9, #32
 	stp	w9, w10, [x8, #8]
-.LBB460_16:                             // %"$24"
+.LBB461_16:                             // %"$24"
 	lsr	x9, x8, #32
 	stp	w8, w9, [x0, #-8]
-.LBB460_17:                             // %"$10"
+.LBB461_17:                             // %"$10"
 	adrp	x0, SymTab+216
 	add	x0, x0, :lo12:SymTab+216
 	ret
-.LBB460_18:                             // %"$27"
+.LBB461_18:                             // %"$27"
 	lsr	x11, x9, #32
 	stp	w9, w11, [x8, #8]
-.LBB460_19:                             // %"$29"
+.LBB461_19:                             // %"$29"
 	lsr	x9, x8, #32
 	stp	w8, w9, [x0, #-8]
-.LBB460_20:                             // %"$12"
+.LBB461_20:                             // %"$12"
 	ldp	w0, w8, [x10]
 	bfi	x0, x8, #32, #32
 	ret
-.Lfunc_end460:
-	.size	get, .Lfunc_end460-get
+.Lfunc_end461:
+	.size	get, .Lfunc_end461-get
 	.cfi_endproc
                                         // -- End function
 	.globl	uniFill                         // -- Begin function uniFill
@@ -45555,9 +45588,9 @@ uniFill:                                // @uniFill
 	.cfi_offset w29, -48
 	mov	x19, x0
 	tst	x0, #0x6
-	b.ne	.LBB461_5
+	b.ne	.LBB462_5
 // %bb.1:                               // %"$3"
-	tbz	w19, #3, .LBB461_3
+	tbz	w19, #3, .LBB462_3
 // %bb.2:                               // %"$6"
 	adrp	x8, ($Pnl)
 	ldr	x8, [x8, :lo12:($Pnl)]
@@ -45568,13 +45601,13 @@ uniFill:                                // @uniFill
 	mov	x1, x19
 	bl	lup
 	mov	x19, x0
-	b	.LBB461_5
-.LBB461_3:                              // %"$5"
+	b	.LBB462_5
+.LBB462_3:                              // %"$5"
 	mov	x8, sp
 	adrp	x9, ($StkLimit)
 	ldr	x9, [x9, :lo12:($StkLimit)]
 	cmp	x9, x8
-	b.hi	.LBB461_6
+	b.hi	.LBB462_6
 // %bb.4:                               // %"$8"
 	ldp	w0, w8, [x19]
 	bfi	x0, x8, #32, #32
@@ -45602,18 +45635,18 @@ uniFill:                                // @uniFill
 	ldp	w9, w8, [x22]
 	bfi	x9, x8, #32, #32
 	str	x9, [x21, :lo12:env]
-.LBB461_5:                              // %"$2"
+.LBB462_5:                              // %"$2"
 	mov	x0, x19
 	mov	sp, x29
 	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #16]             // 16-byte Folded Reload
 	ldp	x29, x30, [sp], #48             // 16-byte Folded Reload
 	ret
-.LBB461_6:                              // %"$7"
+.LBB462_6:                              // %"$7"
 	mov	x0, xzr
 	bl	stkErr
-.Lfunc_end461:
-	.size	uniFill, .Lfunc_end461-uniFill
+.Lfunc_end462:
+	.size	uniFill, .Lfunc_end462-uniFill
 	.cfi_endproc
                                         // -- End function
 	.globl	fill                            // -- Begin function fill
@@ -45637,10 +45670,10 @@ fill:                                   // @fill
 	.cfi_offset w30, -56
 	.cfi_offset w29, -64
 	tst	x0, #0x6
-	b.eq	.LBB462_3
-.LBB462_1:
+	b.eq	.LBB463_3
+.LBB463_1:
 	mov	x19, xzr
-.LBB462_2:                              // %"$2"
+.LBB463_2:                              // %"$2"
 	mov	x0, x19
 	mov	sp, x29
 	ldp	x20, x19, [sp, #48]             // 16-byte Folded Reload
@@ -45648,36 +45681,36 @@ fill:                                   // @fill
 	ldp	x24, x23, [sp, #16]             // 16-byte Folded Reload
 	ldp	x29, x30, [sp], #64             // 16-byte Folded Reload
 	ret
-.LBB462_3:                              // %"$3"
+.LBB463_3:                              // %"$3"
 	mov	x20, x1
-	tbz	w0, #3, .LBB462_8
+	tbz	w0, #3, .LBB463_8
 // %bb.4:                               // %"$6"
 	ldp	w19, w8, [x0]
 	bfi	x19, x8, #32, #32
 	cmp	x0, x19
-	b.eq	.LBB462_1
+	b.eq	.LBB463_1
 // %bb.5:                               // %"$8"
 	adrp	x8, SymTab+8
 	add	x8, x8, :lo12:SymTab+8
 	cmp	x20, x8
-	b.ne	.LBB462_17
+	b.ne	.LBB463_17
 // %bb.6:                               // %"$11"
 	adrp	x8, SymTab+376
 	add	x8, x8, :lo12:SymTab+376
 	cmp	x0, x8
-	b.eq	.LBB462_1
+	b.eq	.LBB463_1
 // %bb.7:                               // %"$13"
 	bl	firstByte
 	and	w8, w0, #0xff
 	cmp	w8, #64                         // =64
-	b.ne	.LBB462_1
-	b	.LBB462_2
-.LBB462_8:                              // %"$5"
+	b.ne	.LBB463_1
+	b	.LBB463_2
+.LBB463_8:                              // %"$5"
 	mov	x8, sp
 	adrp	x9, ($StkLimit)
 	ldr	x9, [x9, :lo12:($StkLimit)]
 	cmp	x9, x8
-	b.hi	.LBB462_36
+	b.hi	.LBB463_36
 // %bb.9:                               // %"$28"
 	ldp	w22, w8, [x0]
 	bfi	x22, x8, #32, #32
@@ -45686,25 +45719,25 @@ fill:                                   // @fill
 	adrp	x8, SymTab+632
 	add	x8, x8, :lo12:SymTab+632
 	cmp	x22, x8
-	b.ne	.LBB462_13
+	b.ne	.LBB463_13
 // %bb.10:                              // %"$29"
 	ldp	w19, w8, [x21]
 	bfi	x19, x8, #32, #32
 	ldp	w21, w8, [x21, #8]
 	bfi	x21, x8, #32, #32
 	tst	x19, #0x6
-	b.ne	.LBB462_25
+	b.ne	.LBB463_25
 // %bb.11:                              // %"$33"
-	tbz	w19, #3, .LBB462_24
+	tbz	w19, #3, .LBB463_24
 // %bb.12:                              // %"$36"
 	ldp	w19, w8, [x19]
 	bfi	x19, x8, #32, #32
-	b	.LBB462_25
-.LBB462_13:                             // %"$30"
+	b	.LBB463_25
+.LBB463_13:                             // %"$30"
 	mov	x0, x22
 	mov	x1, x20
 	bl	fill
-	cbz	x0, .LBB462_22
+	cbz	x0, .LBB463_22
 // %bb.14:                              // %"$51"
 	mov	x19, x0
 	adrp	x22, env
@@ -45721,63 +45754,63 @@ fill:                                   // @fill
 	mov	x1, x20
 	bl	fill
 	mov	x1, x0
-	cbnz	x0, .LBB462_16
+	cbnz	x0, .LBB463_16
 // %bb.15:                              // %"$53"
 	mov	x1, x21
-.LBB462_16:                             // %"$54"
+.LBB463_16:                             // %"$54"
 	mov	x0, x19
 	bl	cons
 	mov	x19, x0
-	b	.LBB462_33
-.LBB462_17:                             // %"$10"
+	b	.LBB463_33
+.LBB463_17:                             // %"$10"
 	cmp	x0, x20
-	b.ne	.LBB462_19
-.LBB462_18:
+	b.ne	.LBB463_19
+.LBB463_18:
 	mov	w8, #1
-	b	.LBB462_35
-.LBB462_19:                             // %"$19"
+	b	.LBB463_35
+.LBB463_19:                             // %"$19"
                                         // =>This Inner Loop Header: Depth=1
 	tst	x20, #0xf
-	b.ne	.LBB462_34
+	b.ne	.LBB463_34
 // %bb.20:                              // %"$20"
-                                        //   in Loop: Header=BB462_19 Depth=1
+                                        //   in Loop: Header=BB463_19 Depth=1
 	ldp	w9, w8, [x20]
 	bfi	x9, x8, #32, #32
 	cmp	x0, x9
-	b.eq	.LBB462_18
+	b.eq	.LBB463_18
 // %bb.21:                              // %"$23"
-                                        //   in Loop: Header=BB462_19 Depth=1
+                                        //   in Loop: Header=BB463_19 Depth=1
 	ldp	w20, w8, [x20, #8]
 	bfi	x20, x8, #32, #32
-	b	.LBB462_19
-.LBB462_22:                             // %"$50"
+	b	.LBB463_19
+.LBB463_22:                             // %"$50"
 	mov	x0, x21
 	mov	x1, x20
 	bl	fill
-	cbz	x0, .LBB462_1
+	cbz	x0, .LBB463_1
 // %bb.23:                              // %"$56"
 	mov	x1, x0
 	mov	x0, x22
 	bl	cons
 	mov	x19, x0
-	b	.LBB462_2
-.LBB462_24:                             // %"$35"
+	b	.LBB463_2
+.LBB463_24:                             // %"$35"
 	mov	x0, x19
 	bl	evList
 	mov	x19, x0
-.LBB462_25:                             // %"$32"
+.LBB463_25:                             // %"$32"
 	tst	x19, #0xf
-	b.eq	.LBB462_28
+	b.eq	.LBB463_28
 // %bb.26:                              // %"$37"
 	mov	x0, x21
 	mov	x1, x20
 	bl	fill
 	mov	x19, x0
-	cbnz	x0, .LBB462_2
+	cbnz	x0, .LBB463_2
 // %bb.27:                              // %"$41"
 	mov	x19, x21
-	b	.LBB462_2
-.LBB462_28:                             // %"$38"
+	b	.LBB463_2
+.LBB463_28:                             // %"$38"
 	adrp	x22, env
 	ldr	x8, [x22, :lo12:env]
 	mov	x9, sp
@@ -45789,39 +45822,39 @@ fill:                                   // @fill
 	stp	w8, w11, [x9, #-8]
 	mov	x8, x19
 	str	x23, [x22, :lo12:env]
-.LBB462_29:                             // %"$43"
+.LBB463_29:                             // %"$43"
                                         // =>This Inner Loop Header: Depth=1
 	mov	x24, x8
 	ldp	w8, w9, [x8, #8]
 	bfi	x8, x9, #32, #32
 	tst	x8, #0xf
-	b.eq	.LBB462_29
+	b.eq	.LBB463_29
 // %bb.30:                              // %"$45"
 	mov	x0, x21
 	mov	x1, x20
 	bl	fill
-	cbnz	x0, .LBB462_32
+	cbnz	x0, .LBB463_32
 // %bb.31:                              // %"$47"
 	mov	x0, x21
-.LBB462_32:                             // %"$48"
+.LBB463_32:                             // %"$48"
 	lsr	x8, x0, #32
 	stp	w0, w8, [x24, #8]
-.LBB462_33:                             // %"$2"
+.LBB463_33:                             // %"$2"
 	ldp	w9, w8, [x23, #8]
 	bfi	x9, x8, #32, #32
 	str	x9, [x22, :lo12:env]
-	b	.LBB462_2
-.LBB462_34:
+	b	.LBB463_2
+.LBB463_34:
 	mov	w8, wzr
-.LBB462_35:                             // %"$17"
+.LBB463_35:                             // %"$17"
 	tst	w8, #0x1
 	csel	x19, x19, xzr, ne
-	b	.LBB462_2
-.LBB462_36:                             // %"$27"
+	b	.LBB463_2
+.LBB463_36:                             // %"$27"
 	mov	x0, xzr
 	bl	stkErr
-.Lfunc_end462:
-	.size	fill, .Lfunc_end462-fill
+.Lfunc_end463:
+	.size	fill, .Lfunc_end463-fill
 	.cfi_endproc
                                         // -- End function
 	.globl	match                           // -- Begin function match
@@ -45843,147 +45876,147 @@ match:                                  // @match
 	mov	x20, x0
 	adrp	x22, ($StkLimit)
 	tst	x20, #0xf
-	b.eq	.LBB463_6
-.LBB463_1:                              // %"$5"
+	b.eq	.LBB464_6
+.LBB464_1:                              // %"$5"
 	tst	x20, #0x6
-	b.eq	.LBB463_22
+	b.eq	.LBB464_22
 // %bb.2:
 	mov	w8, #1
-	cbz	w8, .LBB463_23
-.LBB463_3:                              // %"$8"
+	cbz	w8, .LBB464_23
+.LBB464_3:                              // %"$8"
 	mov	x0, x20
 	mov	x1, x19
 	bl	equal
-	b	.LBB463_25
-.LBB463_4:                              // %"$28"
-                                        //   in Loop: Header=BB463_6 Depth=1
+	b	.LBB464_25
+.LBB464_4:                              // %"$28"
+                                        //   in Loop: Header=BB464_6 Depth=1
 	ldp	w1, w8, [x19]
 	bfi	x1, x8, #32, #32
 	mov	x0, x21
 	bl	match
 	eor	w8, w0, #0x1
-	tbnz	w8, #0, .LBB463_18
-.LBB463_5:                              // %"$29"
-                                        //   in Loop: Header=BB463_6 Depth=1
+	tbnz	w8, #0, .LBB464_18
+.LBB464_5:                              // %"$29"
+                                        //   in Loop: Header=BB464_6 Depth=1
 	ldp	w20, w8, [x20, #8]
 	bfi	x20, x8, #32, #32
 	ldp	w19, w8, [x19, #8]
 	bfi	x19, x8, #32, #32
 	tst	x20, #0xf
-	b.ne	.LBB463_1
-.LBB463_6:                              // %"$3"
+	b.ne	.LBB464_1
+.LBB464_6:                              // %"$3"
                                         // =>This Inner Loop Header: Depth=1
 	mov	x8, sp
 	ldr	x9, [x22, :lo12:($StkLimit)]
 	cmp	x9, x8
-	b.hi	.LBB463_26
+	b.hi	.LBB464_26
 // %bb.7:                               // %"$12"
-                                        //   in Loop: Header=BB463_6 Depth=1
+                                        //   in Loop: Header=BB464_6 Depth=1
 	ldp	w21, w8, [x20]
 	eor	w9, w21, #0x8
 	bfi	x21, x8, #32, #32
 	tst	x9, #0xe
-	b.eq	.LBB463_9
-// %bb.8:                               //   in Loop: Header=BB463_6 Depth=1
+	b.eq	.LBB464_9
+// %bb.8:                               //   in Loop: Header=BB464_6 Depth=1
 	mov	w8, wzr
-	cbnz	w8, .LBB463_10
-	b	.LBB463_14
-.LBB463_9:                              // %"$14"
-                                        //   in Loop: Header=BB463_6 Depth=1
+	cbnz	w8, .LBB464_10
+	b	.LBB464_14
+.LBB464_9:                              // %"$14"
+                                        //   in Loop: Header=BB464_6 Depth=1
 	mov	x0, x21
 	bl	firstByte
 	and	w8, w0, #0xff
 	cmp	w8, #64                         // =64
 	cset	w8, eq
-	cbz	w8, .LBB463_14
-.LBB463_10:                             // %"$15"
-                                        //   in Loop: Header=BB463_6 Depth=1
+	cbz	w8, .LBB464_14
+.LBB464_10:                             // %"$15"
+                                        //   in Loop: Header=BB464_6 Depth=1
 	tst	x19, #0xf
-	b.ne	.LBB463_16
+	b.ne	.LBB464_16
 // %bb.11:                              // %"$17"
-                                        //   in Loop: Header=BB463_6 Depth=1
+                                        //   in Loop: Header=BB464_6 Depth=1
 	ldp	w0, w8, [x20, #8]
 	bfi	x0, x8, #32, #32
 	ldp	w1, w8, [x19, #8]
 	bfi	x1, x8, #32, #32
 	bl	match
-	tbnz	w0, #0, .LBB463_19
+	tbnz	w0, #0, .LBB464_19
 // %bb.12:                              // %"$21"
-                                        //   in Loop: Header=BB463_6 Depth=1
+                                        //   in Loop: Header=BB464_6 Depth=1
 	ldp	w0, w8, [x20, #8]
 	bfi	x0, x8, #32, #32
 	mov	x1, x19
 	bl	match
-	tbnz	w0, #0, .LBB463_17
+	tbnz	w0, #0, .LBB464_17
 // %bb.13:                              // %"$23"
-                                        //   in Loop: Header=BB463_6 Depth=1
+                                        //   in Loop: Header=BB464_6 Depth=1
 	ldp	w1, w8, [x19, #8]
 	bfi	x1, x8, #32, #32
 	mov	x0, x20
 	bl	match
-	tbnz	w0, #0, .LBB463_20
-.LBB463_14:                             // %"$16"
-                                        //   in Loop: Header=BB463_6 Depth=1
+	tbnz	w0, #0, .LBB464_20
+.LBB464_14:                             // %"$16"
+                                        //   in Loop: Header=BB464_6 Depth=1
 	tst	x19, #0xf
-	b.eq	.LBB463_4
-// %bb.15:                              //   in Loop: Header=BB463_6 Depth=1
+	b.eq	.LBB464_4
+// %bb.15:                              //   in Loop: Header=BB464_6 Depth=1
 	mov	w8, #1
-	tbz	w8, #0, .LBB463_5
-	b	.LBB463_18
-.LBB463_16:                             // %"$18"
+	tbz	w8, #0, .LBB464_5
+	b	.LBB464_18
+.LBB464_16:                             // %"$18"
 	ldp	w0, w8, [x20, #8]
 	bfi	x0, x8, #32, #32
 	mov	x1, x19
 	bl	equal
-	tbz	w0, #0, .LBB463_18
-.LBB463_17:                             // %"$20"
+	tbz	w0, #0, .LBB464_18
+.LBB464_17:                             // %"$20"
 	adrp	x8, SymTab+8
 	add	x8, x8, :lo12:SymTab+8
 	lsr	x9, x8, #32
 	stp	w8, w9, [x21]
-	b	.LBB463_24
-.LBB463_18:
+	b	.LBB464_24
+.LBB464_18:
 	mov	w0, wzr
-	b	.LBB463_25
-.LBB463_19:                             // %"$22"
+	b	.LBB464_25
+.LBB464_19:                             // %"$22"
 	ldp	w0, w8, [x19]
 	bfi	x0, x8, #32, #32
 	adrp	x1, SymTab+8
 	add	x1, x1, :lo12:SymTab+8
-	b	.LBB463_21
-.LBB463_20:                             // %"$26"
+	b	.LBB464_21
+.LBB464_20:                             // %"$26"
 	ldp	w0, w8, [x19]
 	bfi	x0, x8, #32, #32
 	ldp	w1, w8, [x21]
 	bfi	x1, x8, #32, #32
-.LBB463_21:                             // %"$4"
+.LBB464_21:                             // %"$4"
 	bl	cons
 	lsr	x8, x0, #32
 	stp	w0, w8, [x21]
-	b	.LBB463_24
-.LBB463_22:                             // %"$7"
+	b	.LBB464_24
+.LBB464_22:                             // %"$7"
 	mov	x0, x20
 	bl	firstByte
 	and	w8, w0, #0xff
 	cmp	w8, #64                         // =64
 	cset	w8, ne
-	cbnz	w8, .LBB463_3
-.LBB463_23:                             // %"$9"
+	cbnz	w8, .LBB464_3
+.LBB464_23:                             // %"$9"
 	lsr	x8, x19, #32
 	stp	w19, w8, [x20]
-.LBB463_24:                             // %"$4"
+.LBB464_24:                             // %"$4"
 	mov	w0, #1
-.LBB463_25:                             // %"$4"
+.LBB464_25:                             // %"$4"
 	and	w0, w0, #0x1
 	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #48                  // 8-byte Folded Reload
 	ret
-.LBB463_26:                             // %"$11"
+.LBB464_26:                             // %"$11"
 	mov	x0, xzr
 	bl	stkErr
-.Lfunc_end463:
-	.size	match, .Lfunc_end463-match
+.Lfunc_end464:
+	.size	match, .Lfunc_end464-match
 	.cfi_endproc
                                         // -- End function
 	.globl	binSize                         // -- Begin function binSize
@@ -46002,73 +46035,73 @@ binSize:                                // @binSize
 	.cfi_offset w22, -32
 	.cfi_offset w30, -48
 	mov	x20, x0
-	tbz	w20, #1, .LBB464_4
+	tbz	w20, #1, .LBB465_4
 // %bb.1:                               // %"$4"
 	lsr	x8, x20, #3
-.LBB464_2:                              // %"$5.preheader"
+.LBB465_2:                              // %"$5.preheader"
 	mov	w19, #2
 	lsr	x8, x8, #8
-	cbz	x8, .LBB464_17
-.LBB464_3:                              // %"$6"
+	cbz	x8, .LBB465_17
+.LBB465_3:                              // %"$6"
                                         // =>This Inner Loop Header: Depth=1
 	add	x19, x19, #1                    // =1
 	lsr	x8, x8, #8
-	cbnz	x8, .LBB464_3
-	b	.LBB464_17
-.LBB464_4:                              // %"$3"
-	tbz	w20, #2, .LBB464_8
+	cbnz	x8, .LBB465_3
+	b	.LBB465_17
+.LBB465_4:                              // %"$3"
+	tbz	w20, #2, .LBB465_8
 // %bb.5:                               // %"$9"
 	and	x9, x20, #0xfffffffffffffff7
 	mov	w8, #9
-.LBB464_6:                              // %"$10"
+.LBB465_6:                              // %"$10"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w10, w11, [x9, #4]
 	bfi	x10, x11, #32, #32
-	tbnz	w10, #1, .LBB464_14
+	tbnz	w10, #1, .LBB465_14
 // %bb.7:                               // %"$11"
-                                        //   in Loop: Header=BB464_6 Depth=1
+                                        //   in Loop: Header=BB465_6 Depth=1
 	add	x8, x8, #8                      // =8
 	mov	x9, x10
-	b	.LBB464_6
-.LBB464_8:                              // %"$8"
-	tbz	w20, #3, .LBB464_18
+	b	.LBB465_6
+.LBB465_8:                              // %"$8"
+	tbz	w20, #3, .LBB465_18
 // %bb.9:                               // %"$22"
 	adrp	x8, SymTab+8
 	add	x8, x8, :lo12:SymTab+8
 	cmp	x20, x8
-	b.eq	.LBB464_13
+	b.eq	.LBB465_13
 // %bb.10:                              // %"$24"
 	ldp	w9, w8, [x20, #-8]
 	bfi	x9, x8, #32, #32
 	and	x9, x9, #0xfffffffffffffff7
 	tst	x9, #0x6
-	b.ne	.LBB464_12
-.LBB464_11:                             // %"$27"
+	b.ne	.LBB465_12
+.LBB465_11:                             // %"$27"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w9, w8, [x9, #8]
 	bfi	x9, x8, #32, #32
 	tst	x9, #0x6
-	b.eq	.LBB464_11
-.LBB464_12:                             // %"$28"
+	b.eq	.LBB465_11
+.LBB465_12:                             // %"$28"
 	cmp	x9, #2                          // =2
-	b.ne	.LBB464_24
-.LBB464_13:
+	b.ne	.LBB465_24
+.LBB465_13:
 	mov	w19, #1
-	b	.LBB464_17
-.LBB464_14:                             // %"$12"
+	b	.LBB465_17
+.LBB465_14:                             // %"$12"
 	ldp	w9, w11, [x9, #-4]
 	bfi	x9, x11, #32, #32
 	lsr	x10, x10, #4
 	cmn	x9, x9
 	add	x9, x10, x10
 	cinc	x9, x9, hs
-	cbz	x9, .LBB464_16
-.LBB464_15:                             // %"$15"
+	cbz	x9, .LBB465_16
+.LBB465_15:                             // %"$15"
                                         // =>This Inner Loop Header: Depth=1
 	add	x8, x8, #1                      // =1
 	lsr	x9, x9, #8
-	cbnz	x9, .LBB464_15
-.LBB464_16:                             // %"$14"
+	cbnz	x9, .LBB465_15
+.LBB465_16:                             // %"$14"
 	sub	x9, x8, #64                     // =64
 	mov	x10, #-9187201950435737472
 	movk	x10, #32897
@@ -46076,18 +46109,18 @@ binSize:                                // @binSize
 	add	x9, x8, x9, lsr #7
 	cmp	x8, #64                         // =64
 	csinc	x19, x8, x9, lo
-.LBB464_17:                             // %"$2"
+.LBB465_17:                             // %"$2"
 	mov	x0, x19
 	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #48                  // 8-byte Folded Reload
 	ret
-.LBB464_18:                             // %"$21"
+.LBB465_18:                             // %"$21"
 	mov	w19, #2
 	mov	x21, x20
 	adrp	x22, SymTab+8
 	add	x22, x22, :lo12:SymTab+8
-.LBB464_19:                             // %"$36"
+.LBB465_19:                             // %"$36"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w0, w8, [x21]
 	bfi	x0, x8, #32, #32
@@ -46096,45 +46129,45 @@ binSize:                                // @binSize
 	bl	binSize
 	add	x19, x19, x0
 	cmp	x21, x22
-	b.eq	.LBB464_17
+	b.eq	.LBB465_17
 // %bb.20:                              // %"$37"
-                                        //   in Loop: Header=BB464_19 Depth=1
+                                        //   in Loop: Header=BB465_19 Depth=1
 	cmp	x20, x21
-	b.eq	.LBB464_23
+	b.eq	.LBB465_23
 // %bb.21:                              // %"$40"
-                                        //   in Loop: Header=BB464_19 Depth=1
+                                        //   in Loop: Header=BB465_19 Depth=1
 	tst	x21, #0xf
-	b.eq	.LBB464_19
+	b.eq	.LBB465_19
 // %bb.22:                              // %"$43"
 	mov	x0, x21
 	bl	binSize
 	add	x19, x19, x0
-	b	.LBB464_17
-.LBB464_23:                             // %"$41"
+	b	.LBB465_17
+.LBB465_23:                             // %"$41"
 	add	x19, x19, #1                    // =1
-	b	.LBB464_17
-.LBB464_24:                             // %"$29"
-	tbz	w9, #1, .LBB464_26
+	b	.LBB465_17
+.LBB465_24:                             // %"$29"
+	tbz	w9, #1, .LBB465_26
 // %bb.25:                              // %"$32"
 	ubfx	x8, x9, #4, #58
-	b	.LBB464_2
-.LBB464_26:                             // %"$33.preheader"
+	b	.LBB465_2
+.LBB465_26:                             // %"$33.preheader"
 	mov	w8, #9
-.LBB464_27:                             // %"$33"
+.LBB465_27:                             // %"$33"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w9, w10, [x9, #4]
 	bfi	x9, x10, #32, #32
-	tbnz	w9, #1, .LBB464_29
+	tbnz	w9, #1, .LBB465_29
 // %bb.28:                              // %"$34"
-                                        //   in Loop: Header=BB464_27 Depth=1
+                                        //   in Loop: Header=BB465_27 Depth=1
 	add	x8, x8, #8                      // =8
-	b	.LBB464_27
-.LBB464_29:                             // %"$35"
+	b	.LBB465_27
+.LBB465_29:                             // %"$35"
 	lsr	x9, x9, #4
-	cbnz	x9, .LBB464_15
-	b	.LBB464_16
-.Lfunc_end464:
-	.size	binSize, .Lfunc_end464-binSize
+	cbnz	x9, .LBB465_15
+	b	.LBB465_16
+.Lfunc_end465:
+	.size	binSize, .Lfunc_end465-binSize
 	.cfi_endproc
                                         // -- End function
 	.globl	size                            // -- Begin function size
@@ -46160,17 +46193,17 @@ size:                                   // @size
 	adrp	x23, ($StkLimit)
 	mov	x22, x0
 	tst	x21, #0xf
-	b.ne	.LBB465_3
-.LBB465_1:                              // %"$3"
+	b.ne	.LBB466_3
+.LBB466_1:                              // %"$3"
 	mov	x8, sp
 	ldr	x9, [x23, :lo12:($StkLimit)]
 	cmp	x9, x8
-	b.hi	.LBB465_11
+	b.hi	.LBB466_11
 // %bb.2:                               // %"$6"
 	mov	x0, x21
 	bl	size
 	add	x20, x20, x0
-.LBB465_3:                              // %"$4"
+.LBB466_3:                              // %"$4"
                                         // =>This Inner Loop Header: Depth=1
 	orr	w8, w21, #0x1
 	lsr	x9, x21, #32
@@ -46178,19 +46211,19 @@ size:                                   // @size
 	ldp	w22, w8, [x22, #8]
 	bfi	x22, x8, #32, #32
 	tst	x22, #0xf
-	b.ne	.LBB465_6
+	b.ne	.LBB466_6
 // %bb.4:                               // %"$7"
-                                        //   in Loop: Header=BB465_3 Depth=1
+                                        //   in Loop: Header=BB466_3 Depth=1
 	ldp	w21, w8, [x22]
 	bfi	x21, x8, #32, #32
-	tbnz	w21, #0, .LBB465_8
+	tbnz	w21, #0, .LBB466_8
 // %bb.5:                               // %"$13"
-                                        //   in Loop: Header=BB465_3 Depth=1
+                                        //   in Loop: Header=BB466_3 Depth=1
 	add	x20, x20, #1                    // =1
 	tst	x21, #0xf
-	b.ne	.LBB465_3
-	b	.LBB465_1
-.LBB465_6:                              // %"$10"
+	b.ne	.LBB466_3
+	b	.LBB466_1
+.LBB466_6:                              // %"$10"
                                         // =>This Inner Loop Header: Depth=1
 	ldr	w8, [x19]
 	and	w8, w8, #0xfffffffe
@@ -46198,20 +46231,20 @@ size:                                   // @size
 	ldp	w19, w8, [x19, #8]
 	bfi	x19, x8, #32, #32
 	cmp	x22, x19
-	b.ne	.LBB465_6
-	b	.LBB465_10
-.LBB465_7:                              // %"$16"
-                                        //   in Loop: Header=BB465_8 Depth=1
+	b.ne	.LBB466_6
+	b	.LBB466_10
+.LBB466_7:                              // %"$16"
+                                        //   in Loop: Header=BB466_8 Depth=1
 	ldr	w8, [x19]
 	and	w8, w8, #0xfffffffe
 	str	w8, [x19]
 	ldp	w19, w8, [x19, #8]
 	bfi	x19, x8, #32, #32
-.LBB465_8:                              // %"$15"
+.LBB466_8:                              // %"$15"
                                         // =>This Inner Loop Header: Depth=1
 	cmp	x22, x19
-	b.ne	.LBB465_7
-.LBB465_9:                              // %"$18"
+	b.ne	.LBB466_7
+.LBB466_9:                              // %"$18"
                                         // =>This Inner Loop Header: Depth=1
 	ldr	w8, [x19]
 	and	w8, w8, #0xfffffffe
@@ -46219,18 +46252,18 @@ size:                                   // @size
 	ldp	w19, w8, [x19, #8]
 	bfi	x19, x8, #32, #32
 	cmp	x22, x19
-	b.ne	.LBB465_9
-.LBB465_10:                             // %"$8"
+	b.ne	.LBB466_9
+.LBB466_10:                             // %"$8"
 	mov	x0, x20
 	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x23, [sp], #48             // 16-byte Folded Reload
 	ret
-.LBB465_11:                             // %"$5"
+.LBB466_11:                             // %"$5"
 	mov	x0, xzr
 	bl	stkErr
-.Lfunc_end465:
-	.size	size, .Lfunc_end465-size
+.Lfunc_end466:
+	.size	size, .Lfunc_end466-size
 	.cfi_endproc
                                         // -- End function
 	.globl	dbFetch                         // -- Begin function dbFetch
@@ -46254,7 +46287,7 @@ dbFetch:                                // @dbFetch
 	tst	x9, #0x6
 	csel	x8, x9, x8, eq
 	csel	w9, wzr, w10, eq
-	cbz	w9, .LBB466_2
+	cbz	w9, .LBB467_2
 // %bb.1:                               // %"$5"
 	mov	x2, #4611686018427387904
 	bfxil	x2, x8, #2, #62
@@ -46262,11 +46295,11 @@ dbFetch:                                // @dbFetch
 	lsr	x9, x2, #32
 	stp	w8, w9, [x1, #-8]
 	bl	db
-.LBB466_2:                              // %"$6"
+.LBB467_2:                              // %"$6"
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end466:
-	.size	dbFetch, .Lfunc_end466-dbFetch
+.Lfunc_end467:
+	.size	dbFetch, .Lfunc_end467-dbFetch
 	.cfi_endproc
                                         // -- End function
 	.globl	db                              // -- Begin function db
@@ -46300,27 +46333,27 @@ db:                                     // @db
 	adrp	x8, ($DBs)
 	ldr	w8, [x8, :lo12:($DBs)]
 	cmp	w0, w8
-	b.lt	.LBB467_7
+	b.lt	.LBB468_7
 // %bb.1:                               // %"$2"
 	adrp	x8, SymTab+472
 	ldr	x8, [x8, :lo12:SymTab+472]
 	tst	x8, #0xf
-	b.eq	.LBB467_17
+	b.eq	.LBB468_17
 // %bb.2:
 	mov	w9, #1
-	tbnz	w9, #0, .LBB467_18
-.LBB467_3:                              // %"$10"
+	tbnz	w9, #0, .LBB468_18
+.LBB468_3:                              // %"$10"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w9, w10, [x8, #8]
 	bfi	x9, x10, #32, #32
 	tst	x9, #0xf
-	b.eq	.LBB467_5
-// %bb.4:                               //   in Loop: Header=BB467_3 Depth=1
+	b.eq	.LBB468_5
+// %bb.4:                               //   in Loop: Header=BB468_3 Depth=1
 	mov	w9, wzr
-	cbnz	w9, .LBB467_6
-	b	.LBB467_11
-.LBB467_5:                              // %"$12"
-                                        //   in Loop: Header=BB467_3 Depth=1
+	cbnz	w9, .LBB468_6
+	b	.LBB468_11
+.LBB468_5:                              // %"$12"
+                                        //   in Loop: Header=BB468_3 Depth=1
 	ldp	w9, w10, [x9]
 	bfi	x9, x10, #32, #32
 	ldp	w9, w10, [x9]
@@ -46328,13 +46361,13 @@ db:                                     // @db
 	lsr	x9, x9, #4
 	cmp	w0, w9
 	cset	w9, ge
-	cbz	w9, .LBB467_11
-.LBB467_6:                              // %"$13"
-                                        //   in Loop: Header=BB467_3 Depth=1
+	cbz	w9, .LBB468_11
+.LBB468_6:                              // %"$13"
+                                        //   in Loop: Header=BB468_3 Depth=1
 	ldp	w8, w9, [x8, #8]
 	bfi	x8, x9, #32, #32
-	b	.LBB467_3
-.LBB467_7:                              // %"$3"
+	b	.LBB468_3
+.LBB468_7:                              // %"$3"
 	adrp	x8, ($DbFiles)
 	ldr	x8, [x8, :lo12:($DbFiles)]
 	mov	w9, #42
@@ -46350,7 +46383,7 @@ db:                                     // @db
 	ldrb	w8, [x0]
 	and	w8, w8, #0x3f
 	cmp	w8, #1                          // =1
-	b.ne	.LBB467_23
+	b.ne	.LBB468_23
 // %bb.8:                               // %"$22"
 	adrp	x8, ($GetBin)
 	adrp	x9, getBlock
@@ -46365,15 +46398,15 @@ db:                                     // @db
 	adrp	x21, SymTab+8
 	add	x21, x21, :lo12:SymTab+8
 	cmp	x0, x21
-	b.ne	.LBB467_13
+	b.ne	.LBB468_13
 // %bb.9:                               // %"$23"
 	lsr	x8, x20, #32
 	stp	w20, w8, [x19, #-8]
-.LBB467_10:                             // %"$25"
+.LBB468_10:                             // %"$25"
 	mov	w0, #1
 	bl	unLockDb
-	b	.LBB467_22
-.LBB467_11:                             // %"$14"
+	b	.LBB468_22
+.LBB468_11:                             // %"$14"
 	mov	x9, sp
 	sub	x10, x9, #32                    // =32
 	mov	sp, x10
@@ -46409,12 +46442,12 @@ db:                                     // @db
 	bfi	x8, x11, #32, #32
 	stp	w9, w10, [x19]
 	tst	x8, #0xf
-	b.eq	.LBB467_19
+	b.eq	.LBB468_19
 // %bb.12:                              // %"$15"
 	lsr	x8, x20, #32
 	stp	w20, w8, [x19, #-8]
-	b	.LBB467_22
-.LBB467_13:                             // %"$24"
+	b	.LBB468_22
+.LBB468_13:                             // %"$24"
 	mov	x1, x20
 	bl	cons
 	mov	x20, x0
@@ -46425,20 +46458,20 @@ db:                                     // @db
 	adrp	x19, SymTab+216
 	add	x19, x19, :lo12:SymTab+216
 	cmp	x0, x19
-	b.eq	.LBB467_15
-.LBB467_14:                             // %"$26"
+	b.eq	.LBB468_15
+.LBB468_14:                             // %"$26"
 	ldp	w1, w8, [x20]
 	bfi	x1, x8, #32, #32
 	bl	cons
 	lsr	x8, x0, #32
 	stp	w0, w8, [x20]
-.LBB467_15:                             // %"$28"
+.LBB468_15:                             // %"$28"
                                         // =>This Inner Loop Header: Depth=1
 	bl	binRead
 	cmp	x0, x21
-	b.eq	.LBB467_10
+	b.eq	.LBB468_10
 // %bb.16:                              // %"$29"
-                                        //   in Loop: Header=BB467_15 Depth=1
+                                        //   in Loop: Header=BB468_15 Depth=1
 	ldr	w1, [x20, #8]!
 	ldr	w8, [x20, #4]
 	bfi	x1, x8, #32, #32
@@ -46448,9 +46481,9 @@ db:                                     // @db
 	mov	x20, x0
 	bl	binRead
 	cmp	x0, x19
-	b.ne	.LBB467_14
-	b	.LBB467_15
-.LBB467_17:                             // %"$6"
+	b.ne	.LBB468_14
+	b	.LBB468_15
+.LBB468_17:                             // %"$6"
 	ldp	w10, w9, [x8]
 	bfi	x10, x9, #32, #32
 	ldp	w10, w9, [x10]
@@ -46459,25 +46492,25 @@ db:                                     // @db
 	add	w0, w0, #1                      // =1
 	cmp	w9, w0
 	cset	w9, gt
-	tbz	w9, #0, .LBB467_3
-.LBB467_18:                             // %"$7"
+	tbz	w9, #0, .LBB468_3
+.LBB468_18:                             // %"$7"
 	mov	x0, x21
 	bl	dbfErr
-.LBB467_19:                             // %"$16"
+.LBB468_19:                             // %"$16"
 	orr	w9, w8, #0x8
 	lsr	x10, x8, #32
 	stp	w9, w10, [x19, #-8]
-.LBB467_20:                             // %"$18"
+.LBB468_20:                             // %"$18"
                                         // =>This Inner Loop Header: Depth=1
 	mov	x9, x8
 	ldp	w8, w10, [x8, #8]
 	bfi	x8, x10, #32, #32
 	tst	x8, #0xf
-	b.eq	.LBB467_20
+	b.eq	.LBB468_20
 // %bb.21:                              // %"$20"
 	lsr	x8, x20, #32
 	stp	w20, w8, [x9, #8]
-.LBB467_22:                             // %"$4"
+.LBB468_22:                             // %"$4"
 	ldur	x8, [x29, #-8]
 	str	x8, [x22, :lo12:env]
 	mov	sp, x29
@@ -46485,15 +46518,15 @@ db:                                     // @db
 	ldp	x22, x21, [sp, #16]             // 16-byte Folded Reload
 	ldp	x29, x30, [sp], #48             // 16-byte Folded Reload
 	ret
-.LBB467_23:                             // %"$21"
+.LBB468_23:                             // %"$21"
 	adrp	x2, .L$175
 	add	x2, x2, :lo12:.L$175
 	mov	x0, x21
 	mov	x1, x19
 	mov	x3, xzr
 	bl	err
-.Lfunc_end467:
-	.size	db, .Lfunc_end467-db
+.Lfunc_end468:
+	.size	db, .Lfunc_end468-db
 	.cfi_endproc
                                         // -- End function
 	.globl	dbfErr                          // -- Begin function dbfErr
@@ -46510,8 +46543,8 @@ dbfErr:                                 // @dbfErr
 	mov	x1, xzr
 	mov	x3, xzr
 	bl	err
-.Lfunc_end468:
-	.size	dbfErr, .Lfunc_end468-dbfErr
+.Lfunc_end469:
+	.size	dbfErr, .Lfunc_end469-dbfErr
 	.cfi_endproc
                                         // -- End function
 	.globl	rdLockDb                        // -- Begin function rdLockDb
@@ -46527,18 +46560,18 @@ rdLockDb:                               // @rdLockDb
 	add	x8, x8, :lo12:SymTab+216
 	ldr	x9, [x8, #144]
 	cmp	x9, x8
-	b.eq	.LBB469_2
+	b.eq	.LBB470_2
 // %bb.1:                               // %"$2"
 	adrp	x8, ($DbFiles)
 	ldr	x8, [x8, :lo12:($DbFiles)]
 	ldr	w0, [x8]
 	mov	w1, #1
 	bl	rdLockWait
-.LBB469_2:                              // %"$3"
+.LBB470_2:                              // %"$3"
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end469:
-	.size	rdLockDb, .Lfunc_end469-rdLockDb
+.Lfunc_end470:
+	.size	rdLockDb, .Lfunc_end470-rdLockDb
 	.cfi_endproc
                                         // -- End function
 	.globl	rdBlock                         // -- Begin function rdBlock
@@ -46581,8 +46614,8 @@ rdBlock:                                // @rdBlock
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #32                  // 8-byte Folded Reload
 	ret
-.Lfunc_end470:
-	.size	rdBlock, .Lfunc_end470-rdBlock
+.Lfunc_end471:
+	.size	rdBlock, .Lfunc_end471-rdBlock
 	.cfi_endproc
                                         // -- End function
 	.globl	getBlock                        // -- Begin function getBlock
@@ -46600,26 +46633,26 @@ getBlock:                               // @getBlock
 	adrp	x9, ($BlkEnd)
 	ldr	x9, [x9, :lo12:($BlkEnd)]
 	cmp	x8, x9
-	b.ne	.LBB471_3
+	b.ne	.LBB472_3
 // %bb.1:                               // %"$2"
 	adrp	x8, ($BlkLink)
 	ldr	x0, [x8, :lo12:($BlkLink)]
-	cbz	x0, .LBB471_4
+	cbz	x0, .LBB472_4
 // %bb.2:                               // %"$5"
 	bl	rdBlock
 	add	x8, x0, #6                      // =6
-.LBB471_3:                              // %"$3"
+.LBB472_3:                              // %"$3"
 	add	x9, x8, #1                      // =1
 	str	x9, [x19, :lo12:($BlkPtr)]
 	ldrb	w0, [x8]
 	ldp	x30, x19, [sp], #16             // 16-byte Folded Reload
 	ret
-.LBB471_4:                              // %"$4"
+.LBB472_4:                              // %"$4"
 	mov	w0, #-1
 	ldp	x30, x19, [sp], #16             // 16-byte Folded Reload
 	ret
-.Lfunc_end471:
-	.size	getBlock, .Lfunc_end471-getBlock
+.Lfunc_end472:
+	.size	getBlock, .Lfunc_end472-getBlock
 	.cfi_endproc
                                         // -- End function
 	.globl	binRead                         // -- Begin function binRead
@@ -46647,20 +46680,20 @@ binRead:                                // @binRead
 	blr	x8
                                         // kill: def $w0 killed $w0 def $x0
 	cmp	w0, #3                          // =3
-	b.hi	.LBB472_8
+	b.hi	.LBB473_8
 // %bb.1:                               // %"$1"
 	adrp	x19, SymTab+8
 	add	x19, x19, :lo12:SymTab+8
 	mov	w8, w0
-	adrp	x9, .LJTI472_0
-	add	x9, x9, :lo12:.LJTI472_0
-	adr	x10, .LBB472_2
+	adrp	x9, .LJTI473_0
+	add	x9, x9, :lo12:.LJTI473_0
+	adr	x10, .LBB473_2
 	ldrb	w11, [x9, x8]
 	add	x10, x10, x11, lsl #2
 	br	x10
-.LBB472_2:                              // %"$5"
+.LBB473_2:                              // %"$5"
 	bl	binRead
-	cbz	x0, .LBB472_23
+	cbz	x0, .LBB473_23
 // %bb.3:                               // %"$9"
 	adrp	x20, SymTab+8
 	add	x20, x20, :lo12:SymTab+8
@@ -46679,29 +46712,29 @@ binRead:                                // @binRead
 	mov	x23, x0
 	str	x22, [x21, :lo12:env]
 	bl	binRead
-	cbz	x0, .LBB472_7
-.LBB472_4:                              // %"$12"
+	cbz	x0, .LBB473_7
+.LBB473_4:                              // %"$12"
                                         // =>This Inner Loop Header: Depth=1
 	cmp	x0, #3                          // =3
-	b.eq	.LBB472_40
+	b.eq	.LBB473_40
 // %bb.5:                               // %"$15"
-                                        //   in Loop: Header=BB472_4 Depth=1
+                                        //   in Loop: Header=BB473_4 Depth=1
 	cmp	x0, #10                         // =10
-	b.eq	.LBB472_35
+	b.eq	.LBB473_35
 // %bb.6:                               // %"$17"
-                                        //   in Loop: Header=BB472_4 Depth=1
+                                        //   in Loop: Header=BB473_4 Depth=1
 	mov	x1, x20
 	bl	cons
 	lsr	x8, x0, #32
 	stp	w0, w8, [x23, #8]
 	mov	x23, x0
 	bl	binRead
-	cbnz	x0, .LBB472_4
-.LBB472_7:                              // %"$28"
+	cbnz	x0, .LBB473_4
+.LBB473_7:                              // %"$28"
 	mov	x19, x0
-	b	.LBB472_40
-.LBB472_8:                              // %"$2"
-	tbnz	w0, #31, .LBB472_23
+	b	.LBB473_40
+.LBB473_8:                              // %"$2"
+	tbnz	w0, #31, .LBB473_23
 // %bb.9:                               // %"$26"
 	and	w24, w0, #0x3
 	lsr	w20, w0, #2
@@ -46717,159 +46750,159 @@ binRead:                                // @binRead
 	lsr	x10, x9, #32
 	stp	w9, w10, [x8, #-8]
 	str	x22, [x21, :lo12:env]
-	cbz	w24, .LBB472_24
+	cbz	w24, .LBB473_24
 // %bb.10:                              // %"$29"
 	mov	w8, #4
 	stp	w8, wzr, [x19]
 	cmp	w20, #63                        // =63
-	b.ne	.LBB472_16
-.LBB472_11:                             // %"$56"
+	b.ne	.LBB473_16
+.LBB473_11:                             // %"$56"
                                         // =>This Inner Loop Header: Depth=1
 	ldr	x8, [x23, :lo12:($GetBin)]
 	blr	x8
-	tbnz	w0, #31, .LBB472_34
+	tbnz	w0, #31, .LBB473_34
 // %bb.12:                              // %"$58"
-                                        //   in Loop: Header=BB472_11 Depth=1
+                                        //   in Loop: Header=BB473_11 Depth=1
 	mov	x1, x19
 	bl	byteSym
 	subs	w20, w20, #1                    // =1
-	b.ne	.LBB472_11
+	b.ne	.LBB473_11
 // %bb.13:                              // %"$60"
-                                        //   in Loop: Header=BB472_11 Depth=1
+                                        //   in Loop: Header=BB473_11 Depth=1
 	ldr	x8, [x23, :lo12:($GetBin)]
 	blr	x8
-	tbnz	w0, #31, .LBB472_34
+	tbnz	w0, #31, .LBB473_34
 // %bb.14:                              // %"$62"
-                                        //   in Loop: Header=BB472_11 Depth=1
+                                        //   in Loop: Header=BB473_11 Depth=1
 	mov	w20, w0
 	cmp	w0, #255                        // =255
-	b.eq	.LBB472_11
+	b.eq	.LBB473_11
 // %bb.15:                              // %"$64"
-	cbz	w20, .LBB472_18
-.LBB472_16:                             // %"$67"
+	cbz	w20, .LBB473_18
+.LBB473_16:                             // %"$67"
                                         // =>This Inner Loop Header: Depth=1
 	ldr	x8, [x23, :lo12:($GetBin)]
 	blr	x8
-	tbnz	w0, #31, .LBB472_34
+	tbnz	w0, #31, .LBB473_34
 // %bb.17:                              // %"$69"
-                                        //   in Loop: Header=BB472_16 Depth=1
+                                        //   in Loop: Header=BB473_16 Depth=1
 	mov	x1, x19
 	bl	byteSym
 	subs	w20, w20, #1                    // =1
-	b.ne	.LBB472_16
-.LBB472_18:                             // %"$-3"
+	b.ne	.LBB473_16
+.LBB473_18:                             // %"$-3"
 	ldp	w19, w8, [x22]
 	bfi	x19, x8, #32, #32
 	cmp	w24, #1                         // =1
-	b.eq	.LBB472_43
+	b.eq	.LBB473_43
 // %bb.19:                              // %"$-3"
 	cmp	w24, #2                         // =2
-	b.ne	.LBB472_44
+	b.ne	.LBB473_44
 // %bb.20:                              // %"$74"
 	mov	x0, x19
 	bl	consStr
-	b	.LBB472_7
-.LBB472_21:                             // %"$6"
+	b	.LBB473_7
+.LBB473_21:                             // %"$6"
 	mov	w19, #10
-	b	.LBB472_41
-.LBB472_22:                             // %"$7"
+	b	.LBB473_41
+.LBB473_22:                             // %"$7"
 	sxtw	x19, w0
-	b	.LBB472_41
-.LBB472_23:
+	b	.LBB473_41
+.LBB473_23:
 	mov	x19, xzr
-	b	.LBB472_41
-.LBB472_24:                             // %"$30"
+	b	.LBB473_41
+.LBB473_24:                             // %"$30"
 	mov	w8, #3
 	stp	w8, wzr, [x19]
 	cmp	w20, #63                        // =63
-	b.ne	.LBB472_30
-.LBB472_25:                             // %"$34"
+	b.ne	.LBB473_30
+.LBB473_25:                             // %"$34"
                                         // =>This Inner Loop Header: Depth=1
 	ldr	x8, [x23, :lo12:($GetBin)]
 	blr	x8
-	tbnz	w0, #31, .LBB472_34
+	tbnz	w0, #31, .LBB473_34
 // %bb.26:                              // %"$36"
-                                        //   in Loop: Header=BB472_25 Depth=1
+                                        //   in Loop: Header=BB473_25 Depth=1
 	mov	x1, x19
 	bl	byteNum
 	subs	w20, w20, #1                    // =1
-	b.ne	.LBB472_25
+	b.ne	.LBB473_25
 // %bb.27:                              // %"$38"
-                                        //   in Loop: Header=BB472_25 Depth=1
+                                        //   in Loop: Header=BB473_25 Depth=1
 	ldr	x8, [x23, :lo12:($GetBin)]
 	blr	x8
-	tbnz	w0, #31, .LBB472_34
+	tbnz	w0, #31, .LBB473_34
 // %bb.28:                              // %"$40"
-                                        //   in Loop: Header=BB472_25 Depth=1
+                                        //   in Loop: Header=BB473_25 Depth=1
 	mov	w20, w0
 	cmp	w0, #255                        // =255
-	b.eq	.LBB472_25
+	b.eq	.LBB473_25
 // %bb.29:                              // %"$42"
-	cbz	w20, .LBB472_32
-.LBB472_30:                             // %"$45"
+	cbz	w20, .LBB473_32
+.LBB473_30:                             // %"$45"
                                         // =>This Inner Loop Header: Depth=1
 	ldr	x8, [x23, :lo12:($GetBin)]
 	blr	x8
-	tbnz	w0, #31, .LBB472_34
+	tbnz	w0, #31, .LBB473_34
 // %bb.31:                              // %"$47"
-                                        //   in Loop: Header=BB472_30 Depth=1
+                                        //   in Loop: Header=BB473_30 Depth=1
 	mov	x1, x19
 	bl	byteNum
 	subs	w20, w20, #1                    // =1
-	b.ne	.LBB472_30
-.LBB472_32:                             // %"$-2"
+	b.ne	.LBB473_30
+.LBB473_32:                             // %"$-2"
 	ldp	w19, w8, [x22]
 	bfi	x19, x8, #32, #32
-	tbnz	w19, #1, .LBB472_40
+	tbnz	w19, #1, .LBB473_40
 // %bb.33:                              // %"$51"
 	ldur	w8, [x19, #-4]
 	and	x20, x8, #0x1
 	mov	x0, x19
 	bl	half
 	orr	x19, x0, x20, lsl #3
-	b	.LBB472_40
-.LBB472_34:                             // %"$-1"
+	b	.LBB473_40
+.LBB473_34:                             // %"$-1"
 	ldp	w9, w8, [x22, #8]
 	bfi	x9, x8, #32, #32
 	str	x9, [x21, :lo12:env]
 	mov	x0, xzr
-	b	.LBB472_42
-.LBB472_35:                             // %"$18"
+	b	.LBB473_42
+.LBB473_35:                             // %"$18"
 	bl	binRead
-	cbz	x0, .LBB472_39
+	cbz	x0, .LBB473_39
 // %bb.36:                              // %"$20"
 	cmp	x0, #3                          // =3
 	mov	x8, x19
-	b.eq	.LBB472_38
+	b.eq	.LBB473_38
 // %bb.37:                              // %"$23"
 	mov	x8, x0
-.LBB472_38:                             // %"$24"
+.LBB473_38:                             // %"$24"
 	lsr	x9, x8, #32
 	stp	w8, w9, [x23, #8]
-	b	.LBB472_40
-.LBB472_39:
+	b	.LBB473_40
+.LBB473_39:
 	mov	x19, xzr
-.LBB472_40:                             // %"$28"
+.LBB473_40:                             // %"$28"
 	ldp	w9, w8, [x22, #8]
 	bfi	x9, x8, #32, #32
 	str	x9, [x21, :lo12:env]
-.LBB472_41:                             // %"$3"
+.LBB473_41:                             // %"$3"
 	mov	x0, x19
-.LBB472_42:                             // %"$3"
+.LBB473_42:                             // %"$3"
 	mov	sp, x29
 	ldp	x20, x19, [sp, #48]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #32]             // 16-byte Folded Reload
 	ldp	x24, x23, [sp, #16]             // 16-byte Folded Reload
 	ldp	x29, x30, [sp], #64             // 16-byte Folded Reload
 	ret
-.LBB472_43:                             // %"$75"
+.LBB473_43:                             // %"$75"
 	mov	x0, x19
 	bl	requestSym
-	b	.LBB472_7
-.LBB472_44:                             // %"$72"
+	b	.LBB473_7
+.LBB473_44:                             // %"$72"
 	adrp	x8, ($Extn)
 	ldr	w20, [x8, :lo12:($Extn)]
-	cbz	w20, .LBB472_46
+	cbz	w20, .LBB473_46
 // %bb.45:                              // %"$76"
 	mov	x0, x19
 	bl	objFile
@@ -46882,19 +46915,19 @@ binRead:                                // @binRead
 	orr	x8, x9, x8, lsl #36
 	and	x8, x8, #0xfffff000ffffffff
 	orr	x19, x10, x8
-.LBB472_46:                             // %"$77"
+.LBB473_46:                             // %"$77"
 	mov	x0, x19
 	bl	extern
-	b	.LBB472_7
-.Lfunc_end472:
-	.size	binRead, .Lfunc_end472-binRead
+	b	.LBB473_7
+.Lfunc_end473:
+	.size	binRead, .Lfunc_end473-binRead
 	.cfi_endproc
 	.section	.rodata,"a",@progbits
-.LJTI472_0:
-	.byte	(.LBB472_41-.LBB472_2)>>2
-	.byte	(.LBB472_2-.LBB472_2)>>2
-	.byte	(.LBB472_21-.LBB472_2)>>2
-	.byte	(.LBB472_22-.LBB472_2)>>2
+.LJTI473_0:
+	.byte	(.LBB473_41-.LBB473_2)>>2
+	.byte	(.LBB473_2-.LBB473_2)>>2
+	.byte	(.LBB473_21-.LBB473_2)>>2
+	.byte	(.LBB473_22-.LBB473_2)>>2
                                         // -- End function
 	.text
 	.globl	unLockDb                        // -- Begin function unLockDb
@@ -46913,43 +46946,43 @@ unLockDb:                               // @unLockDb
 	add	x8, x8, :lo12:SymTab+216
 	ldr	x9, [x8, #144]
 	cmp	x9, x8
-	b.eq	.LBB473_8
+	b.eq	.LBB474_8
 // %bb.1:                               // %"$2"
-	cbnz	x0, .LBB473_7
+	cbnz	x0, .LBB474_7
 // %bb.2:                               // %"$4"
 	adrp	x8, ($DbFiles)
 	ldr	x8, [x8, :lo12:($DbFiles)]
 	adrp	x9, ($DBs)
 	ldr	w19, [x9, :lo12:($DBs)]
-.LBB473_3:                              // %"$6"
+.LBB474_3:                              // %"$6"
                                         // =>This Inner Loop Header: Depth=1
 	subs	w19, w19, #1                    // =1
-	b.eq	.LBB473_6
+	b.eq	.LBB474_6
 // %bb.4:                               // %"$7"
-                                        //   in Loop: Header=BB473_3 Depth=1
+                                        //   in Loop: Header=BB474_3 Depth=1
 	add	x20, x8, #42                    // =42
 	ldrb	w8, [x8, #82]
 	cmp	w8, #1                          // =1
 	mov	x8, x20
-	b.ne	.LBB473_3
+	b.ne	.LBB474_3
 // %bb.5:                               // %"$9"
-                                        //   in Loop: Header=BB473_3 Depth=1
+                                        //   in Loop: Header=BB474_3 Depth=1
 	bl	unLock
 	strb	wzr, [x20, #40]
 	mov	x8, x20
-	b	.LBB473_3
-.LBB473_6:                              // %"$8"
+	b	.LBB474_3
+.LBB474_6:                              // %"$8"
 	adrp	x8, SymTab+360
 	mov	w9, #2
 	str	x9, [x8, :lo12:SymTab+360]
-.LBB473_7:                              // %"$5"
+.LBB474_7:                              // %"$5"
 	bl	unLock
-.LBB473_8:                              // %"$3"
+.LBB474_8:                              // %"$3"
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #32                  // 8-byte Folded Reload
 	ret
-.Lfunc_end473:
-	.size	unLockDb, .Lfunc_end473-unLockDb
+.Lfunc_end474:
+	.size	unLockDb, .Lfunc_end474-unLockDb
 	.cfi_endproc
                                         // -- End function
 	.globl	byteNum                         // -- Begin function byteNum
@@ -46970,13 +47003,13 @@ byteNum:                                // @byteNum
 	bfi	x8, x9, #32, #32
 	ldp	w9, w10, [x1, #16]
 	bfi	x9, x10, #32, #32
-	tbz	w9, #1, .LBB474_4
+	tbz	w9, #1, .LBB475_4
 // %bb.1:                               // %"$2"
 	cmp	x8, #59                         // =59
-	b.eq	.LBB474_7
+	b.eq	.LBB475_7
 // %bb.2:                               // %"$2"
 	cmp	x8, #67                         // =67
-	b.ne	.LBB474_10
+	b.ne	.LBB475_10
 // %bb.3:                               // %"$7"
 	lsr	x8, x9, #3
 	and	x9, x0, #0xff
@@ -46987,17 +47020,17 @@ byteNum:                                // @byteNum
 	lsr	x9, x0, #32
 	stp	w0, w9, [x19, #8]
 	mov	w8, #12
-	b	.LBB474_9
-.LBB474_4:                              // %"$3"
+	b	.LBB475_9
+.LBB475_4:                              // %"$3"
 	ldp	w20, w9, [x19, #8]
 	bfi	x20, x9, #32, #32
 	ldp	w9, w10, [x20, #4]
 	bfi	x9, x10, #32, #32
 	cmp	x8, #60                         // =60
-	b.eq	.LBB474_11
+	b.eq	.LBB475_11
 // %bb.5:                               // %"$3"
 	cmp	x8, #68                         // =68
-	b.ne	.LBB474_14
+	b.ne	.LBB475_14
 // %bb.6:                               // %"$14"
 	lsr	x8, x9, #4
 	and	x9, x0, #0xff
@@ -47008,11 +47041,11 @@ byteNum:                                // @byteNum
 	lsr	x9, x0, #32
 	stp	w0, w9, [x20, #4]
 	mov	w8, #12
-	b	.LBB474_16
-.LBB474_7:                              // %"$9"
+	b	.LBB475_16
+.LBB475_7:                              // %"$9"
 	and	w10, w0, #0xff
 	cmp	w10, #32                        // =32
-	b.lo	.LBB474_10
+	b.lo	.LBB475_10
 // %bb.8:                               // %"$11"
 	lsr	x8, x9, #3
 	orr	x0, x8, x0, lsl #56
@@ -47020,50 +47053,50 @@ byteNum:                                // @byteNum
 	lsr	x9, x0, #32
 	stp	w0, w9, [x19, #8]
 	mov	w8, #4
-.LBB474_9:                              // %"$4"
+.LBB475_9:                              // %"$4"
 	stp	w0, w9, [x19, #16]
-	b	.LBB474_17
-.LBB474_10:                             // %"$10"
+	b	.LBB475_17
+.LBB475_10:                             // %"$10"
 	and	x10, x0, #0xff
 	lsl	x10, x10, x8
 	orr	x9, x9, x10
 	lsr	x10, x9, #32
 	stp	w9, w10, [x19, #16]
-	b	.LBB474_13
-.LBB474_11:                             // %"$16"
+	b	.LBB475_13
+.LBB475_11:                             // %"$16"
 	and	w10, w0, #0xff
 	cmp	w10, #15                        // =15
 	cset	w10, hi
-	cbnz	w10, .LBB474_15
-.LBB474_12:                             // %"$17"
+	cbnz	w10, .LBB475_15
+.LBB475_12:                             // %"$17"
 	and	x10, x0, #0xff
 	lsl	x10, x10, x8
 	orr	x9, x9, x10
 	lsr	x10, x9, #32
 	stp	w9, w10, [x20, #4]
-.LBB474_13:                             // %"$4"
+.LBB475_13:                             // %"$4"
 	add	x8, x8, #8                      // =8
-	b	.LBB474_17
-.LBB474_14:
+	b	.LBB475_17
+.LBB475_14:
 	mov	w10, wzr
-	cbz	w10, .LBB474_12
-.LBB474_15:                             // %"$18"
+	cbz	w10, .LBB475_12
+.LBB475_15:                             // %"$18"
 	lsr	x8, x9, #4
 	orr	x0, x8, x0, lsl #56
 	bl	boxNum
 	lsr	x9, x0, #32
 	stp	w0, w9, [x20, #4]
 	mov	w8, #4
-.LBB474_16:                             // %"$4"
+.LBB475_16:                             // %"$4"
 	stp	w0, w9, [x19, #8]
-.LBB474_17:                             // %"$4"
+.LBB475_17:                             // %"$4"
 	lsr	x9, x8, #32
 	stp	w8, w9, [x19]
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #32                  // 8-byte Folded Reload
 	ret
-.Lfunc_end474:
-	.size	byteNum, .Lfunc_end474-byteNum
+.Lfunc_end475:
+	.size	byteNum, .Lfunc_end475-byteNum
 	.cfi_endproc
                                         // -- End function
 	.globl	half                            // -- Begin function half
@@ -47072,7 +47105,7 @@ byteNum:                                // @byteNum
 half:                                   // @half
 	.cfi_startproc
 // %bb.0:                               // %"$1"
-	tbz	w0, #1, .LBB475_2
+	tbz	w0, #1, .LBB476_2
 // %bb.1:                               // %"$2"
 	lsr	x8, x0, #1
 	orr	x8, x8, #0x2
@@ -47080,16 +47113,16 @@ half:                                   // @half
 	movk	x9, #32767, lsl #48
 	and	x0, x8, x9
 	ret
-.LBB475_2:                              // %"$3"
+.LBB476_2:                              // %"$3"
 	ldp	w8, w9, [x0, #-4]
 	bfi	x8, x9, #32, #32
 	lsr	x8, x8, #1
 	ldp	w10, w9, [x0, #4]
 	bfi	x10, x9, #32, #32
-	tbz	w10, #2, .LBB475_7
+	tbz	w10, #2, .LBB476_7
 // %bb.3:                               // %"$8.preheader"
 	mov	x9, x0
-.LBB475_4:                              // %"$8"
+.LBB476_4:                              // %"$8"
                                         // =>This Inner Loop Header: Depth=1
 	mov	x11, x9
 	mov	x9, x10
@@ -47102,7 +47135,7 @@ half:                                   // @half
 	lsr	x8, x12, #32
 	str	w8, [x11]
 	lsr	x8, x13, #1
-	tbz	w10, #1, .LBB475_4
+	tbz	w10, #1, .LBB476_4
 // %bb.5:                               // %"$10"
 	lsr	x12, x10, #4
 	bfi	x8, x12, #63, #1
@@ -47112,15 +47145,15 @@ half:                                   // @half
 	cset	w13, ne
 	cmp	x12, #0                         // =0
 	csel	w10, w10, w13, ne
-	tbz	w10, #0, .LBB475_9
+	tbz	w10, #0, .LBB476_9
 // %bb.6:                               // %"$14"
 	stur	w8, [x9, #-4]
 	lsr	x8, x8, #32
 	str	w8, [x9], #4
 	mov	w10, #2
 	bfi	x10, x12, #4, #59
-	b	.LBB475_10
-.LBB475_7:                              // %"$6"
+	b	.LBB476_10
+.LBB476_7:                              // %"$6"
 	lsr	x9, x10, #4
 	bfi	x8, x9, #63, #1
 	lsr	x11, x10, #5
@@ -47129,7 +47162,7 @@ half:                                   // @half
 	cset	w10, ne
 	cmp	x11, #0                         // =0
 	csel	w9, w9, w10, ne
-	tbz	w9, #0, .LBB475_11
+	tbz	w9, #0, .LBB476_11
 // %bb.8:                               // %"$19"
 	stur	w8, [x0, #-4]
 	lsr	x8, x8, #32
@@ -47137,21 +47170,21 @@ half:                                   // @half
 	add	x9, x0, #4                      // =4
 	mov	w10, #2
 	bfi	x10, x11, #4, #59
-	b	.LBB475_10
-.LBB475_9:                              // %"$13"
+	b	.LBB476_10
+.LBB476_9:                              // %"$13"
 	add	x9, x11, #4                     // =4
 	mov	w10, #2
 	bfi	x10, x8, #4, #60
-.LBB475_10:                             // %"$7"
+.LBB476_10:                             // %"$7"
 	lsr	x8, x10, #32
 	stp	w10, w8, [x9]
 	ret
-.LBB475_11:                             // %"$18"
+.LBB476_11:                             // %"$18"
 	mov	w0, #2
 	bfi	x0, x8, #4, #60
 	ret
-.Lfunc_end475:
-	.size	half, .Lfunc_end475-half
+.Lfunc_end476:
+	.size	half, .Lfunc_end476-half
 	.cfi_endproc
                                         // -- End function
 	.globl	blkPeek                         // -- Begin function blkPeek
@@ -47168,14 +47201,14 @@ blkPeek:                                // @blkPeek
 	sxtw	x19, w2
 	bl	pread
 	cmp	x19, x0
-	b.ne	.LBB476_2
+	b.ne	.LBB477_2
 // %bb.1:                               // %"$3"
 	ldp	x30, x19, [sp], #16             // 16-byte Folded Reload
 	ret
-.LBB476_2:                              // %"$2"
+.LBB477_2:                              // %"$2"
 	bl	dbRdErr
-.Lfunc_end476:
-	.size	blkPeek, .Lfunc_end476-blkPeek
+.Lfunc_end477:
+	.size	blkPeek, .Lfunc_end477-blkPeek
 	.cfi_endproc
                                         // -- End function
 	.globl	getAdr                          // -- Begin function getAdr
@@ -47197,8 +47230,8 @@ getAdr:                                 // @getAdr
 	ldrb	w9, [x0]
 	orr	x0, x8, x9
 	ret
-.Lfunc_end477:
-	.size	getAdr, .Lfunc_end477-getAdr
+.Lfunc_end478:
+	.size	getAdr, .Lfunc_end478-getAdr
 	.cfi_endproc
                                         // -- End function
 	.globl	pread                           // -- Begin function pread
@@ -47216,8 +47249,8 @@ pread:                                  // @pread
 	mov	x0, xzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end478:
-	.size	pread, .Lfunc_end478-pread
+.Lfunc_end479:
+	.size	pread, .Lfunc_end479-pread
 	.cfi_endproc
                                         // -- End function
 	.globl	dbRdErr                         // -- Begin function dbRdErr
@@ -47236,8 +47269,8 @@ dbRdErr:                                // @dbRdErr
 	mov	x0, xzr
 	mov	x1, xzr
 	bl	err
-.Lfunc_end479:
-	.size	dbRdErr, .Lfunc_end479-dbRdErr
+.Lfunc_end480:
+	.size	dbRdErr, .Lfunc_end480-dbRdErr
 	.cfi_endproc
                                         // -- End function
 	.globl	rdLockWait                      // -- Begin function rdLockWait
@@ -47249,22 +47282,22 @@ rdLockWait:                             // @rdLockWait
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-.LBB480_1:                              // %"$2"
+.LBB481_1:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	bl	rdLock
-	tbz	w0, #31, .LBB480_4
+	tbz	w0, #31, .LBB481_4
 // %bb.2:                               // %"$3"
-                                        //   in Loop: Header=BB480_1 Depth=1
+                                        //   in Loop: Header=BB481_1 Depth=1
 	bl	gErrno
 	cmp	w0, #2                          // =2
-	b.eq	.LBB480_1
+	b.eq	.LBB481_1
 // %bb.3:                               // %"$5"
 	bl	lockErr
-.LBB480_4:                              // %"$4"
+.LBB481_4:                              // %"$4"
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end480:
-	.size	rdLockWait, .Lfunc_end480-rdLockWait
+.Lfunc_end481:
+	.size	rdLockWait, .Lfunc_end481-rdLockWait
 	.cfi_endproc
                                         // -- End function
 	.globl	rdLock                          // -- Begin function rdLock
@@ -47282,8 +47315,8 @@ rdLock:                                 // @rdLock
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end481:
-	.size	rdLock, .Lfunc_end481-rdLock
+.Lfunc_end482:
+	.size	rdLock, .Lfunc_end482-rdLock
 	.cfi_endproc
                                         // -- End function
 	.globl	lockErr                         // -- Begin function lockErr
@@ -47302,8 +47335,8 @@ lockErr:                                // @lockErr
 	mov	x0, xzr
 	mov	x1, xzr
 	bl	err
-.Lfunc_end482:
-	.size	lockErr, .Lfunc_end482-lockErr
+.Lfunc_end483:
+	.size	lockErr, .Lfunc_end483-lockErr
 	.cfi_endproc
                                         // -- End function
 	.globl	symChar                         // -- Begin function symChar
@@ -47323,45 +47356,45 @@ symChar:                                // @symChar
 	bl	symByte
 	and	w0, w0, #0xff
 	cmp	w0, #128                        // =128
-	b.lt	.LBB483_10
+	b.lt	.LBB484_10
 // %bb.1:                               // %"$3"
 	cmp	w0, #255                        // =255
-	b.ne	.LBB483_3
+	b.ne	.LBB484_3
 // %bb.2:
 	mov	w0, #1114112
-	b	.LBB483_10
-.LBB483_3:                              // %"$5"
-	tbz	w0, #5, .LBB483_6
+	b	.LBB484_10
+.LBB484_3:                              // %"$5"
+	tbz	w0, #5, .LBB484_6
 // %bb.4:                               // %"$8"
-	tbz	w0, #4, .LBB483_7
+	tbz	w0, #4, .LBB484_7
 // %bb.5:                               // %"$11"
 	and	w21, w0, #0x7
 	mov	x0, x19
 	bl	symByte
 	and	w20, w0, #0x3f
 	bfi	w20, w21, #6, #3
-	b	.LBB483_8
-.LBB483_6:                              // %"$7"
+	b	.LBB484_8
+.LBB484_6:                              // %"$7"
 	and	w21, w0, #0x1f
-	b	.LBB483_9
-.LBB483_7:                              // %"$10"
+	b	.LBB484_9
+.LBB484_7:                              // %"$10"
 	and	w20, w0, #0xf
-.LBB483_8:                              // %"$12"
+.LBB484_8:                              // %"$12"
 	mov	x0, x19
 	bl	symByte
 	and	w21, w0, #0x3f
 	bfi	w21, w20, #6, #9
-.LBB483_9:                              // %"$9"
+.LBB484_9:                              // %"$9"
 	mov	x0, x19
 	bl	symByte
 	and	w0, w0, #0x3f
 	bfi	w0, w21, #6, #15
-.LBB483_10:                             // %"$2"
+.LBB484_10:                             // %"$2"
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x21, [sp], #32             // 16-byte Folded Reload
 	ret
-.Lfunc_end483:
-	.size	symChar, .Lfunc_end483-symChar
+.Lfunc_end484:
+	.size	symChar, .Lfunc_end484-symChar
 	.cfi_endproc
                                         // -- End function
 	.globl	isBlank                         // -- Begin function isBlank
@@ -47380,27 +47413,27 @@ isBlank:                                // @isBlank
 	adrp	x8, SymTab+8
 	add	x8, x8, :lo12:SymTab+8
 	cmp	x0, x8
-	b.ne	.LBB484_2
-.LBB484_1:
+	b.ne	.LBB485_2
+.LBB485_1:
 	mov	w0, #1
-	b	.LBB484_10
-.LBB484_2:                              // %"$3"
+	b	.LBB485_10
+.LBB485_2:                              // %"$3"
 	eor	w8, w0, #0x8
 	tst	x8, #0xe
-	b.ne	.LBB484_9
+	b.ne	.LBB485_9
 // %bb.3:                               // %"$5"
 	ldp	w8, w9, [x0, #-8]
 	bfi	x8, x9, #32, #32
-	tbnz	w8, #3, .LBB484_9
-	b	.LBB484_5
-.LBB484_4:                              // %"$8"
-                                        //   in Loop: Header=BB484_5 Depth=1
+	tbnz	w8, #3, .LBB485_9
+	b	.LBB485_5
+.LBB485_4:                              // %"$8"
+                                        //   in Loop: Header=BB485_5 Depth=1
 	ldp	w8, w9, [x8, #8]
 	bfi	x8, x9, #32, #32
-.LBB484_5:                              // %"$7"
+.LBB485_5:                              // %"$7"
                                         // =>This Inner Loop Header: Depth=1
 	tst	x8, #0x6
-	b.eq	.LBB484_4
+	b.eq	.LBB485_4
 // %bb.6:                               // %"$9"
 	mov	x9, sp
 	sub	x19, x9, #16                    // =16
@@ -47408,26 +47441,26 @@ isBlank:                                // @isBlank
 	stp	wzr, wzr, [x9, #-16]
 	lsr	x10, x8, #32
 	stp	w8, w10, [x9, #-8]
-.LBB484_7:                              // %"$10"
+.LBB485_7:                              // %"$10"
                                         // =>This Inner Loop Header: Depth=1
 	mov	x0, x19
 	bl	symByte
 	tst	w0, #0xff
-	b.eq	.LBB484_1
+	b.eq	.LBB485_1
 // %bb.8:                               // %"$11"
-                                        //   in Loop: Header=BB484_7 Depth=1
+                                        //   in Loop: Header=BB485_7 Depth=1
 	and	w8, w0, #0xff
 	cmp	w8, #33                         // =33
-	b.lo	.LBB484_7
-.LBB484_9:
+	b.lo	.LBB485_7
+.LBB485_9:
 	mov	w0, wzr
-.LBB484_10:                             // %"$2"
+.LBB485_10:                             // %"$2"
 	mov	sp, x29
 	ldr	x19, [sp, #16]                  // 8-byte Folded Reload
 	ldp	x29, x30, [sp], #32             // 16-byte Folded Reload
 	ret
-.Lfunc_end484:
-	.size	isBlank, .Lfunc_end484-isBlank
+.Lfunc_end485:
+	.size	isBlank, .Lfunc_end485-isBlank
 	.cfi_endproc
                                         // -- End function
 	.globl	trim                            // -- Begin function trim
@@ -47444,13 +47477,13 @@ trim:                                   // @trim
 	.cfi_offset w30, -32
 	mov	x19, x0
 	tst	x0, #0xf
-	b.ne	.LBB485_6
+	b.ne	.LBB486_6
 // %bb.1:                               // %"$3"
 	mov	x8, sp
 	adrp	x9, ($StkLimit)
 	ldr	x9, [x9, :lo12:($StkLimit)]
 	cmp	x9, x8
-	b.hi	.LBB485_7
+	b.hi	.LBB486_7
 // %bb.2:                               // %"$6"
 	ldp	w0, w8, [x19, #8]
 	bfi	x0, x8, #32, #32
@@ -47459,32 +47492,32 @@ trim:                                   // @trim
 	adrp	x8, SymTab+8
 	add	x8, x8, :lo12:SymTab+8
 	cmp	x0, x8
-	b.ne	.LBB485_5
+	b.ne	.LBB486_5
 // %bb.3:                               // %"$8"
 	ldp	w0, w8, [x19]
 	bfi	x0, x8, #32, #32
 	bl	isBlank
-	tbz	w0, #0, .LBB485_5
+	tbz	w0, #0, .LBB486_5
 // %bb.4:
 	adrp	x19, SymTab+8
 	add	x19, x19, :lo12:SymTab+8
-	b	.LBB485_6
-.LBB485_5:                              // %"$10"
+	b	.LBB486_6
+.LBB486_5:                              // %"$10"
 	ldp	w0, w8, [x19]
 	bfi	x0, x8, #32, #32
 	mov	x1, x20
 	bl	cons
 	mov	x19, x0
-.LBB485_6:                              // %"$4"
+.LBB486_6:                              // %"$4"
 	mov	x0, x19
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #32                  // 8-byte Folded Reload
 	ret
-.LBB485_7:                              // %"$5"
+.LBB486_7:                              // %"$5"
 	mov	x0, xzr
 	bl	stkErr
-.Lfunc_end485:
-	.size	trim, .Lfunc_end485-trim
+.Lfunc_end486:
+	.size	trim, .Lfunc_end486-trim
 	.cfi_endproc
                                         // -- End function
 	.globl	makeErr                         // -- Begin function makeErr
@@ -47501,8 +47534,8 @@ makeErr:                                // @makeErr
 	mov	x1, xzr
 	mov	x3, xzr
 	bl	err
-.Lfunc_end486:
-	.size	makeErr, .Lfunc_end486-makeErr
+.Lfunc_end487:
+	.size	makeErr, .Lfunc_end487-makeErr
 	.cfi_endproc
                                         // -- End function
 	.globl	argErr                          // -- Begin function argErr
@@ -47518,8 +47551,8 @@ argErr:                                 // @argErr
 	add	x2, x2, :lo12:.L$111
 	mov	x3, xzr
 	bl	err
-.Lfunc_end487:
-	.size	argErr, .Lfunc_end487-argErr
+.Lfunc_end488:
+	.size	argErr, .Lfunc_end488-argErr
 	.cfi_endproc
                                         // -- End function
 	.globl	adds                            // -- Begin function adds
@@ -47531,35 +47564,35 @@ adds:                                   // @adds
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	tbz	w0, #3, .LBB488_3
+	tbz	w0, #3, .LBB489_3
 // %bb.1:                               // %"$3"
 	and	x0, x0, #0xfffffffffffffff7
-	tbz	w1, #3, .LBB488_5
+	tbz	w1, #3, .LBB489_5
 // %bb.2:                               // %"$9"
 	and	x1, x1, #0xfffffffffffffff7
 	bl	addu
-	b	.LBB488_6
-.LBB488_3:                              // %"$2"
-	tbz	w1, #3, .LBB488_7
+	b	.LBB489_6
+.LBB489_3:                              // %"$2"
+	tbz	w1, #3, .LBB489_7
 // %bb.4:                               // %"$6"
 	and	x1, x1, #0xfffffffffffffff7
 	bl	subu
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.LBB488_5:                              // %"$8"
+.LBB489_5:                              // %"$8"
 	bl	subu
-.LBB488_6:                              // %"$10"
+.LBB489_6:                              // %"$10"
 	eor	x8, x0, #0x8
 	cmp	x0, #2                          // =2
 	csel	x0, x0, x8, eq
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.LBB488_7:                              // %"$5"
+.LBB489_7:                              // %"$5"
 	bl	addu
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end488:
-	.size	adds, .Lfunc_end488-adds
+.Lfunc_end489:
+	.size	adds, .Lfunc_end489-adds
 	.cfi_endproc
                                         // -- End function
 	.globl	subs                            // -- Begin function subs
@@ -47571,35 +47604,35 @@ subs:                                   // @subs
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	tbz	w0, #3, .LBB489_3
+	tbz	w0, #3, .LBB490_3
 // %bb.1:                               // %"$3"
 	and	x0, x0, #0xfffffffffffffff7
-	tbz	w1, #3, .LBB489_5
+	tbz	w1, #3, .LBB490_5
 // %bb.2:                               // %"$9"
 	and	x1, x1, #0xfffffffffffffff7
 	bl	subu
-	b	.LBB489_6
-.LBB489_3:                              // %"$2"
-	tbz	w1, #3, .LBB489_7
+	b	.LBB490_6
+.LBB490_3:                              // %"$2"
+	tbz	w1, #3, .LBB490_7
 // %bb.4:                               // %"$6"
 	and	x1, x1, #0xfffffffffffffff7
 	bl	addu
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.LBB489_5:                              // %"$8"
+.LBB490_5:                              // %"$8"
 	bl	addu
-.LBB489_6:                              // %"$10"
+.LBB490_6:                              // %"$10"
 	eor	x8, x0, #0x8
 	cmp	x0, #2                          // =2
 	csel	x0, x0, x8, eq
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.LBB489_7:                              // %"$5"
+.LBB490_7:                              // %"$5"
 	bl	subu
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end489:
-	.size	subs, .Lfunc_end489-subs
+.Lfunc_end490:
+	.size	subs, .Lfunc_end490-subs
 	.cfi_endproc
                                         // -- End function
 	.globl	subu                            // -- Begin function subu
@@ -47626,32 +47659,32 @@ subu:                                   // @subu
 	.cfi_offset w29, -80
 	mov	x21, x1
 	mov	x20, x0
-	tbz	w20, #1, .LBB490_3
+	tbz	w20, #1, .LBB491_3
 // %bb.1:                               // %"$4"
-	tbz	w21, #1, .LBB490_5
+	tbz	w21, #1, .LBB491_5
 // %bb.2:                               // %"$5"
 	and	x8, x21, #0xfffffffffffffffd
 	subs	x8, x20, x8
 	eor	x9, x8, #0xfffffffffffffff0
 	add	x9, x9, #24                     // =24
 	csel	x0, x8, x9, hs
-	b	.LBB490_27
-.LBB490_3:                              // %"$3"
-	tbz	w21, #1, .LBB490_6
+	b	.LBB491_27
+.LBB491_3:                              // %"$3"
+	tbz	w21, #1, .LBB491_6
 // %bb.4:                               // %"$15"
 	mov	x0, x20
 	mov	x1, x21
 	bl	sub1
-	b	.LBB490_27
-.LBB490_5:                              // %"$6"
+	b	.LBB491_27
+.LBB491_5:                              // %"$6"
 	mov	x0, x21
 	mov	x1, x20
 	bl	sub1
 	eor	x8, x0, #0x8
 	cmp	x0, #2                          // =2
 	csel	x0, x0, x8, eq
-	b	.LBB490_27
-.LBB490_6:                              // %"$14"
+	b	.LBB491_27
+.LBB491_6:                              // %"$14"
 	ldp	w9, w8, [x20, #-4]
 	bfi	x9, x8, #32, #32
 	ldp	w10, w8, [x21, #-4]
@@ -47672,7 +47705,7 @@ subu:                                   // @subu
 	stp	w19, w10, [x9, #-16]
 	mov	x22, x19
 	stp	w8, w11, [x9, #-8]
-.LBB490_7:                              // %"$16"
+.LBB491_7:                              // %"$16"
                                         // =>This Inner Loop Header: Depth=1
 	lsr	x8, x0, #32
 	stp	w0, w8, [x25]
@@ -47680,12 +47713,12 @@ subu:                                   // @subu
 	bfi	x20, x8, #32, #32
 	ldp	w21, w8, [x21, #4]
 	bfi	x21, x8, #32, #32
-	tbnz	w21, #1, .LBB490_10
+	tbnz	w21, #1, .LBB491_10
 // %bb.8:                               // %"$17"
-                                        //   in Loop: Header=BB490_7 Depth=1
-	tbnz	w20, #1, .LBB490_13
+                                        //   in Loop: Header=BB491_7 Depth=1
+	tbnz	w20, #1, .LBB491_13
 // %bb.9:                               // %"$25"
-                                        //   in Loop: Header=BB490_7 Depth=1
+                                        //   in Loop: Header=BB491_7 Depth=1
 	ldp	w9, w8, [x20, #-4]
 	bfi	x9, x8, #32, #32
 	ldp	w10, w8, [x21, #-4]
@@ -47699,14 +47732,14 @@ subu:                                   // @subu
 	add	x25, x22, #4                    // =4
 	bl	boxNum
 	mov	x22, x0
-	b	.LBB490_7
-.LBB490_10:                             // %"$19"
+	b	.LBB491_7
+.LBB491_10:                             // %"$19"
 	lsr	x8, x21, #4
-.LBB490_11:                             // %"$20"
+.LBB491_11:                             // %"$20"
                                         // =>This Inner Loop Header: Depth=1
-	tbnz	w20, #1, .LBB490_16
+	tbnz	w20, #1, .LBB491_16
 // %bb.12:                              // %"$21"
-                                        //   in Loop: Header=BB490_11 Depth=1
+                                        //   in Loop: Header=BB491_11 Depth=1
 	ldp	w10, w9, [x20, #-4]
 	and	x11, x24, #0x1
 	bfi	x10, x9, #32, #32
@@ -47723,11 +47756,11 @@ subu:                                   // @subu
 	lsr	x9, x0, #32
 	stp	w0, w9, [x22, #4]
 	mov	x22, x0
-	tbnz	w24, #0, .LBB490_11
-	b	.LBB490_19
-.LBB490_13:                             // %"$26"
+	tbnz	w24, #0, .LBB491_11
+	b	.LBB491_19
+.LBB491_13:                             // %"$26"
 	lsr	x8, x20, #4
-.LBB490_14:                             // %"$27"
+.LBB491_14:                             // %"$27"
                                         // =>This Inner Loop Header: Depth=1
 	mov	x20, x22
 	ldp	w10, w9, [x21, #-4]
@@ -47745,14 +47778,14 @@ subu:                                   // @subu
 	stp	w22, w9, [x20, #4]
 	ldp	w21, w9, [x21, #4]
 	bfi	x21, x9, #32, #32
-	tbz	w21, #1, .LBB490_14
+	tbz	w21, #1, .LBB491_14
 // %bb.15:                              // %"$29"
 	mov	x9, xzr
 	lsr	x8, x21, #4
-	b	.LBB490_17
-.LBB490_16:                             // %"$22"
+	b	.LBB491_17
+.LBB491_16:                             // %"$22"
 	lsr	x9, x20, #4
-.LBB490_17:                             // %"$18"
+.LBB491_17:                             // %"$18"
 	subs	x8, x9, x8
 	cset	w10, lo
 	and	x9, x24, #0x1
@@ -47763,15 +47796,15 @@ subu:                                   // @subu
 	lsr	x9, x9, #28
 	stp	w11, w9, [x22, #4]
 	mov	x9, x19
-	tbnz	w10, #0, .LBB490_20
+	tbnz	w10, #0, .LBB491_20
 // %bb.18:                              // %"$18"
 	mov	x9, x19
-	cbnz	w8, .LBB490_20
-.LBB490_19:                             // %"$23"
+	cbnz	w8, .LBB491_20
+.LBB491_19:                             // %"$23"
 	mov	x0, x19
 	bl	zapZero
-	b	.LBB490_26
-.LBB490_20:                             // %"$33"
+	b	.LBB491_26
+.LBB491_20:                             // %"$33"
                                         // =>This Inner Loop Header: Depth=1
 	mov	x8, x9
 	mov	x10, x9
@@ -47784,13 +47817,13 @@ subu:                                   // @subu
 	str	w11, [x10, #4]
 	ldr	w10, [x10, #12]
 	bfi	x9, x10, #32, #32
-	tbz	w9, #1, .LBB490_20
+	tbz	w9, #1, .LBB491_20
 // %bb.21:                              // %"$35"
 	eor	x9, x9, #0xfffffffffffffff0
 	lsr	x10, x9, #32
 	stp	w9, w10, [x8, #4]
 	mov	x9, x19
-.LBB490_22:                             // %"$36"
+.LBB491_22:                             // %"$36"
                                         // =>This Inner Loop Header: Depth=1
 	mov	x8, x9
 	ldr	w10, [x9, #-4]!
@@ -47800,26 +47833,26 @@ subu:                                   // @subu
 	str	w10, [x9]
 	lsr	x10, x10, #32
 	str	w10, [x9, #4]
-	b.lo	.LBB490_25
+	b.lo	.LBB491_25
 // %bb.23:                              // %"$38"
-                                        //   in Loop: Header=BB490_22 Depth=1
+                                        //   in Loop: Header=BB491_22 Depth=1
 	ldp	w9, w10, [x8, #4]
 	bfi	x9, x10, #32, #32
-	tbz	w9, #1, .LBB490_22
+	tbz	w9, #1, .LBB491_22
 // %bb.24:                              // %"$40"
 	add	x9, x9, #16                     // =16
 	lsr	x10, x9, #32
 	stp	w9, w10, [x8, #4]
-.LBB490_25:                             // %"$-9"
+.LBB491_25:                             // %"$-9"
 	mov	x0, x19
 	bl	zapZero
 	orr	x0, x0, #0x8
-.LBB490_26:                             // %"$32"
+.LBB491_26:                             // %"$32"
 	ldp	w9, w8, [x23, #8]
 	bfi	x9, x8, #32, #32
 	adrp	x8, env
 	str	x9, [x8, :lo12:env]
-.LBB490_27:                             // %"$2"
+.LBB491_27:                             // %"$2"
 	mov	sp, x29
 	ldp	x20, x19, [sp, #64]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #48]             // 16-byte Folded Reload
@@ -47827,8 +47860,8 @@ subu:                                   // @subu
 	ldr	x25, [sp, #16]                  // 8-byte Folded Reload
 	ldp	x29, x30, [sp], #80             // 16-byte Folded Reload
 	ret
-.Lfunc_end490:
-	.size	subu, .Lfunc_end490-subu
+.Lfunc_end491:
+	.size	subu, .Lfunc_end491-subu
 	.cfi_endproc
                                         // -- End function
 	.globl	sub1                            // -- Begin function sub1
@@ -47857,9 +47890,9 @@ sub1:                                   // @sub1
 	subs	x0, x9, x1, lsr #4
 	ldr	w8, [x8, #8]
 	bfi	x19, x8, #32, #32
-	b.hs	.LBB491_6
+	b.hs	.LBB492_6
 // %bb.1:                               // %"$3"
-	tbz	w19, #2, .LBB491_9
+	tbz	w19, #2, .LBB492_9
 // %bb.2:                               // %"$11"
 	bl	boxNum
 	mov	x20, x0
@@ -47874,53 +47907,53 @@ sub1:                                   // @sub1
 	stp	w8, w11, [x9, #-8]
 	mov	x23, x0
 	str	x22, [x21, :lo12:env]
-.LBB491_3:                              // %"$16"
+.LBB492_3:                              // %"$16"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w9, w8, [x19, #-4]
 	bfi	x9, x8, #32, #32
 	subs	x0, x9, #1                      // =1
 	ldp	w19, w8, [x19, #4]
 	bfi	x19, x8, #32, #32
-	b.hs	.LBB491_12
+	b.hs	.LBB492_12
 // %bb.4:                               // %"$17"
-                                        //   in Loop: Header=BB491_3 Depth=1
+                                        //   in Loop: Header=BB492_3 Depth=1
 	mov	x1, x19
 	bl	consNum
 	lsr	x8, x0, #32
 	stp	w0, w8, [x23, #4]
 	mov	x23, x0
-	tbz	w19, #1, .LBB491_3
+	tbz	w19, #1, .LBB492_3
 // %bb.5:                               // %"$21"
 	add	x23, x0, #4                     // =4
 	sub	x0, x19, #16                    // =16
-	b	.LBB491_13
-.LBB491_6:                              // %"$4"
+	b	.LBB492_13
+.LBB492_6:                              // %"$4"
 	cmp	x19, #2                         // =2
-	b.ne	.LBB491_11
+	b.ne	.LBB492_11
 // %bb.7:                               // %"$5"
 	tst	x0, #0xf000000000000000
-	b.eq	.LBB491_15
+	b.eq	.LBB492_15
 // %bb.8:                               // %"$8"
 	bl	boxNum
 	mov	x8, x0
-	b	.LBB491_16
-.LBB491_9:                              // %"$12"
+	b	.LBB492_16
+.LBB492_9:                              // %"$12"
 	subs	x1, x19, #16                    // =16
-	b.hs	.LBB491_14
+	b.hs	.LBB492_14
 // %bb.10:                              // %"$13"
 	mov	w8, #10
 	sub	x8, x8, x0, lsl #4
-	b	.LBB491_16
-.LBB491_11:                             // %"$6"
+	b	.LBB492_16
+.LBB492_11:                             // %"$6"
 	mov	x1, x19
 	bl	consNum
 	mov	x8, x0
-	b	.LBB491_16
-.LBB491_12:                             // %"$19"
+	b	.LBB492_16
+.LBB492_12:                             // %"$19"
 	add	x23, x23, #4                    // =4
 	mov	x1, x19
 	bl	consNum
-.LBB491_13:                             // %"$18"
+.LBB492_13:                             // %"$18"
 	lsr	x8, x0, #32
 	stp	w0, w8, [x23]
 	mov	x0, x20
@@ -47929,16 +47962,16 @@ sub1:                                   // @sub1
 	ldp	w10, w9, [x22, #8]
 	bfi	x10, x9, #32, #32
 	str	x10, [x21, :lo12:env]
-	b	.LBB491_16
-.LBB491_14:                             // %"$14"
+	b	.LBB492_16
+.LBB492_14:                             // %"$14"
 	bl	consNum
 	bl	zapZero
 	mov	x8, x0
-	b	.LBB491_16
-.LBB491_15:                             // %"$9"
+	b	.LBB492_16
+.LBB492_15:                             // %"$9"
 	mov	w8, #2
 	bfi	x8, x0, #4, #60
-.LBB491_16:                             // %"$2"
+.LBB492_16:                             // %"$2"
 	mov	x0, x8
 	mov	sp, x29
 	ldp	x20, x19, [sp, #48]             // 16-byte Folded Reload
@@ -47946,8 +47979,8 @@ sub1:                                   // @sub1
 	ldr	x23, [sp, #16]                  // 8-byte Folded Reload
 	ldp	x29, x30, [sp], #64             // 16-byte Folded Reload
 	ret
-.Lfunc_end491:
-	.size	sub1, .Lfunc_end491-sub1
+.Lfunc_end492:
+	.size	sub1, .Lfunc_end492-sub1
 	.cfi_endproc
                                         // -- End function
 	.globl	zapZero                         // -- Begin function zapZero
@@ -47961,13 +47994,13 @@ zapZero:                                // @zapZero
 	add	x8, sp, #8                      // =8
 	str	x0, [sp, #8]
 	add	x9, sp, #8                      // =8
-.LBB492_1:                              // %"$2"
+.LBB493_1:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w10, w11, [x0, #4]
 	bfi	x10, x11, #32, #32
-	tbnz	w10, #1, .LBB492_3
+	tbnz	w10, #1, .LBB493_3
 // %bb.2:                               // %"$3"
-                                        //   in Loop: Header=BB492_1 Depth=1
+                                        //   in Loop: Header=BB493_1 Depth=1
 	ldp	w11, w10, [x0, #-4]
 	bfi	x11, x10, #32, #32
 	cmp	x11, #0                         // =0
@@ -47977,47 +48010,47 @@ zapZero:                                // @zapZero
 	ldr	w11, [x0, #4]
 	bfi	x10, x11, #32, #32
 	mov	x0, x10
-	b	.LBB492_1
-.LBB492_3:                              // %"$4"
+	b	.LBB493_1
+.LBB493_3:                              // %"$4"
 	cmp	x10, #2                         // =2
-	b.ne	.LBB492_11
+	b.ne	.LBB493_11
 // %bb.4:                               // %"$7"
 	ldp	w11, w10, [x0, #-4]
 	bfi	x11, x10, #32, #32
-	cbz	x11, .LBB492_7
+	cbz	x11, .LBB493_7
 // %bb.5:                               // %"$11"
 	tst	x11, #0xf000000000000000
-	b.ne	.LBB492_11
+	b.ne	.LBB493_11
 // %bb.6:                               // %"$12"
 	mov	w10, #2
 	bfi	x10, x11, #4, #60
-	b	.LBB492_10
-.LBB492_7:                              // %"$10"
+	b	.LBB493_10
+.LBB493_7:                              // %"$10"
 	ldp	w10, w9, [x8]
 	bfi	x10, x9, #32, #32
 	ldp	w9, w11, [x10, #-4]
 	bfi	x9, x11, #32, #32
 	tst	x9, #0xf000000000000000
-	b.eq	.LBB492_9
+	b.eq	.LBB493_9
 // %bb.8:                               // %"$15"
 	ldp	w8, w9, [x8]
 	bfi	x8, x9, #32, #32
 	add	x9, x8, #4                      // =4
 	mov	w10, #2
-	b	.LBB492_10
-.LBB492_9:                              // %"$14"
+	b	.LBB493_10
+.LBB493_9:                              // %"$14"
 	mov	w10, #2
 	bfi	x10, x9, #4, #60
 	mov	x9, x8
-.LBB492_10:                             // %"$9.sink.split"
+.LBB493_10:                             // %"$9.sink.split"
 	lsr	x8, x10, #32
 	stp	w10, w8, [x9]
-.LBB492_11:                             // %"$8"
+.LBB493_11:                             // %"$8"
 	ldr	x0, [sp, #8]
 	add	sp, sp, #16                     // =16
 	ret
-.Lfunc_end492:
-	.size	zapZero, .Lfunc_end492-zapZero
+.Lfunc_end493:
+	.size	zapZero, .Lfunc_end493-zapZero
 	.cfi_endproc
                                         // -- End function
 	.globl	pairErr                         // -- Begin function pairErr
@@ -48033,8 +48066,8 @@ pairErr:                                // @pairErr
 	add	x2, x2, :lo12:.L$118
 	mov	x3, xzr
 	bl	err
-.Lfunc_end493:
-	.size	pairErr, .Lfunc_end493-pairErr
+.Lfunc_end494:
+	.size	pairErr, .Lfunc_end494-pairErr
 	.cfi_endproc
                                         // -- End function
 	.globl	lstErr                          // -- Begin function lstErr
@@ -48050,8 +48083,8 @@ lstErr:                                 // @lstErr
 	add	x2, x2, :lo12:.L$119
 	mov	x3, xzr
 	bl	err
-.Lfunc_end494:
-	.size	lstErr, .Lfunc_end494-lstErr
+.Lfunc_end495:
+	.size	lstErr, .Lfunc_end495-lstErr
 	.cfi_endproc
                                         // -- End function
 	.globl	_putStdout                      // -- Begin function _putStdout
@@ -48062,16 +48095,16 @@ _putStdout:                             // @_putStdout
 // %bb.0:                               // %"$1"
 	mov	w8, #20544
 	movk	w8, #65057, lsl #16
-.LBB495_1:                              // %"$2"
+.LBB496_1:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	ldrb	w9, [x8, #20]
-	tbz	w9, #5, .LBB495_1
+	tbz	w9, #5, .LBB496_1
 // %bb.2:                               // %"$4"
 	and	w9, w0, #0xff
 	str	w9, [x8]
 	ret
-.Lfunc_end495:
-	.size	_putStdout, .Lfunc_end495-_putStdout
+.Lfunc_end496:
+	.size	_putStdout, .Lfunc_end496-_putStdout
 	.cfi_endproc
                                         // -- End function
 	.globl	trace                           // -- Begin function trace
@@ -48091,15 +48124,15 @@ trace:                                  // @trace
 	mov	w8, #64
 	csel	w8, w0, w8, lt
 	sub	w20, w8, #1                     // =1
-	tbnz	w20, #31, .LBB496_2
-.LBB496_1:                              // %"$5"
+	tbnz	w20, #31, .LBB497_2
+.LBB497_1:                              // %"$5"
                                         // =>This Inner Loop Header: Depth=1
 	bl	space
 	sub	w20, w20, #1                    // =1
-	tbz	w20, #31, .LBB496_1
-.LBB496_2:                              // %"$6"
+	tbz	w20, #31, .LBB497_1
+.LBB497_2:                              // %"$6"
 	tst	x19, #0xf
-	b.ne	.LBB496_4
+	b.ne	.LBB497_4
 // %bb.3:                               // %"$8"
 	ldp	w0, w8, [x19]
 	bfi	x0, x8, #32, #32
@@ -48111,14 +48144,14 @@ trace:                                  // @trace
 	bl	space
 	adrp	x8, SymTab+424
 	ldr	x19, [x8, :lo12:SymTab+424]
-.LBB496_4:                              // %"$9"
+.LBB497_4:                              // %"$9"
 	mov	x0, x19
 	bl	print
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #32                  // 8-byte Folded Reload
 	ret
-.Lfunc_end496:
-	.size	trace, .Lfunc_end496-trace
+.Lfunc_end497:
+	.size	trace, .Lfunc_end497-trace
 	.cfi_endproc
                                         // -- End function
 	.globl	pushOutFile                     // -- Begin function pushOutFile
@@ -48131,11 +48164,11 @@ pushOutFile:                            // @pushOutFile
 	ldr	x10, [x8, :lo12:env+56]
 	str	x10, [x0]
 	adrp	x9, ($Put)
-	cbz	x10, .LBB497_2
+	cbz	x10, .LBB498_2
 // %bb.1:                               // %"$2"
 	ldr	x11, [x9, :lo12:($Put)]
 	str	x11, [x10, #16]
-.LBB497_2:                              // %"$3"
+.LBB498_2:                              // %"$3"
 	adrp	x10, ($OutFile)
 	str	x1, [x10, :lo12:($OutFile)]
 	adrp	x10, _putStdout
@@ -48145,8 +48178,8 @@ pushOutFile:                            // @pushOutFile
 	str	w2, [x0, #24]
 	str	x0, [x8, :lo12:env+56]
 	ret
-.Lfunc_end497:
-	.size	pushOutFile, .Lfunc_end497-pushOutFile
+.Lfunc_end498:
+	.size	pushOutFile, .Lfunc_end498-pushOutFile
 	.cfi_endproc
                                         // -- End function
 	.globl	pushInFile                      // -- Begin function pushInFile
@@ -48158,20 +48191,20 @@ pushInFile:                             // @pushInFile
 	adrp	x9, ($InFile)
 	ldr	x10, [x9, :lo12:($InFile)]
 	adrp	x8, ($Chr)
-	cbz	x10, .LBB498_2
+	cbz	x10, .LBB499_2
 // %bb.1:                               // %"$2"
 	ldr	w11, [x8, :lo12:($Chr)]
 	str	w11, [x10, #12]
-.LBB498_2:                              // %"$3"
+.LBB499_2:                              // %"$3"
 	adrp	x10, env+48
 	ldr	x12, [x10, :lo12:env+48]
 	str	x12, [x0]
 	adrp	x11, ($Get)
-	cbz	x12, .LBB498_4
+	cbz	x12, .LBB499_4
 // %bb.3:                               // %"$4"
 	ldr	x13, [x11, :lo12:($Get)]
 	str	x13, [x12, #16]
-.LBB498_4:                              // %"$5"
+.LBB499_4:                              // %"$5"
 	adrp	x12, _getStdin
 	add	x12, x12, :lo12:_getStdin
 	str	x12, [x11, :lo12:($Get)]
@@ -48182,8 +48215,8 @@ pushInFile:                             // @pushInFile
 	str	w2, [x0, #24]
 	str	x0, [x10, :lo12:env+48]
 	ret
-.Lfunc_end498:
-	.size	pushInFile, .Lfunc_end498-pushInFile
+.Lfunc_end499:
+	.size	pushInFile, .Lfunc_end499-pushInFile
 	.cfi_endproc
                                         // -- End function
 	.globl	brkLoad                         // -- Begin function brkLoad
@@ -48204,21 +48237,21 @@ brkLoad:                                // @brkLoad
 	.cfi_offset w29, -48
 	mov	x19, x0
 	bl	isatty
-	cbz	w0, .LBB499_3
+	cbz	w0, .LBB500_3
 // %bb.1:                               // %"$3"
 	bl	isatty
-	cbz	w0, .LBB499_3
+	cbz	w0, .LBB500_3
 // %bb.2:                               // %"$4"
 	adrp	x8, env+16
 	ldr	x8, [x8, :lo12:env+16]
 	cmp	x8, #0                          // =0
 	cset	w8, eq
-	cbnz	w8, .LBB499_4
-	b	.LBB499_5
-.LBB499_3:
+	cbnz	w8, .LBB500_4
+	b	.LBB500_5
+.LBB500_3:
 	mov	w8, wzr
-	cbz	w8, .LBB499_5
-.LBB499_4:                              // %"$5"
+	cbz	w8, .LBB500_5
+.LBB500_4:                              // %"$5"
 	adrp	x21, env+8
 	add	x21, x21, :lo12:env+8
 	adrp	x20, SymTab+8
@@ -48296,15 +48329,15 @@ brkLoad:                                // @brkLoad
 	ldp	w8, w9, [x8, #16]
 	bfi	x8, x9, #32, #32
 	stp	x8, xzr, [x21]
-.LBB499_5:                              // %"$6"
+.LBB500_5:                              // %"$6"
 	mov	x0, x19
 	mov	sp, x29
 	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
 	ldr	x21, [sp, #16]                  // 8-byte Folded Reload
 	ldp	x29, x30, [sp], #48             // 16-byte Folded Reload
 	ret
-.Lfunc_end499:
-	.size	brkLoad, .Lfunc_end499-brkLoad
+.Lfunc_end500:
+	.size	brkLoad, .Lfunc_end500-brkLoad
 	.cfi_endproc
                                         // -- End function
 	.globl	isatty                          // -- Begin function isatty
@@ -48322,8 +48355,8 @@ isatty:                                 // @isatty
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end500:
-	.size	isatty, .Lfunc_end500-isatty
+.Lfunc_end501:
+	.size	isatty, .Lfunc_end501-isatty
 	.cfi_endproc
                                         // -- End function
 	.globl	repl                            // -- Begin function repl
@@ -48356,10 +48389,10 @@ repl:                                   // @repl
 	mov	x20, x2
 	mov	x21, x0
 	tst	x2, #0x6
-	b.ne	.LBB501_38
+	b.ne	.LBB502_38
 // %bb.1:                               // %"$3"
 	mov	x19, x1
-	tbz	w20, #3, .LBB501_5
+	tbz	w20, #3, .LBB502_5
 // %bb.2:                               // %"$5"
 	mov	x0, x20
 	bl	firstByte
@@ -48367,23 +48400,23 @@ repl:                                   // @repl
 	cmp	w8, #45                         // =45
 	cset	w8, eq
 	adrp	x22, env
-	cbnz	w8, .LBB501_6
-.LBB501_3:                              // %"$7"
+	cbnz	w8, .LBB502_6
+.LBB502_3:                              // %"$7"
 	adrp	x28, SymTab+8
 	add	x28, x28, :lo12:SymTab+8
 	cmp	x20, x28
-	b.ne	.LBB501_7
+	b.ne	.LBB502_7
 // %bb.4:                               // %"$10"
 	adrp	x8, ($Repl)
 	ldrb	w8, [x8, :lo12:($Repl)]
 	eor	w8, w8, #0x1
-	tbnz	w8, #0, .LBB501_8
-	b	.LBB501_9
-.LBB501_5:
+	tbnz	w8, #0, .LBB502_8
+	b	.LBB502_9
+.LBB502_5:
 	mov	w8, wzr
 	adrp	x22, env
-	cbz	w8, .LBB501_3
-.LBB501_6:                              // %"$6"
+	cbz	w8, .LBB502_3
+.LBB502_6:                              // %"$6"
 	mov	x0, x21
 	mov	x1, x20
 	bl	xName
@@ -48402,16 +48435,16 @@ repl:                                   // @repl
 	str	x19, [x22, :lo12:env]
 	bl	evList
 	mov	x23, x0
-	b	.LBB501_37
-.LBB501_7:
+	b	.LBB502_37
+.LBB502_7:
 	mov	w8, wzr
-	tbz	w8, #0, .LBB501_9
-.LBB501_8:                              // %"$11"
+	tbz	w8, #0, .LBB502_9
+.LBB502_8:                              // %"$11"
 	adrp	x8, ($Repl)
 	mov	w9, #1
 	strb	w9, [x8, :lo12:($Repl)]
 	bl	iSignal
-.LBB501_9:                              // %"$12"
+.LBB502_9:                              // %"$12"
 	adrp	x8, env
 	add	x8, x8, :lo12:env
 	ldr	x13, [x8, #88]
@@ -48493,18 +48526,18 @@ repl:                                   // @repl
 	stp	x28, x28, [x28, #104]
 	stp	x28, x28, [x14]
 	mov	x23, x28
-	b	.LBB501_12
-.LBB501_10:                             // %"$36"
-                                        //   in Loop: Header=BB501_12 Depth=1
+	b	.LBB502_12
+.LBB502_10:                             // %"$36"
+                                        //   in Loop: Header=BB502_12 Depth=1
 	adrp	x8, SymTab+376
 	ldr	x23, [x8, :lo12:SymTab+376]
 	lsr	x8, x23, #32
 	ldur	x9, [x29, #-8]                  // 8-byte Folded Reload
 	stp	w23, w8, [x9]
 	tst	x24, #0x6
-	b.eq	.LBB501_32
-.LBB501_11:                             // %"$43"
-                                        //   in Loop: Header=BB501_12 Depth=1
+	b.eq	.LBB502_32
+.LBB502_11:                             // %"$43"
+                                        //   in Loop: Header=BB502_12 Depth=1
 	adrp	x9, SymTab+376
 	add	x9, x9, :lo12:SymTab+376
 	ldr	x8, [x9, #16]
@@ -48518,10 +48551,10 @@ repl:                                   // @repl
 	bl	print
 	bl	newline
 	mov	x23, x24
-.LBB501_12:                             // %"$13"
+.LBB502_12:                             // %"$13"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB501_14 Depth 2
-                                        //     Child Loop BB501_19 Depth 2
+                                        //     Child Loop BB502_14 Depth 2
+                                        //     Child Loop BB502_19 Depth 2
 	ldr	x0, [x28, #432]
 	bl	runAt
 	eor	w8, w0, #0x8
@@ -48530,23 +48563,23 @@ repl:                                   // @repl
 	cmp	x0, x28
 	csel	w9, w25, w8, eq
 	mov	x24, x19
-	tbnz	w9, #0, .LBB501_17
+	tbnz	w9, #0, .LBB502_17
 // %bb.13:                              // %"$17"
-                                        //   in Loop: Header=BB501_12 Depth=1
+                                        //   in Loop: Header=BB502_12 Depth=1
 	sub	x8, x0, #8                      // =8
-.LBB501_14:                             // %"$19"
-                                        //   Parent Loop BB501_12 Depth=1
+.LBB502_14:                             // %"$19"
+                                        //   Parent Loop BB502_12 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	ldp	w24, w9, [x8]
 	bfi	x24, x9, #32, #32
 	tst	x24, #0x6
-	b.ne	.LBB501_16
+	b.ne	.LBB502_16
 // %bb.15:                              // %"$20"
-                                        //   in Loop: Header=BB501_14 Depth=2
+                                        //   in Loop: Header=BB502_14 Depth=2
 	add	x8, x24, #8                     // =8
-	b	.LBB501_14
-.LBB501_16:                             // %"$21"
-                                        //   in Loop: Header=BB501_12 Depth=1
+	b	.LBB502_14
+.LBB502_16:                             // %"$21"
+                                        //   in Loop: Header=BB502_12 Depth=1
 	mov	x0, x24
 	bl	bufSize
 	mov	x25, x0
@@ -48560,8 +48593,8 @@ repl:                                   // @repl
 	sub	x0, x8, #1                      // =1
 	mov	x1, x19
 	bl	cpyString
-.LBB501_17:                             // %"$18"
-                                        //   in Loop: Header=BB501_12 Depth=1
+.LBB502_17:                             // %"$18"
+                                        //   in Loop: Header=BB502_12 Depth=1
 	str	x24, [x21, :lo12:($LinePrmt)]
 	adrp	x0, .L$159
 	add	x0, x0, :lo12:.L$159
@@ -48574,92 +48607,92 @@ repl:                                   // @repl
 	mov	x24, x0
 	str	xzr, [x20, :lo12:($ContPrmt)]
 	str	xzr, [x21, :lo12:($LinePrmt)]
-	b	.LBB501_19
-.LBB501_18:                             // %"$27"
-                                        //   in Loop: Header=BB501_19 Depth=2
+	b	.LBB502_19
+.LBB502_18:                             // %"$27"
+                                        //   in Loop: Header=BB502_19 Depth=2
 	bl	comment
-.LBB501_19:                             // %"$22"
-                                        //   Parent Loop BB501_12 Depth=1
+.LBB502_19:                             // %"$22"
+                                        //   Parent Loop BB502_12 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	ldr	w8, [x22, :lo12:($Chr)]
 	cmp	w8, #1                          // =1
-	b.lt	.LBB501_25
+	b.lt	.LBB502_25
 // %bb.20:                              // %"$23"
-                                        //   in Loop: Header=BB501_19 Depth=2
+                                        //   in Loop: Header=BB502_19 Depth=2
 	ldr	w8, [x22, :lo12:($Chr)]
 	cmp	w8, #10                         // =10
-	b.eq	.LBB501_24
+	b.eq	.LBB502_24
 // %bb.21:                              // %"$25"
-                                        //   in Loop: Header=BB501_19 Depth=2
+                                        //   in Loop: Header=BB502_19 Depth=2
 	ldr	w8, [x22, :lo12:($Chr)]
 	cmp	w8, #35                         // =35
-	b.eq	.LBB501_18
+	b.eq	.LBB502_18
 // %bb.22:                              // %"$28"
-                                        //   in Loop: Header=BB501_19 Depth=2
+                                        //   in Loop: Header=BB502_19 Depth=2
 	ldr	w8, [x22, :lo12:($Chr)]
 	cmp	w8, #32                         // =32
-	b.gt	.LBB501_25
+	b.gt	.LBB502_25
 // %bb.23:                              // %"$30"
-                                        //   in Loop: Header=BB501_19 Depth=2
+                                        //   in Loop: Header=BB502_19 Depth=2
 	ldr	x8, [x27, :lo12:($Get)]
 	blr	x8
-	b	.LBB501_19
-.LBB501_24:                             // %"$26"
-                                        //   in Loop: Header=BB501_12 Depth=1
+	b	.LBB502_19
+.LBB502_24:                             // %"$26"
+                                        //   in Loop: Header=BB502_12 Depth=1
 	str	wzr, [x22, :lo12:($Chr)]
-.LBB501_25:                             // %"$24"
-                                        //   in Loop: Header=BB501_12 Depth=1
+.LBB502_25:                             // %"$24"
+                                        //   in Loop: Header=BB502_12 Depth=1
 	cmp	x24, x28
-	b.eq	.LBB501_36
+	b.eq	.LBB502_36
 // %bb.26:                              // %"$31"
-                                        //   in Loop: Header=BB501_12 Depth=1
+                                        //   in Loop: Header=BB502_12 Depth=1
 	lsr	x8, x24, #32
 	stp	w24, w8, [x26]
 	ldr	w8, [x22, :lo12:($Chr)]
-	cbz	w8, .LBB501_28
-// %bb.27:                              //   in Loop: Header=BB501_12 Depth=1
+	cbz	w8, .LBB502_28
+// %bb.27:                              //   in Loop: Header=BB502_12 Depth=1
 	mov	w8, #1
-	cbz	w8, .LBB501_10
-	b	.LBB501_29
-.LBB501_28:                             // %"$34"
-                                        //   in Loop: Header=BB501_12 Depth=1
+	cbz	w8, .LBB502_10
+	b	.LBB502_29
+.LBB502_28:                             // %"$34"
+                                        //   in Loop: Header=BB502_12 Depth=1
 	cmp	x19, #0                         // =0
 	cset	w8, eq
-	cbz	w8, .LBB501_10
-.LBB501_29:                             // %"$35"
-                                        //   in Loop: Header=BB501_12 Depth=1
+	cbz	w8, .LBB502_10
+.LBB502_29:                             // %"$35"
+                                        //   in Loop: Header=BB502_12 Depth=1
 	tst	x24, #0x6
 	mov	x23, x24
-	b.ne	.LBB501_12
+	b.ne	.LBB502_12
 // %bb.30:                              // %"$39"
-                                        //   in Loop: Header=BB501_12 Depth=1
-	tbz	w24, #3, .LBB501_34
+                                        //   in Loop: Header=BB502_12 Depth=1
+	tbz	w24, #3, .LBB502_34
 // %bb.31:                              // %"$42"
-                                        //   in Loop: Header=BB501_12 Depth=1
+                                        //   in Loop: Header=BB502_12 Depth=1
 	ldp	w23, w8, [x24]
 	bfi	x23, x8, #32, #32
-	b	.LBB501_12
-.LBB501_32:                             // %"$44"
-                                        //   in Loop: Header=BB501_12 Depth=1
-	tbz	w24, #3, .LBB501_35
+	b	.LBB502_12
+.LBB502_32:                             // %"$44"
+                                        //   in Loop: Header=BB502_12 Depth=1
+	tbz	w24, #3, .LBB502_35
 // %bb.33:                              // %"$47"
-                                        //   in Loop: Header=BB501_12 Depth=1
+                                        //   in Loop: Header=BB502_12 Depth=1
 	ldp	w24, w8, [x24]
 	bfi	x24, x8, #32, #32
-	b	.LBB501_11
-.LBB501_34:                             // %"$41"
-                                        //   in Loop: Header=BB501_12 Depth=1
+	b	.LBB502_11
+.LBB502_34:                             // %"$41"
+                                        //   in Loop: Header=BB502_12 Depth=1
 	mov	x0, x24
 	bl	evList
 	mov	x23, x0
-	b	.LBB501_12
-.LBB501_35:                             // %"$46"
-                                        //   in Loop: Header=BB501_12 Depth=1
+	b	.LBB502_12
+.LBB502_35:                             // %"$46"
+                                        //   in Loop: Header=BB502_12 Depth=1
 	mov	x0, x24
 	bl	evList
 	mov	x24, x0
-	b	.LBB501_11
-.LBB501_36:                             // %"$32"
+	b	.LBB502_11
+.LBB502_36:                             // %"$32"
 	adrp	x8, gcData
 	add	x8, x8, :lo12:gcData
 	ldur	x10, [x29, #-56]                // 8-byte Folded Reload
@@ -48674,7 +48707,7 @@ repl:                                   // @repl
 	ldp	x9, x19, [x29, #-24]            // 16-byte Folded Reload
 	str	x9, [x8, :lo12:env+88]
 	adrp	x22, env
-.LBB501_37:                             // %"$8"
+.LBB502_37:                             // %"$8"
 	ldp	w9, w8, [x19, #8]
 	bfi	x9, x8, #32, #32
 	str	x9, [x22, :lo12:env]
@@ -48687,12 +48720,12 @@ repl:                                   // @repl
 	ldp	x28, x27, [sp, #16]             // 16-byte Folded Reload
 	ldp	x29, x30, [sp], #96             // 16-byte Folded Reload
 	ret
-.LBB501_38:                             // %"$2"
+.LBB502_38:                             // %"$2"
 	mov	x0, x21
 	mov	x1, x20
 	bl	argErr
-.Lfunc_end501:
-	.size	repl, .Lfunc_end501-repl
+.Lfunc_end502:
+	.size	repl, .Lfunc_end502-repl
 	.cfi_endproc
                                         // -- End function
 	.globl	parse                           // -- Begin function parse
@@ -48742,23 +48775,23 @@ parse:                                  // @parse
 	stur	x2, [x29, #-32]
 	sub	x8, x29, #48                    // =48
 	str	x8, [x24, #80]
-	tbz	w1, #0, .LBB502_2
+	tbz	w1, #0, .LBB503_2
 // %bb.1:                               // %"$2"
 	bl	getParse
-.LBB502_2:                              // %"$3"
-	cbz	x19, .LBB502_5
+.LBB503_2:                              // %"$3"
+	cbz	x19, .LBB503_5
 // %bb.3:                               // %"$5"
 	cmp	x19, #1                         // =1
-	b.ne	.LBB502_8
+	b.ne	.LBB503_8
 // %bb.4:                               // %"$8"
 	mov	w0, #1
 	bl	read0
-	b	.LBB502_6
-.LBB502_5:                              // %"$6"
+	b	.LBB503_6
+.LBB503_5:                              // %"$6"
 	bl	rdList
-.LBB502_6:                              // %"$4"
+.LBB503_6:                              // %"$4"
 	mov	x20, x0
-.LBB502_7:                              // %"$4"
+.LBB503_7:                              // %"$4"
 	str	x27, [x24, #80]
 	str	x26, [x25, :lo12:($Get)]
 	str	w23, [x22, :lo12:($Chr)]
@@ -48773,11 +48806,11 @@ parse:                                  // @parse
 	ldp	x28, x27, [sp, #16]             // 16-byte Folded Reload
 	ldp	x29, x30, [sp], #96             // 16-byte Folded Reload
 	ret
-.LBB502_8:                              // %"$7"
+.LBB503_8:                              // %"$7"
 	mov	x0, x19
 	mov	w1, wzr
 	bl	token
-	cbz	x0, .LBB502_12
+	cbz	x0, .LBB503_12
 // %bb.9:                               // %"$9"
 	adrp	x21, SymTab+8
 	add	x21, x21, :lo12:SymTab+8
@@ -48795,26 +48828,26 @@ parse:                                  // @parse
 	stp	w9, w13, [x10, #-8]
 	mov	x28, x0
 	str	x11, [x8, :lo12:env]
-.LBB502_10:                             // %"$11"
+.LBB503_10:                             // %"$11"
                                         // =>This Inner Loop Header: Depth=1
 	mov	x0, x19
 	mov	w1, wzr
 	bl	token
-	cbz	x0, .LBB502_7
+	cbz	x0, .LBB503_7
 // %bb.11:                              // %"$12"
-                                        //   in Loop: Header=BB502_10 Depth=1
+                                        //   in Loop: Header=BB503_10 Depth=1
 	mov	x1, x21
 	bl	cons
 	lsr	x8, x0, #32
 	stp	w0, w8, [x28, #8]
 	mov	x28, x0
-	b	.LBB502_10
-.LBB502_12:
+	b	.LBB503_10
+.LBB503_12:
 	adrp	x20, SymTab+8
 	add	x20, x20, :lo12:SymTab+8
-	b	.LBB502_7
-.Lfunc_end502:
-	.size	parse, .Lfunc_end502-parse
+	b	.LBB503_7
+.Lfunc_end503:
+	.size	parse, .Lfunc_end503-parse
 	.cfi_endproc
                                         // -- End function
 	.globl	sig                             // -- Begin function sig
@@ -48831,8 +48864,8 @@ sig:                                    // @sig
 	mov	w9, #1
 	str	w9, [x8, :lo12:($Signal)]
 	ret
-.Lfunc_end503:
-	.size	sig, .Lfunc_end503-sig
+.Lfunc_end504:
+	.size	sig, .Lfunc_end504-sig
 	.cfi_endproc
                                         // -- End function
 	.globl	iSignal                         // -- Begin function iSignal
@@ -48849,8 +48882,8 @@ iSignal:                                // @iSignal
 	bl	"pr-libc"
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end504:
-	.size	iSignal, .Lfunc_end504-iSignal
+.Lfunc_end505:
+	.size	iSignal, .Lfunc_end505-iSignal
 	.cfi_endproc
                                         // -- End function
 	.globl	runAt                           // -- Begin function runAt
@@ -48877,34 +48910,34 @@ runAt:                                  // @runAt
 	stp	x8, x30, [sp, #8]               // 8-byte Folded Spill
 	mov	x8, sp
 	str	x8, [x21, :lo12:env]
-.LBB505_1:                              // %"$2"
+.LBB506_1:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w0, w8, [x19]
 	bfi	x0, x8, #32, #32
 	ldp	w19, w8, [x19, #8]
 	bfi	x19, x8, #32, #32
 	tst	x19, #0xf
-	b.ne	.LBB505_4
+	b.ne	.LBB506_4
 // %bb.2:                               // %"$3"
-                                        //   in Loop: Header=BB505_1 Depth=1
+                                        //   in Loop: Header=BB506_1 Depth=1
 	tst	x0, #0xf
-	b.ne	.LBB505_1
+	b.ne	.LBB506_1
 // %bb.3:                               // %"$12"
-                                        //   in Loop: Header=BB505_1 Depth=1
+                                        //   in Loop: Header=BB506_1 Depth=1
 	bl	evList
-	b	.LBB505_1
-.LBB505_4:                              // %"$5"
+	b	.LBB506_1
+.LBB506_4:                              // %"$5"
 	tst	x0, #0x6
-	b.ne	.LBB505_8
+	b.ne	.LBB506_8
 // %bb.5:                               // %"$7"
-	tbz	w0, #3, .LBB505_7
+	tbz	w0, #3, .LBB506_7
 // %bb.6:                               // %"$10"
 	ldp	w0, w8, [x0]
 	bfi	x0, x8, #32, #32
-	b	.LBB505_8
-.LBB505_7:                              // %"$9"
+	b	.LBB506_8
+.LBB506_7:                              // %"$9"
 	bl	evList
-.LBB505_8:                              // %"$4"
+.LBB506_8:                              // %"$4"
 	str	x22, [x20, :lo12:SymTab+376]
 	ldp	x8, x30, [sp, #8]               // 8-byte Folded Reload
 	str	x8, [x21, :lo12:env]
@@ -48912,8 +48945,8 @@ runAt:                                  // @runAt
 	ldp	x22, x21, [sp, #32]             // 16-byte Folded Reload
 	add	sp, sp, #64                     // =64
 	ret
-.Lfunc_end505:
-	.size	runAt, .Lfunc_end505-runAt
+.Lfunc_end506:
+	.size	runAt, .Lfunc_end506-runAt
 	.cfi_endproc
                                         // -- End function
 	.globl	bufSize                         // -- Begin function bufSize
@@ -48924,25 +48957,25 @@ bufSize:                                // @bufSize
 // %bb.0:                               // %"$1"
 	mov	x8, x0
 	mov	w0, #1
-	tbz	w8, #2, .LBB506_2
-.LBB506_1:                              // %"$3"
+	tbz	w8, #2, .LBB507_2
+.LBB507_1:                              // %"$3"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w8, w9, [x8, #4]
 	bfi	x8, x9, #32, #32
 	add	x0, x0, #8                      // =8
-	tbnz	w8, #2, .LBB506_1
-.LBB506_2:                              // %"$4"
+	tbnz	w8, #2, .LBB507_1
+.LBB507_2:                              // %"$4"
 	lsr	x8, x8, #4
-	cbz	x8, .LBB506_4
-.LBB506_3:                              // %"$6"
+	cbz	x8, .LBB507_4
+.LBB507_3:                              // %"$6"
                                         // =>This Inner Loop Header: Depth=1
 	lsr	x8, x8, #8
 	add	x0, x0, #1                      // =1
-	cbnz	x8, .LBB506_3
-.LBB506_4:                              // %"$7"
+	cbnz	x8, .LBB507_3
+.LBB507_4:                              // %"$7"
 	ret
-.Lfunc_end506:
-	.size	bufSize, .Lfunc_end506-bufSize
+.Lfunc_end507:
+	.size	bufSize, .Lfunc_end507-bufSize
 	.cfi_endproc
                                         // -- End function
 	.globl	bufString                       // -- Begin function bufString
@@ -48961,25 +48994,25 @@ bufString:                              // @bufString
 	mov	x19, x1
 	str	xzr, [sp]
 	mov	x20, x1
-.LBB507_1:                              // %"$2"
+.LBB508_1:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	mov	x0, sp
 	bl	symByte
 	tst	w0, #0xff
 	strb	w0, [x20]
-	b.eq	.LBB507_3
+	b.eq	.LBB508_3
 // %bb.2:                               // %"$3"
-                                        //   in Loop: Header=BB507_1 Depth=1
+                                        //   in Loop: Header=BB508_1 Depth=1
 	add	x20, x20, #1                    // =1
-	b	.LBB507_1
-.LBB507_3:                              // %"$4"
+	b	.LBB508_1
+.LBB508_3:                              // %"$4"
 	mov	x0, x19
 	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
 	ldr	x30, [sp, #16]                  // 8-byte Folded Reload
 	add	sp, sp, #48                     // =48
 	ret
-.Lfunc_end507:
-	.size	bufString, .Lfunc_end507-bufString
+.Lfunc_end508:
+	.size	bufString, .Lfunc_end508-bufString
 	.cfi_endproc
                                         // -- End function
 	.globl	cpyString                       // -- Begin function cpyString
@@ -48989,17 +49022,17 @@ cpyString:                              // @cpyString
 	.cfi_startproc
 // %bb.0:                               // %"$1"
 	ldrb	w8, [x1]
-	cbz	w8, .LBB508_2
-.LBB508_1:                              // %"$3"
+	cbz	w8, .LBB509_2
+.LBB509_1:                              // %"$3"
                                         // =>This Inner Loop Header: Depth=1
 	ldrb	w8, [x1], #1
 	strb	w8, [x0], #1
 	ldrb	w8, [x1]
-	cbnz	w8, .LBB508_1
-.LBB508_2:                              // %"$4"
+	cbnz	w8, .LBB509_1
+.LBB509_2:                              // %"$4"
 	ret
-.Lfunc_end508:
-	.size	cpyString, .Lfunc_end508-cpyString
+.Lfunc_end509:
+	.size	cpyString, .Lfunc_end509-cpyString
 	.cfi_endproc
                                         // -- End function
 	.globl	token                           // -- Begin function token
@@ -49028,40 +49061,40 @@ token:                                  // @token
 	mov	x20, x0
 	adrp	x21, ($Chr)
 	ldr	w8, [x21, :lo12:($Chr)]
-	cbnz	w8, .LBB509_2
+	cbnz	w8, .LBB510_2
 // %bb.1:                               // %"$2"
 	adrp	x8, ($Get)
 	ldr	x8, [x8, :lo12:($Get)]
 	blr	x8
-.LBB509_2:                              // %"$3"
+.LBB510_2:                              // %"$3"
 	mov	w0, w19
 	bl	skipc
-	tbnz	w0, #31, .LBB509_6
+	tbnz	w0, #31, .LBB510_6
 // %bb.3:                               // %"$5"
 	mov	w19, w0
 	cmp	w0, #34                         // =34
-	b.ne	.LBB509_7
+	b.ne	.LBB510_7
 // %bb.4:                               // %"$8"
 	adrp	x22, ($Get)
 	ldr	x8, [x22, :lo12:($Get)]
 	blr	x8
 	cmp	w0, #34                         // =34
-	b.ne	.LBB509_13
+	b.ne	.LBB510_13
 // %bb.5:                               // %"$11"
 	ldr	x8, [x22, :lo12:($Get)]
 	blr	x8
-	b	.LBB509_18
-.LBB509_6:
+	b	.LBB510_18
+.LBB510_6:
 	mov	x19, xzr
-	b	.LBB509_42
-.LBB509_7:                              // %"$7"
+	b	.LBB510_42
+.LBB510_7:                              // %"$7"
 	cmp	w19, #57                        // =57
-	b.gt	.LBB509_19
+	b.gt	.LBB510_19
 // %bb.8:                               // %"$20"
 	cmp	w19, #47                        // =47
 	cset	w8, gt
-	cbnz	w8, .LBB509_20
-.LBB509_9:                              // %"$21"
+	cbnz	w8, .LBB510_20
+.LBB510_9:                              // %"$21"
 	mov	x0, xzr
 	mov	x1, x20
 	bl	xName
@@ -49076,14 +49109,14 @@ token:                                  // @token
 	bl	bufString
 	mov	x20, x0
 	cmp	w19, #43                        // =43
-	b.eq	.LBB509_11
+	b.eq	.LBB510_11
 // %bb.10:                              // %"$31"
 	cmp	w19, #45                        // =45
-	b.ne	.LBB509_25
-.LBB509_11:
+	b.ne	.LBB510_25
+.LBB510_11:
 	mov	w8, #1
-	cbz	w8, .LBB509_29
-.LBB509_12:                             // %"$41"
+	cbz	w8, .LBB510_29
+.LBB510_12:                             // %"$41"
 	mov	w0, w19
 	bl	getChar
 	bl	mkChar
@@ -49091,10 +49124,10 @@ token:                                  // @token
 	adrp	x8, ($Get)
 	ldr	x8, [x8, :lo12:($Get)]
 	blr	x8
-	b	.LBB509_42
-.LBB509_13:                             // %"$10"
+	b	.LBB510_42
+.LBB510_13:                             // %"$10"
 	bl	testEsc
-	tbz	w0, #0, .LBB509_18
+	tbz	w0, #0, .LBB510_18
 // %bb.14:                              // %"$12"
 	ldr	w0, [x21, :lo12:($Chr)]
 	bl	mkChar
@@ -49114,18 +49147,18 @@ token:                                  // @token
 	stp	w8, w11, [x9, #-8]
 	mov	x25, x0
 	str	x24, [x23, :lo12:env]
-.LBB509_15:                             // %"$14"
+.LBB510_15:                             // %"$14"
                                         // =>This Inner Loop Header: Depth=1
 	ldr	x8, [x22, :lo12:($Get)]
 	blr	x8
 	cmp	w0, #34                         // =34
-	b.eq	.LBB509_23
+	b.eq	.LBB510_23
 // %bb.16:                              // %"$15"
-                                        //   in Loop: Header=BB509_15 Depth=1
+                                        //   in Loop: Header=BB510_15 Depth=1
 	bl	testEsc
-	tbz	w0, #0, .LBB509_24
+	tbz	w0, #0, .LBB510_24
 // %bb.17:                              // %"$18"
-                                        //   in Loop: Header=BB509_15 Depth=1
+                                        //   in Loop: Header=BB510_15 Depth=1
 	ldr	w0, [x21, :lo12:($Chr)]
 	bl	mkChar
 	mov	x1, x20
@@ -49133,15 +49166,15 @@ token:                                  // @token
 	lsr	x8, x0, #32
 	stp	w0, w8, [x25, #8]
 	mov	x25, x0
-	b	.LBB509_15
-.LBB509_18:
+	b	.LBB510_15
+.LBB510_18:
 	adrp	x19, SymTab+8
 	add	x19, x19, :lo12:SymTab+8
-	b	.LBB509_42
-.LBB509_19:
+	b	.LBB510_42
+.LBB510_19:
 	mov	w8, wzr
-	cbz	w8, .LBB509_9
-.LBB509_20:                             // %"$22"
+	cbz	w8, .LBB510_9
+.LBB510_20:                             // %"$22"
 	mov	x8, sp
 	sub	x20, x8, #32                    // =32
 	mov	sp, x20
@@ -49158,7 +49191,7 @@ token:                                  // @token
 	str	x12, [x21, :lo12:env]
 	adrp	x22, ($Get)
 	mov	w23, #1
-.LBB509_21:                             // %"$23"
+.LBB510_21:                             // %"$23"
                                         // =>This Inner Loop Header: Depth=1
 	mov	w0, w19
 	mov	x1, x20
@@ -49172,7 +49205,7 @@ token:                                  // @token
 	csel	w8, w23, w8, lt
 	cmp	w0, #46                         // =46
 	csel	w8, wzr, w8, eq
-	cbz	w8, .LBB509_21
+	cbz	w8, .LBB510_21
 // %bb.22:                              // %"$29"
 	ldp	w0, w8, [x20, #16]
 	bfi	x0, x8, #32, #32
@@ -49186,44 +49219,44 @@ token:                                  // @token
 	ldp	w9, w8, [x20, #24]
 	bfi	x9, x8, #32, #32
 	str	x9, [x21, :lo12:env]
-	b	.LBB509_42
-.LBB509_23:                             // %"$17"
+	b	.LBB510_42
+.LBB510_23:                             // %"$17"
 	ldr	x8, [x22, :lo12:($Get)]
 	blr	x8
-.LBB509_24:                             // %"$16"
+.LBB510_24:                             // %"$16"
 	ldp	w9, w8, [x24, #8]
 	bfi	x9, x8, #32, #32
 	str	x9, [x23, :lo12:env]
-	b	.LBB509_42
-.LBB509_25:                             // %"$32"
+	b	.LBB510_42
+.LBB510_25:                             // %"$32"
 	cmp	w19, #92                        // =92
-	b.eq	.LBB509_28
+	b.eq	.LBB510_28
 // %bb.26:                              // %"$34"
 	cmp	w19, #123                       // =123
 	cset	w8, lt
 	cmp	w19, #96                        // =96
 	cset	w9, gt
 	and	w8, w8, w9
-	tbnz	w8, #0, .LBB509_28
+	tbnz	w8, #0, .LBB510_28
 // %bb.27:                              // %"$37"
 	cmp	w19, #91                        // =91
 	cset	w8, lt
 	cmp	w19, #64                        // =64
 	cset	w9, gt
 	and	w8, w8, w9
-	tbz	w8, #0, .LBB509_43
-.LBB509_28:
+	tbz	w8, #0, .LBB510_43
+.LBB510_28:
 	mov	w8, #1
 	eor	w8, w8, #0x1
-	cbnz	w8, .LBB509_12
-.LBB509_29:                             // %"$42"
+	cbnz	w8, .LBB510_12
+.LBB510_29:                             // %"$42"
 	cmp	w19, #92                        // =92
-	b.ne	.LBB509_31
+	b.ne	.LBB510_31
 // %bb.30:                              // %"$44"
 	adrp	x8, ($Get)
 	ldr	x8, [x8, :lo12:($Get)]
 	blr	x8
-.LBB509_31:                             // %"$45"
+.LBB510_31:                             // %"$45"
 	mov	x8, sp
 	sub	x21, x8, #32                    // =32
 	mov	sp, x21
@@ -49240,7 +49273,7 @@ token:                                  // @token
 	str	x12, [x22, :lo12:env]
 	adrp	x23, ($Get)
 	mov	w24, #1
-.LBB509_32:                             // %"$46"
+.LBB510_32:                             // %"$46"
                                         // =>This Inner Loop Header: Depth=1
 	mov	w0, w19
 	mov	x1, x21
@@ -49249,55 +49282,55 @@ token:                                  // @token
 	blr	x8
 	mov	w19, w0
 	cmp	w0, #92                         // =92
-	b.eq	.LBB509_35
+	b.eq	.LBB510_35
 // %bb.33:                              // %"$49"
-                                        //   in Loop: Header=BB509_32 Depth=1
+                                        //   in Loop: Header=BB510_32 Depth=1
 	cmp	w19, #123                       // =123
 	cset	w8, lt
 	cmp	w19, #96                        // =96
 	cset	w9, gt
 	and	w8, w8, w9
-	tbnz	w8, #0, .LBB509_35
+	tbnz	w8, #0, .LBB510_35
 // %bb.34:                              // %"$52"
-                                        //   in Loop: Header=BB509_32 Depth=1
+                                        //   in Loop: Header=BB510_32 Depth=1
 	cmp	w19, #91                        // =91
 	cset	w8, lt
 	cmp	w19, #64                        // =64
 	cset	w9, gt
 	and	w8, w8, w9
-	tbz	w8, #0, .LBB509_37
-.LBB509_35:                             //   in Loop: Header=BB509_32 Depth=1
+	tbz	w8, #0, .LBB510_37
+.LBB510_35:                             //   in Loop: Header=BB510_32 Depth=1
 	mov	w8, #1
-	cbz	w8, .LBB509_38
-.LBB509_36:                             //   in Loop: Header=BB509_32 Depth=1
+	cbz	w8, .LBB510_38
+.LBB510_36:                             //   in Loop: Header=BB510_32 Depth=1
 	mov	w8, wzr
-	tbz	w8, #0, .LBB509_39
-	b	.LBB509_41
-.LBB509_37:                             // %"$55"
-                                        //   in Loop: Header=BB509_32 Depth=1
+	tbz	w8, #0, .LBB510_39
+	b	.LBB510_41
+.LBB510_37:                             // %"$55"
+                                        //   in Loop: Header=BB510_32 Depth=1
 	mov	x0, x20
 	mov	w1, w19
 	bl	strchr2
 	cmp	x0, #0                          // =0
 	cset	w8, ne
-	cbnz	w8, .LBB509_36
-.LBB509_38:                             // %"$56"
-                                        //   in Loop: Header=BB509_32 Depth=1
+	cbnz	w8, .LBB510_36
+.LBB510_38:                             // %"$56"
+                                        //   in Loop: Header=BB510_32 Depth=1
 	cmp	w19, #57                        // =57
 	cset	w8, gt
 	cmp	w19, #48                        // =48
 	csel	w8, w24, w8, lt
-	tbnz	w8, #0, .LBB509_41
-.LBB509_39:                             // %"$59"
-                                        //   in Loop: Header=BB509_32 Depth=1
+	tbnz	w8, #0, .LBB510_41
+.LBB510_39:                             // %"$59"
+                                        //   in Loop: Header=BB510_32 Depth=1
 	cmp	w19, #92                        // =92
-	b.ne	.LBB509_32
+	b.ne	.LBB510_32
 // %bb.40:                              // %"$61"
-                                        //   in Loop: Header=BB509_32 Depth=1
+                                        //   in Loop: Header=BB510_32 Depth=1
 	ldr	x8, [x23, :lo12:($Get)]
 	blr	x8
-	b	.LBB509_32
-.LBB509_41:                             // %"$60"
+	b	.LBB510_32
+.LBB510_41:                             // %"$60"
 	ldp	w0, w8, [x21, #16]
 	bfi	x0, x8, #32, #32
 	bl	requestSym
@@ -49305,7 +49338,7 @@ token:                                  // @token
 	ldp	w9, w8, [x21, #24]
 	bfi	x9, x8, #32, #32
 	str	x9, [x22, :lo12:env]
-.LBB509_42:                             // %"$4"
+.LBB510_42:                             // %"$4"
 	mov	x0, x19
 	mov	sp, x29
 	ldp	x20, x19, [sp, #64]             // 16-byte Folded Reload
@@ -49314,17 +49347,17 @@ token:                                  // @token
 	ldr	x25, [sp, #16]                  // 8-byte Folded Reload
 	ldp	x29, x30, [sp], #80             // 16-byte Folded Reload
 	ret
-.LBB509_43:                             // %"$40"
+.LBB510_43:                             // %"$40"
 	mov	x0, x20
 	mov	w1, w19
 	bl	strchr2
 	cmp	x0, #0                          // =0
 	cset	w8, ne
 	eor	w8, w8, #0x1
-	cbz	w8, .LBB509_29
-	b	.LBB509_12
-.Lfunc_end509:
-	.size	token, .Lfunc_end509-token
+	cbz	w8, .LBB510_29
+	b	.LBB510_12
+.Lfunc_end510:
+	.size	token, .Lfunc_end510-token
 	.cfi_endproc
                                         // -- End function
 	.globl	skipc                           // -- Begin function skipc
@@ -49344,45 +49377,45 @@ skipc:                                  // @skipc
 	ldr	w0, [x8, :lo12:($Chr)]
 	adrp	x20, ($Get)
 	cmp	w0, #32                         // =32
-	b.gt	.LBB510_3
-.LBB510_1:                              // %"$4"
+	b.gt	.LBB511_3
+.LBB511_1:                              // %"$4"
                                         // =>This Inner Loop Header: Depth=1
 	ldr	x8, [x20, :lo12:($Get)]
 	blr	x8
-	tbnz	w0, #31, .LBB510_7
+	tbnz	w0, #31, .LBB511_7
 // %bb.2:                               // %"$3"
-                                        //   in Loop: Header=BB510_1 Depth=1
+                                        //   in Loop: Header=BB511_1 Depth=1
 	cmp	w0, #32                         // =32
-	b.le	.LBB510_1
-.LBB510_3:                              // %"$5"
+	b.le	.LBB511_1
+.LBB511_3:                              // %"$5"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB510_4 Depth 2
+                                        //     Child Loop BB511_4 Depth 2
 	cmp	w0, w19
-	b.ne	.LBB510_7
-.LBB510_4:                              // %"$10"
-                                        //   Parent Loop BB510_3 Depth=1
+	b.ne	.LBB511_7
+.LBB511_4:                              // %"$10"
+                                        //   Parent Loop BB511_3 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	ldr	x8, [x20, :lo12:($Get)]
 	blr	x8
 	cmp	w0, #10                         // =10
-	b.eq	.LBB510_6
+	b.eq	.LBB511_6
 // %bb.5:                               // %"$11"
-                                        //   in Loop: Header=BB510_4 Depth=2
-	tbz	w0, #31, .LBB510_4
-	b	.LBB510_7
-.LBB510_6:                              // %"$12"
-                                        //   in Loop: Header=BB510_3 Depth=1
+                                        //   in Loop: Header=BB511_4 Depth=2
+	tbz	w0, #31, .LBB511_4
+	b	.LBB511_7
+.LBB511_6:                              // %"$12"
+                                        //   in Loop: Header=BB511_3 Depth=1
 	ldr	x8, [x20, :lo12:($Get)]
 	blr	x8
 	cmp	w0, #32                         // =32
-	b.le	.LBB510_1
-	b	.LBB510_3
-.LBB510_7:                              // %"$6"
+	b.le	.LBB511_1
+	b	.LBB511_3
+.LBB511_7:                              // %"$6"
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #32                  // 8-byte Folded Reload
 	ret
-.Lfunc_end510:
-	.size	skipc, .Lfunc_end510-skipc
+.Lfunc_end511:
+	.size	skipc, .Lfunc_end511-skipc
 	.cfi_endproc
                                         // -- End function
 	.globl	mkChar                          // -- Begin function mkChar
@@ -49393,29 +49426,29 @@ mkChar:                                 // @mkChar
 // %bb.0:                               // %"$1"
                                         // kill: def $w0 killed $w0 def $x0
 	cmp	w0, #127                        // =127
-	b.gt	.LBB511_2
+	b.gt	.LBB512_2
 // %bb.1:                               // %"$4"
 	sxtw	x8, w0
-	b	.LBB511_9
-.LBB511_2:                              // %"$3"
+	b	.LBB512_9
+.LBB512_2:                              // %"$3"
 	cmp	w0, #272, lsl #12               // =1114112
-	b.ne	.LBB511_4
+	b.ne	.LBB512_4
 // %bb.3:
 	mov	w8, #255
-	b	.LBB511_9
-.LBB511_4:                              // %"$5"
+	b	.LBB512_9
+.LBB512_4:                              // %"$5"
 	cmp	w0, #2047                       // =2047
-	b.gt	.LBB511_6
+	b.gt	.LBB512_6
 // %bb.5:                               // %"$8"
 	ubfx	w8, w0, #6, #5
 	and	w9, w0, #0x3f
 	bfi	w8, w9, #8, #6
 	mov	w9, #32960
 	orr	w8, w8, w9
-	b	.LBB511_9
-.LBB511_6:                              // %"$7"
+	b	.LBB512_9
+.LBB512_6:                              // %"$7"
 	cmp	w0, #16, lsl #12                // =65536
-	b.ge	.LBB511_8
+	b.ge	.LBB512_8
 // %bb.7:                               // %"$10"
 	ubfx	w8, w0, #12, #4
 	ubfx	w9, w0, #6, #6
@@ -49425,8 +49458,8 @@ mkChar:                                 // @mkChar
 	mov	w9, #32992
 	movk	w9, #128, lsl #16
 	orr	w8, w8, w9
-	b	.LBB511_9
-.LBB511_8:                              // %"$9"
+	b	.LBB512_9
+.LBB512_8:                              // %"$9"
 	ubfx	w8, w0, #18, #3
 	ubfx	w9, w0, #12, #6
 	bfi	w8, w9, #8, #6
@@ -49438,7 +49471,7 @@ mkChar:                                 // @mkChar
 	and	x9, x0, #0x3f
 	bfi	x8, x9, #24, #6
 	orr	x8, x8, #0x80000000
-.LBB511_9:                              // %"$2"
+.LBB512_9:                              // %"$2"
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
@@ -49447,8 +49480,8 @@ mkChar:                                 // @mkChar
 	bl	consStr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end511:
-	.size	mkChar, .Lfunc_end511-mkChar
+.Lfunc_end512:
+	.size	mkChar, .Lfunc_end512-mkChar
 	.cfi_endproc
                                         // -- End function
 	.globl	reentErr                        // -- Begin function reentErr
@@ -49464,8 +49497,8 @@ reentErr:                               // @reentErr
 	add	x2, x2, :lo12:.L$185
 	mov	x3, xzr
 	bl	err
-.Lfunc_end512:
-	.size	reentErr, .Lfunc_end512-reentErr
+.Lfunc_end513:
+	.size	reentErr, .Lfunc_end513-reentErr
 	.cfi_endproc
                                         // -- End function
 	.globl	saveCoEnv                       // -- Begin function saveCoEnv
@@ -49500,8 +49533,8 @@ saveCoEnv:                              // @saveCoEnv
 	bl	memcpy2
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end513:
-	.size	saveCoEnv, .Lfunc_end513-saveCoEnv
+.Lfunc_end514:
+	.size	saveCoEnv, .Lfunc_end514-saveCoEnv
 	.cfi_endproc
                                         // -- End function
 	.globl	loadCoEnv                       // -- Begin function loadCoEnv
@@ -49537,8 +49570,8 @@ loadCoEnv:                              // @loadCoEnv
 	ldr	x0, [x8, :lo12:($Ret)]
 	ldp	x30, x19, [sp], #16             // 16-byte Folded Reload
 	ret
-.Lfunc_end514:
-	.size	loadCoEnv, .Lfunc_end514-loadCoEnv
+.Lfunc_end515:
+	.size	loadCoEnv, .Lfunc_end515-loadCoEnv
 	.cfi_endproc
                                         // -- End function
 	.globl	setDestruct                     // -- Begin function setDestruct
@@ -49558,15 +49591,15 @@ setDestruct:                            // @setDestruct
 	mov	x19, x0
 	adrp	x21, SymTab+8
 	add	x21, x21, :lo12:SymTab+8
-	b	.LBB515_3
-.LBB515_1:                              // %"$6"
-                                        //   in Loop: Header=BB515_3 Depth=1
+	b	.LBB516_3
+.LBB516_1:                              // %"$6"
+                                        //   in Loop: Header=BB516_3 Depth=1
 	bl	setDestruct
-.LBB515_2:                              // %"$7"
-                                        //   in Loop: Header=BB515_3 Depth=1
+.LBB516_2:                              // %"$7"
+                                        //   in Loop: Header=BB516_3 Depth=1
 	tst	x19, #0xf
-	b.ne	.LBB515_6
-.LBB515_3:                              // %"$2"
+	b.ne	.LBB516_6
+.LBB516_3:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	tst	x20, #0xf
 	csel	x8, x20, x21, eq
@@ -49579,28 +49612,28 @@ setDestruct:                            // @setDestruct
 	ldp	w20, w9, [x8, #8]
 	bfi	x20, x9, #32, #32
 	tst	x0, #0xf
-	b.eq	.LBB515_1
+	b.eq	.LBB516_1
 // %bb.4:                               // %"$5"
-                                        //   in Loop: Header=BB515_3 Depth=1
+                                        //   in Loop: Header=BB516_3 Depth=1
 	cmp	x0, x21
-	b.eq	.LBB515_2
+	b.eq	.LBB516_2
 // %bb.5:                               // %"$8"
-                                        //   in Loop: Header=BB515_3 Depth=1
+                                        //   in Loop: Header=BB516_3 Depth=1
 	lsr	x8, x1, #32
 	stp	w1, w8, [x0]
-	b	.LBB515_2
-.LBB515_6:                              // %"$12"
+	b	.LBB516_2
+.LBB516_6:                              // %"$12"
 	cmp	x19, x21
-	b.eq	.LBB515_8
+	b.eq	.LBB516_8
 // %bb.7:                               // %"$13"
 	lsr	x8, x20, #32
 	stp	w20, w8, [x19]
-.LBB515_8:                              // %"$11"
+.LBB516_8:                              // %"$11"
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x21, [sp], #32             // 16-byte Folded Reload
 	ret
-.Lfunc_end515:
-	.size	setDestruct, .Lfunc_end515-setDestruct
+.Lfunc_end516:
+	.size	setDestruct, .Lfunc_end516-setDestruct
 	.cfi_endproc
                                         // -- End function
 	.globl	loop1                           // -- Begin function loop1
@@ -49623,161 +49656,161 @@ loop1:                                  // @loop1
 	add	x20, x20, :lo12:SymTab+8
 	adrp	x21, SymTab+216
 	add	x21, x21, :lo12:SymTab+216
-	b	.LBB516_3
-.LBB516_1:                              // %"$7"
-                                        //   in Loop: Header=BB516_3 Depth=1
+	b	.LBB517_3
+.LBB517_1:                              // %"$7"
+                                        //   in Loop: Header=BB517_3 Depth=1
 	ldp	w0, w8, [x0]
 	bfi	x0, x8, #32, #32
-.LBB516_2:                              // %"$4"
-                                        //   in Loop: Header=BB516_3 Depth=1
+.LBB517_2:                              // %"$4"
+                                        //   in Loop: Header=BB517_3 Depth=1
 	ldp	w19, w8, [x19, #8]
 	bfi	x19, x8, #32, #32
 	tst	x19, #0xf
-	b.ne	.LBB516_23
-.LBB516_3:                              // %"$2"
+	b.ne	.LBB517_23
+.LBB517_3:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w0, w8, [x19]
 	bfi	x0, x8, #32, #32
 	tst	x0, #0x6
-	b.ne	.LBB516_2
+	b.ne	.LBB517_2
 // %bb.4:                               // %"$3"
-                                        //   in Loop: Header=BB516_3 Depth=1
-	tbnz	w0, #3, .LBB516_1
+                                        //   in Loop: Header=BB517_3 Depth=1
+	tbnz	w0, #3, .LBB517_1
 // %bb.5:                               // %"$6"
-                                        //   in Loop: Header=BB516_3 Depth=1
+                                        //   in Loop: Header=BB517_3 Depth=1
 	ldp	w9, w8, [x0]
 	bfi	x9, x8, #32, #32
 	cmp	x9, x20
-	b.ne	.LBB516_9
+	b.ne	.LBB517_9
 // %bb.6:                               // %"$9"
-                                        //   in Loop: Header=BB516_3 Depth=1
+                                        //   in Loop: Header=BB517_3 Depth=1
 	ldp	w22, w8, [x0, #8]
 	bfi	x22, x8, #32, #32
 	ldp	w0, w8, [x22]
 	bfi	x0, x8, #32, #32
 	tst	x0, #0x6
-	b.ne	.LBB516_16
+	b.ne	.LBB517_16
 // %bb.7:                               // %"$11"
-                                        //   in Loop: Header=BB516_3 Depth=1
-	tbz	w0, #3, .LBB516_15
+                                        //   in Loop: Header=BB517_3 Depth=1
+	tbz	w0, #3, .LBB517_15
 // %bb.8:                               // %"$14"
-                                        //   in Loop: Header=BB516_3 Depth=1
+                                        //   in Loop: Header=BB517_3 Depth=1
 	ldp	w0, w8, [x0]
 	bfi	x0, x8, #32, #32
-	b	.LBB516_16
-.LBB516_9:                              // %"$8"
-                                        //   in Loop: Header=BB516_3 Depth=1
+	b	.LBB517_16
+.LBB517_9:                              // %"$8"
+                                        //   in Loop: Header=BB517_3 Depth=1
 	ldp	w9, w8, [x0]
 	bfi	x9, x8, #32, #32
 	cmp	x9, x21
-	b.ne	.LBB516_14
+	b.ne	.LBB517_14
 // %bb.10:                              // %"$30"
-                                        //   in Loop: Header=BB516_3 Depth=1
+                                        //   in Loop: Header=BB517_3 Depth=1
 	ldp	w22, w8, [x0, #8]
 	bfi	x22, x8, #32, #32
 	ldp	w0, w8, [x22]
 	bfi	x0, x8, #32, #32
 	tst	x0, #0x6
-	b.ne	.LBB516_13
+	b.ne	.LBB517_13
 // %bb.11:                              // %"$32"
-                                        //   in Loop: Header=BB516_3 Depth=1
-	tbz	w0, #3, .LBB516_18
+                                        //   in Loop: Header=BB517_3 Depth=1
+	tbz	w0, #3, .LBB517_18
 // %bb.12:                              // %"$35"
-                                        //   in Loop: Header=BB516_3 Depth=1
+                                        //   in Loop: Header=BB517_3 Depth=1
 	ldp	w0, w8, [x0]
 	bfi	x0, x8, #32, #32
-.LBB516_13:                             // %"$31"
-                                        //   in Loop: Header=BB516_3 Depth=1
+.LBB517_13:                             // %"$31"
+                                        //   in Loop: Header=BB517_3 Depth=1
 	cmp	x0, x20
-	b.eq	.LBB516_2
-	b	.LBB516_19
-.LBB516_14:                             // %"$29"
-                                        //   in Loop: Header=BB516_3 Depth=1
+	b.eq	.LBB517_2
+	b	.LBB517_19
+.LBB517_14:                             // %"$29"
+                                        //   in Loop: Header=BB517_3 Depth=1
 	bl	evList
-	b	.LBB516_2
-.LBB516_15:                             // %"$13"
-                                        //   in Loop: Header=BB516_3 Depth=1
+	b	.LBB517_2
+.LBB517_15:                             // %"$13"
+                                        //   in Loop: Header=BB517_3 Depth=1
 	bl	evList
-.LBB516_16:                             // %"$10"
-                                        //   in Loop: Header=BB516_3 Depth=1
+.LBB517_16:                             // %"$10"
+                                        //   in Loop: Header=BB517_3 Depth=1
 	cmp	x0, x20
-	b.eq	.LBB516_25
+	b.eq	.LBB517_25
 // %bb.17:                              // %"$15"
-                                        //   in Loop: Header=BB516_3 Depth=1
+                                        //   in Loop: Header=BB517_3 Depth=1
 	str	x0, [x20, #368]
 	mov	x0, x20
-	b	.LBB516_2
-.LBB516_18:                             // %"$34"
-                                        //   in Loop: Header=BB516_3 Depth=1
+	b	.LBB517_2
+.LBB517_18:                             // %"$34"
+                                        //   in Loop: Header=BB517_3 Depth=1
 	bl	evList
 	cmp	x0, x20
-	b.eq	.LBB516_2
-.LBB516_19:                             // %"$37"
+	b.eq	.LBB517_2
+.LBB517_19:                             // %"$37"
 	adrp	x8, SymTab+376
 	str	x0, [x8, :lo12:SymTab+376]
 	ldp	w19, w8, [x22, #8]
 	bfi	x19, x8, #32, #32
-.LBB516_20:                             // %"$38"
+.LBB517_20:                             // %"$38"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w0, w8, [x19]
 	bfi	x0, x8, #32, #32
 	ldp	w19, w8, [x19, #8]
 	bfi	x19, x8, #32, #32
 	tst	x19, #0xf
-	b.ne	.LBB516_32
+	b.ne	.LBB517_32
 // %bb.21:                              // %"$39"
-                                        //   in Loop: Header=BB516_20 Depth=1
+                                        //   in Loop: Header=BB517_20 Depth=1
 	tst	x0, #0xf
-	b.ne	.LBB516_20
+	b.ne	.LBB517_20
 // %bb.22:                              // %"$48"
-                                        //   in Loop: Header=BB516_20 Depth=1
+                                        //   in Loop: Header=BB517_20 Depth=1
 	bl	evList
-	b	.LBB516_20
-.LBB516_23:                             // %"$50"
+	b	.LBB517_20
+.LBB517_23:                             // %"$50"
 	orr	x0, x0, #0x1
-.LBB516_24:                             // %"$16"
+.LBB517_24:                             // %"$16"
 	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #48                  // 8-byte Folded Reload
 	ret
-.LBB516_25:                             // %"$17"
+.LBB517_25:                             // %"$17"
 	ldp	w19, w8, [x22, #8]
 	bfi	x19, x8, #32, #32
-.LBB516_26:                             // %"$18"
+.LBB517_26:                             // %"$18"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w0, w8, [x19]
 	bfi	x0, x8, #32, #32
 	ldp	w19, w8, [x19, #8]
 	bfi	x19, x8, #32, #32
 	tst	x19, #0xf
-	b.ne	.LBB516_29
+	b.ne	.LBB517_29
 // %bb.27:                              // %"$19"
-                                        //   in Loop: Header=BB516_26 Depth=1
+                                        //   in Loop: Header=BB517_26 Depth=1
 	tst	x0, #0xf
-	b.ne	.LBB516_26
+	b.ne	.LBB517_26
 // %bb.28:                              // %"$28"
-                                        //   in Loop: Header=BB516_26 Depth=1
+                                        //   in Loop: Header=BB517_26 Depth=1
 	bl	evList
-	b	.LBB516_26
-.LBB516_29:                             // %"$21"
+	b	.LBB517_26
+.LBB517_29:                             // %"$21"
 	tst	x0, #0x6
-	b.ne	.LBB516_24
+	b.ne	.LBB517_24
 // %bb.30:                              // %"$23"
-	tbz	w0, #3, .LBB516_34
-.LBB516_31:                             // %"$26"
+	tbz	w0, #3, .LBB517_34
+.LBB517_31:                             // %"$26"
 	ldp	w0, w8, [x0]
 	bfi	x0, x8, #32, #32
-	b	.LBB516_24
-.LBB516_32:                             // %"$41"
+	b	.LBB517_24
+.LBB517_32:                             // %"$41"
 	tst	x0, #0x6
-	b.ne	.LBB516_24
+	b.ne	.LBB517_24
 // %bb.33:                              // %"$43"
-	tbnz	w0, #3, .LBB516_31
-.LBB516_34:                             // %"$25"
+	tbnz	w0, #3, .LBB517_31
+.LBB517_34:                             // %"$25"
 	bl	evList
-	b	.LBB516_24
-.Lfunc_end516:
-	.size	loop1, .Lfunc_end516-loop1
+	b	.LBB517_24
+.Lfunc_end517:
+	.size	loop1, .Lfunc_end517-loop1
 	.cfi_endproc
                                         // -- End function
 	.globl	loop2                           // -- Begin function loop2
@@ -49805,154 +49838,154 @@ loop2:                                  // @loop2
 	mov	x23, x0
 	adrp	x22, SymTab+216
 	add	x22, x22, :lo12:SymTab+216
-.LBB517_1:                              // %"$3"
+.LBB518_1:                              // %"$3"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w0, w8, [x23]
 	bfi	x0, x8, #32, #32
 	tst	x0, #0xf
-	b.ne	.LBB517_14
+	b.ne	.LBB518_14
 // %bb.2:                               // %"$4"
-                                        //   in Loop: Header=BB517_1 Depth=1
+                                        //   in Loop: Header=BB518_1 Depth=1
 	ldp	w9, w8, [x0]
 	bfi	x9, x8, #32, #32
 	cmp	x9, x21
-	b.ne	.LBB517_8
+	b.ne	.LBB518_8
 // %bb.3:                               // %"$8"
-                                        //   in Loop: Header=BB517_1 Depth=1
+                                        //   in Loop: Header=BB518_1 Depth=1
 	ldp	w24, w8, [x0, #8]
 	bfi	x24, x8, #32, #32
 	ldp	w0, w8, [x24]
 	bfi	x0, x8, #32, #32
 	tst	x0, #0x6
-	b.ne	.LBB517_6
+	b.ne	.LBB518_6
 // %bb.4:                               // %"$10"
-                                        //   in Loop: Header=BB517_1 Depth=1
-	tbz	w0, #3, .LBB517_16
+                                        //   in Loop: Header=BB518_1 Depth=1
+	tbz	w0, #3, .LBB518_16
 // %bb.5:                               // %"$13"
-                                        //   in Loop: Header=BB517_1 Depth=1
+                                        //   in Loop: Header=BB518_1 Depth=1
 	ldp	w0, w8, [x0]
 	bfi	x0, x8, #32, #32
-.LBB517_6:                              // %"$9"
-                                        //   in Loop: Header=BB517_1 Depth=1
+.LBB518_6:                              // %"$9"
+                                        //   in Loop: Header=BB518_1 Depth=1
 	cmp	x0, x21
-	b.eq	.LBB517_22
-.LBB517_7:                              // %"$15"
-                                        //   in Loop: Header=BB517_1 Depth=1
+	b.eq	.LBB518_22
+.LBB518_7:                              // %"$15"
+                                        //   in Loop: Header=BB518_1 Depth=1
 	str	x0, [x20, :lo12:SymTab+376]
-	b	.LBB517_14
-.LBB517_8:                              // %"$7"
-                                        //   in Loop: Header=BB517_1 Depth=1
+	b	.LBB518_14
+.LBB518_8:                              // %"$7"
+                                        //   in Loop: Header=BB518_1 Depth=1
 	ldp	w9, w8, [x0]
 	bfi	x9, x8, #32, #32
 	cmp	x9, x22
-	b.ne	.LBB517_13
+	b.ne	.LBB518_13
 // %bb.9:                               // %"$28"
-                                        //   in Loop: Header=BB517_1 Depth=1
+                                        //   in Loop: Header=BB518_1 Depth=1
 	ldp	w24, w8, [x0, #8]
 	bfi	x24, x8, #32, #32
 	ldp	w0, w8, [x24]
 	bfi	x0, x8, #32, #32
 	tst	x0, #0x6
-	b.ne	.LBB517_12
+	b.ne	.LBB518_12
 // %bb.10:                              // %"$30"
-                                        //   in Loop: Header=BB517_1 Depth=1
-	tbz	w0, #3, .LBB517_17
+                                        //   in Loop: Header=BB518_1 Depth=1
+	tbz	w0, #3, .LBB518_17
 // %bb.11:                              // %"$33"
-                                        //   in Loop: Header=BB517_1 Depth=1
+                                        //   in Loop: Header=BB518_1 Depth=1
 	ldp	w0, w8, [x0]
 	bfi	x0, x8, #32, #32
-.LBB517_12:                             // %"$29"
-                                        //   in Loop: Header=BB517_1 Depth=1
+.LBB518_12:                             // %"$29"
+                                        //   in Loop: Header=BB518_1 Depth=1
 	cmp	x0, x21
-	b.eq	.LBB517_14
-	b	.LBB517_18
-.LBB517_13:                             // %"$27"
-                                        //   in Loop: Header=BB517_1 Depth=1
+	b.eq	.LBB518_14
+	b	.LBB518_18
+.LBB518_13:                             // %"$27"
+                                        //   in Loop: Header=BB518_1 Depth=1
 	bl	evList
-.LBB517_14:                             // %"$5"
-                                        //   in Loop: Header=BB517_1 Depth=1
+.LBB518_14:                             // %"$5"
+                                        //   in Loop: Header=BB518_1 Depth=1
 	ldp	w23, w8, [x23, #8]
 	bfi	x23, x8, #32, #32
 	tst	x23, #0xf
-	b.eq	.LBB517_1
+	b.eq	.LBB518_1
 // %bb.15:                              // %"$48"
-                                        //   in Loop: Header=BB517_1 Depth=1
+                                        //   in Loop: Header=BB518_1 Depth=1
 	mov	x23, x19
-	b	.LBB517_1
-.LBB517_16:                             // %"$12"
-                                        //   in Loop: Header=BB517_1 Depth=1
+	b	.LBB518_1
+.LBB518_16:                             // %"$12"
+                                        //   in Loop: Header=BB518_1 Depth=1
 	bl	evList
 	cmp	x0, x21
-	b.ne	.LBB517_7
-	b	.LBB517_22
-.LBB517_17:                             // %"$32"
-                                        //   in Loop: Header=BB517_1 Depth=1
+	b.ne	.LBB518_7
+	b	.LBB518_22
+.LBB518_17:                             // %"$32"
+                                        //   in Loop: Header=BB518_1 Depth=1
 	bl	evList
 	cmp	x0, x21
-	b.eq	.LBB517_14
-.LBB517_18:                             // %"$34"
+	b.eq	.LBB518_14
+.LBB518_18:                             // %"$34"
 	str	x0, [x20, :lo12:SymTab+376]
 	ldp	w19, w8, [x24, #8]
 	bfi	x19, x8, #32, #32
-.LBB517_19:                             // %"$36"
+.LBB518_19:                             // %"$36"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w0, w8, [x19]
 	bfi	x0, x8, #32, #32
 	ldp	w19, w8, [x19, #8]
 	bfi	x19, x8, #32, #32
 	tst	x19, #0xf
-	b.ne	.LBB517_29
+	b.ne	.LBB518_29
 // %bb.20:                              // %"$37"
-                                        //   in Loop: Header=BB517_19 Depth=1
+                                        //   in Loop: Header=BB518_19 Depth=1
 	tst	x0, #0xf
-	b.ne	.LBB517_19
+	b.ne	.LBB518_19
 // %bb.21:                              // %"$46"
-                                        //   in Loop: Header=BB517_19 Depth=1
+                                        //   in Loop: Header=BB518_19 Depth=1
 	bl	evList
-	b	.LBB517_19
-.LBB517_22:                             // %"$14"
+	b	.LBB518_19
+.LBB518_22:                             // %"$14"
 	ldp	w19, w8, [x24, #8]
 	bfi	x19, x8, #32, #32
-.LBB517_23:                             // %"$16"
+.LBB518_23:                             // %"$16"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w0, w8, [x19]
 	bfi	x0, x8, #32, #32
 	ldp	w19, w8, [x19, #8]
 	bfi	x19, x8, #32, #32
 	tst	x19, #0xf
-	b.ne	.LBB517_26
+	b.ne	.LBB518_26
 // %bb.24:                              // %"$17"
-                                        //   in Loop: Header=BB517_23 Depth=1
+                                        //   in Loop: Header=BB518_23 Depth=1
 	tst	x0, #0xf
-	b.ne	.LBB517_23
+	b.ne	.LBB518_23
 // %bb.25:                              // %"$26"
-                                        //   in Loop: Header=BB517_23 Depth=1
+                                        //   in Loop: Header=BB518_23 Depth=1
 	bl	evList
-	b	.LBB517_23
-.LBB517_26:                             // %"$19"
+	b	.LBB518_23
+.LBB518_26:                             // %"$19"
 	tst	x0, #0x6
-	b.ne	.LBB517_32
+	b.ne	.LBB518_32
 // %bb.27:                              // %"$21"
-	tbz	w0, #3, .LBB517_31
-.LBB517_28:                             // %"$24"
+	tbz	w0, #3, .LBB518_31
+.LBB518_28:                             // %"$24"
 	ldp	w0, w8, [x0]
 	bfi	x0, x8, #32, #32
-	b	.LBB517_32
-.LBB517_29:                             // %"$39"
+	b	.LBB518_32
+.LBB518_29:                             // %"$39"
 	tst	x0, #0x6
-	b.ne	.LBB517_32
+	b.ne	.LBB518_32
 // %bb.30:                              // %"$41"
-	tbnz	w0, #3, .LBB517_28
-.LBB517_31:                             // %"$23"
+	tbnz	w0, #3, .LBB518_28
+.LBB518_31:                             // %"$23"
 	bl	evList
-.LBB517_32:                             // %"$18"
+.LBB518_32:                             // %"$18"
 	ldp	x20, x19, [sp, #48]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #32]             // 16-byte Folded Reload
 	ldp	x24, x23, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #64                  // 8-byte Folded Reload
 	ret
-.Lfunc_end517:
-	.size	loop2, .Lfunc_end517-loop2
+.Lfunc_end518:
+	.size	loop2, .Lfunc_end518-loop2
 	.cfi_endproc
                                         // -- End function
 	.globl	extra                           // -- Begin function extra
@@ -49971,99 +50004,99 @@ extra:                                  // @extra
 	.cfi_offset w22, -32
 	.cfi_offset w30, -48
 	mov	x19, x1
-.LBB518_1:                              // %"$2"
+.LBB519_1:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w20, w8, [x0]
 	bfi	x20, x8, #32, #32
 	ldrb	w8, [x20]
 	tst	w8, #0xf
-	b.ne	.LBB518_3
+	b.ne	.LBB519_3
 // %bb.2:                               // %"$3"
-                                        //   in Loop: Header=BB518_1 Depth=1
+                                        //   in Loop: Header=BB519_1 Depth=1
 	add	x0, x20, #8                     // =8
-	b	.LBB518_1
-.LBB518_3:
+	b	.LBB519_1
+.LBB519_3:
 	adrp	x21, env+104
 	adrp	x22, ($StkLimit)
 	tst	x20, #0xf
-	b.ne	.LBB518_9
-.LBB518_4:                              // %"$6"
+	b.ne	.LBB519_9
+.LBB519_4:                              // %"$6"
                                         // =>This Inner Loop Header: Depth=1
 	ldr	x8, [x21, :lo12:env+104]
 	cmp	x20, x8
-	b.eq	.LBB518_10
+	b.eq	.LBB519_10
 // %bb.5:                               // %"$9"
-                                        //   in Loop: Header=BB518_4 Depth=1
+                                        //   in Loop: Header=BB519_4 Depth=1
 	mov	x8, sp
 	ldr	x9, [x22, :lo12:($StkLimit)]
 	cmp	x9, x8
-	b.hi	.LBB518_18
+	b.hi	.LBB519_18
 // %bb.6:                               // %"$18"
-                                        //   in Loop: Header=BB518_4 Depth=1
+                                        //   in Loop: Header=BB519_4 Depth=1
 	ldp	w0, w8, [x20]
 	bfi	x0, x8, #32, #32
 	mov	x1, x19
 	bl	extra
 	cmp	x0, #0                          // =0
-	b.gt	.LBB518_17
+	b.gt	.LBB519_17
 // %bb.7:                               // %"$19"
-                                        //   in Loop: Header=BB518_4 Depth=1
-	cbz	x0, .LBB518_13
+                                        //   in Loop: Header=BB519_4 Depth=1
+	cbz	x0, .LBB519_13
 // %bb.8:                               // %"$21"
-                                        //   in Loop: Header=BB518_4 Depth=1
+                                        //   in Loop: Header=BB519_4 Depth=1
 	ldp	w20, w8, [x20, #8]
 	bfi	x20, x8, #32, #32
 	tst	x20, #0xf
-	b.eq	.LBB518_4
-.LBB518_9:
+	b.eq	.LBB519_4
+.LBB519_9:
 	mov	x0, #-1
-	b	.LBB518_17
-.LBB518_10:                             // %"$11.preheader"
+	b	.LBB519_17
+.LBB519_10:                             // %"$11.preheader"
 	adrp	x21, ($Ret)
-.LBB518_11:                             // %"$11"
+.LBB519_11:                             // %"$11"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w20, w8, [x20, #8]
 	bfi	x20, x8, #32, #32
 	tst	x20, #0xf
-	b.ne	.LBB518_16
+	b.ne	.LBB519_16
 // %bb.12:                              // %"$12"
-                                        //   in Loop: Header=BB518_11 Depth=1
+                                        //   in Loop: Header=BB519_11 Depth=1
 	str	x20, [x21, :lo12:($Ret)]
 	ldp	w0, w8, [x20]
 	bfi	x0, x8, #32, #32
 	mov	x1, x19
 	bl	method
-	cbz	x0, .LBB518_11
-	b	.LBB518_17
-.LBB518_13:                             // %"$23.preheader"
+	cbz	x0, .LBB519_11
+	b	.LBB519_17
+.LBB519_13:                             // %"$23.preheader"
 	adrp	x21, ($Ret)
-.LBB518_14:                             // %"$23"
+.LBB519_14:                             // %"$23"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w20, w8, [x20, #8]
 	bfi	x20, x8, #32, #32
 	tst	x20, #0xf
-	b.ne	.LBB518_16
+	b.ne	.LBB519_16
 // %bb.15:                              // %"$24"
-                                        //   in Loop: Header=BB518_14 Depth=1
+                                        //   in Loop: Header=BB519_14 Depth=1
 	str	x20, [x21, :lo12:($Ret)]
 	ldp	w0, w8, [x20]
 	bfi	x0, x8, #32, #32
 	mov	x1, x19
 	bl	method
-	cbz	x0, .LBB518_14
-	b	.LBB518_17
-.LBB518_16:
+	cbz	x0, .LBB519_14
+	b	.LBB519_17
+.LBB519_16:
 	mov	x0, xzr
-.LBB518_17:                             // %"$7"
+.LBB519_17:                             // %"$7"
 	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #48                  // 8-byte Folded Reload
 	ret
-.LBB518_18:                             // %"$17"
+.LBB519_18:                             // %"$17"
 	mov	x0, xzr
 	bl	stkErr
-.Lfunc_end518:
-	.size	extra, .Lfunc_end518-extra
+.Lfunc_end519:
+	.size	extra, .Lfunc_end519-extra
 	.cfi_endproc
                                         // -- End function
 	.globl	method                          // -- Begin function method
@@ -50082,66 +50115,66 @@ method:                                 // @method
 	ldp	w20, w8, [x0]
 	bfi	x20, x8, #32, #32
 	tst	x20, #0xf
-	b.eq	.LBB519_3
-.LBB519_1:                              // %"$9"
+	b.eq	.LBB520_3
+.LBB520_1:                              // %"$9"
 	mov	x0, xzr
-.LBB519_2:                              // %"$14"
+.LBB520_2:                              // %"$14"
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x21, [sp], #32             // 16-byte Folded Reload
 	ret
-.LBB519_3:                              // %"$4.preheader"
+.LBB520_3:                              // %"$4.preheader"
 	mov	x19, x1
-.LBB519_4:                              // %"$4"
+.LBB520_4:                              // %"$4"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w8, w9, [x20]
 	bfi	x8, x9, #32, #32
 	tst	x8, #0xf
-	b.ne	.LBB519_7
+	b.ne	.LBB520_7
 // %bb.5:                               // %"$5"
-                                        //   in Loop: Header=BB519_4 Depth=1
+                                        //   in Loop: Header=BB520_4 Depth=1
 	ldp	w10, w9, [x8]
 	bfi	x10, x9, #32, #32
 	cmp	x19, x10
-	b.eq	.LBB519_11
+	b.eq	.LBB520_11
 // %bb.6:                               // %"$8"
-                                        //   in Loop: Header=BB519_4 Depth=1
+                                        //   in Loop: Header=BB520_4 Depth=1
 	ldp	w20, w8, [x20, #8]
 	bfi	x20, x8, #32, #32
 	tst	x20, #0xf
-	b.eq	.LBB519_4
-	b	.LBB519_1
-.LBB519_7:                              // %"$6"
+	b.eq	.LBB520_4
+	b	.LBB520_1
+.LBB520_7:                              // %"$6"
 	mov	x8, sp
 	adrp	x9, ($StkLimit)
 	ldr	x9, [x9, :lo12:($StkLimit)]
 	cmp	x9, x8
-	b.hi	.LBB519_12
+	b.hi	.LBB520_12
 // %bb.8:
 	adrp	x21, ($Ret)
-.LBB519_9:                              // %"$13"
+.LBB520_9:                              // %"$13"
                                         // =>This Inner Loop Header: Depth=1
 	str	x20, [x21, :lo12:($Ret)]
 	ldp	w0, w8, [x20]
 	bfi	x0, x8, #32, #32
 	mov	x1, x19
 	bl	method
-	cbnz	x0, .LBB519_2
+	cbnz	x0, .LBB520_2
 // %bb.10:                              // %"$15"
-                                        //   in Loop: Header=BB519_9 Depth=1
+                                        //   in Loop: Header=BB520_9 Depth=1
 	ldp	w20, w8, [x20, #8]
 	bfi	x20, x8, #32, #32
 	tst	x20, #0xf
-	b.eq	.LBB519_9
-	b	.LBB519_1
-.LBB519_11:                             // %"$7"
+	b.eq	.LBB520_9
+	b	.LBB520_1
+.LBB520_11:                             // %"$7"
 	ldp	w0, w9, [x8, #8]
 	bfi	x0, x9, #32, #32
-	b	.LBB519_2
-.LBB519_12:                             // %"$11"
+	b	.LBB520_2
+.LBB520_12:                             // %"$11"
 	mov	x0, xzr
 	bl	stkErr
-.Lfunc_end519:
-	.size	method, .Lfunc_end519-method
+.Lfunc_end520:
+	.size	method, .Lfunc_end520-method
 	.cfi_endproc
                                         // -- End function
 	.globl	isLife                          // -- Begin function isLife
@@ -50164,42 +50197,42 @@ isLife:                                 // @isLife
 	bfi	x9, x8, #32, #32
 	and	x19, x9, #0xfffffffffffffff7
 	tst	x19, #0x6
-	b.ne	.LBB520_2
-.LBB520_1:                              // %"$3"
+	b.ne	.LBB521_2
+.LBB521_1:                              // %"$3"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w19, w8, [x19, #8]
 	bfi	x19, x8, #32, #32
 	tst	x19, #0x6
-	b.eq	.LBB520_1
-.LBB520_2:                              // %"$4"
+	b.eq	.LBB521_1
+.LBB521_2:                              // %"$4"
 	mov	x0, x19
 	bl	objFile
 	mov	w20, w0
 	mov	x0, x19
 	bl	objId
 	lsl	x21, x0, #6
-	cbz	x21, .LBB520_10
+	cbz	x21, .LBB521_10
 // %bb.3:                               // %"$5"
 	adrp	x8, ($DBs)
 	ldr	w8, [x8, :lo12:($DBs)]
 	cmp	w8, w20
-	b.le	.LBB520_7
+	b.le	.LBB521_7
 // %bb.4:                               // %"$9"
 	adds	x8, x19, x19
-	b.hs	.LBB520_6
+	b.hs	.LBB521_6
 // %bb.5:                               // %"$11"
 	cmn	x8, x8
-	b.lo	.LBB520_8
-.LBB520_6:                              // %"$10"
+	b.lo	.LBB521_8
+.LBB521_6:                              // %"$10"
 	mov	w0, #1
-	b	.LBB520_11
-.LBB520_7:                              // %"$8"
+	b	.LBB521_11
+.LBB521_7:                              // %"$8"
 	adrp	x8, SymTab+472
 	ldrb	w8, [x8, :lo12:SymTab+472]
 	tst	w8, #0xf
 	cset	w0, eq
-	b	.LBB520_11
-.LBB520_8:                              // %"$13"
+	b	.LBB521_11
+.LBB521_8:                              // %"$13"
 	adrp	x8, ($DbFiles)
 	ldr	x8, [x8, :lo12:($DbFiles)]
 	mov	w9, #42
@@ -50216,7 +50249,7 @@ isLife:                                 // @isLife
 	mov	x0, x19
 	bl	getAdr
 	cmp	x0, x21
-	b.ls	.LBB520_10
+	b.ls	.LBB521_10
 // %bb.9:                               // %"$14"
 	ldrsw	x8, [x20, #8]
 	lsl	x0, x21, x8
@@ -50227,17 +50260,17 @@ isLife:                                 // @isLife
 	and	w8, w8, #0x3f
 	cmp	w8, #1                          // =1
 	cset	w0, eq
-	b	.LBB520_11
-.LBB520_10:                             // %"$6"
+	b	.LBB521_11
+.LBB521_10:                             // %"$6"
 	mov	w0, wzr
-.LBB520_11:                             // %"$10"
+.LBB521_11:                             // %"$10"
 	mov	sp, x29
 	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
 	ldr	x21, [sp, #16]                  // 8-byte Folded Reload
 	ldp	x29, x30, [sp], #48             // 16-byte Folded Reload
 	ret
-.Lfunc_end520:
-	.size	isLife, .Lfunc_end520-isLife
+.Lfunc_end521:
+	.size	isLife, .Lfunc_end521-isLife
 	.cfi_endproc
                                         // -- End function
 	.globl	evMethod                        // -- Begin function evMethod
@@ -50286,10 +50319,10 @@ evMethod:                               // @evMethod
 	sub	x8, x29, #64                    // =64
 	adrp	x27, SymTab+8
 	add	x27, x27, :lo12:SymTab+8
-.LBB521_1:                              // %"$2.sink.split"
+.LBB522_1:                              // %"$2.sink.split"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB521_2 Depth 2
-                                        //       Child Loop BB521_8 Depth 3
+                                        //     Child Loop BB522_2 Depth 2
+                                        //       Child Loop BB522_8 Depth 3
 	lsr	x9, x0, #32
 	lsr	x10, x1, #32
 	stp	w0, w9, [x8]
@@ -50298,68 +50331,68 @@ evMethod:                               // @evMethod
 	stp	w26, w9, [x8, #16]
 	mov	x26, x8
 	str	x8, [x24, :lo12:env+8]
-.LBB521_2:                              // %"$2"
-                                        //   Parent Loop BB521_1 Depth=1
+.LBB522_2:                              // %"$2"
+                                        //   Parent Loop BB522_1 Depth=1
                                         // =>  This Loop Header: Depth=2
-                                        //       Child Loop BB521_8 Depth 3
+                                        //       Child Loop BB522_8 Depth 3
 	tst	x23, #0xf
-	b.ne	.LBB521_21
+	b.ne	.LBB522_21
 // %bb.3:                               // %"$3"
-                                        //   in Loop: Header=BB521_2 Depth=2
+                                        //   in Loop: Header=BB522_2 Depth=2
 	ldp	w0, w8, [x22]
 	bfi	x0, x8, #32, #32
 	ldp	w22, w8, [x22, #8]
 	bfi	x22, x8, #32, #32
 	tst	x0, #0x6
-	b.ne	.LBB521_7
+	b.ne	.LBB522_7
 // %bb.4:                               // %"$6"
-                                        //   in Loop: Header=BB521_2 Depth=2
-	tbz	w0, #3, .LBB521_6
+                                        //   in Loop: Header=BB522_2 Depth=2
+	tbz	w0, #3, .LBB522_6
 // %bb.5:                               // %"$9"
-                                        //   in Loop: Header=BB521_2 Depth=2
+                                        //   in Loop: Header=BB522_2 Depth=2
 	ldp	w0, w8, [x0]
 	bfi	x0, x8, #32, #32
-	b	.LBB521_7
-.LBB521_6:                              // %"$8"
-                                        //   in Loop: Header=BB521_2 Depth=2
+	b	.LBB522_7
+.LBB522_6:                              // %"$8"
+                                        //   in Loop: Header=BB522_2 Depth=2
 	bl	evList
-.LBB521_7:                              // %"$5"
-                                        //   in Loop: Header=BB521_2 Depth=2
+.LBB522_7:                              // %"$5"
+                                        //   in Loop: Header=BB522_2 Depth=2
 	ldp	w1, w8, [x23]
 	bfi	x1, x8, #32, #32
 	ldp	w23, w8, [x23, #8]
 	bfi	x23, x8, #32, #32
 	tst	x1, #0xf
-	b.ne	.LBB521_18
-.LBB521_8:                              // %"$19"
-                                        //   Parent Loop BB521_1 Depth=1
-                                        //     Parent Loop BB521_2 Depth=2
+	b.ne	.LBB522_18
+.LBB522_8:                              // %"$19"
+                                        //   Parent Loop BB522_1 Depth=1
+                                        //     Parent Loop BB522_2 Depth=2
                                         // =>    This Inner Loop Header: Depth=3
 	tst	x0, #0xf
-	b.eq	.LBB521_10
-// %bb.9:                               //   in Loop: Header=BB521_8 Depth=3
+	b.eq	.LBB522_10
+// %bb.9:                               //   in Loop: Header=BB522_8 Depth=3
 	mov	x10, x27
-	b	.LBB521_11
-.LBB521_10:                             // %"$20"
-                                        //   in Loop: Header=BB521_8 Depth=3
+	b	.LBB522_11
+.LBB522_10:                             // %"$20"
+                                        //   in Loop: Header=BB522_8 Depth=3
 	ldp	w10, w8, [x0]
 	bfi	x10, x8, #32, #32
 	ldp	w0, w8, [x0, #8]
 	bfi	x0, x8, #32, #32
-.LBB521_11:                             // %"$22"
-                                        //   in Loop: Header=BB521_8 Depth=3
+.LBB522_11:                             // %"$22"
+                                        //   in Loop: Header=BB522_8 Depth=3
 	ldp	w8, w9, [x1]
 	bfi	x8, x9, #32, #32
 	tst	x8, #0x6
-	b.ne	.LBB521_77
+	b.ne	.LBB522_77
 // %bb.12:                              // %"$24"
-                                        //   in Loop: Header=BB521_8 Depth=3
+                                        //   in Loop: Header=BB522_8 Depth=3
 	add	x9, x27, #208                   // =208
 	cmp	x9, x8
 	ccmp	x8, x27, #0, hs
-	b.hs	.LBB521_78
+	b.hs	.LBB522_78
 // %bb.13:                              // %"$28"
-                                        //   in Loop: Header=BB521_8 Depth=3
+                                        //   in Loop: Header=BB522_8 Depth=3
 	ldp	w1, w9, [x1, #8]
 	bfi	x1, x9, #32, #32
 	mov	x11, sp
@@ -50374,54 +50407,54 @@ evMethod:                               // @evMethod
 	tst	x1, #0xf
 	mov	x26, x9
 	str	x9, [x24, :lo12:env+8]
-	b.eq	.LBB521_8
+	b.eq	.LBB522_8
 // %bb.14:                              // %"$30"
-                                        //   in Loop: Header=BB521_2 Depth=2
+                                        //   in Loop: Header=BB522_2 Depth=2
 	cmp	x1, x27
 	mov	x26, x9
-	b.eq	.LBB521_2
+	b.eq	.LBB522_2
 // %bb.15:                              // %"$31"
-                                        //   in Loop: Header=BB521_1 Depth=1
+                                        //   in Loop: Header=BB522_1 Depth=1
 	tst	x1, #0x6
-	b.ne	.LBB521_79
+	b.ne	.LBB522_79
 // %bb.16:                              // %"$34"
-                                        //   in Loop: Header=BB521_1 Depth=1
+                                        //   in Loop: Header=BB522_1 Depth=1
 	add	x8, x27, #208                   // =208
 	cmp	x8, x1
 	ccmp	x1, x27, #0, hs
-	b.hs	.LBB521_80
+	b.hs	.LBB522_80
 // %bb.17:                              // %"$38"
-                                        //   in Loop: Header=BB521_1 Depth=1
+                                        //   in Loop: Header=BB522_1 Depth=1
 	sub	x8, sp, #32                     // =32
 	mov	sp, x8
 	mov	x26, x9
-	b	.LBB521_1
-.LBB521_18:                             // %"$10"
-                                        //   in Loop: Header=BB521_1 Depth=1
+	b	.LBB522_1
+.LBB522_18:                             // %"$10"
+                                        //   in Loop: Header=BB522_1 Depth=1
 	tst	x1, #0x6
-	b.ne	.LBB521_79
+	b.ne	.LBB522_79
 // %bb.19:                              // %"$14"
-                                        //   in Loop: Header=BB521_1 Depth=1
+                                        //   in Loop: Header=BB522_1 Depth=1
 	add	x8, x27, #208                   // =208
 	cmp	x8, x1
 	ccmp	x1, x27, #0, hs
-	b.hs	.LBB521_80
+	b.hs	.LBB522_80
 // %bb.20:                              // %"$18"
-                                        //   in Loop: Header=BB521_1 Depth=1
+                                        //   in Loop: Header=BB522_1 Depth=1
 	sub	x8, sp, #32                     // =32
 	mov	sp, x8
-	b	.LBB521_1
-.LBB521_21:                             // %"$4"
+	b	.LBB522_1
+.LBB522_21:                             // %"$4"
 	cmp	x23, x25
-	b.ne	.LBB521_26
+	b.ne	.LBB522_26
 // %bb.22:                              // %"$39"
 	tst	x22, #0xf
-	b.eq	.LBB521_46
+	b.eq	.LBB522_46
 // %bb.23:                              // %"$43"
 	adrp	x8, env+96
 	ldr	x22, [x8, :lo12:env+96]
 	str	x27, [x8, :lo12:env+96]
-.LBB521_24:                             // %"$72"
+.LBB522_24:                             // %"$72"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w9, w8, [x26, #8]
 	bfi	x9, x8, #32, #32
@@ -50430,23 +50463,23 @@ evMethod:                               // @evMethod
 	stp	w12, w11, [x9]
 	stp	w8, w10, [x26]
 	cmp	x25, x9
-	b.eq	.LBB521_39
+	b.eq	.LBB522_39
 // %bb.25:                              // %"$73"
-                                        //   in Loop: Header=BB521_24 Depth=1
+                                        //   in Loop: Header=BB522_24 Depth=1
 	ldp	w26, w8, [x26, #16]
 	bfi	x26, x8, #32, #32
-	b	.LBB521_24
-.LBB521_26:                             // %"$40"
+	b	.LBB522_24
+.LBB522_26:                             // %"$40"
 	cmp	x23, x27
-	b.eq	.LBB521_31
+	b.eq	.LBB522_31
 // %bb.27:                              // %"$86"
 	tst	x23, #0x6
-	b.ne	.LBB521_81
+	b.ne	.LBB522_81
 // %bb.28:                              // %"$89"
 	add	x8, x27, #208                   // =208
 	cmp	x8, x23
 	ccmp	x23, x27, #0, hs
-	b.hs	.LBB521_82
+	b.hs	.LBB522_82
 // %bb.29:                              // %"$93"
 	ldp	w8, w9, [x23]
 	mov	x10, sp
@@ -50460,12 +50493,12 @@ evMethod:                               // @evMethod
 	str	x11, [x24, :lo12:env+8]
 	lsr	x8, x22, #32
 	stp	w22, w8, [x23]
-	b	.LBB521_31
-.LBB521_30:                             // %"$95"
-                                        //   in Loop: Header=BB521_31 Depth=1
+	b	.LBB522_31
+.LBB522_30:                             // %"$95"
+                                        //   in Loop: Header=BB522_31 Depth=1
 	ldp	w26, w8, [x26, #16]
 	bfi	x26, x8, #32, #32
-.LBB521_31:                             // %"$94"
+.LBB522_31:                             // %"$94"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w9, w8, [x26, #8]
 	bfi	x9, x8, #32, #32
@@ -50474,7 +50507,7 @@ evMethod:                               // @evMethod
 	stp	w12, w11, [x9]
 	stp	w8, w10, [x26]
 	cmp	x25, x9
-	b.ne	.LBB521_30
+	b.ne	.LBB522_30
 // %bb.32:                              // %"$96"
 	adrp	x26, env+104
 	add	x26, x26, :lo12:env+104
@@ -50482,92 +50515,92 @@ evMethod:                               // @evMethod
 	stp	x21, x28, [x26]
 	ldp	w19, w8, [x19, #8]
 	bfi	x19, x8, #32, #32
-.LBB521_33:                             // %"$97"
+.LBB522_33:                             // %"$97"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w0, w8, [x19]
 	bfi	x0, x8, #32, #32
 	ldp	w19, w8, [x19, #8]
 	bfi	x19, x8, #32, #32
 	tst	x19, #0xf
-	b.ne	.LBB521_36
+	b.ne	.LBB522_36
 // %bb.34:                              // %"$98"
-                                        //   in Loop: Header=BB521_33 Depth=1
+                                        //   in Loop: Header=BB522_33 Depth=1
 	tst	x0, #0xf
-	b.ne	.LBB521_33
+	b.ne	.LBB522_33
 // %bb.35:                              // %"$107"
-                                        //   in Loop: Header=BB521_33 Depth=1
+                                        //   in Loop: Header=BB522_33 Depth=1
 	bl	evList
-	b	.LBB521_33
-.LBB521_36:                             // %"$100"
+	b	.LBB522_33
+.LBB522_36:                             // %"$100"
 	tst	x0, #0x6
-	b.ne	.LBB521_52
+	b.ne	.LBB522_52
 // %bb.37:                              // %"$102"
-	tbz	w0, #3, .LBB521_49
+	tbz	w0, #3, .LBB522_49
 // %bb.38:                              // %"$105"
 	ldp	w0, w8, [x0]
 	bfi	x0, x8, #32, #32
-	b	.LBB521_52
-.LBB521_39:                             // %"$74"
+	b	.LBB522_52
+.LBB522_39:                             // %"$74"
 	adrp	x8, env+104
 	add	x8, x8, :lo12:env+104
 	ldp	x20, x23, [x8]
 	stp	x21, x28, [x8]
 	ldp	w19, w8, [x19, #8]
 	bfi	x19, x8, #32, #32
-.LBB521_40:                             // %"$75"
+.LBB522_40:                             // %"$75"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w0, w8, [x19]
 	bfi	x0, x8, #32, #32
 	ldp	w19, w8, [x19, #8]
 	bfi	x19, x8, #32, #32
 	tst	x19, #0xf
-	b.ne	.LBB521_43
+	b.ne	.LBB522_43
 // %bb.41:                              // %"$76"
-                                        //   in Loop: Header=BB521_40 Depth=1
+                                        //   in Loop: Header=BB522_40 Depth=1
 	tst	x0, #0xf
-	b.ne	.LBB521_40
+	b.ne	.LBB522_40
 // %bb.42:                              // %"$85"
-                                        //   in Loop: Header=BB521_40 Depth=1
+                                        //   in Loop: Header=BB522_40 Depth=1
 	bl	evList
-	b	.LBB521_40
-.LBB521_43:                             // %"$78"
+	b	.LBB522_40
+.LBB522_43:                             // %"$78"
 	tst	x0, #0x6
-	b.ne	.LBB521_51
+	b.ne	.LBB522_51
 // %bb.44:                              // %"$80"
-	tbz	w0, #3, .LBB521_50
+	tbz	w0, #3, .LBB522_50
 // %bb.45:                              // %"$83"
 	ldp	w0, w8, [x0]
 	bfi	x0, x8, #32, #32
-	b	.LBB521_51
-.LBB521_46:                             // %"$42"
+	b	.LBB522_51
+.LBB522_46:                             // %"$42"
 	ldp	w0, w8, [x22]
 	bfi	x0, x8, #32, #32
 	tst	x0, #0x6
 	stur	x28, [x29, #-72]                // 8-byte Folded Spill
-	b.ne	.LBB521_58
+	b.ne	.LBB522_58
 // %bb.47:                              // %"$46"
-	tbz	w0, #3, .LBB521_57
+	tbz	w0, #3, .LBB522_57
 // %bb.48:                              // %"$49"
 	ldp	w0, w8, [x0]
 	bfi	x0, x8, #32, #32
-	b	.LBB521_58
-.LBB521_49:                             // %"$104"
+	b	.LBB522_58
+.LBB522_49:                             // %"$104"
 	bl	evList
-	b	.LBB521_52
-.LBB521_50:                             // %"$82"
+	b	.LBB522_52
+.LBB522_50:                             // %"$82"
 	bl	evList
-.LBB521_51:                             // %"$77"
+.LBB522_51:                             // %"$77"
 	adrp	x26, env+96
 	add	x26, x26, :lo12:env+96
 	str	x23, [x26, #16]
-.LBB521_52:                             // %"$99"
+.LBB522_52:                             // %"$99"
 	str	x20, [x26, #8]
-.LBB521_53:                             // %"$41"
+.LBB522_53:                             // %"$41"
 	lsr	x8, x22, #32
 	stp	w22, w8, [x26]
 	adrp	x8, env+8
 	add	x8, x8, :lo12:env+8
-.LBB521_54:                             // %"$108"
+.LBB522_54:                             // %"$108"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w8, w9, [x8]
 	bfi	x8, x9, #32, #32
@@ -50576,12 +50609,12 @@ evMethod:                               // @evMethod
 	ldp	w9, w11, [x8]
 	stp	w9, w11, [x10]
 	cmp	x25, x10
-	b.eq	.LBB521_56
+	b.eq	.LBB522_56
 // %bb.55:                              // %"$109"
-                                        //   in Loop: Header=BB521_54 Depth=1
+                                        //   in Loop: Header=BB522_54 Depth=1
 	add	x8, x8, #16                     // =16
-	b	.LBB521_54
-.LBB521_56:                             // %"$110"
+	b	.LBB522_54
+.LBB522_56:                             // %"$110"
 	ldp	w8, w9, [x8, #16]
 	bfi	x8, x9, #32, #32
 	str	x8, [x24, :lo12:env+8]
@@ -50593,23 +50626,23 @@ evMethod:                               // @evMethod
 	ldp	x28, x27, [sp, #16]             // 16-byte Folded Reload
 	ldp	x29, x30, [sp], #96             // 16-byte Folded Reload
 	ret
-.LBB521_57:                             // %"$48"
+.LBB522_57:                             // %"$48"
 	bl	evList
-.LBB521_58:                             // %"$45"
+.LBB522_58:                             // %"$45"
 	mov	x8, sp
 	sub	x23, x8, #32                    // =32
 	mov	sp, x23
 	sub	x8, x8, #24                     // =24
 	adrp	x20, env
 	mov	x28, x23
-	b	.LBB521_61
-.LBB521_59:                             // %"$56"
-                                        //   in Loop: Header=BB521_61 Depth=1
+	b	.LBB522_61
+.LBB522_59:                             // %"$56"
+                                        //   in Loop: Header=BB522_61 Depth=1
 	mov	x0, x8
 	bl	evList
 	mov	x8, x0
-.LBB521_60:                             // %"$53"
-                                        //   in Loop: Header=BB521_61 Depth=1
+.LBB522_60:                             // %"$53"
+                                        //   in Loop: Header=BB522_61 Depth=1
 	mov	x9, sp
 	sub	x0, x9, #32                     // =32
 	mov	sp, x0
@@ -50617,7 +50650,7 @@ evMethod:                               // @evMethod
 	stp	w8, w10, [x9, #-24]
 	mov	x8, x28
 	mov	x28, x0
-.LBB521_61:                             // %"$50"
+.LBB522_61:                             // %"$50"
                                         // =>This Inner Loop Header: Depth=1
 	lsr	x9, x0, #32
 	stp	w0, w9, [x8]
@@ -50629,29 +50662,29 @@ evMethod:                               // @evMethod
 	ldp	w22, w8, [x22, #8]
 	bfi	x22, x8, #32, #32
 	tst	x22, #0xf
-	b.ne	.LBB521_65
+	b.ne	.LBB522_65
 // %bb.62:                              // %"$51"
-                                        //   in Loop: Header=BB521_61 Depth=1
+                                        //   in Loop: Header=BB522_61 Depth=1
 	ldp	w8, w9, [x22]
 	bfi	x8, x9, #32, #32
 	tst	x8, #0x6
-	b.ne	.LBB521_60
+	b.ne	.LBB522_60
 // %bb.63:                              // %"$54"
-                                        //   in Loop: Header=BB521_61 Depth=1
-	tbz	w8, #3, .LBB521_59
+                                        //   in Loop: Header=BB522_61 Depth=1
+	tbz	w8, #3, .LBB522_59
 // %bb.64:                              // %"$57"
-                                        //   in Loop: Header=BB521_61 Depth=1
+                                        //   in Loop: Header=BB522_61 Depth=1
 	ldp	w8, w9, [x8]
 	bfi	x8, x9, #32, #32
-	b	.LBB521_60
-.LBB521_65:                             // %"$52"
+	b	.LBB522_60
+.LBB522_65:                             // %"$52"
 	adrp	x8, env+96
 	ldr	x22, [x8, :lo12:env+96]
 	lsr	x9, x27, #32
 	stp	w27, w9, [x28]
 	str	x23, [x8, :lo12:env+96]
 	ldur	x13, [x29, #-72]                // 8-byte Folded Reload
-.LBB521_66:                             // %"$58"
+.LBB522_66:                             // %"$58"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w9, w8, [x26, #8]
 	bfi	x9, x8, #32, #32
@@ -50660,78 +50693,78 @@ evMethod:                               // @evMethod
 	stp	w12, w11, [x9]
 	stp	w8, w10, [x26]
 	cmp	x25, x9
-	b.eq	.LBB521_68
+	b.eq	.LBB522_68
 // %bb.67:                              // %"$59"
-                                        //   in Loop: Header=BB521_66 Depth=1
+                                        //   in Loop: Header=BB522_66 Depth=1
 	ldp	w26, w8, [x26, #16]
 	bfi	x26, x8, #32, #32
-	b	.LBB521_66
-.LBB521_68:                             // %"$60"
+	b	.LBB522_66
+.LBB522_68:                             // %"$60"
 	adrp	x8, env+104
 	add	x8, x8, :lo12:env+104
 	ldp	x20, x27, [x8]
 	stp	x21, x13, [x8]
 	ldp	w19, w8, [x19, #8]
 	bfi	x19, x8, #32, #32
-.LBB521_69:                             // %"$61"
+.LBB522_69:                             // %"$61"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w0, w8, [x19]
 	bfi	x0, x8, #32, #32
 	ldp	w19, w8, [x19, #8]
 	bfi	x19, x8, #32, #32
 	tst	x19, #0xf
-	b.ne	.LBB521_72
+	b.ne	.LBB522_72
 // %bb.70:                              // %"$62"
-                                        //   in Loop: Header=BB521_69 Depth=1
+                                        //   in Loop: Header=BB522_69 Depth=1
 	tst	x0, #0xf
-	b.ne	.LBB521_69
+	b.ne	.LBB522_69
 // %bb.71:                              // %"$71"
-                                        //   in Loop: Header=BB521_69 Depth=1
+                                        //   in Loop: Header=BB522_69 Depth=1
 	bl	evList
-	b	.LBB521_69
-.LBB521_72:                             // %"$64"
+	b	.LBB522_69
+.LBB522_72:                             // %"$64"
 	tst	x0, #0x6
-	b.ne	.LBB521_76
+	b.ne	.LBB522_76
 // %bb.73:                              // %"$66"
-	tbz	w0, #3, .LBB521_75
+	tbz	w0, #3, .LBB522_75
 // %bb.74:                              // %"$69"
 	ldp	w0, w8, [x0]
 	bfi	x0, x8, #32, #32
-	b	.LBB521_76
-.LBB521_75:                             // %"$68"
+	b	.LBB522_76
+.LBB522_75:                             // %"$68"
 	bl	evList
-.LBB521_76:                             // %"$63"
+.LBB522_76:                             // %"$63"
 	adrp	x26, env
 	add	x26, x26, :lo12:env
 	stp	x20, x27, [x26, #104]
 	str	x22, [x26, #96]
 	ldp	w22, w8, [x23, #16]
 	bfi	x22, x8, #32, #32
-	b	.LBB521_53
-.LBB521_77:                             // %"$23"
+	b	.LBB522_53
+.LBB522_77:                             // %"$23"
 	mov	x0, x19
 	mov	x1, x8
 	bl	varErr
-.LBB521_78:                             // %"$27"
+.LBB522_78:                             // %"$27"
 	mov	x0, x19
 	mov	x1, x8
 	bl	protErr
-.LBB521_79:                             // %"$13"
+.LBB522_79:                             // %"$13"
 	mov	x0, x19
 	bl	varErr
-.LBB521_80:                             // %"$17"
+.LBB522_80:                             // %"$17"
 	mov	x0, x19
 	bl	protErr
-.LBB521_81:                             // %"$88"
+.LBB522_81:                             // %"$88"
 	mov	x0, x19
 	mov	x1, x23
 	bl	varErr
-.LBB521_82:                             // %"$92"
+.LBB522_82:                             // %"$92"
 	mov	x0, x19
 	mov	x1, x23
 	bl	protErr
-.Lfunc_end521:
-	.size	evMethod, .Lfunc_end521-evMethod
+.Lfunc_end522:
+	.size	evMethod, .Lfunc_end522-evMethod
 	.cfi_endproc
                                         // -- End function
 	.globl	symErr                          // -- Begin function symErr
@@ -50747,8 +50780,8 @@ symErr:                                 // @symErr
 	add	x2, x2, :lo12:.L$114
 	mov	x3, xzr
 	bl	err
-.Lfunc_end522:
-	.size	symErr, .Lfunc_end522-symErr
+.Lfunc_end523:
+	.size	symErr, .Lfunc_end523-symErr
 	.cfi_endproc
                                         // -- End function
 	.globl	isa                             // -- Begin function isa
@@ -50768,69 +50801,69 @@ isa:                                    // @isa
 	ldp	w20, w8, [x1]
 	bfi	x20, x8, #32, #32
 	mov	x21, x20
-.LBB523_1:                              // %"$2"
+.LBB524_1:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	tst	x21, #0xf
-	b.ne	.LBB523_4
+	b.ne	.LBB524_4
 // %bb.2:                               // %"$3"
-                                        //   in Loop: Header=BB523_1 Depth=1
+                                        //   in Loop: Header=BB524_1 Depth=1
 	ldrb	w8, [x21]
 	tst	w8, #0xf
-	b.ne	.LBB523_6
+	b.ne	.LBB524_6
 // %bb.3:                               // %"$6"
-                                        //   in Loop: Header=BB523_1 Depth=1
+                                        //   in Loop: Header=BB524_1 Depth=1
 	ldp	w21, w8, [x21, #8]
 	bfi	x21, x8, #32, #32
 	cmp	x20, x21
-	b.ne	.LBB523_1
-.LBB523_4:
+	b.ne	.LBB524_1
+.LBB524_4:
 	mov	w0, wzr
-.LBB523_5:                              // %"$4"
+.LBB524_5:                              // %"$4"
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x21, [sp], #32             // 16-byte Folded Reload
 	ret
-.LBB523_6:                              // %"$7"
+.LBB524_6:                              // %"$7"
 	mov	x8, sp
 	adrp	x9, ($StkLimit)
 	ldr	x9, [x9, :lo12:($StkLimit)]
 	cmp	x9, x8
-	b.hi	.LBB523_13
-.LBB523_7:                              // %"$10"
+	b.hi	.LBB524_13
+.LBB524_7:                              // %"$10"
                                         // =>This Inner Loop Header: Depth=1
 	ldr	w1, [x21]
 	eor	w8, w1, #0x8
 	tst	x8, #0xe
-	b.ne	.LBB523_4
+	b.ne	.LBB524_4
 // %bb.8:                               // %"$11"
-                                        //   in Loop: Header=BB523_7 Depth=1
+                                        //   in Loop: Header=BB524_7 Depth=1
 	ldr	w8, [x21, #4]
 	bfi	x1, x8, #32, #32
 	cmp	x1, x19
-	b.eq	.LBB523_12
+	b.eq	.LBB524_12
 // %bb.9:                               // %"$14"
-                                        //   in Loop: Header=BB523_7 Depth=1
+                                        //   in Loop: Header=BB524_7 Depth=1
 	mov	x0, x19
 	bl	isa
-	tbnz	w0, #0, .LBB523_12
+	tbnz	w0, #0, .LBB524_12
 // %bb.10:                              // %"$16"
-                                        //   in Loop: Header=BB523_7 Depth=1
+                                        //   in Loop: Header=BB524_7 Depth=1
 	ldp	w21, w8, [x21, #8]
 	bfi	x21, x8, #32, #32
 	tst	x21, #0xf
-	b.ne	.LBB523_4
+	b.ne	.LBB524_4
 // %bb.11:                              // %"$18"
-                                        //   in Loop: Header=BB523_7 Depth=1
+                                        //   in Loop: Header=BB524_7 Depth=1
 	cmp	x20, x21
-	b.ne	.LBB523_7
-	b	.LBB523_4
-.LBB523_12:
+	b.ne	.LBB524_7
+	b	.LBB524_4
+.LBB524_12:
 	mov	w0, #1
-	b	.LBB523_5
-.LBB523_13:                             // %"$8"
+	b	.LBB524_5
+.LBB524_13:                             // %"$8"
 	mov	x0, xzr
 	bl	stkErr
-.Lfunc_end523:
-	.size	isa, .Lfunc_end523-isa
+.Lfunc_end524:
+	.size	isa, .Lfunc_end524-isa
 	.cfi_endproc
                                         // -- End function
 	.globl	newId                           // -- Begin function newId
@@ -50850,7 +50883,7 @@ newId:                                  // @newId
 	adrp	x9, ($DBs)
 	ldr	w9, [x9, :lo12:($DBs)]
 	cmp	w8, w9
-	b.ge	.LBB524_6
+	b.ge	.LBB525_6
 // %bb.1:                               // %"$3"
 	adrp	x9, ($DbFiles)
 	mov	w10, #42
@@ -50866,10 +50899,10 @@ newId:                                  // @newId
 	bl	wrLockDb
 	adrp	x21, ($DbJnl)
 	ldr	x8, [x21, :lo12:($DbJnl)]
-	cbz	x8, .LBB524_3
+	cbz	x8, .LBB525_3
 // %bb.2:                               // %"$4"
 	bl	lockJnl
-.LBB524_3:                              // %"$5"
+.LBB525_3:                              // %"$5"
 	ldr	x8, [x19, :lo12:($DbFile)]
 	ldr	w19, [x8, #4]
 	bl	newBlock
@@ -50878,10 +50911,10 @@ newId:                                  // @newId
 	bl	extNm
 	mov	x19, x0
 	ldr	x8, [x21, :lo12:($DbJnl)]
-	cbz	x8, .LBB524_5
+	cbz	x8, .LBB525_5
 // %bb.4:                               // %"$6"
 	bl	unLockJnl
-.LBB524_5:                              // %"$7"
+.LBB525_5:                              // %"$7"
 	mov	w0, #1
 	bl	unLockDb
 	ldr	w8, [x20, :lo12:env+136]
@@ -50891,10 +50924,10 @@ newId:                                  // @newId
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x21, [sp], #32             // 16-byte Folded Reload
 	ret
-.LBB524_6:                              // %"$2"
+.LBB525_6:                              // %"$2"
 	bl	dbfErr
-.Lfunc_end524:
-	.size	newId, .Lfunc_end524-newId
+.Lfunc_end525:
+	.size	newId, .Lfunc_end525-newId
 	.cfi_endproc
                                         // -- End function
 	.globl	put                             // -- Begin function put
@@ -50916,44 +50949,44 @@ put:                                    // @put
 	ldp	w20, w8, [x0, #-8]
 	bfi	x20, x8, #32, #32
 	tst	x20, #0x6
-	b.eq	.LBB525_6
-.LBB525_1:                              // %"$3"
+	b.eq	.LBB526_6
+.LBB526_1:                              // %"$3"
 	adrp	x8, SymTab+8
 	add	x8, x8, :lo12:SymTab+8
 	cmp	x2, x8
-	b.eq	.LBB525_12
+	b.eq	.LBB526_12
 // %bb.2:                               // %"$54"
 	adrp	x8, SymTab+216
 	add	x8, x8, :lo12:SymTab+216
 	cmp	x2, x8
-	b.eq	.LBB525_4
+	b.eq	.LBB526_4
 // %bb.3:                               // %"$57"
 	mov	x0, x2
 	bl	cons
 	mov	x1, x0
-.LBB525_4:                              // %"$58"
-	tbz	w20, #3, .LBB525_10
+.LBB526_4:                              // %"$58"
+	tbz	w20, #3, .LBB526_10
 // %bb.5:                               // %"$59"
 	and	x8, x20, #0xfffffffffffffff7
 	mov	x0, x1
 	mov	x1, x8
 	bl	cons
 	orr	x0, x0, #0x8
-	b	.LBB525_11
-.LBB525_6:                              // %"$2"
+	b	.LBB526_11
+.LBB526_6:                              // %"$2"
 	and	x21, x20, #0xfffffffffffffff7
 	ldp	w8, w9, [x21]
 	bfi	x8, x9, #32, #32
 	tst	x8, #0xf
-	b.eq	.LBB525_13
+	b.eq	.LBB526_13
 // %bb.7:                               // %"$4"
 	cmp	x1, x8
-	b.ne	.LBB525_18
+	b.ne	.LBB526_18
 // %bb.8:                               // %"$7"
 	adrp	x8, SymTab+8
 	add	x8, x8, :lo12:SymTab+8
 	cmp	x2, x8
-	b.ne	.LBB525_24
+	b.ne	.LBB526_24
 // %bb.9:                               // %"$11"
 	ldp	w9, w8, [x21, #8]
 	bfi	x9, x8, #32, #32
@@ -50961,108 +50994,108 @@ put:                                    // @put
 	orr	x8, x9, #0x8
 	tst	w20, #0x8
 	csel	x0, x9, x8, eq
-	b	.LBB525_26
-.LBB525_10:                             // %"$60"
+	b	.LBB526_26
+.LBB526_10:                             // %"$60"
 	mov	x0, x1
 	mov	x1, x20
 	bl	cons
-.LBB525_11:                             // %"$61"
+.LBB526_11:                             // %"$61"
 	lsr	x8, x0, #32
 	stp	w0, w8, [x19, #-8]
-.LBB525_12:                             // %"$9"
+.LBB526_12:                             // %"$9"
 	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #48                  // 8-byte Folded Reload
 	ret
-.LBB525_13:                             // %"$5"
+.LBB526_13:                             // %"$5"
 	ldp	w10, w9, [x8, #8]
 	bfi	x10, x9, #32, #32
 	cmp	x1, x10
-	b.ne	.LBB525_18
+	b.ne	.LBB526_18
 // %bb.14:                              // %"$17"
 	adrp	x9, SymTab+8
 	add	x9, x9, :lo12:SymTab+8
 	cmp	x2, x9
-	b.ne	.LBB525_27
+	b.ne	.LBB526_27
 // %bb.15:                              // %"$21"
 	ldp	w8, w9, [x21, #8]
 	bfi	x8, x9, #32, #32
 	sub	x9, x19, #8                     // =8
-	tbz	w20, #3, .LBB525_28
+	tbz	w20, #3, .LBB526_28
 // %bb.16:                              // %"$22"
 	orr	x8, x8, #0x8
-	b	.LBB525_28
-.LBB525_17:                             // %"$31"
-                                        //   in Loop: Header=BB525_18 Depth=1
+	b	.LBB526_28
+.LBB526_17:                             // %"$31"
+                                        //   in Loop: Header=BB526_18 Depth=1
 	ldp	w10, w9, [x8, #8]
 	bfi	x10, x9, #32, #32
 	cmp	x1, x10
-	b.eq	.LBB525_29
-.LBB525_18:                             // %"$27"
+	b.eq	.LBB526_29
+.LBB526_18:                             // %"$27"
                                         // =>This Inner Loop Header: Depth=1
 	mov	x22, x21
 	ldp	w21, w8, [x21, #8]
 	bfi	x21, x8, #32, #32
 	tst	x21, #0xf
-	b.ne	.LBB525_1
+	b.ne	.LBB526_1
 // %bb.19:                              // %"$28"
-                                        //   in Loop: Header=BB525_18 Depth=1
+                                        //   in Loop: Header=BB526_18 Depth=1
 	ldp	w8, w9, [x21]
 	bfi	x8, x9, #32, #32
 	tst	x8, #0xf
-	b.eq	.LBB525_17
+	b.eq	.LBB526_17
 // %bb.20:                              // %"$30"
-                                        //   in Loop: Header=BB525_18 Depth=1
+                                        //   in Loop: Header=BB526_18 Depth=1
 	cmp	x1, x8
-	b.ne	.LBB525_18
+	b.ne	.LBB526_18
 // %bb.21:                              // %"$33"
 	adrp	x8, SymTab+8
 	add	x8, x8, :lo12:SymTab+8
 	cmp	x2, x8
-	b.eq	.LBB525_30
+	b.eq	.LBB526_30
 // %bb.22:                              // %"$36"
 	adrp	x8, SymTab+216
 	add	x8, x8, :lo12:SymTab+216
 	cmp	x2, x8
-	b.eq	.LBB525_32
+	b.eq	.LBB526_32
 // %bb.23:                              // %"$38"
 	mov	x0, x2
 	bl	cons
 	lsr	x8, x0, #32
 	stp	w0, w8, [x21]
-	b	.LBB525_32
-.LBB525_24:                             // %"$10"
+	b	.LBB526_32
+.LBB526_24:                             // %"$10"
 	adrp	x8, SymTab+216
 	add	x8, x8, :lo12:SymTab+216
 	cmp	x2, x8
-	b.eq	.LBB525_12
+	b.eq	.LBB526_12
 // %bb.25:                              // %"$16"
 	mov	x0, x2
 	bl	cons
-.LBB525_26:                             // %"$9.sink.split"
+.LBB526_26:                             // %"$9.sink.split"
 	lsr	x8, x0, #32
 	stp	w0, w8, [x21]
-	b	.LBB525_12
-.LBB525_27:                             // %"$20"
+	b	.LBB526_12
+.LBB526_27:                             // %"$20"
 	adrp	x9, SymTab+216
 	add	x9, x9, :lo12:SymTab+216
 	cmp	x2, x9
 	csel	x9, x21, x8, eq
 	csel	x8, x1, x2, eq
-.LBB525_28:                             // %"$19"
+.LBB526_28:                             // %"$19"
 	lsr	x10, x8, #32
 	stp	w8, w10, [x9]
-	b	.LBB525_12
-.LBB525_29:                             // %"$43"
+	b	.LBB526_12
+.LBB526_29:                             // %"$43"
 	adrp	x9, SymTab+8
 	add	x9, x9, :lo12:SymTab+8
 	cmp	x2, x9
-	b.ne	.LBB525_31
-.LBB525_30:                             // %"$35"
+	b.ne	.LBB526_31
+.LBB526_30:                             // %"$35"
 	ldp	w9, w8, [x21, #8]
 	stp	w9, w8, [x22, #8]
-	b	.LBB525_12
-.LBB525_31:                             // %"$46"
+	b	.LBB526_12
+.LBB526_31:                             // %"$46"
 	adrp	x9, SymTab+216
 	add	x9, x9, :lo12:SymTab+216
 	cmp	x2, x9
@@ -51070,25 +51103,25 @@ put:                                    // @put
 	csel	x9, x1, x2, eq
 	lsr	x10, x9, #32
 	stp	w9, w10, [x8]
-.LBB525_32:                             // %"$39"
+.LBB526_32:                             // %"$39"
 	ldp	w8, w9, [x21, #8]
 	stp	w8, w9, [x22, #8]
-	tbz	w20, #3, .LBB525_34
+	tbz	w20, #3, .LBB526_34
 // %bb.33:                              // %"$41"
 	and	x8, x20, #0xfffffffffffffff7
 	lsr	x9, x20, #32
 	stp	w8, w9, [x21, #8]
 	orr	x21, x21, #0x8
-	b	.LBB525_35
-.LBB525_34:                             // %"$40"
+	b	.LBB526_35
+.LBB526_34:                             // %"$40"
 	lsr	x8, x20, #32
 	stp	w20, w8, [x21, #8]
-.LBB525_35:                             // %"$42"
+.LBB526_35:                             // %"$42"
 	lsr	x8, x21, #32
 	stp	w21, w8, [x19, #-8]
-	b	.LBB525_12
-.Lfunc_end525:
-	.size	put, .Lfunc_end525-put
+	b	.LBB526_12
+.Lfunc_end526:
+	.size	put, .Lfunc_end526-put
 	.cfi_endproc
                                         // -- End function
 	.globl	wrLockDb                        // -- Begin function wrLockDb
@@ -51104,18 +51137,18 @@ wrLockDb:                               // @wrLockDb
 	add	x8, x8, :lo12:SymTab+216
 	ldr	x9, [x8, #144]
 	cmp	x9, x8
-	b.eq	.LBB526_2
+	b.eq	.LBB527_2
 // %bb.1:                               // %"$2"
 	adrp	x8, ($DbFiles)
 	ldr	x8, [x8, :lo12:($DbFiles)]
 	ldr	w0, [x8]
 	mov	w1, #1
 	bl	wrLockWait
-.LBB526_2:                              // %"$3"
+.LBB527_2:                              // %"$3"
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end526:
-	.size	wrLockDb, .Lfunc_end526-wrLockDb
+.Lfunc_end527:
+	.size	wrLockDb, .Lfunc_end527-wrLockDb
 	.cfi_endproc
                                         // -- End function
 	.globl	lockJnl                         // -- Begin function lockJnl
@@ -51132,8 +51165,8 @@ lockJnl:                                // @lockJnl
 	bl	wrLockWait
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end527:
-	.size	lockJnl, .Lfunc_end527-lockJnl
+.Lfunc_end528:
+	.size	lockJnl, .Lfunc_end528-lockJnl
 	.cfi_endproc
                                         // -- End function
 	.globl	newBlock                        // -- Begin function newBlock
@@ -51170,14 +51203,14 @@ newBlock:                               // @newBlock
 	mov	x0, x19
 	bl	getAdr
 	mov	x20, x0
-	cbz	x0, .LBB528_3
+	cbz	x0, .LBB529_3
 // %bb.1:                               // %"$4"
 	ldp	w9, w8, [x22, #32]
 	bfi	x9, x8, #32, #32
 	cmp	x9, #0                          // =0
 	cset	w8, ne
-	cbz	w8, .LBB528_4
-.LBB528_2:                              // %"$6"
+	cbz	w8, .LBB529_4
+.LBB529_2:                              // %"$6"
 	ldrsw	x8, [x22, #8]
 	lsl	x0, x20, x8
 	mov	x1, x19
@@ -51191,23 +51224,23 @@ newBlock:                               // @newBlock
 	str	w9, [x8]
 	lsr	x9, x9, #32
 	str	w9, [x8, #4]
-	b	.LBB528_6
-.LBB528_3:
+	b	.LBB529_6
+.LBB529_3:
 	mov	w8, wzr
-	cbnz	w8, .LBB528_2
-.LBB528_4:                              // %"$5"
+	cbnz	w8, .LBB529_2
+.LBB529_4:                              // %"$5"
 	add	x21, x19, #6                    // =6
 	mov	x0, x21
 	bl	getAdr
 	mov	x8, #281474976710592
 	cmp	x0, x8
-	b.eq	.LBB528_7
+	b.eq	.LBB529_7
 // %bb.5:                               // %"$7"
 	mov	x20, x0
 	add	x0, x0, #64                     // =64
 	mov	x1, x21
 	bl	setAdr
-.LBB528_6:                              // %"$2"
+.LBB529_6:                              // %"$2"
 	sxtw	x21, w23
 	mov	x0, xzr
 	mov	x1, x19
@@ -51229,15 +51262,15 @@ newBlock:                               // @newBlock
 	ldr	x23, [sp, #16]                  // 8-byte Folded Reload
 	ldp	x29, x30, [sp], #64             // 16-byte Folded Reload
 	ret
-.LBB528_7:                              // %"$8"
+.LBB529_7:                              // %"$8"
 	adrp	x2, .L$170
 	add	x2, x2, :lo12:.L$170
 	mov	x0, xzr
 	mov	x1, xzr
 	mov	x3, xzr
 	bl	err
-.Lfunc_end528:
-	.size	newBlock, .Lfunc_end528-newBlock
+.Lfunc_end529:
+	.size	newBlock, .Lfunc_end529-newBlock
 	.cfi_endproc
                                         // -- End function
 	.globl	unLockJnl                       // -- Begin function unLockJnl
@@ -51254,8 +51287,8 @@ unLockJnl:                              // @unLockJnl
 	bl	unLock
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end529:
-	.size	unLockJnl, .Lfunc_end529-unLockJnl
+.Lfunc_end530:
+	.size	unLockJnl, .Lfunc_end530-unLockJnl
 	.cfi_endproc
                                         // -- End function
 	.globl	fflush                          // -- Begin function fflush
@@ -51273,8 +51306,8 @@ fflush:                                 // @fflush
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end530:
-	.size	fflush, .Lfunc_end530-fflush
+.Lfunc_end531:
+	.size	fflush, .Lfunc_end531-fflush
 	.cfi_endproc
                                         // -- End function
 	.globl	fileno                          // -- Begin function fileno
@@ -51292,8 +51325,8 @@ fileno:                                 // @fileno
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end531:
-	.size	fileno, .Lfunc_end531-fileno
+.Lfunc_end532:
+	.size	fileno, .Lfunc_end532-fileno
 	.cfi_endproc
                                         // -- End function
 	.globl	setAdr                          // -- Begin function setAdr
@@ -51314,8 +51347,8 @@ setAdr:                                 // @setAdr
 	lsr	x8, x0, #40
 	strb	w8, [x1, #5]
 	ret
-.Lfunc_end532:
-	.size	setAdr, .Lfunc_end532-setAdr
+.Lfunc_end533:
+	.size	setAdr, .Lfunc_end533-setAdr
 	.cfi_endproc
                                         // -- End function
 	.globl	blkPoke                         // -- Begin function blkPoke
@@ -51340,11 +51373,11 @@ blkPoke:                                // @blkPoke
 	ldr	x21, [x8, :lo12:($DbFile)]
 	bl	pwrite
 	cmp	w20, w0
-	b.ne	.LBB533_6
+	b.ne	.LBB534_6
 // %bb.1:                               // %"$3"
 	adrp	x8, ($DbJnl)
 	ldr	x8, [x8, :lo12:($DbJnl)]
-	cbz	x8, .LBB533_4
+	cbz	x8, .LBB534_4
 // %bb.2:                               // %"$4"
 	bl	putc_unlocked
 	mov	x8, sp
@@ -51361,18 +51394,18 @@ blkPoke:                                // @blkPoke
 	bl	setAdr
 	bl	fwrite
 	cmp	w0, #1                          // =1
-	b.ne	.LBB533_5
+	b.ne	.LBB534_5
 // %bb.3:                               // %"$10"
 	bl	fwrite
 	cmp	w0, #1                          // =1
-	b.ne	.LBB533_5
-.LBB533_4:                              // %"$5"
+	b.ne	.LBB534_5
+.LBB534_4:                              // %"$5"
 	mov	sp, x29
 	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
 	ldr	x21, [sp, #16]                  // 8-byte Folded Reload
 	ldp	x29, x30, [sp], #48             // 16-byte Folded Reload
 	ret
-.LBB533_5:                              // %"$11"
+.LBB534_5:                              // %"$11"
 	bl	strErrno
 	mov	x3, x0
 	adrp	x2, .L$168
@@ -51380,10 +51413,10 @@ blkPoke:                                // @blkPoke
 	mov	x0, xzr
 	mov	x1, xzr
 	bl	err
-.LBB533_6:                              // %"$2"
+.LBB534_6:                              // %"$2"
 	bl	dbWrErr
-.Lfunc_end533:
-	.size	blkPoke, .Lfunc_end533-blkPoke
+.Lfunc_end534:
+	.size	blkPoke, .Lfunc_end534-blkPoke
 	.cfi_endproc
                                         // -- End function
 	.globl	memset2                         // -- Begin function memset2
@@ -51394,17 +51427,17 @@ memset2:                                // @memset2
 // %bb.0:                               // %"$1"
 	mov	x8, xzr
 	cmp	x2, x8
-	b.eq	.LBB534_2
-.LBB534_1:                              // %"$3"
+	b.eq	.LBB535_2
+.LBB535_1:                              // %"$3"
                                         // =>This Inner Loop Header: Depth=1
 	strb	w1, [x0]
 	add	x8, x8, #1                      // =1
 	cmp	x2, x8
-	b.ne	.LBB534_1
-.LBB534_2:                              // %"$4"
+	b.ne	.LBB535_1
+.LBB535_2:                              // %"$4"
 	ret
-.Lfunc_end534:
-	.size	memset2, .Lfunc_end534-memset2
+.Lfunc_end535:
+	.size	memset2, .Lfunc_end535-memset2
 	.cfi_endproc
                                         // -- End function
 	.globl	pwrite                          // -- Begin function pwrite
@@ -51422,8 +51455,8 @@ pwrite:                                 // @pwrite
 	mov	x0, xzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end535:
-	.size	pwrite, .Lfunc_end535-pwrite
+.Lfunc_end536:
+	.size	pwrite, .Lfunc_end536-pwrite
 	.cfi_endproc
                                         // -- End function
 	.globl	dbWrErr                         // -- Begin function dbWrErr
@@ -51442,8 +51475,8 @@ dbWrErr:                                // @dbWrErr
 	mov	x0, xzr
 	mov	x1, xzr
 	bl	err
-.Lfunc_end536:
-	.size	dbWrErr, .Lfunc_end536-dbWrErr
+.Lfunc_end537:
+	.size	dbWrErr, .Lfunc_end537-dbWrErr
 	.cfi_endproc
                                         // -- End function
 	.globl	putc_unlocked                   // -- Begin function putc_unlocked
@@ -51461,8 +51494,8 @@ putc_unlocked:                          // @putc_unlocked
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end537:
-	.size	putc_unlocked, .Lfunc_end537-putc_unlocked
+.Lfunc_end538:
+	.size	putc_unlocked, .Lfunc_end538-putc_unlocked
 	.cfi_endproc
                                         // -- End function
 	.globl	fwrite                          // -- Begin function fwrite
@@ -51480,8 +51513,8 @@ fwrite:                                 // @fwrite
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end538:
-	.size	fwrite, .Lfunc_end538-fwrite
+.Lfunc_end539:
+	.size	fwrite, .Lfunc_end539-fwrite
 	.cfi_endproc
                                         // -- End function
 	.globl	wrLockWait                      // -- Begin function wrLockWait
@@ -51493,22 +51526,22 @@ wrLockWait:                             // @wrLockWait
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-.LBB539_1:                              // %"$2"
+.LBB540_1:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	bl	wrLock
-	tbz	w0, #31, .LBB539_4
+	tbz	w0, #31, .LBB540_4
 // %bb.2:                               // %"$3"
-                                        //   in Loop: Header=BB539_1 Depth=1
+                                        //   in Loop: Header=BB540_1 Depth=1
 	bl	gErrno
 	cmp	w0, #2                          // =2
-	b.eq	.LBB539_1
+	b.eq	.LBB540_1
 // %bb.3:                               // %"$5"
 	bl	lockErr
-.LBB539_4:                              // %"$4"
+.LBB540_4:                              // %"$4"
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end539:
-	.size	wrLockWait, .Lfunc_end539-wrLockWait
+.Lfunc_end540:
+	.size	wrLockWait, .Lfunc_end540-wrLockWait
 	.cfi_endproc
                                         // -- End function
 	.globl	wrLock                          // -- Begin function wrLock
@@ -51526,8 +51559,8 @@ wrLock:                                 // @wrLock
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end540:
-	.size	wrLock, .Lfunc_end540-wrLock
+.Lfunc_end541:
+	.size	wrLock, .Lfunc_end541-wrLock
 	.cfi_endproc
                                         // -- End function
 	.globl	redefine                        // -- Begin function redefine
@@ -51544,32 +51577,32 @@ redefine:                               // @redefine
 	.cfi_offset w30, -32
 	mov	x19, x1
 	tst	x1, #0x6
-	b.ne	.LBB541_7
+	b.ne	.LBB542_7
 // %bb.1:                               // %"$3"
 	adrp	x8, SymTab+8
 	add	x8, x8, :lo12:SymTab+8
 	add	x9, x8, #208                    // =208
 	cmp	x9, x19
 	ccmp	x19, x8, #0, hs
-	b.hs	.LBB541_8
+	b.hs	.LBB542_8
 // %bb.2:                               // %"$7"
 	mov	x20, x2
 	ldp	w0, w9, [x19]
 	bfi	x0, x9, #32, #32
 	cmp	x0, x8
-	b.eq	.LBB541_6
+	b.eq	.LBB542_6
 // %bb.3:                               // %"$7"
 	cmp	x0, x19
-	b.eq	.LBB541_6
+	b.eq	.LBB542_6
 // %bb.4:                               // %"$10"
 	mov	x1, x20
 	bl	equal
-	tbnz	w0, #0, .LBB541_6
+	tbnz	w0, #0, .LBB542_6
 // %bb.5:                               // %"$11"
 	mov	x0, x19
 	mov	x1, xzr
 	bl	redefMsg
-.LBB541_6:                              // %"$12"
+.LBB542_6:                              // %"$12"
 	lsr	x8, x20, #32
 	stp	w20, w8, [x19]
 	mov	x0, x19
@@ -51578,14 +51611,14 @@ redefine:                               // @redefine
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #32                  // 8-byte Folded Reload
 	ret
-.LBB541_7:                              // %"$2"
+.LBB542_7:                              // %"$2"
 	mov	x1, x19
 	bl	varErr
-.LBB541_8:                              // %"$6"
+.LBB542_8:                              // %"$6"
 	mov	x1, x19
 	bl	protErr
-.Lfunc_end541:
-	.size	redefine, .Lfunc_end541-redefine
+.Lfunc_end542:
+	.size	redefine, .Lfunc_end542-redefine
 	.cfi_endproc
                                         // -- End function
 	.globl	redefMsg                        // -- Begin function redefMsg
@@ -51624,12 +51657,12 @@ redefMsg:                               // @redefMsg
 	bl	outString
 	mov	x0, x20
 	bl	print
-	cbz	x19, .LBB542_2
+	cbz	x19, .LBB543_2
 // %bb.1:                               // %"$2"
 	bl	space
 	mov	x0, x19
 	bl	print
-.LBB542_2:                              // %"$3"
+.LBB543_2:                              // %"$3"
 	adrp	x0, .L$180
 	add	x0, x0, :lo12:.L$180
 	bl	outString
@@ -51640,8 +51673,8 @@ redefMsg:                               // @redefMsg
 	ldp	x24, x23, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #64                  // 8-byte Folded Reload
 	ret
-.Lfunc_end542:
-	.size	redefMsg, .Lfunc_end542-redefMsg
+.Lfunc_end543:
+	.size	redefMsg, .Lfunc_end543-redefMsg
 	.cfi_endproc
                                         // -- End function
 	.globl	putSrc                          // -- Begin function putSrc
@@ -51666,18 +51699,18 @@ putSrc:                                 // @putSrc
 	add	x22, x22, :lo12:SymTab+8
 	ldr	x8, [x22, #720]
 	cmp	x8, x22
-	b.eq	.LBB543_17
+	b.eq	.LBB544_17
 // %bb.1:                               // %"$3"
 	mov	x21, x0
 	ldurb	w8, [x0, #-8]
-	tbnz	w8, #3, .LBB543_17
+	tbnz	w8, #3, .LBB544_17
 // %bb.2:                               // %"$4"
 	adrp	x8, ($InFile)
 	ldr	x24, [x8, :lo12:($InFile)]
-	cbz	x24, .LBB543_17
+	cbz	x24, .LBB544_17
 // %bb.3:                               // %"$7"
 	ldr	x8, [x24]
-	cbz	x8, .LBB543_17
+	cbz	x8, .LBB544_17
 // %bb.4:                               // %"$8"
 	mov	x20, x1
 	adrp	x1, SymTab+728
@@ -51698,70 +51731,70 @@ putSrc:                                 // @putSrc
 	bl	cons
 	mov	x1, x0
 	cmp	x19, x22
-	cbz	x20, .LBB543_7
+	cbz	x20, .LBB544_7
 // %bb.5:                               // %"$11"
-	b.ne	.LBB543_10
+	b.ne	.LBB544_10
 // %bb.6:                               // %"$17"
 	mov	x0, x1
 	mov	x1, x22
 	bl	cons
 	mov	x1, x0
 	mov	x0, x22
-	b	.LBB543_9
-.LBB543_7:                              // %"$12"
-	b.ne	.LBB543_14
+	b	.LBB544_9
+.LBB544_7:                              // %"$12"
+	b.ne	.LBB544_14
 // %bb.8:                               // %"$13"
 	mov	x0, x1
 	mov	x1, x22
-.LBB543_9:                              // %"$5"
+.LBB544_9:                              // %"$5"
 	bl	cons
 	mov	x2, x0
 	add	x1, x22, #720                   // =720
 	mov	x0, x21
 	bl	put
-	b	.LBB543_17
-.LBB543_10:
+	b	.LBB544_17
+.LBB544_10:
 	mov	x8, x19
-.LBB543_11:                             // %"$18"
+.LBB544_11:                             // %"$18"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w8, w9, [x8, #8]
 	bfi	x8, x9, #32, #32
 	tst	x8, #0xf
-	b.ne	.LBB543_15
+	b.ne	.LBB544_15
 // %bb.12:                              // %"$19"
-                                        //   in Loop: Header=BB543_11 Depth=1
+                                        //   in Loop: Header=BB544_11 Depth=1
 	ldp	w10, w9, [x8]
 	bfi	x10, x9, #32, #32
 	ldp	w10, w9, [x10]
 	bfi	x10, x9, #32, #32
 	cmp	x10, x20
-	b.ne	.LBB543_11
+	b.ne	.LBB544_11
 // %bb.13:                              // %"$23"
 	ldp	w19, w9, [x8]
 	bfi	x19, x9, #32, #32
-	b	.LBB543_16
-.LBB543_14:                             // %"$14"
+	b	.LBB544_16
+.LBB544_14:                             // %"$14"
 	lsr	x8, x1, #32
 	stp	w1, w8, [x19]
-	b	.LBB543_17
-.LBB543_15:                             // %"$21"
+	b	.LBB544_17
+.LBB544_15:                             // %"$21"
 	mov	x0, x20
 	bl	cons
 	ldp	w1, w8, [x19, #8]
 	bfi	x1, x8, #32, #32
 	bl	cons
 	mov	x1, x0
-.LBB543_16:                             // %"$20"
+.LBB544_16:                             // %"$20"
 	lsr	x8, x1, #32
 	stp	w1, w8, [x19, #8]
-.LBB543_17:                             // %"$5"
+.LBB544_17:                             // %"$5"
 	ldp	x20, x19, [sp, #48]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #32]             // 16-byte Folded Reload
 	ldp	x24, x23, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #64                  // 8-byte Folded Reload
 	ret
-.Lfunc_end543:
-	.size	putSrc, .Lfunc_end543-putSrc
+.Lfunc_end544:
+	.size	putSrc, .Lfunc_end544-putSrc
 	.cfi_endproc
                                         // -- End function
 	.globl	dbTouch                         // -- Begin function dbTouch
@@ -51778,20 +51811,20 @@ dbTouch:                                // @dbTouch
 	ldr	w10, [x8, #4]
 	bfi	x9, x10, #32, #32
 	tst	x9, #0x6
-	b.ne	.LBB544_3
+	b.ne	.LBB545_3
 // %bb.1:                               // %"$2"
 	and	x9, x9, #0xfffffffffffffff7
-.LBB544_2:                              // %"$4"
+.LBB545_2:                              // %"$4"
                                         // =>This Inner Loop Header: Depth=1
 	mov	x8, x9
 	ldr	w9, [x8, #8]!
 	ldr	w10, [x8, #4]
 	bfi	x9, x10, #32, #32
 	tst	x9, #0x6
-	b.eq	.LBB544_2
-.LBB544_3:                              // %"$3"
+	b.eq	.LBB545_2
+.LBB545_3:                              // %"$3"
 	adds	x9, x9, x9
-	b.hs	.LBB544_6
+	b.hs	.LBB545_6
 // %bb.4:                               // %"$7"
 	adds	x9, x9, x9
 	mov	x2, #-9223372036854775808
@@ -51799,14 +51832,14 @@ dbTouch:                                // @dbTouch
 	lsr	x9, x9, #2
 	lsr	x10, x2, #32
 	stp	w9, w10, [x8]
-	b.hs	.LBB544_6
+	b.hs	.LBB545_6
 // %bb.5:                               // %"$9"
 	bl	db
-.LBB544_6:                              // %"$8"
+.LBB545_6:                              // %"$8"
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end544:
-	.size	dbTouch, .Lfunc_end544-dbTouch
+.Lfunc_end545:
+	.size	dbTouch, .Lfunc_end545-dbTouch
 	.cfi_endproc
                                         // -- End function
 	.globl	fish                            // -- Begin function fish
@@ -51836,28 +51869,28 @@ fish:                                   // @fish
 	adrp	x8, SymTab+8
 	add	x8, x8, :lo12:SymTab+8
 	cmp	x0, x8
-	b.ne	.LBB545_6
+	b.ne	.LBB546_6
 // %bb.1:                               // %"$4"
 	tst	x21, #0xf
-	b.ne	.LBB545_8
+	b.ne	.LBB546_8
 // %bb.2:                               // %"$5"
 	mov	x9, sp
 	adrp	x10, ($StkLimit)
 	ldr	x10, [x10, :lo12:($StkLimit)]
 	cmp	x10, x9
-	b.hi	.LBB545_9
+	b.hi	.LBB546_9
 // %bb.3:                               // %"$8"
 	ldp	w1, w9, [x21, #8]
 	bfi	x1, x9, #32, #32
 	cmp	x1, x8
-	b.eq	.LBB545_5
+	b.eq	.LBB546_5
 // %bb.4:                               // %"$9"
 	mov	x0, x23
 	mov	x2, x22
 	mov	x3, x19
 	mov	x4, x20
 	bl	fish
-.LBB545_5:                              // %"$10"
+.LBB546_5:                              // %"$10"
 	ldp	w1, w8, [x21]
 	bfi	x1, x8, #32, #32
 	mov	x0, x23
@@ -51865,10 +51898,10 @@ fish:                                   // @fish
 	mov	x3, x19
 	mov	x4, x20
 	bl	fish
-	b	.LBB545_8
-.LBB545_6:                              // %"$3"
+	b	.LBB546_8
+.LBB546_6:                              // %"$3"
 	cmp	x0, x20
-	b.eq	.LBB545_8
+	b.eq	.LBB546_8
 // %bb.7:                               // %"$12"
 	ldp	w1, w8, [x19]
 	bfi	x1, x8, #32, #32
@@ -51876,16 +51909,16 @@ fish:                                   // @fish
 	bl	cons
 	lsr	x8, x0, #32
 	stp	w0, w8, [x19]
-.LBB545_8:                              // %"$2"
+.LBB546_8:                              // %"$2"
 	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x23, [sp], #48             // 16-byte Folded Reload
 	ret
-.LBB545_9:                              // %"$7"
+.LBB546_9:                              // %"$7"
 	mov	x0, xzr
 	bl	stkErr
-.Lfunc_end545:
-	.size	fish, .Lfunc_end545-fish
+.Lfunc_end546:
+	.size	fish, .Lfunc_end546-fish
 	.cfi_endproc
                                         // -- End function
 	.globl	begString                       // -- Begin function begString
@@ -51913,8 +51946,8 @@ begString:                              // @begString
 	add	x8, x8, :lo12:putString
 	str	x8, [x10, :lo12:($Put)]
 	ret
-.Lfunc_end546:
-	.size	begString, .Lfunc_end546-begString
+.Lfunc_end547:
+	.size	begString, .Lfunc_end547-begString
 	.cfi_endproc
                                         // -- End function
 	.globl	endString                       // -- Begin function endString
@@ -51945,8 +51978,8 @@ endString:                              // @endString
 	str	x9, [x8, :lo12:env]
 	ldp	x30, x19, [sp], #16             // 16-byte Folded Reload
 	ret
-.Lfunc_end547:
-	.size	endString, .Lfunc_end547-endString
+.Lfunc_end548:
+	.size	endString, .Lfunc_end548-endString
 	.cfi_endproc
                                         // -- End function
 	.globl	putString                       // -- Begin function putString
@@ -51963,8 +51996,8 @@ putString:                              // @putString
 	bl	byteSym
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end548:
-	.size	putString, .Lfunc_end548-putString
+.Lfunc_end549:
+	.size	putString, .Lfunc_end549-putString
 	.cfi_endproc
                                         // -- End function
 	.globl	putPlio                         // -- Begin function putPlio
@@ -51983,15 +52016,15 @@ putPlio:                                // @putPlio
 	adrp	x8, ($End)
 	ldr	x8, [x8, :lo12:($End)]
 	cmp	x9, x8
-	b.eq	.LBB549_2
+	b.eq	.LBB550_2
 // %bb.1:                               // %"$3"
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.LBB549_2:                              // %"$2"
+.LBB550_2:                              // %"$2"
 	mov	x0, xzr
 	bl	sizeErr
-.Lfunc_end549:
-	.size	putPlio, .Lfunc_end549-putPlio
+.Lfunc_end550:
+	.size	putPlio, .Lfunc_end550-putPlio
 	.cfi_endproc
                                         // -- End function
 	.globl	binPrint                        // -- Begin function binPrint
@@ -52018,59 +52051,59 @@ binPrint:                               // @binPrint
 	.cfi_offset w30, -72
 	.cfi_offset w29, -80
 	mov	x19, x0
-	tbz	w19, #1, .LBB550_3
+	tbz	w19, #1, .LBB551_3
 // %bb.1:                               // %"$4"
 	lsr	x1, x19, #3
 	mov	w0, #4
-.LBB550_2:                              // %"$2"
+.LBB551_2:                              // %"$2"
 	bl	prCnt
-	b	.LBB550_37
-.LBB550_3:                              // %"$3"
-	tbz	w19, #2, .LBB550_7
+	b	.LBB551_37
+.LBB551_3:                              // %"$3"
+	tbz	w19, #2, .LBB551_7
 // %bb.4:                               // %"$6"
 	and	x8, x19, #0xfffffffffffffff7
 	mov	w21, #8
 	mov	x10, x8
-.LBB550_5:                              // %"$7"
+.LBB551_5:                              // %"$7"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w9, w11, [x10, #4]
 	bfi	x9, x11, #32, #32
-	tbnz	w9, #1, .LBB550_9
+	tbnz	w9, #1, .LBB551_9
 // %bb.6:                               // %"$8"
-                                        //   in Loop: Header=BB550_5 Depth=1
+                                        //   in Loop: Header=BB551_5 Depth=1
 	add	x21, x21, #8                    // =8
 	mov	x10, x9
-	b	.LBB550_5
-.LBB550_7:                              // %"$5"
+	b	.LBB551_5
+.LBB551_7:                              // %"$5"
 	adrp	x22, SymTab+8
 	add	x22, x22, :lo12:SymTab+8
 	cmp	x19, x22
-	b.ne	.LBB550_25
-.LBB550_8:                              // %"$35"
+	b.ne	.LBB551_25
+.LBB551_8:                              // %"$35"
 	adrp	x8, ($PutBin)
 	ldr	x8, [x8, :lo12:($PutBin)]
-	b	.LBB550_35
-.LBB550_9:                              // %"$10"
+	b	.LBB551_35
+.LBB551_9:                              // %"$10"
 	ldp	w10, w11, [x10, #-4]
 	bfi	x10, x11, #32, #32
 	lsr	x9, x9, #4
 	cmn	x10, x10
 	add	x9, x9, x9
 	cinc	x9, x9, hs
-	cbz	x9, .LBB550_11
-.LBB550_10:                             // %"$13"
+	cbz	x9, .LBB551_11
+.LBB551_10:                             // %"$13"
                                         // =>This Inner Loop Header: Depth=1
 	add	x21, x21, #1                    // =1
 	lsr	x9, x9, #8
-	cbnz	x9, .LBB550_10
-.LBB550_11:                             // %"$12"
+	cbnz	x9, .LBB551_10
+.LBB551_11:                             // %"$12"
 	subs	x20, x21, #63                   // =63
 	ldp	w9, w10, [x8, #-4]
 	bfi	x9, x10, #32, #32
-	b.mi	.LBB550_13
+	b.mi	.LBB551_13
 // %bb.12:                              // %"$16"
 	mov	w21, #63
-.LBB550_13:                             // %"$17"
+.LBB551_13:                             // %"$17"
 	ldp	w22, w10, [x8, #4]
 	bfi	x22, x10, #32, #32
 	ror	x8, x19, #4
@@ -52086,42 +52119,42 @@ binPrint:                               // @binPrint
 	lsl	w0, w21, #2
 	blr	x8
 	mov	w25, #8
-	b	.LBB550_15
-.LBB550_14:                             // %"$33"
-                                        //   in Loop: Header=BB550_15 Depth=1
+	b	.LBB551_15
+.LBB551_14:                             // %"$33"
+                                        //   in Loop: Header=BB551_15 Depth=1
 	ldr	x8, [x23, :lo12:($PutBin)]
 	mov	w0, w20
 	blr	x8
 	mov	x21, x20
 	mov	x20, x26
-.LBB550_15:                             // %"$19"
+.LBB551_15:                             // %"$19"
                                         // =>This Inner Loop Header: Depth=1
 	ldr	x8, [x23, :lo12:($PutBin)]
 	mov	w0, w19
 	blr	x8
 	subs	x25, x25, #1                    // =1
-	b.eq	.LBB550_17
+	b.eq	.LBB551_17
 // %bb.16:                              // %"$20"
-                                        //   in Loop: Header=BB550_15 Depth=1
+                                        //   in Loop: Header=BB551_15 Depth=1
 	lsr	x19, x19, #8
 	subs	x21, x21, #1                    // =1
-	b.ne	.LBB550_15
-	b	.LBB550_21
-.LBB550_17:                             // %"$21"
-                                        //   in Loop: Header=BB550_15 Depth=1
-	tbz	w22, #1, .LBB550_19
+	b.ne	.LBB551_15
+	b	.LBB551_21
+.LBB551_17:                             // %"$21"
+                                        //   in Loop: Header=BB551_15 Depth=1
+	tbz	w22, #1, .LBB551_19
 // %bb.18:                              // %"$23"
-                                        //   in Loop: Header=BB550_15 Depth=1
+                                        //   in Loop: Header=BB551_15 Depth=1
 	lsr	x8, x22, #4
-	b	.LBB550_20
-.LBB550_19:                             // %"$24"
-                                        //   in Loop: Header=BB550_15 Depth=1
+	b	.LBB551_20
+.LBB551_19:                             // %"$24"
+                                        //   in Loop: Header=BB551_15 Depth=1
 	ldp	w8, w9, [x22, #-4]
 	bfi	x8, x9, #32, #32
 	ldp	w22, w9, [x22, #4]
 	bfi	x22, x9, #32, #32
-.LBB550_20:                             // %"$25"
-                                        //   in Loop: Header=BB550_15 Depth=1
+.LBB551_20:                             // %"$25"
+                                        //   in Loop: Header=BB551_15 Depth=1
 	adds	x8, x8, x8
 	cset	w9, hs
 	and	x10, x24, #0x1
@@ -52130,42 +52163,42 @@ binPrint:                               // @binPrint
 	orr	w24, w9, w8
 	mov	w25, #8
 	subs	x21, x21, #1                    // =1
-	b.ne	.LBB550_15
-.LBB550_21:                             // %"$27"
-                                        //   in Loop: Header=BB550_15 Depth=1
-	tbnz	x20, #63, .LBB550_37
+	b.ne	.LBB551_15
+.LBB551_21:                             // %"$27"
+                                        //   in Loop: Header=BB551_15 Depth=1
+	tbnz	x20, #63, .LBB551_37
 // %bb.22:                              // %"$28"
-                                        //   in Loop: Header=BB550_15 Depth=1
-	cbz	x20, .LBB550_34
+                                        //   in Loop: Header=BB551_15 Depth=1
+	cbz	x20, .LBB551_34
 // %bb.23:                              // %"$30"
-                                        //   in Loop: Header=BB550_15 Depth=1
+                                        //   in Loop: Header=BB551_15 Depth=1
 	subs	x26, x20, #255                  // =255
-	b.mi	.LBB550_14
+	b.mi	.LBB551_14
 // %bb.24:                              // %"$32"
-                                        //   in Loop: Header=BB550_15 Depth=1
+                                        //   in Loop: Header=BB551_15 Depth=1
 	mov	w20, #255
-	b	.LBB550_14
-.LBB550_25:                             // %"$34"
+	b	.LBB551_14
+.LBB551_25:                             // %"$34"
 	tst	x19, #0xf
-	b.eq	.LBB550_38
+	b.eq	.LBB551_38
 // %bb.26:                              // %"$36"
 	ldp	w20, w8, [x19, #-8]
 	bfi	x20, x8, #32, #32
-	tbz	w20, #3, .LBB550_32
+	tbz	w20, #3, .LBB551_32
 // %bb.27:                              // %"$56"
 	and	x19, x20, #0xfffffffffffffff7
 	tst	x19, #0x6
-	b.ne	.LBB550_29
-.LBB550_28:                             // %"$58"
+	b.ne	.LBB551_29
+.LBB551_28:                             // %"$58"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w19, w8, [x19, #8]
 	bfi	x19, x8, #32, #32
 	tst	x19, #0x6
-	b.eq	.LBB550_28
-.LBB550_29:                             // %"$59"
+	b.eq	.LBB551_28
+.LBB551_29:                             // %"$59"
 	adrp	x8, ($Extn)
 	ldr	w20, [x8, :lo12:($Extn)]
-	cbz	w20, .LBB550_31
+	cbz	w20, .LBB551_31
 // %bb.30:                              // %"$60"
 	mov	x0, x19
 	bl	objFile
@@ -52178,26 +52211,26 @@ binPrint:                               // @binPrint
 	orr	x8, x9, x8, lsl #36
 	and	x8, x8, #0xfffff000ffffffff
 	orr	x19, x10, x8
-.LBB550_31:                             // %"$61"
+.LBB551_31:                             // %"$61"
 	ubfx	x1, x19, #4, #58
 	mov	w0, #7
-	b	.LBB550_2
-.LBB550_32:                             // %"$62"
+	b	.LBB551_2
+.LBB551_32:                             // %"$62"
                                         // =>This Inner Loop Header: Depth=1
 	tst	x20, #0x6
-	b.ne	.LBB550_49
+	b.ne	.LBB551_49
 // %bb.33:                              // %"$63"
-                                        //   in Loop: Header=BB550_32 Depth=1
+                                        //   in Loop: Header=BB551_32 Depth=1
 	ldp	w20, w8, [x20, #8]
 	bfi	x20, x8, #32, #32
-	b	.LBB550_32
-.LBB550_34:                             // %"$31"
+	b	.LBB551_32
+.LBB551_34:                             // %"$31"
 	ldr	x8, [x23, :lo12:($PutBin)]
-.LBB550_35:                             // %"$2"
+.LBB551_35:                             // %"$2"
 	mov	w0, wzr
-.LBB550_36:                             // %"$2"
+.LBB551_36:                             // %"$2"
 	blr	x8
-.LBB550_37:                             // %"$2"
+.LBB551_37:                             // %"$2"
 	mov	sp, x29
 	ldp	x20, x19, [sp, #64]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #48]             // 16-byte Folded Reload
@@ -52205,18 +52238,18 @@ binPrint:                               // @binPrint
 	ldp	x26, x25, [sp, #16]             // 16-byte Folded Reload
 	ldp	x29, x30, [sp], #80             // 16-byte Folded Reload
 	ret
-.LBB550_38:                             // %"$37"
+.LBB551_38:                             // %"$37"
 	adrp	x21, ($PutBin)
 	ldr	x8, [x21, :lo12:($PutBin)]
 	mov	w0, #1
 	blr	x8
 	mov	x0, x19
 	bl	circ
-	cbz	x0, .LBB550_46
+	cbz	x0, .LBB551_46
 // %bb.39:                              // %"$39"
 	mov	x20, x0
 	mov	x22, x19
-.LBB550_40:                             // %"$47"
+.LBB551_40:                             // %"$47"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w0, w8, [x22]
 	bfi	x0, x8, #32, #32
@@ -52224,18 +52257,18 @@ binPrint:                               // @binPrint
 	ldp	w22, w8, [x22, #8]
 	bfi	x22, x8, #32, #32
 	cmp	x20, x22
-	b.ne	.LBB550_40
+	b.ne	.LBB551_40
 // %bb.41:                              // %"$49"
 	ldr	x8, [x21, :lo12:($PutBin)]
 	mov	w0, #2
 	blr	x8
 	cmp	x20, x19
-	b.eq	.LBB550_45
+	b.eq	.LBB551_45
 // %bb.42:                              // %"$50"
 	ldr	x8, [x21, :lo12:($PutBin)]
 	mov	w0, #1
 	blr	x8
-.LBB550_43:                             // %"$52"
+.LBB551_43:                             // %"$52"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w0, w8, [x22]
 	bfi	x0, x8, #32, #32
@@ -52243,16 +52276,16 @@ binPrint:                               // @binPrint
 	ldp	w22, w8, [x22, #8]
 	bfi	x22, x8, #32, #32
 	cmp	x20, x22
-	b.ne	.LBB550_43
+	b.ne	.LBB551_43
 // %bb.44:                              // %"$54"
 	ldr	x8, [x21, :lo12:($PutBin)]
 	mov	w0, #2
 	blr	x8
-.LBB550_45:                             // %"$44"
+.LBB551_45:                             // %"$44"
 	ldr	x8, [x21, :lo12:($PutBin)]
 	mov	w0, #3
-	b	.LBB550_36
-.LBB550_46:                             // %"$41"
+	b	.LBB551_36
+.LBB551_46:                             // %"$41"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w0, w8, [x19]
 	bfi	x0, x8, #32, #32
@@ -52260,60 +52293,60 @@ binPrint:                               // @binPrint
 	ldp	w19, w8, [x19, #8]
 	bfi	x19, x8, #32, #32
 	cmp	x19, x22
-	b.eq	.LBB550_45
+	b.eq	.LBB551_45
 // %bb.47:                              // %"$42"
-                                        //   in Loop: Header=BB550_46 Depth=1
+                                        //   in Loop: Header=BB551_46 Depth=1
 	tst	x19, #0xf
-	b.eq	.LBB550_46
+	b.eq	.LBB551_46
 // %bb.48:                              // %"$46"
 	ldr	x8, [x21, :lo12:($PutBin)]
 	mov	w0, #2
 	blr	x8
 	mov	x0, x19
 	bl	binPrint
-	b	.LBB550_37
-.LBB550_49:                             // %"$64"
+	b	.LBB551_37
+.LBB551_49:                             // %"$64"
 	cmp	x20, #2                         // =2
-	b.eq	.LBB550_8
+	b.eq	.LBB551_8
 // %bb.50:                              // %"$65"
 	adrp	x8, env+88
 	ldr	x2, [x8, :lo12:env+88]
 	mov	x0, x19
 	mov	x1, x20
 	bl	findSym
-	tbz	w0, #0, .LBB550_52
+	tbz	w0, #0, .LBB551_52
 // %bb.51:
 	mov	w0, #1
-	b	.LBB550_53
-.LBB550_52:                             // %"$68"
+	b	.LBB551_53
+.LBB551_52:                             // %"$68"
 	mov	w0, #2
-.LBB550_53:                             // %"$69"
-	tbz	w20, #1, .LBB550_55
+.LBB551_53:                             // %"$69"
+	tbz	w20, #1, .LBB551_55
 // %bb.54:                              // %"$70"
 	orr	w0, w0, #0x4
 	lsr	x1, x20, #4
-	b	.LBB550_2
-.LBB550_55:                             // %"$73.preheader"
+	b	.LBB551_2
+.LBB551_55:                             // %"$73.preheader"
 	mov	w8, #8
 	mov	x9, x20
-.LBB550_56:                             // %"$73"
+.LBB551_56:                             // %"$73"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w9, w10, [x9, #4]
 	bfi	x9, x10, #32, #32
-	tbz	w9, #2, .LBB550_58
+	tbz	w9, #2, .LBB551_58
 // %bb.57:                              // %"$74"
-                                        //   in Loop: Header=BB550_56 Depth=1
+                                        //   in Loop: Header=BB551_56 Depth=1
 	add	x8, x8, #8                      // =8
-	b	.LBB550_56
-.LBB550_58:                             // %"$75"
+	b	.LBB551_56
+.LBB551_58:                             // %"$75"
 	lsr	x9, x9, #4
-	cbz	x9, .LBB550_60
-.LBB550_59:                             // %"$77"
+	cbz	x9, .LBB551_60
+.LBB551_59:                             // %"$77"
                                         // =>This Inner Loop Header: Depth=1
 	lsr	x9, x9, #8
 	add	x8, x8, #1                      // =1
-	cbnz	x9, .LBB550_59
-.LBB550_60:                             // %"$78"
+	cbnz	x9, .LBB551_59
+.LBB551_60:                             // %"$78"
 	mov	x9, sp
 	sub	x19, x9, #16                    // =16
 	mov	sp, x19
@@ -52327,41 +52360,41 @@ binPrint:                               // @binPrint
 	ldr	x8, [x22, :lo12:($PutBin)]
 	stp	w20, w10, [x9, #-8]
 	blr	x8
-	b	.LBB550_62
-.LBB550_61:                             // %"$90"
-                                        //   in Loop: Header=BB550_62 Depth=1
+	b	.LBB551_62
+.LBB551_61:                             // %"$90"
+                                        //   in Loop: Header=BB551_62 Depth=1
 	ldr	x8, [x22, :lo12:($PutBin)]
 	mov	w0, w21
 	blr	x8
 	mov	x23, x21
 	mov	x21, x20
-.LBB550_62:                             // %"$82"
+.LBB551_62:                             // %"$82"
                                         // =>This Inner Loop Header: Depth=1
 	mov	x0, x19
 	bl	symByte
 	ldr	x8, [x22, :lo12:($PutBin)]
 	blr	x8
 	subs	x23, x23, #1                    // =1
-	b.ne	.LBB550_62
+	b.ne	.LBB551_62
 // %bb.63:                              // %"$84"
-                                        //   in Loop: Header=BB550_62 Depth=1
-	tbnz	x21, #63, .LBB550_37
+                                        //   in Loop: Header=BB551_62 Depth=1
+	tbnz	x21, #63, .LBB551_37
 // %bb.64:                              // %"$85"
-                                        //   in Loop: Header=BB550_62 Depth=1
-	cbz	x21, .LBB550_67
+                                        //   in Loop: Header=BB551_62 Depth=1
+	cbz	x21, .LBB551_67
 // %bb.65:                              // %"$87"
-                                        //   in Loop: Header=BB550_62 Depth=1
+                                        //   in Loop: Header=BB551_62 Depth=1
 	subs	x20, x21, #255                  // =255
-	b.mi	.LBB550_61
+	b.mi	.LBB551_61
 // %bb.66:                              // %"$89"
-                                        //   in Loop: Header=BB550_62 Depth=1
+                                        //   in Loop: Header=BB551_62 Depth=1
 	mov	w21, #255
-	b	.LBB550_61
-.LBB550_67:                             // %"$88"
+	b	.LBB551_61
+.LBB551_67:                             // %"$88"
 	ldr	x8, [x22, :lo12:($PutBin)]
-	b	.LBB550_35
-.Lfunc_end550:
-	.size	binPrint, .Lfunc_end550-binPrint
+	b	.LBB551_35
+.Lfunc_end551:
+	.size	binPrint, .Lfunc_end551-binPrint
 	.cfi_endproc
                                         // -- End function
 	.globl	getPlio                         // -- Begin function getPlio
@@ -52376,8 +52409,8 @@ getPlio:                                // @getPlio
 	str	x10, [x8, :lo12:($Ptr)]
 	ldrb	w0, [x9]
 	ret
-.Lfunc_end551:
-	.size	getPlio, .Lfunc_end551-getPlio
+.Lfunc_end552:
+	.size	getPlio, .Lfunc_end552-getPlio
 	.cfi_endproc
                                         // -- End function
 	.globl	prCnt                           // -- Begin function prCnt
@@ -52395,29 +52428,29 @@ prCnt:                                  // @prCnt
 	mov	x19, x1
 	mov	x8, x1
 	lsr	x8, x8, #8
-	cbz	x8, .LBB552_2
-.LBB552_1:                              // %"$3"
+	cbz	x8, .LBB553_2
+.LBB553_1:                              // %"$3"
                                         // =>This Inner Loop Header: Depth=1
 	add	w0, w0, #4                      // =4
 	lsr	x8, x8, #8
-	cbnz	x8, .LBB552_1
-.LBB552_2:                              // %"$4"
+	cbnz	x8, .LBB553_1
+.LBB553_2:                              // %"$4"
 	adrp	x20, ($PutBin)
 	ldr	x8, [x20, :lo12:($PutBin)]
 	blr	x8
-.LBB552_3:                              // %"$5"
+.LBB553_3:                              // %"$5"
                                         // =>This Inner Loop Header: Depth=1
 	ldr	x8, [x20, :lo12:($PutBin)]
 	mov	w0, w19
 	blr	x8
 	lsr	x19, x19, #8
-	cbnz	x19, .LBB552_3
+	cbnz	x19, .LBB553_3
 // %bb.4:                               // %"$7"
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #32                  // 8-byte Folded Reload
 	ret
-.Lfunc_end552:
-	.size	prCnt, .Lfunc_end552-prCnt
+.Lfunc_end553:
+	.size	prCnt, .Lfunc_end553-prCnt
 	.cfi_endproc
                                         // -- End function
 	.globl	findSym                         // -- Begin function findSym
@@ -52437,8 +52470,8 @@ findSym:                                // @findSym
 	mov	x20, x1
 	mov	x21, x0
 	tst	x19, #0xf
-	b.ne	.LBB553_3
-.LBB553_1:                              // %"$3"
+	b.ne	.LBB554_3
+.LBB554_1:                              // %"$3"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w9, w8, [x19]
 	bfi	x9, x8, #32, #32
@@ -52449,24 +52482,24 @@ findSym:                                // @findSym
 	mov	x0, x20
 	bl	isIntern
 	cmp	x21, x0
-	b.eq	.LBB553_4
+	b.eq	.LBB554_4
 // %bb.2:                               // %"$6"
-                                        //   in Loop: Header=BB553_1 Depth=1
+                                        //   in Loop: Header=BB554_1 Depth=1
 	ldp	w19, w8, [x19, #8]
 	bfi	x19, x8, #32, #32
 	tst	x19, #0xf
-	b.eq	.LBB553_1
-.LBB553_3:
+	b.eq	.LBB554_1
+.LBB554_3:
 	mov	w0, wzr
-	b	.LBB553_5
-.LBB553_4:
+	b	.LBB554_5
+.LBB554_4:
 	mov	w0, #1
-.LBB553_5:                              // %"$4"
+.LBB554_5:                              // %"$4"
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x21, [sp], #32             // 16-byte Folded Reload
 	ret
-.Lfunc_end553:
-	.size	findSym, .Lfunc_end553-findSym
+.Lfunc_end554:
+	.size	findSym, .Lfunc_end554-findSym
 	.cfi_endproc
                                         // -- End function
 	.globl	sizeErr                         // -- Begin function sizeErr
@@ -52483,8 +52516,8 @@ sizeErr:                                // @sizeErr
 	mov	x1, xzr
 	mov	x3, xzr
 	bl	err
-.Lfunc_end554:
-	.size	sizeErr, .Lfunc_end554-sizeErr
+.Lfunc_end555:
+	.size	sizeErr, .Lfunc_end555-sizeErr
 	.cfi_endproc
                                         // -- End function
 	.globl	prin                            // -- Begin function prin
@@ -52502,23 +52535,23 @@ prin:                                   // @prin
 	mov	x19, x0
 	adrp	x8, ($Signal)
 	ldr	w8, [x8, :lo12:($Signal)]
-	cbz	w8, .LBB555_2
+	cbz	w8, .LBB556_2
 // %bb.1:                               // %"$2"
 	mov	x0, xzr
 	bl	sighandler
-.LBB555_2:                              // %"$3"
+.LBB556_2:                              // %"$3"
 	adrp	x20, SymTab+8
 	add	x20, x20, :lo12:SymTab+8
 	cmp	x19, x20
-	b.eq	.LBB555_19
+	b.eq	.LBB556_19
 // %bb.3:                               // %"$4"
-	tbz	w19, #1, .LBB555_5
+	tbz	w19, #1, .LBB556_5
 // %bb.4:                               // %"$8"
 	mov	x0, x19
 	bl	outNum
-	b	.LBB555_19
-.LBB555_5:                              // %"$7"
-	tbz	w19, #2, .LBB555_7
+	b	.LBB556_19
+.LBB556_5:                              // %"$7"
+	tbz	w19, #2, .LBB556_7
 // %bb.6:                               // %"$10"
 	mov	x0, x19
 	mov	x1, #-1
@@ -52526,14 +52559,14 @@ prin:                                   // @prin
 	mov	w3, wzr
 	mov	x4, xzr
 	bl	fmtNum
-	b	.LBB555_19
-.LBB555_7:                              // %"$9"
+	b	.LBB556_19
+.LBB556_7:                              // %"$9"
 	tst	x19, #0xf
-	b.eq	.LBB555_14
+	b.eq	.LBB556_14
 // %bb.8:                               // %"$11"
 	ldp	w19, w8, [x19, #-8]
 	bfi	x19, x8, #32, #32
-	tbz	w19, #3, .LBB555_12
+	tbz	w19, #3, .LBB556_12
 // %bb.9:                               // %"$21"
 	adrp	x20, ($Put)
 	ldr	x8, [x20, :lo12:($Put)]
@@ -52541,35 +52574,35 @@ prin:                                   // @prin
 	blr	x8
 	and	x0, x19, #0xfffffffffffffff7
 	tst	x0, #0x6
-	b.ne	.LBB555_11
-.LBB555_10:                             // %"$23"
+	b.ne	.LBB556_11
+.LBB556_10:                             // %"$23"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w0, w8, [x0, #8]
 	bfi	x0, x8, #32, #32
 	tst	x0, #0x6
-	b.eq	.LBB555_10
-.LBB555_11:                             // %"$24"
+	b.eq	.LBB556_10
+.LBB556_11:                             // %"$24"
 	bl	prExt
 	ldr	x8, [x20, :lo12:($Put)]
 	mov	w0, #125
 	blr	x8
-	b	.LBB555_19
-.LBB555_12:                             // %"$25"
+	b	.LBB556_19
+.LBB556_12:                             // %"$25"
                                         // =>This Inner Loop Header: Depth=1
 	tst	x19, #0x6
-	b.ne	.LBB555_18
+	b.ne	.LBB556_18
 // %bb.13:                              // %"$26"
-                                        //   in Loop: Header=BB555_12 Depth=1
+                                        //   in Loop: Header=BB556_12 Depth=1
 	ldp	w19, w8, [x19, #8]
 	bfi	x19, x8, #32, #32
-	b	.LBB555_12
-.LBB555_14:                             // %"$12"
+	b	.LBB556_12
+.LBB556_14:                             // %"$12"
 	mov	x8, sp
 	adrp	x9, ($StkLimit)
 	ldr	x9, [x9, :lo12:($StkLimit)]
 	cmp	x9, x8
-	b.hi	.LBB555_20
-.LBB555_15:                             // %"$15"
+	b.hi	.LBB556_20
+.LBB556_15:                             // %"$15"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w0, w8, [x19]
 	bfi	x0, x8, #32, #32
@@ -52577,27 +52610,27 @@ prin:                                   // @prin
 	ldp	w19, w8, [x19, #8]
 	bfi	x19, x8, #32, #32
 	cmp	x19, x20
-	b.eq	.LBB555_19
+	b.eq	.LBB556_19
 // %bb.16:                              // %"$16"
-                                        //   in Loop: Header=BB555_15 Depth=1
+                                        //   in Loop: Header=BB556_15 Depth=1
 	tst	x19, #0xf
-	b.eq	.LBB555_15
+	b.eq	.LBB556_15
 // %bb.17:                              // %"$19"
 	mov	x0, x19
 	bl	prin
-	b	.LBB555_19
-.LBB555_18:                             // %"$27"
+	b	.LBB556_19
+.LBB556_18:                             // %"$27"
 	mov	x0, x19
 	bl	prName
-.LBB555_19:                             // %"$5"
+.LBB556_19:                             // %"$5"
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #32                  // 8-byte Folded Reload
 	ret
-.LBB555_20:                             // %"$13"
+.LBB556_20:                             // %"$13"
 	mov	x0, xzr
 	bl	stkErr
-.Lfunc_end555:
-	.size	prin, .Lfunc_end555-prin
+.Lfunc_end556:
+	.size	prin, .Lfunc_end556-prin
 	.cfi_endproc
                                         // -- End function
 	.globl	prName                          // -- Begin function prName
@@ -52613,23 +52646,23 @@ prName:                                 // @prName
 	.cfi_offset w30, -16
 	stp	xzr, x0, [sp]
 	adrp	x19, ($Put)
-.LBB556_1:                              // %"$2"
+.LBB557_1:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	mov	x0, sp
 	bl	symByte
 	tst	w0, #0xff
-	b.eq	.LBB556_3
+	b.eq	.LBB557_3
 // %bb.2:                               // %"$3"
-                                        //   in Loop: Header=BB556_1 Depth=1
+                                        //   in Loop: Header=BB557_1 Depth=1
 	ldr	x8, [x19, :lo12:($Put)]
 	blr	x8
-	b	.LBB556_1
-.LBB556_3:                              // %"$4"
+	b	.LBB557_1
+.LBB557_3:                              // %"$4"
 	ldp	x30, x19, [sp, #16]             // 16-byte Folded Reload
 	add	sp, sp, #32                     // =32
 	ret
-.Lfunc_end556:
-	.size	prName, .Lfunc_end556-prName
+.Lfunc_end557:
+	.size	prName, .Lfunc_end557-prName
 	.cfi_endproc
                                         // -- End function
 	.globl	memcmp                          // -- Begin function memcmp
@@ -52647,8 +52680,8 @@ memcmp:                                 // @memcmp
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end557:
-	.size	memcmp, .Lfunc_end557-memcmp
+.Lfunc_end558:
+	.size	memcmp, .Lfunc_end558-memcmp
 	.cfi_endproc
                                         // -- End function
 	.globl	eol                             // -- Begin function eol
@@ -52660,32 +52693,32 @@ eol:                                    // @eol
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	tbnz	w0, #31, .LBB558_6
+	tbnz	w0, #31, .LBB559_6
 // %bb.1:                               // %"$3"
 	cmp	w0, #13                         // =13
-	b.eq	.LBB558_4
+	b.eq	.LBB559_4
 // %bb.2:                               // %"$3"
 	cmp	w0, #10                         // =10
-	b.eq	.LBB558_5
+	b.eq	.LBB559_5
 // %bb.3:
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.LBB558_4:                              // %"$8"
+.LBB559_4:                              // %"$8"
 	adrp	x8, ($Get)
 	ldr	x8, [x8, :lo12:($Get)]
 	blr	x8
 	cmp	w0, #10                         // =10
-	b.ne	.LBB558_6
-.LBB558_5:                              // %"$9"
+	b.ne	.LBB559_6
+.LBB559_5:                              // %"$9"
 	adrp	x8, ($Chr)
 	str	wzr, [x8, :lo12:($Chr)]
-.LBB558_6:                              // %"$2"
+.LBB559_6:                              // %"$2"
 	mov	w0, #1
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end558:
-	.size	eol, .Lfunc_end558-eol
+.Lfunc_end559:
+	.size	eol, .Lfunc_end559-eol
 	.cfi_endproc
                                         // -- End function
 	.globl	firstChar                       // -- Begin function firstChar
@@ -52702,24 +52735,24 @@ firstChar:                              // @firstChar
 	adrp	x8, SymTab+8
 	add	x8, x8, :lo12:SymTab+8
 	cmp	x0, x8
-	b.eq	.LBB559_2
+	b.eq	.LBB560_2
 // %bb.1:                               // %"$3"
 	ldp	w8, w9, [x0, #-8]
 	bfi	x8, x9, #32, #32
-	tbz	w8, #3, .LBB559_3
-.LBB559_2:
+	tbz	w8, #3, .LBB560_3
+.LBB560_2:
 	mov	w0, wzr
-	b	.LBB559_6
-.LBB559_3:                              // %"$7"
+	b	.LBB560_6
+.LBB560_3:                              // %"$7"
                                         // =>This Inner Loop Header: Depth=1
 	tst	x8, #0x6
-	b.ne	.LBB559_5
+	b.ne	.LBB560_5
 // %bb.4:                               // %"$8"
-                                        //   in Loop: Header=BB559_3 Depth=1
+                                        //   in Loop: Header=BB560_3 Depth=1
 	ldp	w8, w9, [x8, #8]
 	bfi	x8, x9, #32, #32
-	b	.LBB559_3
-.LBB559_5:                              // %"$9"
+	b	.LBB560_3
+.LBB560_5:                              // %"$9"
 	mov	x9, sp
 	sub	x0, x9, #16                     // =16
 	mov	sp, x0
@@ -52727,12 +52760,12 @@ firstChar:                              // @firstChar
 	lsr	x10, x8, #32
 	stp	w8, w10, [x9, #-8]
 	bl	symChar
-.LBB559_6:                              // %"$2"
+.LBB560_6:                              // %"$2"
 	mov	sp, x29
 	ldp	x29, x30, [sp], #16             // 16-byte Folded Reload
 	ret
-.Lfunc_end559:
-	.size	firstChar, .Lfunc_end559-firstChar
+.Lfunc_end560:
+	.size	firstChar, .Lfunc_end560-firstChar
 	.cfi_endproc
                                         // -- End function
 	.globl	atomErr                         // -- Begin function atomErr
@@ -52748,8 +52781,8 @@ atomErr:                                // @atomErr
 	add	x2, x2, :lo12:.L$117
 	mov	x3, xzr
 	bl	err
-.Lfunc_end560:
-	.size	atomErr, .Lfunc_end560-atomErr
+.Lfunc_end561:
+	.size	atomErr, .Lfunc_end561-atomErr
 	.cfi_endproc
                                         // -- End function
 	.globl	stdinByte                       // -- Begin function stdinByte
@@ -52766,8 +52799,8 @@ stdinByte:                              // @stdinByte
 	blr	x8
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end561:
-	.size	stdinByte, .Lfunc_end561-stdinByte
+.Lfunc_end562:
+	.size	stdinByte, .Lfunc_end562-stdinByte
 	.cfi_endproc
                                         // -- End function
 	.globl	meta                            // -- Begin function meta
@@ -52791,57 +52824,57 @@ meta:                                   // @meta
 	adrp	x23, ($StkLimit)
 	adrp	x19, SymTab+8
 	add	x19, x19, :lo12:SymTab+8
-	b	.LBB562_2
-.LBB562_1:                              // %"$7"
-                                        //   in Loop: Header=BB562_2 Depth=1
+	b	.LBB563_2
+.LBB563_1:                              // %"$7"
+                                        //   in Loop: Header=BB563_2 Depth=1
 	ldp	w21, w8, [x21, #8]
 	bfi	x21, x8, #32, #32
-.LBB562_2:                              // %"$2"
+.LBB563_2:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	tst	x21, #0xf
-	b.ne	.LBB562_8
+	b.ne	.LBB563_8
 // %bb.3:                               // %"$3"
-                                        //   in Loop: Header=BB562_2 Depth=1
+                                        //   in Loop: Header=BB563_2 Depth=1
 	ldr	w22, [x21]
 	eor	w8, w22, #0x8
 	tst	x8, #0xe
-	b.ne	.LBB562_1
+	b.ne	.LBB563_1
 // %bb.4:                               // %"$6"
-                                        //   in Loop: Header=BB562_2 Depth=1
+                                        //   in Loop: Header=BB563_2 Depth=1
 	ldr	w8, [x21, #4]
 	bfi	x22, x8, #32, #32
 	mov	x0, x22
 	mov	x1, x20
 	bl	get
 	cmp	x0, x19
-	b.ne	.LBB562_7
+	b.ne	.LBB563_7
 // %bb.5:                               // %"$8"
-                                        //   in Loop: Header=BB562_2 Depth=1
+                                        //   in Loop: Header=BB563_2 Depth=1
 	mov	x8, sp
 	ldr	x9, [x23, :lo12:($StkLimit)]
 	cmp	x9, x8
-	b.hi	.LBB562_9
+	b.hi	.LBB563_9
 // %bb.6:                               // %"$11"
-                                        //   in Loop: Header=BB562_2 Depth=1
+                                        //   in Loop: Header=BB563_2 Depth=1
 	ldp	w0, w8, [x22]
 	bfi	x0, x8, #32, #32
 	mov	x1, x20
 	bl	meta
 	cmp	x0, x19
-	b.eq	.LBB562_1
-.LBB562_7:
+	b.eq	.LBB563_1
+.LBB563_7:
 	mov	x19, x0
-.LBB562_8:                              // %"$4"
+.LBB563_8:                              // %"$4"
 	mov	x0, x19
 	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x23, [sp], #48             // 16-byte Folded Reload
 	ret
-.LBB562_9:                              // %"$10"
+.LBB563_9:                              // %"$10"
 	mov	x0, xzr
 	bl	stkErr
-.Lfunc_end562:
-	.size	meta, .Lfunc_end562-meta
+.Lfunc_end563:
+	.size	meta, .Lfunc_end563-meta
 	.cfi_endproc
                                         // -- End function
 	.globl	getn                            // -- Begin function getn
@@ -52858,88 +52891,88 @@ getn:                                   // @getn
 	.cfi_offset w30, -32
 	mov	x19, x1
 	tst	x1, #0x6
-	b.ne	.LBB563_18
+	b.ne	.LBB564_18
 // %bb.1:                               // %"$3"
 	mov	x20, x2
 	tst	x19, #0xf
-	b.eq	.LBB563_6
+	b.eq	.LBB564_6
 // %bb.2:                               // %"$5"
 	ldurb	w8, [x19, #-8]
-	tbz	w8, #3, .LBB563_4
+	tbz	w8, #3, .LBB564_4
 // %bb.3:                               // %"$26"
 	mov	x1, x19
 	bl	dbFetch
-.LBB563_4:                              // %"$27"
+.LBB564_4:                              // %"$27"
 	mov	x0, x19
 	mov	x1, x20
 	bl	get
-.LBB563_5:                              // %"$6"
+.LBB564_5:                              // %"$6"
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #32                  // 8-byte Folded Reload
 	ret
-.LBB563_6:                              // %"$4"
+.LBB564_6:                              // %"$4"
 	tst	x20, #0x6
-	b.eq	.LBB563_9
+	b.eq	.LBB564_9
 // %bb.7:                               // %"$8"
 	cmp	x20, #2                         // =2
-	b.ne	.LBB563_14
+	b.ne	.LBB564_14
 // %bb.8:
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
-	b	.LBB563_5
-.LBB563_9:                              // %"$10.preheader"
+	b	.LBB564_5
+.LBB564_9:                              // %"$10.preheader"
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
-.LBB563_10:                             // %"$10"
+.LBB564_10:                             // %"$10"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w8, w9, [x19]
 	bfi	x8, x9, #32, #32
 	tst	x8, #0xf
-	b.eq	.LBB563_12
-// %bb.11:                              //   in Loop: Header=BB563_10 Depth=1
+	b.eq	.LBB564_12
+// %bb.11:                              //   in Loop: Header=BB564_10 Depth=1
 	mov	w9, wzr
-	cbz	w9, .LBB563_13
-	b	.LBB563_17
-.LBB563_12:                             // %"$12"
-                                        //   in Loop: Header=BB563_10 Depth=1
+	cbz	w9, .LBB564_13
+	b	.LBB564_17
+.LBB564_12:                             // %"$12"
+                                        //   in Loop: Header=BB564_10 Depth=1
 	ldp	w10, w9, [x8]
 	bfi	x10, x9, #32, #32
 	cmp	x20, x10
 	cset	w9, eq
-	cbnz	w9, .LBB563_17
-.LBB563_13:                             // %"$13"
-                                        //   in Loop: Header=BB563_10 Depth=1
+	cbnz	w9, .LBB564_17
+.LBB564_13:                             // %"$13"
+                                        //   in Loop: Header=BB564_10 Depth=1
 	ldp	w19, w8, [x19, #8]
 	bfi	x19, x8, #32, #32
 	tst	x19, #0xf
-	b.eq	.LBB563_10
-	b	.LBB563_5
-.LBB563_14:                             // %"$19"
+	b.eq	.LBB564_10
+	b	.LBB564_5
+.LBB564_14:                             // %"$19"
 	lsr	x8, x20, #4
 	sub	x8, x8, #1                      // =1
-	cbz	x8, .LBB563_16
-.LBB563_15:                             // %"$21"
+	cbz	x8, .LBB564_16
+.LBB564_15:                             // %"$21"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w19, w9, [x19, #8]
 	bfi	x19, x9, #32, #32
 	sub	x8, x8, #1                      // =1
-	cbnz	x8, .LBB563_15
-.LBB563_16:                             // %"$22"
+	cbnz	x8, .LBB564_15
+.LBB564_16:                             // %"$22"
 	add	x8, x19, #8                     // =8
 	tst	w20, #0x8
 	csel	x8, x19, x8, eq
 	ldp	w0, w9, [x8]
 	bfi	x0, x9, #32, #32
-	b	.LBB563_5
-.LBB563_17:                             // %"$15"
+	b	.LBB564_5
+.LBB564_17:                             // %"$15"
 	ldp	w0, w9, [x8, #8]
 	bfi	x0, x9, #32, #32
-	b	.LBB563_5
-.LBB563_18:                             // %"$2"
+	b	.LBB564_5
+.LBB564_18:                             // %"$2"
 	mov	x1, x19
 	bl	argErr
-.Lfunc_end563:
-	.size	getn, .Lfunc_end563-getn
+.Lfunc_end564:
+	.size	getn, .Lfunc_end564-getn
 	.cfi_endproc
                                         // -- End function
 	.globl	wipe                            // -- Begin function wipe
@@ -52953,27 +52986,27 @@ wipe:                                   // @wipe
 	.cfi_offset w30, -16
 	eor	w8, w1, #0x8
 	tst	x8, #0xe
-	b.ne	.LBB564_9
+	b.ne	.LBB565_9
 // %bb.1:                               // %"$3"
 	ldp	w9, w8, [x1, #-8]
 	bfi	x9, x8, #32, #32
 	and	x8, x9, #0xfffffffffffffff7
 	tst	x8, #0x6
-	b.ne	.LBB564_3
-.LBB564_2:                              // %"$5"
+	b.ne	.LBB565_3
+.LBB565_2:                              // %"$5"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w8, w10, [x8, #8]
 	bfi	x8, x10, #32, #32
 	tst	x8, #0x6
-	b.eq	.LBB564_2
-.LBB564_3:                              // %"$6"
-	tbz	w9, #3, .LBB564_8
+	b.eq	.LBB565_2
+.LBB565_3:                              // %"$6"
+	tbz	w9, #3, .LBB565_8
 // %bb.4:                               // %"$8"
 	adds	x8, x8, x8
-	b.hs	.LBB564_7
+	b.hs	.LBB565_7
 // %bb.5:                               // %"$10"
 	adds	x8, x8, x8
-	b.lo	.LBB564_7
+	b.lo	.LBB565_7
 // %bb.6:                               // %"$12"
 	adrp	x9, SymTab+8
 	add	x9, x9, :lo12:SymTab+8
@@ -52983,10 +53016,10 @@ wipe:                                   // @wipe
 	orr	w9, w9, #0x8
 	lsr	x8, x8, #34
 	stp	w9, w8, [x1, #-8]
-.LBB564_7:                              // %"$9"
+.LBB565_7:                              // %"$9"
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.LBB564_8:                              // %"$7"
+.LBB565_8:                              // %"$7"
 	adrp	x9, SymTab+8
 	add	x9, x9, :lo12:SymTab+8
 	lsr	x10, x9, #32
@@ -52995,10 +53028,10 @@ wipe:                                   // @wipe
 	stp	w8, w9, [x1, #-8]
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.LBB564_9:                              // %"$2"
+.LBB565_9:                              // %"$2"
 	bl	symErr
-.Lfunc_end564:
-	.size	wipe, .Lfunc_end564-wipe
+.Lfunc_end565:
+	.size	wipe, .Lfunc_end565-wipe
 	.cfi_endproc
                                         // -- End function
 	.globl	prop                            // -- Begin function prop
@@ -53018,109 +53051,109 @@ prop:                                   // @prop
 	ldp	w20, w8, [x0, #-8]
 	bfi	x20, x8, #32, #32
 	tst	x20, #0x6
-	b.eq	.LBB565_3
-.LBB565_1:                              // %"$3"
+	b.eq	.LBB566_3
+.LBB566_1:                              // %"$3"
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	bl	cons
 	mov	x21, x0
-	tbz	w20, #3, .LBB565_6
+	tbz	w20, #3, .LBB566_6
 // %bb.2:                               // %"$27"
 	and	x1, x20, #0xfffffffffffffff7
 	mov	x0, x21
 	bl	cons
 	orr	x0, x0, #0x8
-	b	.LBB565_7
-.LBB565_3:                              // %"$2"
+	b	.LBB566_7
+.LBB566_3:                              // %"$2"
 	and	x8, x20, #0xfffffffffffffff7
 	ldp	w0, w9, [x8]
 	bfi	x0, x9, #32, #32
 	tst	x0, #0xf
-	b.eq	.LBB565_9
+	b.eq	.LBB566_9
 // %bb.4:                               // %"$4"
 	cmp	x1, x0
-	b.ne	.LBB565_11
+	b.ne	.LBB566_11
 // %bb.5:                               // %"$7"
 	mov	x0, x1
-	b	.LBB565_8
-.LBB565_6:                              // %"$28"
+	b	.LBB566_8
+.LBB566_6:                              // %"$28"
 	mov	x0, x21
 	mov	x1, x20
 	bl	cons
-.LBB565_7:                              // %"$29"
+.LBB566_7:                              // %"$29"
 	lsr	x8, x0, #32
 	stp	w0, w8, [x19, #-8]
 	mov	x0, x21
-.LBB565_8:                              // %"$9"
+.LBB566_8:                              // %"$9"
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x21, [sp], #32             // 16-byte Folded Reload
 	ret
-.LBB565_9:                              // %"$5"
+.LBB566_9:                              // %"$5"
 	ldp	w10, w9, [x0, #8]
 	bfi	x10, x9, #32, #32
 	cmp	x1, x10
-	b.ne	.LBB565_11
-	b	.LBB565_8
-.LBB565_10:                             // %"$15"
-                                        //   in Loop: Header=BB565_11 Depth=1
+	b.ne	.LBB566_11
+	b	.LBB566_8
+.LBB566_10:                             // %"$15"
+                                        //   in Loop: Header=BB566_11 Depth=1
 	ldp	w11, w10, [x0, #8]
 	bfi	x11, x10, #32, #32
 	cmp	x1, x11
-	b.eq	.LBB565_16
-.LBB565_11:                             // %"$11"
+	b.eq	.LBB566_16
+.LBB566_11:                             // %"$11"
                                         // =>This Inner Loop Header: Depth=1
 	mov	x9, x8
 	ldp	w8, w10, [x8, #8]
 	bfi	x8, x10, #32, #32
 	tst	x8, #0xf
-	b.ne	.LBB565_1
+	b.ne	.LBB566_1
 // %bb.12:                              // %"$12"
-                                        //   in Loop: Header=BB565_11 Depth=1
+                                        //   in Loop: Header=BB566_11 Depth=1
 	ldp	w0, w10, [x8]
 	bfi	x0, x10, #32, #32
 	tst	x0, #0xf
-	b.eq	.LBB565_10
+	b.eq	.LBB566_10
 // %bb.13:                              // %"$14"
-                                        //   in Loop: Header=BB565_11 Depth=1
+                                        //   in Loop: Header=BB566_11 Depth=1
 	cmp	x1, x0
-	b.ne	.LBB565_11
+	b.ne	.LBB566_11
 // %bb.14:                              // %"$17"
 	ldp	w10, w11, [x8, #8]
 	stp	w10, w11, [x9, #8]
-	tbz	w20, #3, .LBB565_18
+	tbz	w20, #3, .LBB566_18
 // %bb.15:                              // %"$20"
 	and	x9, x20, #0xfffffffffffffff7
 	lsr	x10, x20, #32
 	stp	w9, w10, [x8, #8]
 	orr	x8, x8, #0x8
-	b	.LBB565_19
-.LBB565_16:                             // %"$22"
+	b	.LBB566_19
+.LBB566_16:                             // %"$22"
 	ldp	w10, w11, [x8, #8]
 	stp	w10, w11, [x9, #8]
-	tbz	w20, #3, .LBB565_20
+	tbz	w20, #3, .LBB566_20
 // %bb.17:                              // %"$25"
 	and	x9, x20, #0xfffffffffffffff7
 	lsr	x10, x20, #32
 	stp	w9, w10, [x8, #8]
 	orr	x8, x8, #0x8
-	b	.LBB565_21
-.LBB565_18:                             // %"$19"
+	b	.LBB566_21
+.LBB566_18:                             // %"$19"
 	lsr	x9, x20, #32
 	stp	w20, w9, [x8, #8]
-.LBB565_19:                             // %"$21"
+.LBB566_19:                             // %"$21"
 	lsr	x9, x8, #32
 	stp	w8, w9, [x19, #-8]
 	mov	x0, x1
-	b	.LBB565_8
-.LBB565_20:                             // %"$24"
+	b	.LBB566_8
+.LBB566_20:                             // %"$24"
 	lsr	x9, x20, #32
 	stp	w20, w9, [x8, #8]
-.LBB565_21:                             // %"$26"
+.LBB566_21:                             // %"$26"
 	lsr	x9, x8, #32
 	stp	w8, w9, [x19, #-8]
-	b	.LBB565_8
-.Lfunc_end565:
-	.size	prop, .Lfunc_end565-prop
+	b	.LBB566_8
+.Lfunc_end566:
+	.size	prop, .Lfunc_end566-prop
 	.cfi_endproc
                                         // -- End function
 	.globl	putn                            // -- Begin function putn
@@ -53133,67 +53166,67 @@ putn:                                   // @putn
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
 	tst	x2, #0x6
-	b.eq	.LBB566_5
+	b.eq	.LBB567_5
 // %bb.1:                               // %"$3"
 	cmp	x2, #2                          // =2
-	b.eq	.LBB566_13
+	b.eq	.LBB567_13
 // %bb.2:                               // %"$14"
 	lsr	x8, x2, #4
 	sub	x8, x8, #1                      // =1
-.LBB566_3:                              // %"$15"
+.LBB567_3:                              // %"$15"
                                         // =>This Inner Loop Header: Depth=1
-	cbz	x8, .LBB566_10
+	cbz	x8, .LBB567_10
 // %bb.4:                               // %"$16"
-                                        //   in Loop: Header=BB566_3 Depth=1
+                                        //   in Loop: Header=BB567_3 Depth=1
 	ldp	w1, w9, [x1, #8]
 	bfi	x1, x9, #32, #32
 	and	x9, x1, #0xf
 	sub	x8, x8, #1                      // =1
-	cbz	x9, .LBB566_3
-	b	.LBB566_9
-.LBB566_5:                              // %"$5"
+	cbz	x9, .LBB567_3
+	b	.LBB567_9
+.LBB567_5:                              // %"$5"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w8, w9, [x1]
 	bfi	x8, x9, #32, #32
 	tst	x8, #0xf
-	b.eq	.LBB566_7
-// %bb.6:                               //   in Loop: Header=BB566_5 Depth=1
+	b.eq	.LBB567_7
+// %bb.6:                               //   in Loop: Header=BB567_5 Depth=1
 	mov	w9, wzr
-	cbz	w9, .LBB566_8
-	b	.LBB566_11
-.LBB566_7:                              // %"$7"
-                                        //   in Loop: Header=BB566_5 Depth=1
+	cbz	w9, .LBB567_8
+	b	.LBB567_11
+.LBB567_7:                              // %"$7"
+                                        //   in Loop: Header=BB567_5 Depth=1
 	ldp	w10, w9, [x8]
 	bfi	x10, x9, #32, #32
 	cmp	x2, x10
 	cset	w9, eq
-	cbnz	w9, .LBB566_11
-.LBB566_8:                              // %"$8"
-                                        //   in Loop: Header=BB566_5 Depth=1
+	cbnz	w9, .LBB567_11
+.LBB567_8:                              // %"$8"
+                                        //   in Loop: Header=BB567_5 Depth=1
 	ldp	w1, w8, [x1, #8]
 	bfi	x1, x8, #32, #32
 	tst	x1, #0xf
-	b.eq	.LBB566_5
-.LBB566_9:                              // %"$11"
+	b.eq	.LBB567_5
+.LBB567_9:                              // %"$11"
 	mov	x1, x2
 	bl	itemErr
-.LBB566_10:                             // %"$17"
+.LBB567_10:                             // %"$17"
 	add	x8, x1, #8                      // =8
 	tst	w2, #0x8
 	csel	x8, x1, x8, eq
-	b	.LBB566_12
-.LBB566_11:                             // %"$10"
+	b	.LBB567_12
+.LBB567_11:                             // %"$10"
 	add	x8, x8, #8                      // =8
-.LBB566_12:                             // %"$2"
+.LBB567_12:                             // %"$2"
 	lsr	x9, x3, #32
 	stp	w3, w9, [x8]
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.LBB566_13:                             // %"$13"
+.LBB567_13:                             // %"$13"
 	mov	x1, x2
 	bl	argErr
-.Lfunc_end566:
-	.size	putn, .Lfunc_end566-putn
+.Lfunc_end567:
+	.size	putn, .Lfunc_end567-putn
 	.cfi_endproc
                                         // -- End function
 	.globl	itemErr                         // -- Begin function itemErr
@@ -53209,8 +53242,8 @@ itemErr:                                // @itemErr
 	add	x2, x2, :lo12:.L$121
 	mov	x3, xzr
 	bl	err
-.Lfunc_end567:
-	.size	itemErr, .Lfunc_end567-itemErr
+.Lfunc_end568:
+	.size	itemErr, .Lfunc_end568-itemErr
 	.cfi_endproc
                                         // -- End function
 	.globl	consTree                        // -- Begin function consTree
@@ -53220,11 +53253,11 @@ consTree:                               // @consTree
 	.cfi_startproc
 // %bb.0:                               // %"$1"
 	tst	x0, #0xf
-	b.eq	.LBB568_2
+	b.eq	.LBB569_2
 // %bb.1:                               // %"$4"
 	mov	x0, x1
 	ret
-.LBB568_2:                              // %"$3"
+.LBB569_2:                              // %"$3"
 	stp	x29, x30, [sp, #-64]!           // 16-byte Folded Spill
 	str	x23, [sp, #16]                  // 8-byte Folded Spill
 	stp	x22, x21, [sp, #32]             // 16-byte Folded Spill
@@ -53268,10 +53301,10 @@ consTree:                               // @consTree
 	lsr	x11, x10, #32
 	stp	w10, w11, [x9, #-8]
 	mov	x9, x22
-.LBB568_3:                              // %"$6"
+.LBB569_3:                              // %"$6"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB568_4 Depth 2
-                                        //       Child Loop BB568_6 Depth 3
+                                        //     Child Loop BB569_4 Depth 2
+                                        //       Child Loop BB569_6 Depth 3
 	lsr	x10, x9, #32
 	stp	w9, w10, [x8]
 	ldp	w9, w8, [x19, #8]
@@ -53279,11 +53312,11 @@ consTree:                               // @consTree
 	ldp	w10, w8, [x9, #8]
 	bfi	x10, x8, #32, #32
 	tst	x10, #0xf
-	b.eq	.LBB568_10
-.LBB568_4:                              // %"$9"
-                                        //   Parent Loop BB568_3 Depth=1
+	b.eq	.LBB569_10
+.LBB569_4:                              // %"$9"
+                                        //   Parent Loop BB569_3 Depth=1
                                         // =>  This Loop Header: Depth=2
-                                        //       Child Loop BB568_6 Depth 3
+                                        //       Child Loop BB569_6 Depth 3
 	lsr	x23, x19, #32
 	stp	w19, w23, [x20]
 	ldp	w0, w8, [x19]
@@ -53298,22 +53331,22 @@ consTree:                               // @consTree
 	ldp	w9, w10, [x8]
 	bfi	x9, x10, #32, #32
 	tst	x9, #0xf
-	b.eq	.LBB568_11
-// %bb.5:                               //   in Loop: Header=BB568_4 Depth=2
+	b.eq	.LBB569_11
+// %bb.5:                               //   in Loop: Header=BB569_4 Depth=2
 	mov	x8, x19
-.LBB568_6:                              // %"$13"
-                                        //   Parent Loop BB568_3 Depth=1
-                                        //     Parent Loop BB568_4 Depth=2
+.LBB569_6:                              // %"$13"
+                                        //   Parent Loop BB569_3 Depth=1
+                                        //     Parent Loop BB569_4 Depth=2
                                         // =>    This Inner Loop Header: Depth=3
 	ldp	w19, w9, [x22]
 	bfi	x19, x9, #32, #32
 	cmp	x19, #10                        // =10
-	b.eq	.LBB568_12
+	b.eq	.LBB569_12
 // %bb.7:                               // %"$15"
-                                        //   in Loop: Header=BB568_6 Depth=3
-	tbz	w19, #3, .LBB568_9
+                                        //   in Loop: Header=BB569_6 Depth=3
+	tbz	w19, #3, .LBB569_9
 // %bb.8:                               // %"$16"
-                                        //   in Loop: Header=BB568_6 Depth=3
+                                        //   in Loop: Header=BB569_6 Depth=3
 	and	x9, x19, #0xfffffffffffffff7
 	ldp	w11, w10, [x9, #8]
 	bfi	x11, x10, #32, #32
@@ -53324,9 +53357,9 @@ consTree:                               // @consTree
 	lsr	x8, x19, #32
 	stp	w9, w8, [x20]
 	mov	x8, x9
-	b	.LBB568_6
-.LBB568_9:                              // %"$18"
-                                        //   in Loop: Header=BB568_4 Depth=2
+	b	.LBB569_6
+.LBB569_9:                              // %"$18"
+                                        //   in Loop: Header=BB569_4 Depth=2
 	ldp	w10, w9, [x19, #8]
 	bfi	x10, x9, #32, #32
 	ldr	w9, [x10, #8]!
@@ -53334,25 +53367,25 @@ consTree:                               // @consTree
 	stp	w9, w11, [x22]
 	lsr	x9, x8, #32
 	stp	w8, w9, [x10]
-	b	.LBB568_4
-.LBB568_10:                             // %"$7"
-                                        //   in Loop: Header=BB568_3 Depth=1
+	b	.LBB569_4
+.LBB569_10:                             // %"$7"
+                                        //   in Loop: Header=BB569_3 Depth=1
 	ldp	w11, w12, [x22]
 	mov	x8, x22
 	stp	w11, w12, [x9, #8]
 	mov	x9, x19
 	mov	x19, x10
-	b	.LBB568_3
-.LBB568_11:                             // %"$12"
-                                        //   in Loop: Header=BB568_3 Depth=1
+	b	.LBB569_3
+.LBB569_11:                             // %"$12"
+                                        //   in Loop: Header=BB569_3 Depth=1
 	ldp	w10, w11, [x22]
 	stp	w10, w11, [x8]
 	orr	w8, w19, #0x8
 	stp	w8, w23, [x22]
 	mov	x8, x20
 	mov	x19, x9
-	b	.LBB568_3
-.LBB568_12:                             // %"$14"
+	b	.LBB569_3
+.LBB569_12:                             // %"$14"
 	ldp	w9, w8, [x20, #8]
 	bfi	x9, x8, #32, #32
 	adrp	x8, env
@@ -53365,8 +53398,8 @@ consTree:                               // @consTree
 	ldr	x23, [sp, #16]                  // 8-byte Folded Reload
 	ldp	x29, x30, [sp], #64             // 16-byte Folded Reload
 	ret
-.Lfunc_end568:
-	.size	consTree, .Lfunc_end568-consTree
+.Lfunc_end569:
+	.size	consTree, .Lfunc_end569-consTree
 	.cfi_endproc
                                         // -- End function
 	.globl	idxGet                          // -- Begin function idxGet
@@ -53385,38 +53418,38 @@ idxGet:                                 // @idxGet
 	mov	x19, x1
 	adrp	x21, SymTab+8
 	add	x21, x21, :lo12:SymTab+8
-.LBB569_1:                              // %"$2"
+.LBB570_1:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w20, w8, [x0]
 	bfi	x20, x8, #32, #32
 	tst	x20, #0xf
-	b.ne	.LBB569_5
+	b.ne	.LBB570_5
 // %bb.2:                               // %"$3"
-                                        //   in Loop: Header=BB569_1 Depth=1
+                                        //   in Loop: Header=BB570_1 Depth=1
 	ldp	w0, w8, [x20]
 	bfi	x0, x8, #32, #32
 	mov	x1, x19
 	bl	compare
-	cbz	x0, .LBB569_6
+	cbz	x0, .LBB570_6
 // %bb.3:                               // %"$6"
-                                        //   in Loop: Header=BB569_1 Depth=1
+                                        //   in Loop: Header=BB570_1 Depth=1
 	mov	x8, x0
 	ldp	w0, w9, [x20, #8]
 	bfi	x0, x9, #32, #32
-	tbz	x8, #63, .LBB569_1
+	tbz	x8, #63, .LBB570_1
 // %bb.4:                               // %"$8"
-                                        //   in Loop: Header=BB569_1 Depth=1
+                                        //   in Loop: Header=BB570_1 Depth=1
 	add	x0, x0, #8                      // =8
-	b	.LBB569_1
-.LBB569_5:
+	b	.LBB570_1
+.LBB570_5:
 	mov	x20, x21
-.LBB569_6:                              // %"$4"
+.LBB570_6:                              // %"$4"
 	mov	x0, x20
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x21, [sp], #32             // 16-byte Folded Reload
 	ret
-.Lfunc_end569:
-	.size	idxGet, .Lfunc_end569-idxGet
+.Lfunc_end570:
+	.size	idxGet, .Lfunc_end570-idxGet
 	.cfi_endproc
                                         // -- End function
 	.globl	idxDel                          // -- Begin function idxDel
@@ -53439,65 +53472,65 @@ idxDel:                                 // @idxDel
 	mov	x20, x0
 	adrp	x22, SymTab+8
 	add	x22, x22, :lo12:SymTab+8
-.LBB570_1:                              // %"$2"
+.LBB571_1:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w19, w8, [x20]
 	bfi	x19, x8, #32, #32
 	tst	x19, #0xf
-	b.ne	.LBB570_6
+	b.ne	.LBB571_6
 // %bb.2:                               // %"$3"
-                                        //   in Loop: Header=BB570_1 Depth=1
+                                        //   in Loop: Header=BB571_1 Depth=1
 	ldp	w23, w8, [x19, #8]
 	bfi	x23, x8, #32, #32
 	ldp	w0, w8, [x19]
 	bfi	x0, x8, #32, #32
 	mov	x1, x21
 	bl	compare
-	cbz	x0, .LBB570_7
+	cbz	x0, .LBB571_7
 // %bb.3:                               // %"$6"
-                                        //   in Loop: Header=BB570_1 Depth=1
+                                        //   in Loop: Header=BB571_1 Depth=1
 	tst	x23, #0xf
-	b.ne	.LBB570_6
+	b.ne	.LBB571_6
 // %bb.4:                               // %"$19"
-                                        //   in Loop: Header=BB570_1 Depth=1
+                                        //   in Loop: Header=BB571_1 Depth=1
 	mov	x20, x23
-	tbz	x0, #63, .LBB570_1
+	tbz	x0, #63, .LBB571_1
 // %bb.5:                               // %"$22"
-                                        //   in Loop: Header=BB570_1 Depth=1
+                                        //   in Loop: Header=BB571_1 Depth=1
 	add	x20, x23, #8                    // =8
-	b	.LBB570_1
-.LBB570_6:
+	b	.LBB571_1
+.LBB571_6:
 	mov	x19, x22
-	b	.LBB570_12
-.LBB570_7:                              // %"$7"
+	b	.LBB571_12
+.LBB571_7:                              // %"$7"
 	ldrb	w8, [x23]
 	tst	w8, #0xf
-	b.eq	.LBB570_9
+	b.eq	.LBB571_9
 // %bb.8:                               // %"$10"
 	ldp	w8, w9, [x23, #8]
-	b	.LBB570_11
-.LBB570_9:                              // %"$9"
+	b	.LBB571_11
+.LBB571_9:                              // %"$9"
 	ldrb	w8, [x23, #8]
 	tst	w8, #0xf
-	b.eq	.LBB570_13
+	b.eq	.LBB571_13
 // %bb.10:                              // %"$12"
 	ldp	w8, w9, [x23]
-.LBB570_11:                             // %"$4"
+.LBB571_11:                             // %"$4"
 	stp	w8, w9, [x20]
-.LBB570_12:                             // %"$4"
+.LBB571_12:                             // %"$4"
 	mov	x0, x19
 	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x23, [sp], #48             // 16-byte Folded Reload
 	ret
-.LBB570_13:                             // %"$11"
+.LBB571_13:                             // %"$11"
 	ldp	w8, w9, [x23, #8]
 	bfi	x8, x9, #32, #32
 	ldp	w9, w10, [x8, #8]
 	bfi	x9, x10, #32, #32
 	ldrb	w10, [x9]
 	tst	w10, #0xf
-	b.eq	.LBB570_15
+	b.eq	.LBB571_15
 // %bb.14:                              // %"$13"
 	ldp	w10, w8, [x8]
 	stp	w10, w8, [x19]
@@ -53505,34 +53538,34 @@ idxDel:                                 // @idxDel
 	bfi	x10, x8, #32, #32
 	ldp	w8, w9, [x9, #8]
 	stp	w8, w9, [x10, #8]
-	b	.LBB570_12
-.LBB570_15:                             // %"$14"
+	b	.LBB571_12
+.LBB571_15:                             // %"$14"
 	ldp	w9, w10, [x9]
 	bfi	x9, x10, #32, #32
-.LBB570_16:                             // %"$16"
+.LBB571_16:                             // %"$16"
                                         // =>This Inner Loop Header: Depth=1
 	mov	x10, x9
 	ldp	w9, w11, [x9, #8]
 	bfi	x9, x11, #32, #32
 	ldrb	w11, [x9]
 	tst	w11, #0xf
-	b.ne	.LBB570_18
+	b.ne	.LBB571_18
 // %bb.17:                              // %"$17"
-                                        //   in Loop: Header=BB570_16 Depth=1
+                                        //   in Loop: Header=BB571_16 Depth=1
 	ldp	w9, w8, [x9]
 	bfi	x9, x8, #32, #32
 	mov	x8, x10
-	b	.LBB570_16
-.LBB570_18:                             // %"$18"
+	b	.LBB571_16
+.LBB571_18:                             // %"$18"
 	ldp	w11, w10, [x10]
 	stp	w11, w10, [x19]
 	ldp	w8, w10, [x8, #8]
 	bfi	x8, x10, #32, #32
 	ldp	w10, w9, [x9, #8]
 	stp	w10, w9, [x8]
-	b	.LBB570_12
-.Lfunc_end570:
-	.size	idxDel, .Lfunc_end570-idxDel
+	b	.LBB571_12
+.Lfunc_end571:
+	.size	idxDel, .Lfunc_end571-idxDel
 	.cfi_endproc
                                         // -- End function
 	.globl	chopExtNm                       // -- Begin function chopExtNm
@@ -53558,11 +53591,11 @@ chopExtNm:                              // @chopExtNm
 	mov	x8, sp
 	str	x8, [x20, :lo12:env]
 	bl	objId
-	b	.LBB571_3
-.LBB571_1:                              //   in Loop: Header=BB571_3 Depth=1
+	b	.LBB572_3
+.LBB572_1:                              //   in Loop: Header=BB572_3 Depth=1
 	mov	x21, x9
-.LBB571_2:                              // %"$4"
-                                        //   in Loop: Header=BB571_3 Depth=1
+.LBB572_2:                              // %"$4"
+                                        //   in Loop: Header=BB572_3 Depth=1
 	mov	w0, #2
 	bfi	x0, x8, #4, #22
 	mov	x1, xzr
@@ -53571,44 +53604,44 @@ chopExtNm:                              // @chopExtNm
 	bl	cons
 	str	x0, [sp]
 	lsr	x0, x21, #3
-	cbz	x0, .LBB571_6
-.LBB571_3:                              // %"$2"
+	cbz	x0, .LBB572_6
+.LBB572_3:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	mov	w8, #48
 	bfxil	x8, x0, #0, #3
 	lsr	x9, x0, #3
-	cbz	x9, .LBB571_1
+	cbz	x9, .LBB572_1
 // %bb.4:                               // %"$3"
-                                        //   in Loop: Header=BB571_3 Depth=1
+                                        //   in Loop: Header=BB572_3 Depth=1
 	lsl	x8, x8, #8
 	bfxil	x8, x0, #3, #3
 	orr	x8, x8, #0x30
 	lsr	x21, x9, #3
-	cbz	x21, .LBB571_2
+	cbz	x21, .LBB572_2
 // %bb.5:                               // %"$5"
-                                        //   in Loop: Header=BB571_3 Depth=1
+                                        //   in Loop: Header=BB572_3 Depth=1
 	lsl	x8, x8, #8
 	bfxil	x8, x9, #3, #3
 	orr	x8, x8, #0x30
-	b	.LBB571_2
-.LBB571_6:                              // %"$8"
+	b	.LBB572_2
+.LBB572_6:                              // %"$8"
 	mov	x0, x19
 	bl	objFile
-	cbz	w0, .LBB571_11
+	cbz	w0, .LBB572_11
 // %bb.7:                               // %"$11.preheader"
 	mov	w8, wzr
-.LBB571_8:                              // %"$11"
+.LBB572_8:                              // %"$11"
                                         // =>This Inner Loop Header: Depth=1
 	and	w9, w0, #0xf
 	orr	w8, w9, w8
 	orr	w8, w8, #0x40
 	lsr	w0, w0, #4
-	cbz	w0, .LBB571_10
+	cbz	w0, .LBB572_10
 // %bb.9:                               // %"$12"
-                                        //   in Loop: Header=BB571_8 Depth=1
+                                        //   in Loop: Header=BB572_8 Depth=1
 	lsl	w8, w8, #8
-	b	.LBB571_8
-.LBB571_10:                             // %"$13"
+	b	.LBB572_8
+.LBB572_10:                             // %"$13"
 	sxtw	x8, w8
 	mov	w0, #2
 	bfi	x0, x8, #4, #60
@@ -53616,15 +53649,15 @@ chopExtNm:                              // @chopExtNm
 	ldr	x1, [sp]
 	bl	cons
 	str	x0, [sp]
-.LBB571_11:                             // %"$10"
+.LBB572_11:                             // %"$10"
 	ldp	x0, x8, [sp]
 	str	x8, [x20, :lo12:env]
 	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
 	ldp	x30, x21, [sp, #16]             // 16-byte Folded Reload
 	add	sp, sp, #48                     // =48
 	ret
-.Lfunc_end571:
-	.size	chopExtNm, .Lfunc_end571-chopExtNm
+.Lfunc_end572:
+	.size	chopExtNm, .Lfunc_end572-chopExtNm
 	.cfi_endproc
                                         // -- End function
 	.globl	dbZap                           // -- Begin function dbZap
@@ -53636,18 +53669,18 @@ dbZap:                                  // @dbZap
 	ldp	w8, w9, [x0, #-8]
 	bfi	x8, x9, #32, #32
 	tst	x8, #0x6
-	b.ne	.LBB572_4
+	b.ne	.LBB573_4
 // %bb.1:                               // %"$2"
 	and	x8, x8, #0xfffffffffffffff7
-.LBB572_2:                              // %"$4"
+.LBB573_2:                              // %"$4"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w8, w9, [x8, #8]
 	bfi	x8, x9, #32, #32
 	tst	x8, #0x6
-	b.eq	.LBB572_2
+	b.eq	.LBB573_2
 // %bb.3:                               // %"$6"
 	orr	x8, x8, #0x8
-.LBB572_4:                              // %"$3"
+.LBB573_4:                              // %"$3"
 	orr	x9, x8, #0xc000000000000000
 	lsr	x9, x9, #32
 	stp	w8, w9, [x0, #-8]
@@ -53656,8 +53689,8 @@ dbZap:                                  // @dbZap
 	lsr	x9, x8, #32
 	stp	w8, w9, [x0]
 	ret
-.Lfunc_end572:
-	.size	dbZap, .Lfunc_end572-dbZap
+.Lfunc_end573:
+	.size	dbZap, .Lfunc_end573-dbZap
 	.cfi_endproc
                                         // -- End function
 	.globl	unintern                        // -- Begin function unintern
@@ -53678,112 +53711,112 @@ unintern:                               // @unintern
 	.cfi_offset w30, -48
 	mov	x20, x1
 	mov	x19, x0
-	tbz	w20, #1, .LBB573_9
-.LBB573_1:                              // %"$5"
+	tbz	w20, #1, .LBB574_9
+.LBB574_1:                              // %"$5"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB573_3 Depth 2
+                                        //     Child Loop BB574_3 Depth 2
 	ldp	w0, w8, [x2]
 	bfi	x0, x8, #32, #32
 	tst	x0, #0xf
-	b.ne	.LBB573_23
+	b.ne	.LBB574_23
 // %bb.2:                               // %"$6"
-                                        //   in Loop: Header=BB573_1 Depth=1
+                                        //   in Loop: Header=BB574_1 Depth=1
 	ldp	w8, w9, [x0]
 	bfi	x8, x9, #32, #32
 	sub	x9, x8, #8                      // =8
-.LBB573_3:                              // %"$8"
-                                        //   Parent Loop BB573_1 Depth=1
+.LBB574_3:                              // %"$8"
+                                        //   Parent Loop BB574_1 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	ldp	w9, w10, [x9]
 	bfi	x9, x10, #32, #32
 	tst	x9, #0x6
-	b.ne	.LBB573_5
+	b.ne	.LBB574_5
 // %bb.4:                               // %"$9"
-                                        //   in Loop: Header=BB573_3 Depth=2
+                                        //   in Loop: Header=BB574_3 Depth=2
 	add	x9, x9, #8                      // =8
-	b	.LBB573_3
-.LBB573_5:                              // %"$10"
-                                        //   in Loop: Header=BB573_1 Depth=1
+	b	.LBB574_3
+.LBB574_5:                              // %"$10"
+                                        //   in Loop: Header=BB574_1 Depth=1
 	cmp	x20, x9
-	b.eq	.LBB573_18
+	b.eq	.LBB574_18
 // %bb.6:                               // %"$11"
-                                        //   in Loop: Header=BB573_1 Depth=1
+                                        //   in Loop: Header=BB574_1 Depth=1
 	ldp	w2, w8, [x0, #8]
 	bfi	x2, x8, #32, #32
 	tst	x2, #0xf
-	b.ne	.LBB573_23
+	b.ne	.LBB574_23
 // %bb.7:                               // %"$15"
-                                        //   in Loop: Header=BB573_1 Depth=1
+                                        //   in Loop: Header=BB574_1 Depth=1
 	cmp	x20, x9
-	b.ls	.LBB573_1
+	b.ls	.LBB574_1
 // %bb.8:                               // %"$16"
-                                        //   in Loop: Header=BB573_1 Depth=1
+                                        //   in Loop: Header=BB574_1 Depth=1
 	add	x2, x2, #8                      // =8
-	b	.LBB573_1
-.LBB573_9:                              // %"$3"
+	b	.LBB574_1
+.LBB574_9:                              // %"$3"
 	add	x21, x2, #8                     // =8
-.LBB573_10:                             // %"$19"
+.LBB574_10:                             // %"$19"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB573_12 Depth 2
+                                        //     Child Loop BB574_12 Depth 2
 	ldp	w22, w8, [x21]
 	bfi	x22, x8, #32, #32
 	tst	x22, #0xf
-	b.ne	.LBB573_23
+	b.ne	.LBB574_23
 // %bb.11:                              // %"$20"
-                                        //   in Loop: Header=BB573_10 Depth=1
+                                        //   in Loop: Header=BB574_10 Depth=1
 	ldp	w23, w8, [x22]
 	bfi	x23, x8, #32, #32
 	sub	x8, x23, #8                     // =8
-.LBB573_12:                             // %"$22"
-                                        //   Parent Loop BB573_10 Depth=1
+.LBB574_12:                             // %"$22"
+                                        //   Parent Loop BB574_10 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	ldp	w0, w9, [x8]
 	bfi	x0, x9, #32, #32
 	tst	x0, #0x6
-	b.ne	.LBB573_14
+	b.ne	.LBB574_14
 // %bb.13:                              // %"$23"
-                                        //   in Loop: Header=BB573_12 Depth=2
+                                        //   in Loop: Header=BB574_12 Depth=2
 	add	x8, x0, #8                      // =8
-	b	.LBB573_12
-.LBB573_14:                             // %"$24"
-                                        //   in Loop: Header=BB573_10 Depth=1
+	b	.LBB574_12
+.LBB574_14:                             // %"$24"
+                                        //   in Loop: Header=BB574_10 Depth=1
 	mov	x1, x20
 	bl	cmpLong
-	cbz	x0, .LBB573_20
+	cbz	x0, .LBB574_20
 // %bb.15:                              // %"$25"
-                                        //   in Loop: Header=BB573_10 Depth=1
+                                        //   in Loop: Header=BB574_10 Depth=1
 	ldp	w21, w8, [x22, #8]
 	bfi	x21, x8, #32, #32
 	tst	x21, #0xf
-	b.ne	.LBB573_23
+	b.ne	.LBB574_23
 // %bb.16:                              // %"$29"
-                                        //   in Loop: Header=BB573_10 Depth=1
-	tbz	x0, #63, .LBB573_10
+                                        //   in Loop: Header=BB574_10 Depth=1
+	tbz	x0, #63, .LBB574_10
 // %bb.17:                              // %"$30"
-                                        //   in Loop: Header=BB573_10 Depth=1
+                                        //   in Loop: Header=BB574_10 Depth=1
 	add	x21, x21, #8                    // =8
-	b	.LBB573_10
-.LBB573_18:                             // %"$12"
+	b	.LBB574_10
+.LBB574_18:                             // %"$12"
 	cmp	x8, x19
-	b.ne	.LBB573_23
+	b.ne	.LBB574_23
 // %bb.19:                              // %"$13"
 	mov	x1, x2
-	b	.LBB573_22
-.LBB573_20:                             // %"$26"
+	b	.LBB574_22
+.LBB574_20:                             // %"$26"
 	cmp	x23, x19
-	b.ne	.LBB573_23
+	b.ne	.LBB574_23
 // %bb.21:                              // %"$27"
 	mov	x0, x22
 	mov	x1, x21
-.LBB573_22:                             // %"$4"
+.LBB574_22:                             // %"$4"
 	bl	delNode
-.LBB573_23:                             // %"$4"
+.LBB574_23:                             // %"$4"
 	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x23, [sp], #48             // 16-byte Folded Reload
 	ret
-.Lfunc_end573:
-	.size	unintern, .Lfunc_end573-unintern
+.Lfunc_end574:
+	.size	unintern, .Lfunc_end574-unintern
 	.cfi_endproc
                                         // -- End function
 	.globl	delNode                         // -- Begin function delNode
@@ -53796,27 +53829,27 @@ delNode:                                // @delNode
 	bfi	x8, x9, #32, #32
 	ldrb	w9, [x8]
 	tst	w9, #0xf
-	b.eq	.LBB574_2
+	b.eq	.LBB575_2
 // %bb.1:                               // %"$4"
 	ldp	w8, w9, [x8, #8]
 	stp	w8, w9, [x1]
 	ret
-.LBB574_2:                              // %"$3"
+.LBB575_2:                              // %"$3"
 	ldrb	w9, [x8, #8]
 	tst	w9, #0xf
-	b.eq	.LBB574_4
+	b.eq	.LBB575_4
 // %bb.3:                               // %"$6"
 	ldp	w8, w9, [x8]
 	stp	w8, w9, [x1]
 	ret
-.LBB574_4:                              // %"$5"
+.LBB575_4:                              // %"$5"
 	ldp	w9, w10, [x8, #8]
 	bfi	x9, x10, #32, #32
 	ldp	w8, w10, [x9, #8]
 	bfi	x8, x10, #32, #32
 	ldrb	w10, [x8]
 	tst	w10, #0xf
-	b.eq	.LBB574_6
+	b.eq	.LBB575_6
 // %bb.5:                               // %"$8"
 	ldp	w10, w9, [x9]
 	stp	w10, w9, [x0]
@@ -53825,7 +53858,7 @@ delNode:                                // @delNode
 	ldp	w8, w9, [x8, #8]
 	stp	w8, w9, [x10, #8]
 	ret
-.LBB574_6:                              // %"$9"
+.LBB575_6:                              // %"$9"
                                         // =>This Inner Loop Header: Depth=1
 	mov	x10, x9
 	ldp	w9, w11, [x8]
@@ -53834,7 +53867,7 @@ delNode:                                // @delNode
 	bfi	x8, x11, #32, #32
 	ldrb	w11, [x8]
 	tst	w11, #0xf
-	b.eq	.LBB574_6
+	b.eq	.LBB575_6
 // %bb.7:                               // %"$12"
 	ldp	w11, w9, [x9]
 	stp	w11, w9, [x0]
@@ -53843,8 +53876,8 @@ delNode:                                // @delNode
 	ldp	w8, w9, [x8, #8]
 	stp	w8, w9, [x10]
 	ret
-.Lfunc_end574:
-	.size	delNode, .Lfunc_end574-delNode
+.Lfunc_end575:
+	.size	delNode, .Lfunc_end575-delNode
 	.cfi_endproc
                                         // -- End function
 	.globl	funq                            // -- Begin function funq
@@ -53863,106 +53896,106 @@ funq:                                   // @funq
 	.cfi_offset w22, -32
 	.cfi_offset w30, -48
 	mov	x19, x0
-	tbnz	w19, #1, .LBB575_4
+	tbnz	w19, #1, .LBB576_4
 // %bb.1:                               // %"$3"
 	mov	w8, #1
 	ubfx	x9, x19, #3, #1
 	tst	w19, #0x4
 	csel	w8, w8, w9, ne
-	tbnz	w8, #0, .LBB575_3
+	tbnz	w8, #0, .LBB576_3
 // %bb.2:                               // %"$7"
 	mov	x0, x19
 	bl	circ
-	cbz	x0, .LBB575_5
-.LBB575_3:
+	cbz	x0, .LBB576_5
+.LBB576_3:
 	mov	x19, xzr
-.LBB575_4:                              // %"$2"
+.LBB576_4:                              // %"$2"
 	mov	x0, x19
 	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #48                  // 8-byte Folded Reload
 	ret
-.LBB575_5:                              // %"$9"
+.LBB576_5:                              // %"$9"
 	ldp	w8, w9, [x19, #8]
 	adrp	x21, SymTab+8
 	add	x21, x21, :lo12:SymTab+8
 	bfi	x8, x9, #32, #32
 	adrp	x22, SymTab+216
 	add	x22, x22, :lo12:SymTab+216
-	b	.LBB575_7
-.LBB575_6:                              // %"$39"
-                                        //   in Loop: Header=BB575_7 Depth=1
+	b	.LBB576_7
+.LBB576_6:                              // %"$39"
+                                        //   in Loop: Header=BB576_7 Depth=1
 	cmp	x8, x21
-	b.ne	.LBB575_3
-.LBB575_7:                              // %"$11"
+	b.ne	.LBB576_3
+.LBB576_7:                              // %"$11"
                                         // =>This Inner Loop Header: Depth=1
 	tst	x8, #0xf
-	b.ne	.LBB575_14
+	b.ne	.LBB576_14
 // %bb.8:                               // %"$12"
-                                        //   in Loop: Header=BB575_7 Depth=1
+                                        //   in Loop: Header=BB576_7 Depth=1
 	ldp	w9, w10, [x8]
 	bfi	x9, x10, #32, #32
 	ldp	w8, w10, [x8, #8]
 	bfi	x8, x10, #32, #32
 	tst	x9, #0xf
-	b.ne	.LBB575_6
+	b.ne	.LBB576_6
 // %bb.9:                               // %"$38"
-                                        //   in Loop: Header=BB575_7 Depth=1
+                                        //   in Loop: Header=BB576_7 Depth=1
 	ldrb	w10, [x9]
 	tst	w10, #0x6
-	b.eq	.LBB575_11
+	b.eq	.LBB576_11
 // %bb.10:                              // %"$41"
-                                        //   in Loop: Header=BB575_7 Depth=1
+                                        //   in Loop: Header=BB576_7 Depth=1
 	tst	x8, #0xf
-	b.ne	.LBB575_7
-	b	.LBB575_3
-.LBB575_11:                             // %"$42"
-                                        //   in Loop: Header=BB575_7 Depth=1
+	b.ne	.LBB576_7
+	b	.LBB576_3
+.LBB576_11:                             // %"$42"
+                                        //   in Loop: Header=BB576_7 Depth=1
 	ldp	w11, w10, [x9]
 	bfi	x11, x10, #32, #32
 	cmp	x11, x21
-	b.ne	.LBB575_13
-// %bb.12:                              //   in Loop: Header=BB575_7 Depth=1
+	b.ne	.LBB576_13
+// %bb.12:                              //   in Loop: Header=BB576_7 Depth=1
 	mov	w9, #1
-	tbz	w9, #0, .LBB575_7
-	b	.LBB575_3
-.LBB575_13:                             // %"$47"
-                                        //   in Loop: Header=BB575_7 Depth=1
+	tbz	w9, #0, .LBB576_7
+	b	.LBB576_3
+.LBB576_13:                             // %"$47"
+                                        //   in Loop: Header=BB576_7 Depth=1
 	ldp	w9, w10, [x9]
 	bfi	x9, x10, #32, #32
 	cmp	x9, x22
 	cset	w9, eq
-	tbz	w9, #0, .LBB575_7
-	b	.LBB575_3
-.LBB575_14:                             // %"$14"
+	tbz	w9, #0, .LBB576_7
+	b	.LBB576_3
+.LBB576_14:                             // %"$14"
 	cmp	x8, x21
-	b.ne	.LBB575_3
+	b.ne	.LBB576_3
 // %bb.15:                              // %"$16"
 	ldp	w20, w8, [x19]
 	bfi	x20, x8, #32, #32
 	cmp	x20, x21
-	b.ne	.LBB575_17
+	b.ne	.LBB576_17
 // %bb.16:
 	add	x19, x21, #208                  // =208
-	b	.LBB575_4
-.LBB575_17:                             // %"$18"
+	b	.LBB576_4
+.LBB576_17:                             // %"$18"
 	adrp	x8, SymTab+40
 	add	x8, x8, :lo12:SymTab+40
 	cmp	x20, x8
-	b.eq	.LBB575_3
+	b.eq	.LBB576_3
 // %bb.18:                              // %"$20"
 	mov	x0, x20
 	bl	circ
-	cbnz	x0, .LBB575_3
+	cbnz	x0, .LBB576_3
 // %bb.19:                              // %"$24.preheader"
 	mov	w9, #1
 	mov	x8, x20
-.LBB575_20:                             // %"$24"
+.LBB576_20:                             // %"$24"
                                         // =>This Inner Loop Header: Depth=1
 	tst	x8, #0xf
-	b.ne	.LBB575_22
+	b.ne	.LBB576_22
 // %bb.21:                              // %"$25"
-                                        //   in Loop: Header=BB575_20 Depth=1
+                                        //   in Loop: Header=BB576_20 Depth=1
 	mov	x19, xzr
 	ldp	w11, w10, [x8]
 	eor	w12, w11, #0x8
@@ -53975,9 +54008,9 @@ funq:                                   // @funq
 	csel	w10, w9, w10, eq
 	tst	x12, #0xe
 	csel	w10, w9, w10, ne
-	tbz	w10, #0, .LBB575_20
-	b	.LBB575_4
-.LBB575_22:                             // %"$27"
+	tbz	w10, #0, .LBB576_20
+	b	.LBB576_4
+.LBB576_22:                             // %"$27"
 	cmp	x8, x22
 	cset	w9, eq
 	tst	x8, #0x6
@@ -53985,9 +54018,9 @@ funq:                                   // @funq
 	csel	w8, w8, w9, ne
 	tst	w8, #0x1
 	csel	x19, xzr, x20, ne
-	b	.LBB575_4
-.Lfunc_end575:
-	.size	funq, .Lfunc_end575-funq
+	b	.LBB576_4
+.Lfunc_end576:
+	.size	funq, .Lfunc_end576-funq
 	.cfi_endproc
                                         // -- End function
 	.globl	initSeed                        // -- Begin function initSeed
@@ -54005,8 +54038,8 @@ initSeed:                               // @initSeed
 	mov	x20, x0
 	mov	x19, xzr
 	tst	x20, #0xf
-	b.ne	.LBB576_2
-.LBB576_1:                              // %"$3"
+	b.ne	.LBB577_2
+.LBB577_1:                              // %"$3"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w0, w8, [x20]
 	bfi	x0, x8, #32, #32
@@ -54015,57 +54048,57 @@ initSeed:                               // @initSeed
 	bl	initSeed
 	add	x19, x19, x0
 	tst	x20, #0xf
-	b.eq	.LBB576_1
-.LBB576_2:                              // %"$4"
+	b.eq	.LBB577_1
+.LBB577_2:                              // %"$4"
 	adrp	x8, SymTab+8
 	add	x8, x8, :lo12:SymTab+8
 	cmp	x20, x8
-	b.eq	.LBB576_10
+	b.eq	.LBB577_10
 // %bb.3:                               // %"$5"
 	tst	x20, #0x6
-	b.eq	.LBB576_11
-.LBB576_4:                              // %"$8"
-	tbz	w20, #1, .LBB576_6
+	b.eq	.LBB577_11
+.LBB577_4:                              // %"$8"
+	tbz	w20, #1, .LBB577_6
 // %bb.5:                               // %"$12"
 	lsr	x8, x20, #3
-	b	.LBB576_9
-.LBB576_6:                              // %"$13"
+	b	.LBB577_9
+.LBB577_6:                              // %"$13"
 	and	x8, x20, #0xfffffffffffffff7
 	tst	w20, #0x8
 	csel	x8, x20, x8, eq
 	cinc	x19, x19, ne
-.LBB576_7:                              // %"$17"
+.LBB577_7:                              // %"$17"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w10, w9, [x8, #-4]
 	bfi	x10, x9, #32, #32
 	add	x19, x19, x10
 	ldp	w8, w9, [x8, #4]
 	bfi	x8, x9, #32, #32
-	tbz	w8, #1, .LBB576_7
+	tbz	w8, #1, .LBB577_7
 // %bb.8:                               // %"$19"
 	lsr	x8, x8, #4
-.LBB576_9:                              // %"$14"
+.LBB577_9:                              // %"$14"
 	add	x19, x19, x8
-.LBB576_10:                             // %"$6"
+.LBB577_10:                             // %"$6"
 	mov	x0, x19
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #32                  // 8-byte Folded Reload
 	ret
-.LBB576_11:                             // %"$7"
+.LBB577_11:                             // %"$7"
 	ldp	w9, w8, [x20, #-8]
 	bfi	x9, x8, #32, #32
 	and	x20, x9, #0xfffffffffffffff7
 	tst	x20, #0x6
-	b.ne	.LBB576_4
-.LBB576_12:                             // %"$10"
+	b.ne	.LBB577_4
+.LBB577_12:                             // %"$10"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w20, w8, [x20, #8]
 	bfi	x20, x8, #32, #32
 	tst	x20, #0x6
-	b.eq	.LBB576_12
-	b	.LBB576_4
-.Lfunc_end576:
-	.size	initSeed, .Lfunc_end576-initSeed
+	b.eq	.LBB577_12
+	b	.LBB577_4
+.Lfunc_end577:
+	.size	initSeed, .Lfunc_end577-initSeed
 	.cfi_endproc
                                         // -- End function
 	.globl	mulu                            // -- Begin function mulu
@@ -54096,13 +54129,13 @@ mulu:                                   // @mulu
 	.cfi_offset w29, -96
 	mov	x19, x0
 	cmp	x0, #2                          // =2
-	b.eq	.LBB577_41
+	b.eq	.LBB578_41
 // %bb.1:                               // %"$3"
 	mov	x21, x1
-	tbz	w19, #1, .LBB577_5
+	tbz	w19, #1, .LBB578_5
 // %bb.2:                               // %"$6"
 	lsr	x22, x19, #4
-	tbz	w21, #1, .LBB577_7
+	tbz	w21, #1, .LBB578_7
 // %bb.3:                               // %"$7"
 	lsr	x9, x21, #4
 	umulh	x8, x22, x9
@@ -54112,27 +54145,27 @@ mulu:                                   // @mulu
 	cset	w10, ne
 	cmp	x8, #0                          // =0
 	csel	w9, w9, w10, ne
-	cbz	w9, .LBB577_17
+	cbz	w9, .LBB578_17
 // %bb.4:                               // %"$12"
 	mov	w1, #2
 	bfi	x1, x8, #4, #60
 	bl	consNum
 	mov	x19, x0
-	b	.LBB577_41
-.LBB577_5:                              // %"$5"
+	b	.LBB578_41
+.LBB578_5:                              // %"$5"
 	cmp	x21, #2                         // =2
-	b.ne	.LBB577_8
+	b.ne	.LBB578_8
 // %bb.6:
 	mov	x19, x21
-	b	.LBB577_41
-.LBB577_7:
+	b	.LBB578_41
+.LBB578_7:
 	mov	x19, x21
-	b	.LBB577_10
-.LBB577_8:                              // %"$23"
-	tbz	w21, #1, .LBB577_18
+	b	.LBB578_10
+.LBB578_8:                              // %"$23"
+	tbz	w21, #1, .LBB578_18
 // %bb.9:                               // %"$26"
 	lsr	x22, x21, #4
-.LBB577_10:                             // %"$-1"
+.LBB578_10:                             // %"$-1"
 	mov	x21, x19
 	ldp	w9, w8, [x19, #-4]
 	bfi	x9, x8, #32, #32
@@ -54152,15 +54185,15 @@ mulu:                                   // @mulu
 	stp	w19, w10, [x9, #-16]
 	mov	x24, x19
 	stp	w8, w11, [x9, #-8]
-.LBB577_11:                             // %"$15"
+.LBB578_11:                             // %"$15"
                                         // =>This Inner Loop Header: Depth=1
 	lsr	x8, x0, #32
 	stp	w0, w8, [x25]
 	ldp	w21, w8, [x21, #4]
 	bfi	x21, x8, #32, #32
-	tbz	w21, #2, .LBB577_13
+	tbz	w21, #2, .LBB578_13
 // %bb.12:                              // %"$16"
-                                        //   in Loop: Header=BB577_11 Depth=1
+                                        //   in Loop: Header=BB578_11 Depth=1
 	ldp	w9, w8, [x21, #-4]
 	bfi	x9, x8, #32, #32
 	mul	x8, x22, x9
@@ -54170,8 +54203,8 @@ mulu:                                   // @mulu
 	add	x25, x24, #4                    // =4
 	bl	boxNum
 	mov	x24, x0
-	b	.LBB577_11
-.LBB577_13:                             // %"$17"
+	b	.LBB578_11
+.LBB578_13:                             // %"$17"
 	lsr	x8, x21, #4
 	umulh	x9, x22, x8
 	mul	x8, x22, x8
@@ -54182,29 +54215,29 @@ mulu:                                   // @mulu
 	cset	w10, ne
 	cmp	x8, #0                          // =0
 	csel	w9, w9, w10, ne
-	cbz	w9, .LBB577_15
+	cbz	w9, .LBB578_15
 // %bb.14:                              // %"$20"
 	mov	w1, #2
 	bfi	x1, x8, #4, #60
 	bl	consNum
 	mov	x8, x0
-	b	.LBB577_16
-.LBB577_15:                             // %"$21"
+	b	.LBB578_16
+.LBB578_15:                             // %"$21"
 	mov	w8, #2
 	bfi	x8, x0, #4, #60
-.LBB577_16:                             // %"$22"
+.LBB578_16:                             // %"$22"
 	lsr	x9, x8, #32
 	stp	w8, w9, [x24, #4]
 	ldp	w9, w8, [x20, #8]
 	bfi	x9, x8, #32, #32
 	adrp	x8, env
 	str	x9, [x8, :lo12:env]
-	b	.LBB577_41
-.LBB577_17:                             // %"$13"
+	b	.LBB578_41
+.LBB578_17:                             // %"$13"
 	mov	w19, #2
 	bfi	x19, x0, #4, #60
-	b	.LBB577_41
-.LBB577_18:                             // %"$25"
+	b	.LBB578_41
+.LBB578_18:                             // %"$25"
 	mov	x0, xzr
 	bl	boxNum
 	mov	x20, x0
@@ -54219,24 +54252,24 @@ mulu:                                   // @mulu
 	stp	w8, w11, [x9, #-8]
 	mov	x24, x0
 	str	x23, [x22, :lo12:env]
-	b	.LBB577_22
-.LBB577_19:                             // %"$37"
-                                        //   in Loop: Header=BB577_22 Depth=1
+	b	.LBB578_22
+.LBB578_19:                             // %"$37"
+                                        //   in Loop: Header=BB578_22 Depth=1
 	add	x25, x9, #4                     // =4
-.LBB577_20:                             // %"$38"
-                                        //   in Loop: Header=BB577_22 Depth=1
+.LBB578_20:                             // %"$38"
+                                        //   in Loop: Header=BB578_22 Depth=1
 	lsr	x9, x8, #32
 	stp	w8, w9, [x25]
-.LBB577_21:                             // %"$35"
-                                        //   in Loop: Header=BB577_22 Depth=1
+.LBB578_21:                             // %"$35"
+                                        //   in Loop: Header=BB578_22 Depth=1
 	ldp	w24, w8, [x24, #4]
 	bfi	x24, x8, #32, #32
 	ldp	w21, w8, [x21, #4]
 	bfi	x21, x8, #32, #32
-	tbnz	w21, #1, .LBB577_30
-.LBB577_22:                             // %"$27"
+	tbnz	w21, #1, .LBB578_30
+.LBB578_22:                             // %"$27"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB577_23 Depth 2
+                                        //     Child Loop BB578_23 Depth 2
 	ldp	w10, w8, [x19, #-4]
 	ldp	w11, w9, [x21, #-4]
 	bfi	x10, x8, #32, #32
@@ -54249,8 +54282,8 @@ mulu:                                   // @mulu
 	umulh	x26, x10, x11
 	mov	x25, x19
 	mov	x27, x24
-.LBB577_23:                             // %"$28"
-                                        //   Parent Loop BB577_22 Depth=1
+.LBB578_23:                             // %"$28"
+                                        //   Parent Loop BB578_22 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	and	x28, x9, #0x1
 	stur	w8, [x27, #-4]
@@ -54258,21 +54291,21 @@ mulu:                                   // @mulu
 	str	w8, [x27]
 	ldp	w0, w8, [x27, #4]
 	bfi	x0, x8, #32, #32
-	tbz	w0, #1, .LBB577_25
+	tbz	w0, #1, .LBB578_25
 // %bb.24:                              // %"$29"
-                                        //   in Loop: Header=BB577_23 Depth=2
+                                        //   in Loop: Header=BB578_23 Depth=2
 	mov	x0, xzr
 	bl	boxNum
 	lsr	x8, x0, #32
 	stp	w0, w8, [x27, #4]
-.LBB577_25:                             // %"$31"
-                                        //   in Loop: Header=BB577_23 Depth=2
+.LBB578_25:                             // %"$31"
+                                        //   in Loop: Header=BB578_23 Depth=2
 	add	x8, x26, x28
 	ldp	w25, w9, [x25, #4]
 	bfi	x25, x9, #32, #32
-	tbnz	w25, #1, .LBB577_27
+	tbnz	w25, #1, .LBB578_27
 // %bb.26:                              // %"$32"
-                                        //   in Loop: Header=BB577_23 Depth=2
+                                        //   in Loop: Header=BB578_23 Depth=2
 	ldp	w10, w9, [x25, #-4]
 	bfi	x10, x9, #32, #32
 	ldp	w11, w9, [x21, #-4]
@@ -54286,9 +54319,9 @@ mulu:                                   // @mulu
 	adds	x8, x9, x8
 	cset	w9, hs
 	mov	x27, x0
-	b	.LBB577_23
-.LBB577_27:                             // %"$33"
-                                        //   in Loop: Header=BB577_22 Depth=1
+	b	.LBB578_23
+.LBB578_27:                             // %"$33"
+                                        //   in Loop: Header=BB578_22 Depth=1
 	lsr	x9, x25, #4
 	ldp	w11, w10, [x21, #-4]
 	bfi	x11, x10, #32, #32
@@ -54305,20 +54338,20 @@ mulu:                                   // @mulu
 	str	w9, [x11]
 	lsr	x9, x9, #32
 	str	w9, [x11, #4]
-	cbz	x8, .LBB577_21
+	cbz	x8, .LBB578_21
 // %bb.28:                              // %"$34"
-                                        //   in Loop: Header=BB577_22 Depth=1
+                                        //   in Loop: Header=BB578_22 Depth=1
 	ldp	w9, w10, [x0, #4]
 	bfi	x9, x10, #32, #32
-	tbz	w9, #1, .LBB577_19
+	tbz	w9, #1, .LBB578_19
 // %bb.29:                              // %"$36"
-                                        //   in Loop: Header=BB577_22 Depth=1
+                                        //   in Loop: Header=BB578_22 Depth=1
 	add	x25, x0, #4                     // =4
 	mov	x0, x8
 	bl	boxNum
 	mov	x8, x0
-	b	.LBB577_20
-.LBB577_30:                             // %"$40"
+	b	.LBB578_20
+.LBB578_30:                             // %"$40"
 	lsr	x21, x21, #4
 	ldp	w9, w8, [x19, #-4]
 	bfi	x9, x8, #32, #32
@@ -54328,7 +54361,7 @@ mulu:                                   // @mulu
 	bfi	x10, x9, #32, #32
 	adds	x8, x8, x10
 	cset	w9, hs
-.LBB577_31:                             // %"$41"
+.LBB578_31:                             // %"$41"
                                         // =>This Inner Loop Header: Depth=1
 	and	x26, x9, #0x1
 	stur	w8, [x24, #-4]
@@ -54336,21 +54369,21 @@ mulu:                                   // @mulu
 	str	w8, [x24]
 	ldp	w0, w8, [x24, #4]
 	bfi	x0, x8, #32, #32
-	tbz	w0, #1, .LBB577_33
+	tbz	w0, #1, .LBB578_33
 // %bb.32:                              // %"$42"
-                                        //   in Loop: Header=BB577_31 Depth=1
+                                        //   in Loop: Header=BB578_31 Depth=1
 	mov	x0, xzr
 	bl	boxNum
 	lsr	x8, x0, #32
 	stp	w0, w8, [x24, #4]
-.LBB577_33:                             // %"$44"
-                                        //   in Loop: Header=BB577_31 Depth=1
+.LBB578_33:                             // %"$44"
+                                        //   in Loop: Header=BB578_31 Depth=1
 	add	x8, x25, x26
 	ldp	w19, w9, [x19, #4]
 	bfi	x19, x9, #32, #32
-	tbnz	w19, #1, .LBB577_35
+	tbnz	w19, #1, .LBB578_35
 // %bb.34:                              // %"$45"
-                                        //   in Loop: Header=BB577_31 Depth=1
+                                        //   in Loop: Header=BB578_31 Depth=1
 	ldp	w10, w9, [x19, #-4]
 	bfi	x10, x9, #32, #32
 	mul	x9, x10, x21
@@ -54362,8 +54395,8 @@ mulu:                                   // @mulu
 	adds	x8, x9, x8
 	cset	w9, hs
 	mov	x24, x0
-	b	.LBB577_31
-.LBB577_35:                             // %"$46"
+	b	.LBB578_31
+.LBB578_35:                             // %"$46"
 	lsr	x9, x19, #4
 	umulh	x10, x9, x21
 	mul	x9, x9, x21
@@ -54378,30 +54411,30 @@ mulu:                                   // @mulu
 	str	w9, [x11]
 	lsr	x9, x9, #32
 	str	w9, [x11, #4]
-	cbz	x8, .LBB577_40
+	cbz	x8, .LBB578_40
 // %bb.36:                              // %"$47"
 	ldp	w9, w10, [x0, #4]
 	bfi	x9, x10, #32, #32
-	tbz	w9, #1, .LBB577_38
+	tbz	w9, #1, .LBB578_38
 // %bb.37:                              // %"$49"
 	add	x19, x0, #4                     // =4
 	mov	x0, x8
 	bl	boxNum
 	mov	x8, x0
-	b	.LBB577_39
-.LBB577_38:                             // %"$50"
+	b	.LBB578_39
+.LBB578_38:                             // %"$50"
 	add	x19, x9, #4                     // =4
-.LBB577_39:                             // %"$51"
+.LBB578_39:                             // %"$51"
 	lsr	x9, x8, #32
 	stp	w8, w9, [x19]
-.LBB577_40:                             // %"$48"
+.LBB578_40:                             // %"$48"
 	mov	x0, x20
 	bl	zapZero
 	mov	x19, x0
 	ldp	w9, w8, [x23, #8]
 	bfi	x9, x8, #32, #32
 	str	x9, [x22, :lo12:env]
-.LBB577_41:                             // %"$2"
+.LBB578_41:                             // %"$2"
 	mov	x0, x19
 	mov	sp, x29
 	ldp	x20, x19, [sp, #80]             // 16-byte Folded Reload
@@ -54411,8 +54444,8 @@ mulu:                                   // @mulu
 	ldp	x28, x27, [sp, #16]             // 16-byte Folded Reload
 	ldp	x29, x30, [sp], #96             // 16-byte Folded Reload
 	ret
-.Lfunc_end577:
-	.size	mulu, .Lfunc_end577-mulu
+.Lfunc_end578:
+	.size	mulu, .Lfunc_end578-mulu
 	.cfi_endproc
                                         // -- End function
 	.globl	twiceBig                        // -- Begin function twiceBig
@@ -54438,8 +54471,8 @@ twiceBig:                               // @twiceBig
 	lsr	x11, x8, #31
 	stp	w13, w11, [x10]
 	mov	x20, x0
-	tbz	w9, #2, .LBB578_2
-.LBB578_1:                              // %"$3"
+	tbz	w9, #2, .LBB579_2
+.LBB579_1:                              // %"$3"
                                         // =>This Inner Loop Header: Depth=1
 	mov	x20, x9
 	ldr	w10, [x9, #-4]!
@@ -54453,27 +54486,27 @@ twiceBig:                               // @twiceBig
 	bfi	x13, x11, #32, #32
 	mov	x8, x10
 	mov	x9, x13
-	tbnz	w9, #2, .LBB578_1
-.LBB578_2:                              // %"$4"
+	tbnz	w9, #2, .LBB579_1
+.LBB579_2:                              // %"$4"
 	lsr	x9, x9, #4
 	extr	x8, x9, x8, #63
-	tbz	x8, #60, .LBB578_4
+	tbz	x8, #60, .LBB579_4
 // %bb.3:                               // %"$5"
 	mov	x0, x8
 	bl	boxNum
-	b	.LBB578_5
-.LBB578_4:                              // %"$6"
+	b	.LBB579_5
+.LBB579_4:                              // %"$6"
 	mov	w0, #2
 	bfi	x0, x8, #4, #60
-.LBB578_5:                              // %"$7"
+.LBB579_5:                              // %"$7"
 	lsr	x8, x0, #32
 	stp	w0, w8, [x20, #4]
 	mov	x0, x19
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #32                  // 8-byte Folded Reload
 	ret
-.Lfunc_end578:
-	.size	twiceBig, .Lfunc_end578-twiceBig
+.Lfunc_end579:
+	.size	twiceBig, .Lfunc_end579-twiceBig
 	.cfi_endproc
                                         // -- End function
 	.globl	xoru                            // -- Begin function xoru
@@ -54497,32 +54530,32 @@ xoru:                                   // @xoru
 	.cfi_offset w29, -64
 	mov	x19, x1
 	mov	x20, x0
-	tbz	w20, #1, .LBB579_3
+	tbz	w20, #1, .LBB580_3
 // %bb.1:                               // %"$4"
-	tbz	w19, #1, .LBB579_5
+	tbz	w19, #1, .LBB580_5
 // %bb.2:                               // %"$5"
 	eor	x8, x20, x19
 	orr	x0, x8, #0x2
-	b	.LBB579_17
-.LBB579_3:                              // %"$3"
-	tbz	w19, #1, .LBB579_7
+	b	.LBB580_17
+.LBB580_3:                              // %"$3"
+	tbz	w19, #1, .LBB580_7
 // %bb.4:                               // %"$9"
 	ldp	w8, w9, [x20, #-4]
 	bfi	x8, x9, #32, #32
 	eor	x0, x8, x19, lsr #4
 	ldp	w1, w8, [x20, #4]
-	b	.LBB579_6
-.LBB579_5:                              // %"$6"
+	b	.LBB580_6
+.LBB580_5:                              // %"$6"
 	ldp	w8, w9, [x19, #-4]
 	bfi	x8, x9, #32, #32
 	eor	x0, x8, x20, lsr #4
 	ldp	w1, w8, [x19, #4]
-.LBB579_6:                              // %"$2"
+.LBB580_6:                              // %"$2"
 	bfi	x1, x8, #32, #32
 	bl	consNum
 	bl	zapZero
-	b	.LBB579_17
-.LBB579_7:                              // %"$8"
+	b	.LBB580_17
+.LBB580_7:                              // %"$8"
 	ldp	w9, w8, [x20, #-4]
 	bfi	x9, x8, #32, #32
 	ldp	w10, w8, [x19, #-4]
@@ -54542,7 +54575,7 @@ xoru:                                   // @xoru
 	stp	w21, w8, [x10, #-16]
 	mov	x8, x21
 	stp	w9, w11, [x10, #-8]
-.LBB579_8:                              // %"$10"
+.LBB580_8:                              // %"$10"
                                         // =>This Inner Loop Header: Depth=1
 	lsr	x9, x0, #32
 	stp	w0, w9, [x23]
@@ -54551,12 +54584,12 @@ xoru:                                   // @xoru
 	ldp	w19, w9, [x19, #4]
 	bfi	x19, x9, #32, #32
 	add	x23, x8, #4                     // =4
-	tbnz	w20, #1, .LBB579_11
+	tbnz	w20, #1, .LBB580_11
 // %bb.9:                               // %"$11"
-                                        //   in Loop: Header=BB579_8 Depth=1
-	tbnz	w19, #1, .LBB579_13
+                                        //   in Loop: Header=BB580_8 Depth=1
+	tbnz	w19, #1, .LBB580_13
 // %bb.10:                              // %"$17"
-                                        //   in Loop: Header=BB579_8 Depth=1
+                                        //   in Loop: Header=BB580_8 Depth=1
 	ldp	w9, w8, [x20, #-4]
 	bfi	x9, x8, #32, #32
 	ldp	w10, w8, [x19, #-4]
@@ -54564,28 +54597,28 @@ xoru:                                   // @xoru
 	eor	x0, x9, x10
 	bl	boxNum
 	mov	x8, x0
-	b	.LBB579_8
-.LBB579_11:                             // %"$13"
-	tbz	w19, #1, .LBB579_14
+	b	.LBB580_8
+.LBB580_11:                             // %"$13"
+	tbz	w19, #1, .LBB580_14
 // %bb.12:                              // %"$14"
 	eor	x8, x20, x19
 	orr	x0, x8, #0x2
-	b	.LBB579_16
-.LBB579_13:                             // %"$18"
+	b	.LBB580_16
+.LBB580_13:                             // %"$18"
 	ldp	w8, w9, [x20, #-4]
 	bfi	x8, x9, #32, #32
 	eor	x0, x8, x19, lsr #4
 	ldp	w1, w8, [x20, #4]
-	b	.LBB579_15
-.LBB579_14:                             // %"$15"
+	b	.LBB580_15
+.LBB580_14:                             // %"$15"
 	ldp	w8, w9, [x19, #-4]
 	bfi	x8, x9, #32, #32
 	eor	x0, x8, x20, lsr #4
 	ldp	w1, w8, [x19, #4]
-.LBB579_15:                             // %"$12"
+.LBB580_15:                             // %"$12"
 	bfi	x1, x8, #32, #32
 	bl	consNum
-.LBB579_16:                             // %"$12"
+.LBB580_16:                             // %"$12"
 	lsr	x8, x0, #32
 	stp	w0, w8, [x23]
 	mov	x0, x21
@@ -54594,15 +54627,15 @@ xoru:                                   // @xoru
 	bfi	x9, x8, #32, #32
 	adrp	x8, env
 	str	x9, [x8, :lo12:env]
-.LBB579_17:                             // %"$2"
+.LBB580_17:                             // %"$2"
 	mov	sp, x29
 	ldp	x20, x19, [sp, #48]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #32]             // 16-byte Folded Reload
 	ldr	x23, [sp, #16]                  // 8-byte Folded Reload
 	ldp	x29, x30, [sp], #64             // 16-byte Folded Reload
 	ret
-.Lfunc_end579:
-	.size	xoru, .Lfunc_end579-xoru
+.Lfunc_end580:
+	.size	xoru, .Lfunc_end580-xoru
 	.cfi_endproc
                                         // -- End function
 	.globl	oru                             // -- Begin function oru
@@ -54626,31 +54659,31 @@ oru:                                    // @oru
 	.cfi_offset w29, -64
 	mov	x20, x1
 	mov	x21, x0
-	tbz	w21, #1, .LBB580_3
+	tbz	w21, #1, .LBB581_3
 // %bb.1:                               // %"$4"
-	tbz	w20, #1, .LBB580_5
+	tbz	w20, #1, .LBB581_5
 // %bb.2:                               // %"$5"
 	orr	x19, x21, x20
-	b	.LBB580_17
-.LBB580_3:                              // %"$3"
-	tbz	w20, #1, .LBB580_7
+	b	.LBB581_17
+.LBB581_3:                              // %"$3"
+	tbz	w20, #1, .LBB581_7
 // %bb.4:                               // %"$9"
 	ldp	w8, w9, [x21, #-4]
 	bfi	x8, x9, #32, #32
 	orr	x0, x8, x20, lsr #4
 	ldp	w1, w8, [x21, #4]
-	b	.LBB580_6
-.LBB580_5:                              // %"$6"
+	b	.LBB581_6
+.LBB581_5:                              // %"$6"
 	ldp	w8, w9, [x20, #-4]
 	bfi	x8, x9, #32, #32
 	orr	x0, x8, x21, lsr #4
 	ldp	w1, w8, [x20, #4]
-.LBB580_6:                              // %"$2"
+.LBB581_6:                              // %"$2"
 	bfi	x1, x8, #32, #32
 	bl	consNum
 	mov	x19, x0
-	b	.LBB580_17
-.LBB580_7:                              // %"$8"
+	b	.LBB581_17
+.LBB581_7:                              // %"$8"
 	ldp	w9, w8, [x21, #-4]
 	bfi	x9, x8, #32, #32
 	ldp	w10, w8, [x20, #-4]
@@ -54670,7 +54703,7 @@ oru:                                    // @oru
 	stp	w19, w8, [x10, #-16]
 	mov	x8, x19
 	stp	w9, w11, [x10, #-8]
-.LBB580_8:                              // %"$10"
+.LBB581_8:                              // %"$10"
                                         // =>This Inner Loop Header: Depth=1
 	lsr	x9, x0, #32
 	stp	w0, w9, [x23]
@@ -54679,12 +54712,12 @@ oru:                                    // @oru
 	ldp	w20, w9, [x20, #4]
 	bfi	x20, x9, #32, #32
 	add	x23, x8, #4                     // =4
-	tbnz	w21, #1, .LBB580_11
+	tbnz	w21, #1, .LBB581_11
 // %bb.9:                               // %"$11"
-                                        //   in Loop: Header=BB580_8 Depth=1
-	tbnz	w20, #1, .LBB580_13
+                                        //   in Loop: Header=BB581_8 Depth=1
+	tbnz	w20, #1, .LBB581_13
 // %bb.10:                              // %"$17"
-                                        //   in Loop: Header=BB580_8 Depth=1
+                                        //   in Loop: Header=BB581_8 Depth=1
 	ldp	w9, w8, [x21, #-4]
 	bfi	x9, x8, #32, #32
 	ldp	w10, w8, [x20, #-4]
@@ -54692,34 +54725,34 @@ oru:                                    // @oru
 	orr	x0, x9, x10
 	bl	boxNum
 	mov	x8, x0
-	b	.LBB580_8
-.LBB580_11:                             // %"$13"
-	tbz	w20, #1, .LBB580_14
+	b	.LBB581_8
+.LBB581_11:                             // %"$13"
+	tbz	w20, #1, .LBB581_14
 // %bb.12:                              // %"$14"
 	orr	x0, x21, x20
-	b	.LBB580_16
-.LBB580_13:                             // %"$18"
+	b	.LBB581_16
+.LBB581_13:                             // %"$18"
 	ldp	w8, w9, [x21, #-4]
 	bfi	x8, x9, #32, #32
 	orr	x0, x8, x20, lsr #4
 	ldp	w1, w8, [x21, #4]
-	b	.LBB580_15
-.LBB580_14:                             // %"$15"
+	b	.LBB581_15
+.LBB581_14:                             // %"$15"
 	ldp	w8, w9, [x20, #-4]
 	bfi	x8, x9, #32, #32
 	orr	x0, x8, x21, lsr #4
 	ldp	w1, w8, [x20, #4]
-.LBB580_15:                             // %"$12"
+.LBB581_15:                             // %"$12"
 	bfi	x1, x8, #32, #32
 	bl	consNum
-.LBB580_16:                             // %"$12"
+.LBB581_16:                             // %"$12"
 	lsr	x8, x0, #32
 	stp	w0, w8, [x23]
 	ldp	w9, w8, [x22, #8]
 	bfi	x9, x8, #32, #32
 	adrp	x8, env
 	str	x9, [x8, :lo12:env]
-.LBB580_17:                             // %"$2"
+.LBB581_17:                             // %"$2"
 	mov	x0, x19
 	mov	sp, x29
 	ldp	x20, x19, [sp, #48]             // 16-byte Folded Reload
@@ -54727,8 +54760,8 @@ oru:                                    // @oru
 	ldr	x23, [sp, #16]                  // 8-byte Folded Reload
 	ldp	x29, x30, [sp], #64             // 16-byte Folded Reload
 	ret
-.Lfunc_end580:
-	.size	oru, .Lfunc_end580-oru
+.Lfunc_end581:
+	.size	oru, .Lfunc_end581-oru
 	.cfi_endproc
                                         // -- End function
 	.globl	andu                            // -- Begin function andu
@@ -54752,27 +54785,27 @@ andu:                                   // @andu
 	.cfi_offset w29, -64
 	mov	x19, x1
 	mov	x20, x0
-	tbz	w20, #1, .LBB581_4
+	tbz	w20, #1, .LBB582_4
 // %bb.1:                               // %"$4"
-	tbnz	w19, #1, .LBB581_3
+	tbnz	w19, #1, .LBB582_3
 // %bb.2:                               // %"$6"
 	ldp	w9, w8, [x19, #-4]
 	bfi	x9, x8, #32, #32
 	mov	w19, #2
 	bfi	x19, x9, #4, #60
-.LBB581_3:                              // %"$7"
+.LBB582_3:                              // %"$7"
 	and	x0, x20, x19
-	b	.LBB581_15
-.LBB581_4:                              // %"$3"
-	tbz	w19, #1, .LBB581_6
+	b	.LBB582_15
+.LBB582_4:                              // %"$3"
+	tbz	w19, #1, .LBB582_6
 // %bb.5:                               // %"$9"
 	ldp	w9, w8, [x20, #-4]
 	bfi	x9, x8, #32, #32
 	mov	w8, #2
 	bfi	x8, x9, #4, #60
 	and	x0, x19, x8
-	b	.LBB581_15
-.LBB581_6:                              // %"$8"
+	b	.LBB582_15
+.LBB582_6:                              // %"$8"
 	ldp	w9, w8, [x20, #-4]
 	bfi	x9, x8, #32, #32
 	ldp	w10, w8, [x19, #-4]
@@ -54792,7 +54825,7 @@ andu:                                   // @andu
 	stp	w21, w8, [x10, #-16]
 	mov	x8, x21
 	stp	w9, w11, [x10, #-8]
-.LBB581_7:                              // %"$10"
+.LBB582_7:                              // %"$10"
                                         // =>This Inner Loop Header: Depth=1
 	lsr	x9, x0, #32
 	stp	w0, w9, [x23]
@@ -54800,12 +54833,12 @@ andu:                                   // @andu
 	bfi	x20, x9, #32, #32
 	ldp	w19, w9, [x19, #4]
 	bfi	x19, x9, #32, #32
-	tbnz	w20, #1, .LBB581_10
+	tbnz	w20, #1, .LBB582_10
 // %bb.8:                               // %"$11"
-                                        //   in Loop: Header=BB581_7 Depth=1
-	tbnz	w19, #1, .LBB581_13
+                                        //   in Loop: Header=BB582_7 Depth=1
+	tbnz	w19, #1, .LBB582_13
 // %bb.9:                               // %"$17"
-                                        //   in Loop: Header=BB581_7 Depth=1
+                                        //   in Loop: Header=BB582_7 Depth=1
 	add	x23, x8, #4                     // =4
 	ldp	w9, w8, [x20, #-4]
 	bfi	x9, x8, #32, #32
@@ -54814,26 +54847,26 @@ andu:                                   // @andu
 	and	x0, x9, x10
 	bl	boxNum
 	mov	x8, x0
-	b	.LBB581_7
-.LBB581_10:                             // %"$13"
+	b	.LBB582_7
+.LBB582_10:                             // %"$13"
 	add	x8, x8, #4                      // =4
-	tbnz	w19, #1, .LBB581_12
+	tbnz	w19, #1, .LBB582_12
 // %bb.11:                              // %"$15"
 	ldp	w10, w9, [x19, #-4]
 	bfi	x10, x9, #32, #32
 	mov	w19, #2
 	bfi	x19, x10, #4, #60
-.LBB581_12:                             // %"$16"
+.LBB582_12:                             // %"$16"
 	and	x9, x20, x19
-	b	.LBB581_14
-.LBB581_13:                             // %"$18"
+	b	.LBB582_14
+.LBB582_13:                             // %"$18"
 	add	x8, x8, #4                      // =4
 	ldp	w10, w9, [x20, #-4]
 	bfi	x10, x9, #32, #32
 	mov	w9, #2
 	bfi	x9, x10, #4, #60
 	and	x9, x19, x9
-.LBB581_14:                             // %"$12"
+.LBB582_14:                             // %"$12"
 	lsr	x10, x9, #32
 	stp	w9, w10, [x8]
 	mov	x0, x21
@@ -54842,15 +54875,15 @@ andu:                                   // @andu
 	bfi	x9, x8, #32, #32
 	adrp	x8, env
 	str	x9, [x8, :lo12:env]
-.LBB581_15:                             // %"$2"
+.LBB582_15:                             // %"$2"
 	mov	sp, x29
 	ldp	x20, x19, [sp, #48]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #32]             // 16-byte Folded Reload
 	ldr	x23, [sp, #16]                  // 8-byte Folded Reload
 	ldp	x29, x30, [sp], #64             // 16-byte Folded Reload
 	ret
-.Lfunc_end581:
-	.size	andu, .Lfunc_end581-andu
+.Lfunc_end582:
+	.size	andu, .Lfunc_end582-andu
 	.cfi_endproc
                                         // -- End function
 	.globl	shru                            // -- Begin function shru
@@ -54874,21 +54907,21 @@ shru:                                   // @shru
 	.cfi_offset w30, -56
 	.cfi_offset w29, -64
 	mov	x8, x0
-	tbz	w8, #1, .LBB582_2
+	tbz	w8, #1, .LBB583_2
 // %bb.1:                               // %"$2"
 	lsr	x8, x8, #1
 	orr	x8, x8, #0x2
 	mov	x9, #-10
 	movk	x9, #32767, lsl #48
 	and	x19, x8, x9
-	b	.LBB582_13
-.LBB582_2:                              // %"$3"
+	b	.LBB583_13
+.LBB583_2:                              // %"$3"
 	ldp	w9, w10, [x8, #-4]
 	ldp	w21, w8, [x8, #4]
 	bfi	x9, x10, #32, #32
 	lsr	x0, x9, #1
 	bfi	x21, x8, #32, #32
-	tbz	w21, #2, .LBB582_6
+	tbz	w21, #2, .LBB583_6
 // %bb.3:                               // %"$5"
 	ldp	w23, w8, [x21, #-4]
 	bfi	x23, x8, #32, #32
@@ -54907,24 +54940,24 @@ shru:                                   // @shru
 	stp	w19, w10, [x9, #-16]
 	mov	x22, x19
 	stp	w8, w11, [x9, #-8]
-.LBB582_4:                              // %"$8"
+.LBB583_4:                              // %"$8"
                                         // =>This Inner Loop Header: Depth=1
 	lsr	x8, x0, #32
 	stp	w0, w8, [x24]
 	lsr	x0, x23, #1
 	ldp	w21, w8, [x21, #4]
 	bfi	x21, x8, #32, #32
-	tbnz	w21, #1, .LBB582_8
+	tbnz	w21, #1, .LBB583_8
 // %bb.5:                               // %"$9"
-                                        //   in Loop: Header=BB582_4 Depth=1
+                                        //   in Loop: Header=BB583_4 Depth=1
 	ldp	w23, w8, [x21, #-4]
 	bfi	x23, x8, #32, #32
 	add	x24, x22, #4                    // =4
 	bfi	x0, x23, #63, #1
 	bl	boxNum
 	mov	x22, x0
-	b	.LBB582_4
-.LBB582_6:                              // %"$6"
+	b	.LBB583_4
+.LBB583_6:                              // %"$6"
 	lsr	x8, x21, #4
 	bfi	x0, x8, #63, #1
 	lsr	x20, x21, #5
@@ -54933,7 +54966,7 @@ shru:                                   // @shru
 	cset	w9, ne
 	cmp	x20, #0                         // =0
 	csel	w8, w8, w9, ne
-	tbz	w8, #0, .LBB582_10
+	tbz	w8, #0, .LBB583_10
 // %bb.7:                               // %"$19"
 	bl	boxNum
 	mov	x19, x0
@@ -54941,8 +54974,8 @@ shru:                                   // @shru
 	bfi	w8, w20, #4, #28
 	lsr	x9, x20, #28
 	stp	w8, w9, [x0, #4]
-	b	.LBB582_13
-.LBB582_8:                              // %"$10"
+	b	.LBB583_13
+.LBB583_8:                              // %"$10"
 	lsr	x8, x21, #4
 	bfi	x0, x8, #63, #1
 	lsr	x21, x21, #5
@@ -54951,7 +54984,7 @@ shru:                                   // @shru
 	cset	w9, ne
 	cmp	x21, #0                         // =0
 	csel	w8, w8, w9, ne
-	tbz	w8, #0, .LBB582_11
+	tbz	w8, #0, .LBB583_11
 // %bb.9:                               // %"$14"
 	bl	boxNum
 	mov	x8, x0
@@ -54959,22 +54992,22 @@ shru:                                   // @shru
 	bfi	w9, w21, #4, #28
 	lsr	x10, x21, #28
 	stp	w9, w10, [x0, #4]
-	b	.LBB582_12
-.LBB582_10:                             // %"$18"
+	b	.LBB583_12
+.LBB583_10:                             // %"$18"
 	mov	w19, #2
 	bfi	x19, x0, #4, #60
-	b	.LBB582_13
-.LBB582_11:                             // %"$13"
+	b	.LBB583_13
+.LBB583_11:                             // %"$13"
 	mov	w8, #2
 	bfi	x8, x0, #4, #60
-.LBB582_12:                             // %"$15"
+.LBB583_12:                             // %"$15"
 	lsr	x9, x8, #32
 	stp	w8, w9, [x22, #4]
 	ldp	w9, w8, [x20, #8]
 	bfi	x9, x8, #32, #32
 	adrp	x8, env
 	str	x9, [x8, :lo12:env]
-.LBB582_13:                             // %"$4"
+.LBB583_13:                             // %"$4"
 	mov	x0, x19
 	mov	sp, x29
 	ldp	x20, x19, [sp, #48]             // 16-byte Folded Reload
@@ -54982,8 +55015,8 @@ shru:                                   // @shru
 	ldp	x24, x23, [sp, #16]             // 16-byte Folded Reload
 	ldp	x29, x30, [sp], #64             // 16-byte Folded Reload
 	ret
-.Lfunc_end582:
-	.size	shru, .Lfunc_end582-shru
+.Lfunc_end583:
+	.size	shru, .Lfunc_end583-shru
 	.cfi_endproc
                                         // -- End function
 	.globl	shlu                            // -- Begin function shlu
@@ -55009,16 +55042,16 @@ shlu:                                   // @shlu
 	.cfi_offset w30, -72
 	.cfi_offset w29, -80
 	mov	x20, x0
-	tbz	w20, #1, .LBB583_3
+	tbz	w20, #1, .LBB584_3
 // %bb.1:                               // %"$2"
 	adds	x8, x20, x20
-	b.lo	.LBB583_7
+	b.lo	.LBB584_7
 // %bb.2:                               // %"$5"
 	lsr	x0, x20, #3
 	bl	boxNum
 	mov	x19, x0
-	b	.LBB583_10
-.LBB583_3:                              // %"$3"
+	b	.LBB584_10
+.LBB584_3:                              // %"$3"
 	ldp	w23, w8, [x20, #-4]
 	bfi	x23, x8, #32, #32
 	lsl	x0, x23, #1
@@ -55037,8 +55070,8 @@ shlu:                                   // @shlu
 	stp	w8, w11, [x9, #-8]
 	mov	x24, x0
 	str	x21, [x20, :lo12:env]
-	tbz	w22, #2, .LBB583_5
-.LBB583_4:                              // %"$9"
+	tbz	w22, #2, .LBB584_5
+.LBB584_4:                              // %"$9"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w25, w8, [x22, #-4]
 	bfi	x25, x8, #32, #32
@@ -55050,28 +55083,28 @@ shlu:                                   // @shlu
 	bfi	x22, x8, #32, #32
 	mov	x23, x25
 	mov	x24, x0
-	tbnz	w22, #2, .LBB583_4
-.LBB583_5:                              // %"$10"
+	tbnz	w22, #2, .LBB584_4
+.LBB584_5:                              // %"$10"
 	lsr	x8, x22, #4
 	extr	x8, x8, x23, #63
-	tbz	x8, #60, .LBB583_8
+	tbz	x8, #60, .LBB584_8
 // %bb.6:                               // %"$11"
 	mov	x0, x8
 	bl	boxNum
-	b	.LBB583_9
-.LBB583_7:                              // %"$6"
+	b	.LBB584_9
+.LBB584_7:                              // %"$6"
 	eor	x19, x8, #0x6
-	b	.LBB583_10
-.LBB583_8:                              // %"$12"
+	b	.LBB584_10
+.LBB584_8:                              // %"$12"
 	mov	w0, #2
 	bfi	x0, x8, #4, #60
-.LBB583_9:                              // %"$13"
+.LBB584_9:                              // %"$13"
 	lsr	x8, x0, #32
 	stp	w0, w8, [x24, #4]
 	ldp	w9, w8, [x21, #8]
 	bfi	x9, x8, #32, #32
 	str	x9, [x20, :lo12:env]
-.LBB583_10:                             // %"$4"
+.LBB584_10:                             // %"$4"
 	mov	x0, x19
 	mov	sp, x29
 	ldp	x20, x19, [sp, #64]             // 16-byte Folded Reload
@@ -55080,8 +55113,8 @@ shlu:                                   // @shlu
 	ldr	x25, [sp, #16]                  // 8-byte Folded Reload
 	ldp	x29, x30, [sp], #80             // 16-byte Folded Reload
 	ret
-.Lfunc_end583:
-	.size	shlu, .Lfunc_end583-shlu
+.Lfunc_end584:
+	.size	shlu, .Lfunc_end584-shlu
 	.cfi_endproc
                                         // -- End function
 	.globl	twice                           // -- Begin function twice
@@ -55093,25 +55126,25 @@ twice:                                  // @twice
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	tbz	w0, #1, .LBB584_3
+	tbz	w0, #1, .LBB585_3
 // %bb.1:                               // %"$2"
 	adds	x8, x0, x0
-	b.lo	.LBB584_4
+	b.lo	.LBB585_4
 // %bb.2:                               // %"$5"
 	lsr	x0, x0, #3
 	bl	boxNum
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.LBB584_3:                              // %"$3"
+.LBB585_3:                              // %"$3"
 	bl	twiceBig
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.LBB584_4:                              // %"$6"
+.LBB585_4:                              // %"$6"
 	eor	x0, x8, #0x6
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end584:
-	.size	twice, .Lfunc_end584-twice
+.Lfunc_end585:
+	.size	twice, .Lfunc_end585-twice
 	.cfi_endproc
                                         // -- End function
 	.globl	divErr                          // -- Begin function divErr
@@ -55128,8 +55161,8 @@ divErr:                                 // @divErr
 	mov	x1, xzr
 	mov	x3, xzr
 	bl	err
-.Lfunc_end585:
-	.size	divErr, .Lfunc_end585-divErr
+.Lfunc_end586:
+	.size	divErr, .Lfunc_end586-divErr
 	.cfi_endproc
                                         // -- End function
 	.globl	remu                            // -- Begin function remu
@@ -55138,7 +55171,7 @@ divErr:                                 // @divErr
 remu:                                   // @remu
 	.cfi_startproc
 // %bb.0:                               // %"$1"
-	tbz	w0, #2, .LBB586_2
+	tbz	w0, #2, .LBB587_2
 // %bb.1:                               // %"$4"
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
@@ -55147,8 +55180,8 @@ remu:                                   // @remu
 	bl	div1
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.LBB586_2:                              // %"$3"
-	tbnz	w1, #2, .LBB586_4
+.LBB587_2:                              // %"$3"
+	tbnz	w1, #2, .LBB587_4
 // %bb.3:                               // %"$5"
 	lsr	x8, x0, #4
 	lsr	x9, x1, #4
@@ -55156,10 +55189,10 @@ remu:                                   // @remu
 	msub	x8, x10, x9, x8
 	mov	w0, #2
 	bfi	x0, x8, #4, #60
-.LBB586_4:                              // %"$2"
+.LBB587_4:                              // %"$2"
 	ret
-.Lfunc_end586:
-	.size	remu, .Lfunc_end586-remu
+.Lfunc_end587:
+	.size	remu, .Lfunc_end587-remu
 	.cfi_endproc
                                         // -- End function
 	.globl	div1                            // -- Begin function div1
@@ -55208,13 +55241,13 @@ div1:                                   // @div1
 	stp	x21, x8, [sp]
 	mov	x8, sp
 	str	x8, [x23, :lo12:env]
-.LBB587_1:                              // %"$2"
+.LBB588_1:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w22, w8, [x22, #4]
 	bfi	x22, x8, #32, #32
-	tbz	w22, #2, .LBB587_3
+	tbz	w22, #2, .LBB588_3
 // %bb.2:                               // %"$3"
-                                        //   in Loop: Header=BB587_1 Depth=1
+                                        //   in Loop: Header=BB588_1 Depth=1
 	ldp	w0, w8, [x22, #-4]
 	bfi	x0, x8, #32, #32
 	bl	boxNum
@@ -55222,10 +55255,10 @@ div1:                                   // @div1
 	stp	w0, w8, [x20, #4]
 	add	x25, x25, #1                    // =1
 	mov	x20, x0
-	b	.LBB587_1
-.LBB587_3:                              // %"$4"
+	b	.LBB588_1
+.LBB588_3:                              // %"$4"
 	cmp	x22, #2                         // =2
-	b.eq	.LBB587_5
+	b.eq	.LBB588_5
 // %bb.4:                               // %"$5"
 	lsr	x0, x22, #4
 	bl	boxNum
@@ -55233,8 +55266,8 @@ div1:                                   // @div1
 	stp	w0, w8, [x20, #4]
 	add	x25, x25, #1                    // =1
 	mov	x20, x0
-.LBB587_5:                              // %"$6"
-	tbz	w21, #1, .LBB587_7
+.LBB588_5:                              // %"$6"
+	tbz	w21, #1, .LBB588_7
 // %bb.6:                               // %"$7"
 	lsr	x0, x21, #4
 	bl	boxNum
@@ -55242,8 +55275,8 @@ div1:                                   // @div1
 	mov	x27, xzr
 	str	x0, [sp]
 	mov	w26, #1
-	b	.LBB587_13
-.LBB587_7:                              // %"$8"
+	b	.LBB588_13
+.LBB588_7:                              // %"$8"
 	ldp	w0, w8, [x21, #-4]
 	bfi	x0, x8, #32, #32
 	bl	boxNum
@@ -55251,13 +55284,13 @@ div1:                                   // @div1
 	mov	x27, xzr
 	str	x0, [sp]
 	mov	w26, #1
-.LBB587_8:                              // %"$10"
+.LBB588_8:                              // %"$10"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w21, w8, [x21, #4]
 	bfi	x21, x8, #32, #32
-	tbz	w21, #2, .LBB587_10
+	tbz	w21, #2, .LBB588_10
 // %bb.9:                               // %"$11"
-                                        //   in Loop: Header=BB587_8 Depth=1
+                                        //   in Loop: Header=BB588_8 Depth=1
 	ldp	w0, w8, [x21, #-4]
 	bfi	x0, x8, #32, #32
 	bl	boxNum
@@ -55267,10 +55300,10 @@ div1:                                   // @div1
 	stp	w0, w8, [x22, #4]
 	mov	x27, x22
 	mov	x22, x0
-	b	.LBB587_8
-.LBB587_10:                             // %"$12"
+	b	.LBB588_8
+.LBB588_10:                             // %"$12"
 	cmp	x21, #2                         // =2
-	b.eq	.LBB587_12
+	b.eq	.LBB588_12
 // %bb.11:                              // %"$13"
 	lsr	x0, x21, #4
 	bl	boxNum
@@ -55280,60 +55313,60 @@ div1:                                   // @div1
 	stp	w0, w8, [x22, #4]
 	mov	x27, x22
 	mov	x22, x0
-.LBB587_12:                             // %"$14"
-	tbnz	x25, #63, .LBB587_49
-.LBB587_13:                             // %"$9"
+.LBB588_12:                             // %"$14"
+	tbnz	x25, #63, .LBB588_49
+.LBB588_13:                             // %"$9"
 	mov	x0, xzr
 	bl	boxNum
 	mov	x28, xzr
 	lsr	x8, x0, #32
 	stp	w0, w8, [x20, #4]
-.LBB587_14:                             // %"$20"
+.LBB588_14:                             // %"$20"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w9, w8, [x22, #-4]
 	bfi	x9, x8, #32, #32
-	tbnz	x9, #63, .LBB587_16
+	tbnz	x9, #63, .LBB588_16
 // %bb.15:                              // %"$21"
-                                        //   in Loop: Header=BB587_14 Depth=1
+                                        //   in Loop: Header=BB588_14 Depth=1
 	ldr	x0, [sp, #16]
 	bl	twiceBig
 	ldr	x0, [sp]
 	bl	twiceBig
 	add	x28, x28, #1                    // =1
-	b	.LBB587_14
-.LBB587_16:                             // %"$22"
+	b	.LBB588_14
+.LBB588_16:                             // %"$22"
 	ldp	w20, w8, [x22, #-4]
 	bfi	x20, x8, #32, #32
-	cbz	x27, .LBB587_18
+	cbz	x27, .LBB588_18
 // %bb.17:                              // %"$23"
 	ldp	w27, w8, [x27, #-4]
 	bfi	x27, x8, #32, #32
-.LBB587_18:                             // %"$26.preheader"
+.LBB588_18:                             // %"$26.preheader"
 	add	x22, sp, #16                    // =16
 	mov	w21, #2
 	mov	x8, x25
-	b	.LBB587_20
-.LBB587_19:                             // %"$27"
-                                        //   in Loop: Header=BB587_20 Depth=1
+	b	.LBB588_20
+.LBB588_19:                             // %"$27"
+                                        //   in Loop: Header=BB588_20 Depth=1
 	add	x22, x29, #4                    // =4
-.LBB587_20:                             // %"$26"
+.LBB588_20:                             // %"$26"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB587_22 Depth 2
-                                        //     Child Loop BB587_27 Depth 2
-                                        //     Child Loop BB587_31 Depth 2
-                                        //     Child Loop BB587_39 Depth 2
+                                        //     Child Loop BB588_22 Depth 2
+                                        //     Child Loop BB588_27 Depth 2
+                                        //     Child Loop BB588_31 Depth 2
+                                        //     Child Loop BB588_39 Depth 2
 	ldp	w29, w9, [x22]
 	bfi	x29, x9, #32, #32
 	subs	x8, x8, #1                      // =1
-	b.pl	.LBB587_19
+	b.pl	.LBB588_19
 // %bb.21:                              // %"$29.preheader"
-                                        //   in Loop: Header=BB587_20 Depth=1
+                                        //   in Loop: Header=BB588_20 Depth=1
 	mov	x22, xzr
 	mov	x23, xzr
 	mov	x8, x26
 	mov	x9, x29
-.LBB587_22:                             // %"$29"
-                                        //   Parent Loop BB587_20 Depth=1
+.LBB588_22:                             // %"$29"
+                                        //   Parent Loop BB588_20 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	mov	x24, x23
 	mov	x23, x22
@@ -55342,52 +55375,52 @@ div1:                                   // @div1
 	ldp	w9, w10, [x9, #4]
 	bfi	x9, x10, #32, #32
 	subs	x8, x8, #1                      // =1
-	b.pl	.LBB587_22
+	b.pl	.LBB588_22
 // %bb.23:                              // %"$31"
-                                        //   in Loop: Header=BB587_20 Depth=1
+                                        //   in Loop: Header=BB588_20 Depth=1
 	cmp	x22, x20
-	b.ne	.LBB587_25
-// %bb.24:                              //   in Loop: Header=BB587_20 Depth=1
+	b.ne	.LBB588_25
+// %bb.24:                              //   in Loop: Header=BB588_20 Depth=1
 	mov	x0, #-1
-	b	.LBB587_26
-.LBB587_25:                             // %"$33"
-                                        //   in Loop: Header=BB587_20 Depth=1
+	b	.LBB588_26
+.LBB588_25:                             // %"$33"
+                                        //   in Loop: Header=BB588_20 Depth=1
 	mov	x0, x23
 	mov	x1, x22
 	mov	x2, x20
 	mov	x3, xzr
 	bl	__udivti3
-.LBB587_26:                             // %"$34"
-                                        //   in Loop: Header=BB587_20 Depth=1
+.LBB588_26:                             // %"$34"
+                                        //   in Loop: Header=BB588_20 Depth=1
 	umulh	x9, x0, x20
 	mul	x8, x0, x20
 	subs	x8, x23, x8
 	cset	w10, lo
 	sub	x9, x22, x9
 	sub	x9, x9, x10
-	cbnz	x9, .LBB587_30
-.LBB587_27:                             // %"$36"
-                                        //   Parent Loop BB587_20 Depth=1
+	cbnz	x9, .LBB588_30
+.LBB588_27:                             // %"$36"
+                                        //   Parent Loop BB588_20 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	umulh	x10, x0, x27
 	cmp	x8, x10
-	b.hi	.LBB587_30
+	b.hi	.LBB588_30
 // %bb.28:                              // %"$38"
-                                        //   in Loop: Header=BB587_27 Depth=2
+                                        //   in Loop: Header=BB588_27 Depth=2
 	mul	x11, x0, x27
 	cmp	x24, x11
 	cset	w11, hs
 	cmp	x8, x10
 	csel	w10, wzr, w11, ne
-	tbnz	w10, #0, .LBB587_30
+	tbnz	w10, #0, .LBB588_30
 // %bb.29:                              // %"$41"
-                                        //   in Loop: Header=BB587_27 Depth=2
+                                        //   in Loop: Header=BB588_27 Depth=2
 	sub	x0, x0, #1                      // =1
 	adds	x8, x8, x20
 	cinc	x9, x9, hs
-	cbz	x9, .LBB587_27
-.LBB587_30:                             // %"$37"
-                                        //   in Loop: Header=BB587_20 Depth=1
+	cbz	x9, .LBB588_27
+.LBB588_30:                             // %"$37"
+                                        //   in Loop: Header=BB588_20 Depth=1
 	ldr	x8, [sp]
 	mov	x9, x29
 	ldr	w10, [x9, #-4]!
@@ -55402,14 +55435,14 @@ div1:                                   // @div1
 	stp	w10, w12, [x9]
 	cinc	x10, x11, lo
 	mov	x9, x29
-.LBB587_31:                             // %"$42"
-                                        //   Parent Loop BB587_20 Depth=1
+.LBB588_31:                             // %"$42"
+                                        //   Parent Loop BB588_20 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	ldp	w8, w11, [x8, #4]
 	bfi	x8, x11, #32, #32
-	tbz	w8, #2, .LBB587_33
+	tbz	w8, #2, .LBB588_33
 // %bb.32:                              // %"$43"
-                                        //   in Loop: Header=BB587_31 Depth=2
+                                        //   in Loop: Header=BB588_31 Depth=2
 	ldp	w9, w11, [x9, #4]
 	bfi	x9, x11, #32, #32
 	mov	x11, x9
@@ -55428,12 +55461,12 @@ div1:                                   // @div1
 	lsr	x12, x10, #32
 	stp	w10, w12, [x11]
 	cinc	x10, x13, lo
-	b	.LBB587_31
-.LBB587_33:                             // %"$44"
-                                        //   in Loop: Header=BB587_20 Depth=1
-	cbz	x10, .LBB587_42
+	b	.LBB588_31
+.LBB588_33:                             // %"$44"
+                                        //   in Loop: Header=BB588_20 Depth=1
+	cbz	x10, .LBB588_42
 // %bb.34:                              // %"$45"
-                                        //   in Loop: Header=BB587_20 Depth=1
+                                        //   in Loop: Header=BB588_20 Depth=1
 	ldp	w9, w8, [x9, #4]
 	bfi	x9, x8, #32, #32
 	ldr	w8, [x9, #-4]!
@@ -55443,22 +55476,22 @@ div1:                                   // @div1
 	str	w8, [x9]
 	lsr	x8, x8, #32
 	str	w8, [x9, #4]
-	b.hs	.LBB587_42
+	b.hs	.LBB588_42
 // %bb.35:                              // %"$47"
-                                        //   in Loop: Header=BB587_20 Depth=1
+                                        //   in Loop: Header=BB588_20 Depth=1
 	sub	x0, x0, #1                      // =1
-	tbz	w19, #0, .LBB587_37
-// %bb.36:                              //   in Loop: Header=BB587_20 Depth=1
+	tbz	w19, #0, .LBB588_37
+// %bb.36:                              //   in Loop: Header=BB588_20 Depth=1
 	mov	w8, #1
-	cbnz	w8, .LBB587_38
-	b	.LBB587_42
-.LBB587_37:                             // %"$50"
-                                        //   in Loop: Header=BB587_20 Depth=1
+	cbnz	w8, .LBB588_38
+	b	.LBB588_42
+.LBB588_37:                             // %"$50"
+                                        //   in Loop: Header=BB588_20 Depth=1
 	cmp	x25, #0                         // =0
 	cset	w8, ne
-	cbz	w8, .LBB587_42
-.LBB587_38:                             // %"$51"
-                                        //   in Loop: Header=BB587_20 Depth=1
+	cbz	w8, .LBB588_42
+.LBB588_38:                             // %"$51"
+                                        //   in Loop: Header=BB588_20 Depth=1
 	ldr	x8, [sp]
 	mov	x10, x29
 	ldr	w9, [x10, #-4]!
@@ -55468,8 +55501,8 @@ div1:                                   // @div1
 	bfi	x12, x11, #32, #32
 	adds	x11, x9, x12
 	cset	w9, hs
-.LBB587_39:                             // %"$53"
-                                        //   Parent Loop BB587_20 Depth=1
+.LBB588_39:                             // %"$53"
+                                        //   Parent Loop BB588_20 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	lsr	x12, x11, #32
 	stp	w11, w12, [x10]
@@ -55477,9 +55510,9 @@ div1:                                   // @div1
 	bfi	x29, x10, #32, #32
 	ldp	w8, w10, [x8, #4]
 	bfi	x8, x10, #32, #32
-	tbnz	w8, #1, .LBB587_41
+	tbnz	w8, #1, .LBB588_41
 // %bb.40:                              // %"$54"
-                                        //   in Loop: Header=BB587_39 Depth=2
+                                        //   in Loop: Header=BB588_39 Depth=2
 	mov	x10, x29
 	ldr	w11, [x10, #-4]!
 	ldr	w12, [x29]
@@ -55492,9 +55525,9 @@ div1:                                   // @div1
 	adds	x11, x11, x9
 	cset	w9, hs
 	orr	w9, w12, w9
-	b	.LBB587_39
-.LBB587_41:                             // %"$55"
-                                        //   in Loop: Header=BB587_20 Depth=1
+	b	.LBB588_39
+.LBB588_41:                             // %"$55"
+                                        //   in Loop: Header=BB588_20 Depth=1
 	ldr	w8, [x29, #-4]!
 	ldr	w10, [x29, #4]
 	bfi	x8, x10, #32, #32
@@ -55503,8 +55536,8 @@ div1:                                   // @div1
 	str	w8, [x29]
 	lsr	x8, x8, #32
 	str	w8, [x29, #4]
-.LBB587_42:                             // %"$46"
-                                        //   in Loop: Header=BB587_20 Depth=1
+.LBB588_42:                             // %"$46"
+                                        //   in Loop: Header=BB588_20 Depth=1
 	add	x22, sp, #16                    // =16
 	mov	x1, x21
 	bl	consNum
@@ -55512,27 +55545,27 @@ div1:                                   // @div1
 	str	x0, [sp, #32]
 	subs	x25, x25, #1                    // =1
 	mov	x8, x25
-	b.pl	.LBB587_20
+	b.pl	.LBB588_20
 // %bb.43:                              // %"$57"
-	tbz	w19, #0, .LBB587_46
+	tbz	w19, #0, .LBB588_46
 // %bb.44:                              // %"$59"
 	ldr	x0, [sp, #16]
 	bl	zapZero
-	cbz	x28, .LBB587_47
-.LBB587_45:                             // %"$62"
+	cbz	x28, .LBB588_47
+.LBB588_45:                             // %"$62"
                                         // =>This Inner Loop Header: Depth=1
 	bl	half
 	sub	x28, x28, #1                    // =1
-	cbnz	x28, .LBB587_45
-	b	.LBB587_47
-.LBB587_46:                             // %"$58"
+	cbnz	x28, .LBB588_45
+	b	.LBB588_47
+.LBB588_46:                             // %"$58"
 	mov	x0, x21
 	bl	zapZero
-.LBB587_47:
+.LBB588_47:
 	adrp	x9, env
 	ldr	x8, [sp, #40]
 	str	x8, [x9, :lo12:env]
-.LBB587_48:                             // %"$19"
+.LBB588_48:                             // %"$19"
 	ldp	x20, x19, [sp, #128]            // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #112]            // 16-byte Folded Reload
 	ldp	x24, x23, [sp, #96]             // 16-byte Folded Reload
@@ -55541,20 +55574,20 @@ div1:                                   // @div1
 	ldp	x29, x30, [sp, #48]             // 16-byte Folded Reload
 	add	sp, sp, #144                    // =144
 	ret
-.LBB587_49:                             // %"$15"
-	tbz	w19, #0, .LBB587_51
+.LBB588_49:                             // %"$15"
+	tbz	w19, #0, .LBB588_51
 // %bb.50:                              // %"$17"
 	ldr	x0, [sp, #16]
 	bl	zapZero
-	b	.LBB587_52
-.LBB587_51:
+	b	.LBB588_52
+.LBB588_51:
 	mov	w0, #2
-.LBB587_52:                             // %"$19"
+.LBB588_52:                             // %"$19"
 	ldr	x8, [sp, #40]
 	str	x8, [x23, :lo12:env]
-	b	.LBB587_48
-.Lfunc_end587:
-	.size	div1, .Lfunc_end587-div1
+	b	.LBB588_48
+.Lfunc_end588:
+	.size	div1, .Lfunc_end588-div1
 	.cfi_endproc
                                         // -- End function
 	.globl	divu                            // -- Begin function divu
@@ -55563,7 +55596,7 @@ div1:                                   // @div1
 divu:                                   // @divu
 	.cfi_startproc
 // %bb.0:                               // %"$1"
-	tbz	w0, #2, .LBB588_2
+	tbz	w0, #2, .LBB589_2
 // %bb.1:                               // %"$4"
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
@@ -55572,20 +55605,20 @@ divu:                                   // @divu
 	bl	div1
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.LBB588_2:                              // %"$3"
-	tbz	w1, #2, .LBB588_4
+.LBB589_2:                              // %"$3"
+	tbz	w1, #2, .LBB589_4
 // %bb.3:
 	mov	w0, #2
 	ret
-.LBB588_4:                              // %"$5"
+.LBB589_4:                              // %"$5"
 	lsr	x8, x0, #4
 	lsr	x9, x1, #4
 	udiv	x8, x8, x9
 	mov	w0, #2
 	bfi	x0, x8, #4, #60
 	ret
-.Lfunc_end588:
-	.size	divu, .Lfunc_end588-divu
+.Lfunc_end589:
+	.size	divu, .Lfunc_end589-divu
 	.cfi_endproc
                                         // -- End function
 	.globl	decs                            // -- Begin function decs
@@ -55597,7 +55630,7 @@ decs:                                   // @decs
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	tbz	w0, #3, .LBB589_2
+	tbz	w0, #3, .LBB590_2
 // %bb.1:                               // %"$2"
 	and	x0, x0, #0xfffffffffffffff7
 	mov	w1, #18
@@ -55607,13 +55640,13 @@ decs:                                   // @decs
 	csel	x0, x0, x8, eq
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.LBB589_2:                              // %"$3"
+.LBB590_2:                              // %"$3"
 	mov	w1, #18
 	bl	subu
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end589:
-	.size	decs, .Lfunc_end589-decs
+.Lfunc_end590:
+	.size	decs, .Lfunc_end590-decs
 	.cfi_endproc
                                         // -- End function
 	.globl	incs                            // -- Begin function incs
@@ -55625,7 +55658,7 @@ incs:                                   // @incs
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	tbz	w0, #3, .LBB590_2
+	tbz	w0, #3, .LBB591_2
 // %bb.1:                               // %"$2"
 	and	x0, x0, #0xfffffffffffffff7
 	mov	w1, #18
@@ -55635,13 +55668,13 @@ incs:                                   // @incs
 	csel	x0, x0, x8, eq
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.LBB590_2:                              // %"$3"
+.LBB591_2:                              // %"$3"
 	mov	w1, #18
 	bl	addu
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end590:
-	.size	incs, .Lfunc_end590-incs
+.Lfunc_end591:
+	.size	incs, .Lfunc_end591-incs
 	.cfi_endproc
                                         // -- End function
 	.globl	malloc                          // -- Begin function malloc
@@ -55659,8 +55692,8 @@ malloc:                                 // @malloc
 	mov	x0, xzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end591:
-	.size	malloc, .Lfunc_end591-malloc
+.Lfunc_end592:
+	.size	malloc, .Lfunc_end592-malloc
 	.cfi_endproc
                                         // -- End function
 	.globl	realloc                         // -- Begin function realloc
@@ -55678,8 +55711,8 @@ realloc:                                // @realloc
 	mov	x0, xzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end592:
-	.size	realloc, .Lfunc_end592-realloc
+.Lfunc_end593:
+	.size	realloc, .Lfunc_end593-realloc
 	.cfi_endproc
                                         // -- End function
 	.globl	free                            // -- Begin function free
@@ -55696,8 +55729,8 @@ free:                                   // @free
 	bl	"pr-libc"
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end593:
-	.size	free, .Lfunc_end593-free
+.Lfunc_end594:
+	.size	free, .Lfunc_end594-free
 	.cfi_endproc
                                         // -- End function
 	.globl	fork                            // -- Begin function fork
@@ -55715,8 +55748,8 @@ fork:                                   // @fork
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end594:
-	.size	fork, .Lfunc_end594-fork
+.Lfunc_end595:
+	.size	fork, .Lfunc_end595-fork
 	.cfi_endproc
                                         // -- End function
 	.globl	getenv                          // -- Begin function getenv
@@ -55734,8 +55767,8 @@ getenv:                                 // @getenv
 	mov	x0, xzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end595:
-	.size	getenv, .Lfunc_end595-getenv
+.Lfunc_end596:
+	.size	getenv, .Lfunc_end596-getenv
 	.cfi_endproc
                                         // -- End function
 	.globl	setenv                          // -- Begin function setenv
@@ -55753,8 +55786,8 @@ setenv:                                 // @setenv
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end596:
-	.size	setenv, .Lfunc_end596-setenv
+.Lfunc_end597:
+	.size	setenv, .Lfunc_end597-setenv
 	.cfi_endproc
                                         // -- End function
 	.globl	getcwd                          // -- Begin function getcwd
@@ -55772,8 +55805,8 @@ getcwd:                                 // @getcwd
 	mov	x0, xzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end597:
-	.size	getcwd, .Lfunc_end597-getcwd
+.Lfunc_end598:
+	.size	getcwd, .Lfunc_end598-getcwd
 	.cfi_endproc
                                         // -- End function
 	.globl	chdir                           // -- Begin function chdir
@@ -55791,8 +55824,8 @@ chdir:                                  // @chdir
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end598:
-	.size	chdir, .Lfunc_end598-chdir
+.Lfunc_end599:
+	.size	chdir, .Lfunc_end599-chdir
 	.cfi_endproc
                                         // -- End function
 	.globl	getpid                          // -- Begin function getpid
@@ -55810,8 +55843,8 @@ getpid:                                 // @getpid
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end599:
-	.size	getpid, .Lfunc_end599-getpid
+.Lfunc_end600:
+	.size	getpid, .Lfunc_end600-getpid
 	.cfi_endproc
                                         // -- End function
 	.globl	getpgrp                         // -- Begin function getpgrp
@@ -55829,8 +55862,8 @@ getpgrp:                                // @getpgrp
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end600:
-	.size	getpgrp, .Lfunc_end600-getpgrp
+.Lfunc_end601:
+	.size	getpgrp, .Lfunc_end601-getpgrp
 	.cfi_endproc
                                         // -- End function
 	.globl	setsid                          // -- Begin function setsid
@@ -55848,8 +55881,8 @@ setsid:                                 // @setsid
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end601:
-	.size	setsid, .Lfunc_end601-setsid
+.Lfunc_end602:
+	.size	setsid, .Lfunc_end602-setsid
 	.cfi_endproc
                                         // -- End function
 	.globl	alarm                           // -- Begin function alarm
@@ -55867,8 +55900,8 @@ alarm:                                  // @alarm
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end602:
-	.size	alarm, .Lfunc_end602-alarm
+.Lfunc_end603:
+	.size	alarm, .Lfunc_end603-alarm
 	.cfi_endproc
                                         // -- End function
 	.globl	setpgid                         // -- Begin function setpgid
@@ -55886,8 +55919,8 @@ setpgid:                                // @setpgid
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end603:
-	.size	setpgid, .Lfunc_end603-setpgid
+.Lfunc_end604:
+	.size	setpgid, .Lfunc_end604-setpgid
 	.cfi_endproc
                                         // -- End function
 	.globl	execvp                          // -- Begin function execvp
@@ -55905,8 +55938,8 @@ execvp:                                 // @execvp
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end604:
-	.size	execvp, .Lfunc_end604-execvp
+.Lfunc_end605:
+	.size	execvp, .Lfunc_end605-execvp
 	.cfi_endproc
                                         // -- End function
 	.globl	tcgetattr                       // -- Begin function tcgetattr
@@ -55924,8 +55957,8 @@ tcgetattr:                              // @tcgetattr
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end605:
-	.size	tcgetattr, .Lfunc_end605-tcgetattr
+.Lfunc_end606:
+	.size	tcgetattr, .Lfunc_end606-tcgetattr
 	.cfi_endproc
                                         // -- End function
 	.globl	read                            // -- Begin function read
@@ -55943,8 +55976,8 @@ read:                                   // @read
 	mov	x0, xzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end606:
-	.size	read, .Lfunc_end606-read
+.Lfunc_end607:
+	.size	read, .Lfunc_end607-read
 	.cfi_endproc
                                         // -- End function
 	.globl	write                           // -- Begin function write
@@ -55962,8 +55995,8 @@ write:                                  // @write
 	mov	x0, xzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end607:
-	.size	write, .Lfunc_end607-write
+.Lfunc_end608:
+	.size	write, .Lfunc_end608-write
 	.cfi_endproc
                                         // -- End function
 	.globl	fread                           // -- Begin function fread
@@ -55981,8 +56014,8 @@ fread:                                  // @fread
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end608:
-	.size	fread, .Lfunc_end608-fread
+.Lfunc_end609:
+	.size	fread, .Lfunc_end609-fread
 	.cfi_endproc
                                         // -- End function
 	.globl	getc_unlocked                   // -- Begin function getc_unlocked
@@ -56000,8 +56033,8 @@ getc_unlocked:                          // @getc_unlocked
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end609:
-	.size	getc_unlocked, .Lfunc_end609-getc_unlocked
+.Lfunc_end610:
+	.size	getc_unlocked, .Lfunc_end610-getc_unlocked
 	.cfi_endproc
                                         // -- End function
 	.globl	fopen                           // -- Begin function fopen
@@ -56019,8 +56052,8 @@ fopen:                                  // @fopen
 	mov	x0, xzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end610:
-	.size	fopen, .Lfunc_end610-fopen
+.Lfunc_end611:
+	.size	fopen, .Lfunc_end611-fopen
 	.cfi_endproc
                                         // -- End function
 	.globl	feof                            // -- Begin function feof
@@ -56038,8 +56071,8 @@ feof:                                   // @feof
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end611:
-	.size	feof, .Lfunc_end611-feof
+.Lfunc_end612:
+	.size	feof, .Lfunc_end612-feof
 	.cfi_endproc
                                         // -- End function
 	.globl	fclose                          // -- Begin function fclose
@@ -56057,8 +56090,8 @@ fclose:                                 // @fclose
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end612:
-	.size	fclose, .Lfunc_end612-fclose
+.Lfunc_end613:
+	.size	fclose, .Lfunc_end613-fclose
 	.cfi_endproc
                                         // -- End function
 	.globl	fsync                           // -- Begin function fsync
@@ -56076,8 +56109,8 @@ fsync:                                  // @fsync
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end613:
-	.size	fsync, .Lfunc_end613-fsync
+.Lfunc_end614:
+	.size	fsync, .Lfunc_end614-fsync
 	.cfi_endproc
                                         // -- End function
 	.globl	pipe                            // -- Begin function pipe
@@ -56095,8 +56128,8 @@ pipe:                                   // @pipe
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end614:
-	.size	pipe, .Lfunc_end614-pipe
+.Lfunc_end615:
+	.size	pipe, .Lfunc_end615-pipe
 	.cfi_endproc
                                         // -- End function
 	.globl	strlen                          // -- Begin function strlen
@@ -56114,8 +56147,8 @@ strlen:                                 // @strlen
 	mov	x0, xzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end615:
-	.size	strlen, .Lfunc_end615-strlen
+.Lfunc_end616:
+	.size	strlen, .Lfunc_end616-strlen
 	.cfi_endproc
                                         // -- End function
 	.globl	strcpy                          // -- Begin function strcpy
@@ -56133,8 +56166,8 @@ strcpy:                                 // @strcpy
 	mov	x0, xzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end616:
-	.size	strcpy, .Lfunc_end616-strcpy
+.Lfunc_end617:
+	.size	strcpy, .Lfunc_end617-strcpy
 	.cfi_endproc
                                         // -- End function
 	.globl	strdup                          // -- Begin function strdup
@@ -56152,8 +56185,8 @@ strdup:                                 // @strdup
 	mov	x0, xzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end617:
-	.size	strdup, .Lfunc_end617-strdup
+.Lfunc_end618:
+	.size	strdup, .Lfunc_end618-strdup
 	.cfi_endproc
                                         // -- End function
 	.globl	strcmp                          // -- Begin function strcmp
@@ -56171,8 +56204,8 @@ strcmp:                                 // @strcmp
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end618:
-	.size	strcmp, .Lfunc_end618-strcmp
+.Lfunc_end619:
+	.size	strcmp, .Lfunc_end619-strcmp
 	.cfi_endproc
                                         // -- End function
 	.globl	strrchr                         // -- Begin function strrchr
@@ -56190,8 +56223,8 @@ strrchr:                                // @strrchr
 	mov	x0, xzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end619:
-	.size	strrchr, .Lfunc_end619-strrchr
+.Lfunc_end620:
+	.size	strrchr, .Lfunc_end620-strrchr
 	.cfi_endproc
                                         // -- End function
 	.globl	dlsym                           // -- Begin function dlsym
@@ -56209,8 +56242,8 @@ dlsym:                                  // @dlsym
 	mov	x0, xzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end620:
-	.size	dlsym, .Lfunc_end620-dlsym
+.Lfunc_end621:
+	.size	dlsym, .Lfunc_end621-dlsym
 	.cfi_endproc
                                         // -- End function
 	.globl	dlerror                         // -- Begin function dlerror
@@ -56228,8 +56261,8 @@ dlerror:                                // @dlerror
 	mov	x0, xzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end621:
-	.size	dlerror, .Lfunc_end621-dlerror
+.Lfunc_end622:
+	.size	dlerror, .Lfunc_end622-dlerror
 	.cfi_endproc
                                         // -- End function
 	.globl	dup                             // -- Begin function dup
@@ -56247,8 +56280,8 @@ dup:                                    // @dup
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end622:
-	.size	dup, .Lfunc_end622-dup
+.Lfunc_end623:
+	.size	dup, .Lfunc_end623-dup
 	.cfi_endproc
                                         // -- End function
 	.globl	signal                          // -- Begin function signal
@@ -56266,8 +56299,8 @@ signal:                                 // @signal
 	mov	x0, xzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end623:
-	.size	signal, .Lfunc_end623-signal
+.Lfunc_end624:
+	.size	signal, .Lfunc_end624-signal
 	.cfi_endproc
                                         // -- End function
 	.globl	tcsetpgrp                       // -- Begin function tcsetpgrp
@@ -56285,8 +56318,8 @@ tcsetpgrp:                              // @tcsetpgrp
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end624:
-	.size	tcsetpgrp, .Lfunc_end624-tcsetpgrp
+.Lfunc_end625:
+	.size	tcsetpgrp, .Lfunc_end625-tcsetpgrp
 	.cfi_endproc
                                         // -- End function
 	.globl	kill                            // -- Begin function kill
@@ -56304,8 +56337,8 @@ kill:                                   // @kill
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end625:
-	.size	kill, .Lfunc_end625-kill
+.Lfunc_end626:
+	.size	kill, .Lfunc_end626-kill
 	.cfi_endproc
                                         // -- End function
 	.globl	exit                            // -- Begin function exit
@@ -56322,8 +56355,8 @@ exit:                                   // @exit
 	bl	"pr-libc"
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end626:
-	.size	exit, .Lfunc_end626-exit
+.Lfunc_end627:
+	.size	exit, .Lfunc_end627-exit
 	.cfi_endproc
                                         // -- End function
 	.globl	readline                        // -- Begin function readline
@@ -56341,8 +56374,8 @@ readline:                               // @readline
 	mov	x0, xzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end627:
-	.size	readline, .Lfunc_end627-readline
+.Lfunc_end628:
+	.size	readline, .Lfunc_end628-readline
 	.cfi_endproc
                                         // -- End function
 	.globl	add_history                     // -- Begin function add_history
@@ -56359,8 +56392,8 @@ add_history:                            // @add_history
 	bl	"pr-libc"
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end628:
-	.size	add_history, .Lfunc_end628-add_history
+.Lfunc_end629:
+	.size	add_history, .Lfunc_end629-add_history
 	.cfi_endproc
                                         // -- End function
 	.globl	history_list                    // -- Begin function history_list
@@ -56378,8 +56411,8 @@ history_list:                           // @history_list
 	mov	x0, xzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end629:
-	.size	history_list, .Lfunc_end629-history_list
+.Lfunc_end630:
+	.size	history_list, .Lfunc_end630-history_list
 	.cfi_endproc
                                         // -- End function
 	.globl	clear_history                   // -- Begin function clear_history
@@ -56396,8 +56429,8 @@ clear_history:                          // @clear_history
 	bl	"pr-libc"
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end630:
-	.size	clear_history, .Lfunc_end630-clear_history
+.Lfunc_end631:
+	.size	clear_history, .Lfunc_end631-clear_history
 	.cfi_endproc
                                         // -- End function
 	.globl	stderrMsg                       // -- Begin function stderrMsg
@@ -56415,8 +56448,8 @@ stderrMsg:                              // @stderrMsg
 	mov	x0, xzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end631:
-	.size	stderrMsg, .Lfunc_end631-stderrMsg
+.Lfunc_end632:
+	.size	stderrMsg, .Lfunc_end632-stderrMsg
 	.cfi_endproc
                                         // -- End function
 	.globl	gPrintf                         // -- Begin function gPrintf
@@ -56434,8 +56467,8 @@ gPrintf:                                // @gPrintf
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end632:
-	.size	gPrintf, .Lfunc_end632-gPrintf
+.Lfunc_end633:
+	.size	gPrintf, .Lfunc_end633-gPrintf
 	.cfi_endproc
                                         // -- End function
 	.globl	openRd                          // -- Begin function openRd
@@ -56453,8 +56486,8 @@ openRd:                                 // @openRd
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end633:
-	.size	openRd, .Lfunc_end633-openRd
+.Lfunc_end634:
+	.size	openRd, .Lfunc_end634-openRd
 	.cfi_endproc
                                         // -- End function
 	.globl	openWr                          // -- Begin function openWr
@@ -56472,8 +56505,8 @@ openWr:                                 // @openWr
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end634:
-	.size	openWr, .Lfunc_end634-openWr
+.Lfunc_end635:
+	.size	openWr, .Lfunc_end635-openWr
 	.cfi_endproc
                                         // -- End function
 	.globl	openRdWr                        // -- Begin function openRdWr
@@ -56491,8 +56524,8 @@ openRdWr:                               // @openRdWr
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end635:
-	.size	openRdWr, .Lfunc_end635-openRdWr
+.Lfunc_end636:
+	.size	openRdWr, .Lfunc_end636-openRdWr
 	.cfi_endproc
                                         // -- End function
 	.globl	openRdWrExcl                    // -- Begin function openRdWrExcl
@@ -56510,8 +56543,8 @@ openRdWrExcl:                           // @openRdWrExcl
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end636:
-	.size	openRdWrExcl, .Lfunc_end636-openRdWrExcl
+.Lfunc_end637:
+	.size	openRdWrExcl, .Lfunc_end637-openRdWrExcl
 	.cfi_endproc
                                         // -- End function
 	.globl	openRdWrCreate                  // -- Begin function openRdWrCreate
@@ -56529,8 +56562,8 @@ openRdWrCreate:                         // @openRdWrCreate
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end637:
-	.size	openRdWrCreate, .Lfunc_end637-openRdWrCreate
+.Lfunc_end638:
+	.size	openRdWrCreate, .Lfunc_end638-openRdWrCreate
 	.cfi_endproc
                                         // -- End function
 	.globl	openRdWrAppend                  // -- Begin function openRdWrAppend
@@ -56548,8 +56581,8 @@ openRdWrAppend:                         // @openRdWrAppend
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end638:
-	.size	openRdWrAppend, .Lfunc_end638-openRdWrAppend
+.Lfunc_end639:
+	.size	openRdWrAppend, .Lfunc_end639-openRdWrAppend
 	.cfi_endproc
                                         // -- End function
 	.globl	openWrAppend                    // -- Begin function openWrAppend
@@ -56567,8 +56600,8 @@ openWrAppend:                           // @openWrAppend
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end639:
-	.size	openWrAppend, .Lfunc_end639-openWrAppend
+.Lfunc_end640:
+	.size	openWrAppend, .Lfunc_end640-openWrAppend
 	.cfi_endproc
                                         // -- End function
 	.globl	fseekOfs                        // -- Begin function fseekOfs
@@ -56586,8 +56619,8 @@ fseekOfs:                               // @fseekOfs
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end640:
-	.size	fseekOfs, .Lfunc_end640-fseekOfs
+.Lfunc_end641:
+	.size	fseekOfs, .Lfunc_end641-fseekOfs
 	.cfi_endproc
                                         // -- End function
 	.globl	fseek0                          // -- Begin function fseek0
@@ -56605,8 +56638,8 @@ fseek0:                                 // @fseek0
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end641:
-	.size	fseek0, .Lfunc_end641-fseek0
+.Lfunc_end642:
+	.size	fseek0, .Lfunc_end642-fseek0
 	.cfi_endproc
                                         // -- End function
 	.globl	seek0                           // -- Begin function seek0
@@ -56624,8 +56657,8 @@ seek0:                                  // @seek0
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end642:
-	.size	seek0, .Lfunc_end642-seek0
+.Lfunc_end643:
+	.size	seek0, .Lfunc_end643-seek0
 	.cfi_endproc
                                         // -- End function
 	.globl	truncate0                       // -- Begin function truncate0
@@ -56643,8 +56676,8 @@ truncate0:                              // @truncate0
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end643:
-	.size	truncate0, .Lfunc_end643-truncate0
+.Lfunc_end644:
+	.size	truncate0, .Lfunc_end644-truncate0
 	.cfi_endproc
                                         // -- End function
 	.globl	socketPair                      // -- Begin function socketPair
@@ -56662,8 +56695,8 @@ socketPair:                             // @socketPair
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end644:
-	.size	socketPair, .Lfunc_end644-socketPair
+.Lfunc_end645:
+	.size	socketPair, .Lfunc_end645-socketPair
 	.cfi_endproc
                                         // -- End function
 	.globl	fcntlCloExec                    // -- Begin function fcntlCloExec
@@ -56681,8 +56714,8 @@ fcntlCloExec:                           // @fcntlCloExec
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end645:
-	.size	fcntlCloExec, .Lfunc_end645-fcntlCloExec
+.Lfunc_end646:
+	.size	fcntlCloExec, .Lfunc_end646-fcntlCloExec
 	.cfi_endproc
                                         // -- End function
 	.globl	fcntlSetFl                      // -- Begin function fcntlSetFl
@@ -56699,8 +56732,8 @@ fcntlSetFl:                             // @fcntlSetFl
 	bl	"pr-libc"
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end646:
-	.size	fcntlSetFl, .Lfunc_end646-fcntlSetFl
+.Lfunc_end647:
+	.size	fcntlSetFl, .Lfunc_end647-fcntlSetFl
 	.cfi_endproc
                                         // -- End function
 	.globl	nonBlocking                     // -- Begin function nonBlocking
@@ -56718,8 +56751,8 @@ nonBlocking:                            // @nonBlocking
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end647:
-	.size	nonBlocking, .Lfunc_end647-nonBlocking
+.Lfunc_end648:
+	.size	nonBlocking, .Lfunc_end648-nonBlocking
 	.cfi_endproc
                                         // -- End function
 	.globl	fcntlSetOwn                     // -- Begin function fcntlSetOwn
@@ -56736,8 +56769,8 @@ fcntlSetOwn:                            // @fcntlSetOwn
 	bl	"pr-libc"
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end648:
-	.size	fcntlSetOwn, .Lfunc_end648-fcntlSetOwn
+.Lfunc_end649:
+	.size	fcntlSetOwn, .Lfunc_end649-fcntlSetOwn
 	.cfi_endproc
                                         // -- End function
 	.globl	getDir                          // -- Begin function getDir
@@ -56755,8 +56788,8 @@ getDir:                                 // @getDir
 	mov	x0, xzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end649:
-	.size	getDir, .Lfunc_end649-getDir
+.Lfunc_end650:
+	.size	getDir, .Lfunc_end650-getDir
 	.cfi_endproc
                                         // -- End function
 	.globl	initReadline                    // -- Begin function initReadline
@@ -56773,8 +56806,8 @@ initReadline:                           // @initReadline
 	bl	"pr-libc"
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end650:
-	.size	initReadline, .Lfunc_end650-initReadline
+.Lfunc_end651:
+	.size	initReadline, .Lfunc_end651-initReadline
 	.cfi_endproc
                                         // -- End function
 	.globl	rlHide                          // -- Begin function rlHide
@@ -56791,8 +56824,8 @@ rlHide:                                 // @rlHide
 	bl	"pr-libc"
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end651:
-	.size	rlHide, .Lfunc_end651-rlHide
+.Lfunc_end652:
+	.size	rlHide, .Lfunc_end652-rlHide
 	.cfi_endproc
                                         // -- End function
 	.globl	rlShow                          // -- Begin function rlShow
@@ -56809,8 +56842,8 @@ rlShow:                                 // @rlShow
 	bl	"pr-libc"
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end652:
-	.size	rlShow, .Lfunc_end652-rlShow
+.Lfunc_end653:
+	.size	rlShow, .Lfunc_end653-rlShow
 	.cfi_endproc
                                         // -- End function
 	.globl	rlSigBeg                        // -- Begin function rlSigBeg
@@ -56827,8 +56860,8 @@ rlSigBeg:                               // @rlSigBeg
 	bl	"pr-libc"
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end653:
-	.size	rlSigBeg, .Lfunc_end653-rlSigBeg
+.Lfunc_end654:
+	.size	rlSigBeg, .Lfunc_end654-rlSigBeg
 	.cfi_endproc
                                         // -- End function
 	.globl	rlSigEnd                        // -- Begin function rlSigEnd
@@ -56845,8 +56878,8 @@ rlSigEnd:                               // @rlSigEnd
 	bl	"pr-libc"
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end654:
-	.size	rlSigEnd, .Lfunc_end654-rlSigEnd
+.Lfunc_end655:
+	.size	rlSigEnd, .Lfunc_end655-rlSigEnd
 	.cfi_endproc
                                         // -- End function
 	.globl	currentLine                     // -- Begin function currentLine
@@ -56864,8 +56897,8 @@ currentLine:                            // @currentLine
 	mov	x0, xzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end655:
-	.size	currentLine, .Lfunc_end655-currentLine
+.Lfunc_end656:
+	.size	currentLine, .Lfunc_end656-currentLine
 	.cfi_endproc
                                         // -- End function
 	.globl	gSignal                         // -- Begin function gSignal
@@ -56883,8 +56916,8 @@ gSignal:                                // @gSignal
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end656:
-	.size	gSignal, .Lfunc_end656-gSignal
+.Lfunc_end657:
+	.size	gSignal, .Lfunc_end657-gSignal
 	.cfi_endproc
                                         // -- End function
 	.globl	sigUnblock                      // -- Begin function sigUnblock
@@ -56901,8 +56934,8 @@ sigUnblock:                             // @sigUnblock
 	bl	"pr-libc"
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end657:
-	.size	sigUnblock, .Lfunc_end657-sigUnblock
+.Lfunc_end658:
+	.size	sigUnblock, .Lfunc_end658-sigUnblock
 	.cfi_endproc
                                         // -- End function
 	.globl	sigChld                         // -- Begin function sigChld
@@ -56919,8 +56952,8 @@ sigChld:                                // @sigChld
 	bl	"pr-libc"
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end658:
-	.size	sigChld, .Lfunc_end658-sigChld
+.Lfunc_end659:
+	.size	sigChld, .Lfunc_end659-sigChld
 	.cfi_endproc
                                         // -- End function
 	.globl	waitWuntraced                   // -- Begin function waitWuntraced
@@ -56938,8 +56971,8 @@ waitWuntraced:                          // @waitWuntraced
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end659:
-	.size	waitWuntraced, .Lfunc_end659-waitWuntraced
+.Lfunc_end660:
+	.size	waitWuntraced, .Lfunc_end660-waitWuntraced
 	.cfi_endproc
                                         // -- End function
 	.globl	wifStopped                      // -- Begin function wifStopped
@@ -56957,8 +56990,8 @@ wifStopped:                             // @wifStopped
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end660:
-	.size	wifStopped, .Lfunc_end660-wifStopped
+.Lfunc_end661:
+	.size	wifStopped, .Lfunc_end661-wifStopped
 	.cfi_endproc
                                         // -- End function
 	.globl	nErrno                          // -- Begin function nErrno
@@ -56976,8 +57009,8 @@ nErrno:                                 // @nErrno
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end661:
-	.size	nErrno, .Lfunc_end661-nErrno
+.Lfunc_end662:
+	.size	nErrno, .Lfunc_end662-nErrno
 	.cfi_endproc
                                         // -- End function
 	.globl	setRaw                          // -- Begin function setRaw
@@ -56994,8 +57027,8 @@ setRaw:                                 // @setRaw
 	bl	"pr-libc"
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end662:
-	.size	setRaw, .Lfunc_end662-setRaw
+.Lfunc_end663:
+	.size	setRaw, .Lfunc_end663-setRaw
 	.cfi_endproc
                                         // -- End function
 	.globl	setCooked                       // -- Begin function setCooked
@@ -57012,8 +57045,8 @@ setCooked:                              // @setCooked
 	bl	"pr-libc"
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end663:
-	.size	setCooked, .Lfunc_end663-setCooked
+.Lfunc_end664:
+	.size	setCooked, .Lfunc_end664-setCooked
 	.cfi_endproc
                                         // -- End function
 	.globl	getUsec                         // -- Begin function getUsec
@@ -57031,8 +57064,8 @@ getUsec:                                // @getUsec
 	mov	x0, xzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end664:
-	.size	getUsec, .Lfunc_end664-getUsec
+.Lfunc_end665:
+	.size	getUsec, .Lfunc_end665-getUsec
 	.cfi_endproc
                                         // -- End function
 	.globl	getMsec                         // -- Begin function getMsec
@@ -57050,8 +57083,8 @@ getMsec:                                // @getMsec
 	mov	x0, xzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end665:
-	.size	getMsec, .Lfunc_end665-getMsec
+.Lfunc_end666:
+	.size	getMsec, .Lfunc_end666-getMsec
 	.cfi_endproc
                                         // -- End function
 	.globl	fileInfo                        // -- Begin function fileInfo
@@ -57069,8 +57102,8 @@ fileInfo:                               // @fileInfo
 	mov	x0, xzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end666:
-	.size	fileInfo, .Lfunc_end666-fileInfo
+.Lfunc_end667:
+	.size	fileInfo, .Lfunc_end667-fileInfo
 	.cfi_endproc
                                         // -- End function
 	.globl	pollIn                          // -- Begin function pollIn
@@ -57087,8 +57120,8 @@ pollIn:                                 // @pollIn
 	bl	"pr-libc"
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end667:
-	.size	pollIn, .Lfunc_end667-pollIn
+.Lfunc_end668:
+	.size	pollIn, .Lfunc_end668-pollIn
 	.cfi_endproc
                                         // -- End function
 	.globl	pollOut                         // -- Begin function pollOut
@@ -57105,8 +57138,8 @@ pollOut:                                // @pollOut
 	bl	"pr-libc"
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end668:
-	.size	pollOut, .Lfunc_end668-pollOut
+.Lfunc_end669:
+	.size	pollOut, .Lfunc_end669-pollOut
 	.cfi_endproc
                                         // -- End function
 	.globl	pollIgn                         // -- Begin function pollIgn
@@ -57123,8 +57156,8 @@ pollIgn:                                // @pollIgn
 	bl	"pr-libc"
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end669:
-	.size	pollIgn, .Lfunc_end669-pollIgn
+.Lfunc_end670:
+	.size	pollIgn, .Lfunc_end670-pollIgn
 	.cfi_endproc
                                         // -- End function
 	.globl	gPoll                           // -- Begin function gPoll
@@ -57142,8 +57175,8 @@ gPoll:                                  // @gPoll
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end670:
-	.size	gPoll, .Lfunc_end670-gPoll
+.Lfunc_end671:
+	.size	gPoll, .Lfunc_end671-gPoll
 	.cfi_endproc
                                         // -- End function
 	.globl	readyIn                         // -- Begin function readyIn
@@ -57161,8 +57194,8 @@ readyIn:                                // @readyIn
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end671:
-	.size	readyIn, .Lfunc_end671-readyIn
+.Lfunc_end672:
+	.size	readyIn, .Lfunc_end672-readyIn
 	.cfi_endproc
                                         // -- End function
 	.globl	readyOut                        // -- Begin function readyOut
@@ -57180,8 +57213,8 @@ readyOut:                               // @readyOut
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end672:
-	.size	readyOut, .Lfunc_end672-readyOut
+.Lfunc_end673:
+	.size	readyOut, .Lfunc_end673-readyOut
 	.cfi_endproc
                                         // -- End function
 	.globl	getLock                         // -- Begin function getLock
@@ -57199,8 +57232,8 @@ getLock:                                // @getLock
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end673:
-	.size	getLock, .Lfunc_end673-getLock
+.Lfunc_end674:
+	.size	getLock, .Lfunc_end674-getLock
 	.cfi_endproc
                                         // -- End function
 	.globl	heapAlloc2                      // -- Begin function heapAlloc2
@@ -57224,7 +57257,7 @@ heapAlloc2:                             // @heapAlloc2
 	str	x12, [x10, :lo12:($Heaps)]
 	add	x11, x12, x11
 	mov	x10, #-1048576
-.LBB674_1:                              // %"$2"
+.LBB675_1:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	mov	x12, x9
 	mov	x9, x11
@@ -57232,12 +57265,12 @@ heapAlloc2:                             // @heapAlloc2
 	stp	w12, w11, [x9]
 	sub	x11, x9, #16                    // =16
 	adds	x10, x10, #16                   // =16
-	b.ne	.LBB674_1
+	b.ne	.LBB675_1
 // %bb.2:                               // %"$4"
 	str	x9, [x8, :lo12:($Avail)]
 	ret
-.Lfunc_end674:
-	.size	heapAlloc2, .Lfunc_end674-heapAlloc2
+.Lfunc_end675:
+	.size	heapAlloc2, .Lfunc_end675-heapAlloc2
 	.cfi_endproc
                                         // -- End function
 	.globl	wrnl                            // -- Begin function wrnl
@@ -57252,8 +57285,8 @@ wrnl:                                   // @wrnl
 	bl	write
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end675:
-	.size	wrnl, .Lfunc_end675-wrnl
+.Lfunc_end676:
+	.size	wrnl, .Lfunc_end676-wrnl
 	.cfi_endproc
                                         // -- End function
 	.globl	dbg                             // -- Begin function dbg
@@ -57285,12 +57318,12 @@ dbg:                                    // @dbg
 	add	x8, x8, :lo12:_putStdout
 	str	x8, [x22, :lo12:($Put)]
 	bl	outWord
-	cbz	x19, .LBB676_2
+	cbz	x19, .LBB677_2
 // %bb.1:                               // %"$2"
 	bl	space
 	mov	x0, x19
 	bl	print
-.LBB676_2:                              // %"$3"
+.LBB677_2:                              // %"$3"
 	bl	newline
 	str	x23, [x22, :lo12:($Put)]
 	str	x21, [x20, :lo12:($OutFile)]
@@ -57299,8 +57332,8 @@ dbg:                                    // @dbg
 	ldp	x22, x21, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x23, [sp], #48             // 16-byte Folded Reload
 	ret
-.Lfunc_end676:
-	.size	dbg, .Lfunc_end676-dbg
+.Lfunc_end677:
+	.size	dbg, .Lfunc_end677-dbg
 	.cfi_endproc
                                         // -- End function
 	.globl	finish                          // -- Begin function finish
@@ -57313,8 +57346,8 @@ finish:                                 // @finish
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
 	bl	exit
-.Lfunc_end677:
-	.size	finish, .Lfunc_end677-finish
+.Lfunc_end678:
+	.size	finish, .Lfunc_end678-finish
 	.cfi_endproc
                                         // -- End function
 	.globl	giveup                          // -- Begin function giveup
@@ -57329,8 +57362,8 @@ giveup:                                 // @giveup
 	bl	stderrMsg
 	mov	w0, #1
 	bl	finish
-.Lfunc_end678:
-	.size	giveup, .Lfunc_end678-giveup
+.Lfunc_end679:
+	.size	giveup, .Lfunc_end679-giveup
 	.cfi_endproc
                                         // -- End function
 	.globl	bye                             // -- Begin function bye
@@ -57348,7 +57381,7 @@ bye:                                    // @bye
 	mov	w19, w0
 	adrp	x8, ($InBye)
 	ldrb	w9, [x8, :lo12:($InBye)]
-	tbnz	w9, #0, .LBB679_5
+	tbnz	w9, #0, .LBB680_5
 // %bb.1:                               // %"$2"
 	mov	w9, #1
 	strb	w9, [x8, :lo12:($InBye)]
@@ -57356,26 +57389,26 @@ bye:                                    // @bye
 	bl	unwind
 	adrp	x8, SymTab+712
 	ldr	x20, [x8, :lo12:SymTab+712]
-.LBB679_2:                              // %"$4"
+.LBB680_2:                              // %"$4"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w0, w8, [x20]
 	bfi	x0, x8, #32, #32
 	ldp	w20, w8, [x20, #8]
 	bfi	x20, x8, #32, #32
 	tst	x0, #0xf
-	b.ne	.LBB679_4
+	b.ne	.LBB680_4
 // %bb.3:                               // %"$5"
-                                        //   in Loop: Header=BB679_2 Depth=1
+                                        //   in Loop: Header=BB680_2 Depth=1
 	bl	evList
-.LBB679_4:                              // %"$6"
-                                        //   in Loop: Header=BB679_2 Depth=1
+.LBB680_4:                              // %"$6"
+                                        //   in Loop: Header=BB680_2 Depth=1
 	tst	x20, #0xf
-	b.eq	.LBB679_2
-.LBB679_5:                              // %"$3"
+	b.eq	.LBB680_2
+.LBB680_5:                              // %"$3"
 	mov	w0, w19
 	bl	finish
-.Lfunc_end679:
-	.size	bye, .Lfunc_end679-bye
+.Lfunc_end680:
+	.size	bye, .Lfunc_end680-bye
 	.cfi_endproc
                                         // -- End function
 	.globl	execErr                         // -- Begin function execErr
@@ -57389,8 +57422,8 @@ execErr:                                // @execErr
 	.cfi_offset w30, -16
 	bl	stderrMsg
 	bl	exit
-.Lfunc_end680:
-	.size	execErr, .Lfunc_end680-execErr
+.Lfunc_end681:
+	.size	execErr, .Lfunc_end681-execErr
 	.cfi_endproc
                                         // -- End function
 	.globl	sigTerm                         // -- Begin function sigTerm
@@ -57405,12 +57438,12 @@ sigTerm:                                // @sigTerm
 	.cfi_offset w30, -16
 	adrp	x8, ($TtyPid)
 	ldr	w8, [x8, :lo12:($TtyPid)]
-	cbz	w8, .LBB681_2
+	cbz	w8, .LBB682_2
 // %bb.1:                               // %"$2"
 	bl	kill
 	ldp	x30, x19, [sp], #16             // 16-byte Folded Reload
 	ret
-.LBB681_2:                              // %"$3"
+.LBB682_2:                              // %"$3"
 	adrp	x19, ($Signal)
 	add	x19, x19, :lo12:($Signal)
 	ldr	w8, [x19]
@@ -57424,8 +57457,8 @@ sigTerm:                                // @sigTerm
 	str	w9, [x19, x8]
 	ldp	x30, x19, [sp], #16             // 16-byte Folded Reload
 	ret
-.Lfunc_end681:
-	.size	sigTerm, .Lfunc_end681-sigTerm
+.Lfunc_end682:
+	.size	sigTerm, .Lfunc_end682-sigTerm
 	.cfi_endproc
                                         // -- End function
 	.globl	extErr                          // -- Begin function extErr
@@ -57441,8 +57474,8 @@ extErr:                                 // @extErr
 	add	x2, x2, :lo12:.L$115
 	mov	x3, xzr
 	bl	err
-.Lfunc_end682:
-	.size	extErr, .Lfunc_end682-extErr
+.Lfunc_end683:
+	.size	extErr, .Lfunc_end683-extErr
 	.cfi_endproc
                                         // -- End function
 	.globl	forkErr                         // -- Begin function forkErr
@@ -57459,8 +57492,8 @@ forkErr:                                // @forkErr
 	mov	x1, xzr
 	mov	x3, xzr
 	bl	err
-.Lfunc_end683:
-	.size	forkErr, .Lfunc_end683-forkErr
+.Lfunc_end684:
+	.size	forkErr, .Lfunc_end684-forkErr
 	.cfi_endproc
                                         // -- End function
 	.globl	evLst                           // -- Begin function evLst
@@ -57477,18 +57510,18 @@ evLst:                                  // @evLst
 	ldp	w1, w8, [x0]
 	bfi	x1, x8, #32, #32
 	tst	x1, #0x6
-	b.ne	.LBB684_4
+	b.ne	.LBB685_4
 // %bb.1:                               // %"$3"
-	tbz	w1, #3, .LBB684_3
+	tbz	w1, #3, .LBB685_3
 // %bb.2:                               // %"$6"
 	ldp	w1, w8, [x1]
 	bfi	x1, x8, #32, #32
-	b	.LBB684_4
-.LBB684_3:                              // %"$5"
+	b	.LBB685_4
+.LBB685_3:                              // %"$5"
 	mov	x0, x1
 	bl	evList
 	mov	x1, x0
-.LBB684_4:                              // %"$2"
+.LBB685_4:                              // %"$2"
 	tst	x1, #0xf
 	cset	w8, eq
 	adrp	x9, SymTab+8
@@ -57496,16 +57529,16 @@ evLst:                                  // @evLst
 	cmp	x1, x9
 	cset	w9, eq
 	orr	w8, w8, w9
-	tbz	w8, #0, .LBB684_6
+	tbz	w8, #0, .LBB685_6
 // %bb.5:                               // %"$10"
 	mov	x0, x1
 	ldp	x30, x19, [sp], #16             // 16-byte Folded Reload
 	ret
-.LBB684_6:                              // %"$9"
+.LBB685_6:                              // %"$9"
 	mov	x0, x19
 	bl	lstErr
-.Lfunc_end684:
-	.size	evLst, .Lfunc_end684-evLst
+.Lfunc_end685:
+	.size	evLst, .Lfunc_end685-evLst
 	.cfi_endproc
                                         // -- End function
 	.globl	_tty                            // -- Begin function _tty
@@ -57524,8 +57557,8 @@ _tty:                                   // @_tty
 	add	x0, x0, :lo12:SymTab+8
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end685:
-	.size	_tty, .Lfunc_end685-_tty
+.Lfunc_end686:
+	.size	_tty, .Lfunc_end686-_tty
 	.cfi_endproc
                                         // -- End function
 	.globl	_raw                            // -- Begin function _raw
@@ -57544,8 +57577,8 @@ _raw:                                   // @_raw
 	add	x0, x0, :lo12:SymTab+8
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end686:
-	.size	_raw, .Lfunc_end686-_raw
+.Lfunc_end687:
+	.size	_raw, .Lfunc_end687-_raw
 	.cfi_endproc
                                         // -- End function
 	.globl	_sigio                          // -- Begin function _sigio
@@ -57564,8 +57597,8 @@ _sigio:                                 // @_sigio
 	add	x0, x0, :lo12:SymTab+8
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end687:
-	.size	_sigio, .Lfunc_end687-_sigio
+.Lfunc_end688:
+	.size	_sigio, .Lfunc_end688-_sigio
 	.cfi_endproc
                                         // -- End function
 	.globl	_kids                           // -- Begin function _kids
@@ -57584,8 +57617,8 @@ _kids:                                  // @_kids
 	add	x0, x0, :lo12:SymTab+8
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end688:
-	.size	_kids, .Lfunc_end688-_kids
+.Lfunc_end689:
+	.size	_kids, .Lfunc_end689-_kids
 	.cfi_endproc
                                         // -- End function
 	.globl	tmDate                          // -- Begin function tmDate
@@ -57597,23 +57630,23 @@ tmDate:                                 // @tmDate
 	cmp	x0, #1                          // =1
 	adrp	x8, SymTab+8
 	add	x8, x8, :lo12:SymTab+8
-	b.lt	.LBB689_6
+	b.lt	.LBB690_6
 // %bb.1:                               // %"$1"
 	cmp	x1, #1                          // =1
-	b.lt	.LBB689_6
+	b.lt	.LBB690_6
 // %bb.2:                               // %"$1"
 	cmp	x1, #12                         // =12
-	b.hi	.LBB689_6
+	b.hi	.LBB690_6
 // %bb.3:                               // %"$1"
 	cmp	x2, #1                          // =1
-	b.lt	.LBB689_6
+	b.lt	.LBB690_6
 // %bb.4:                               // %"$6"
 	adrp	x8, ($Month)
 	add	x8, x8, :lo12:($Month)
 	ldrb	w8, [x8, x1]
 	cmp	x8, x2
-	b.lo	.LBB689_7
-.LBB689_5:                              // %"$15"
+	b.lo	.LBB690_7
+.LBB690_5:                              // %"$15"
 	mov	w8, #12
 	madd	x8, x0, x8, x1
 	sub	x8, x8, #3                      // =3
@@ -57647,20 +57680,20 @@ tmDate:                                 // @tmDate
 	sub	x9, x9, x8, lsr #2
 	mov	w8, #2
 	bfi	x8, x9, #4, #60
-.LBB689_6:                              // %"$17"
+.LBB690_6:                              // %"$17"
 	mov	x0, x8
 	ret
-.LBB689_7:                              // %"$8"
+.LBB690_7:                              // %"$8"
 	cmp	x2, #29                         // =29
 	adrp	x8, SymTab+8
 	add	x8, x8, :lo12:SymTab+8
-	b.ne	.LBB689_6
+	b.ne	.LBB690_6
 // %bb.8:                               // %"$8"
 	cmp	x1, #2                          // =2
-	b.ne	.LBB689_6
+	b.ne	.LBB690_6
 // %bb.9:                               // %"$8"
 	and	x9, x0, #0x3
-	cbnz	x9, .LBB689_6
+	cbnz	x9, .LBB690_6
 // %bb.10:                              // %"$12"
 	mov	x8, #23593
 	movk	x8, #49807, lsl #16
@@ -57673,7 +57706,7 @@ tmDate:                                 // @tmDate
 	movk	x9, #23592, lsl #32
 	movk	x9, #655, lsl #48
 	cmp	x8, x9
-	b.hi	.LBB689_5
+	b.hi	.LBB690_5
 // %bb.11:                              // %"$12"
 	lsr	x8, x0, #4
 	mov	x9, #15729
@@ -57683,13 +57716,13 @@ tmDate:                                 // @tmDate
 	umulh	x8, x8, x9
 	mov	w9, #400
 	msub	x8, x8, x9, x0
-	cbz	x8, .LBB689_5
+	cbz	x8, .LBB690_5
 // %bb.12:
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ret
-.Lfunc_end689:
-	.size	tmDate, .Lfunc_end689-tmDate
+.Lfunc_end690:
+	.size	tmDate, .Lfunc_end690-tmDate
 	.cfi_endproc
                                         // -- End function
 	.globl	tmTime                          // -- Begin function tmTime
@@ -57701,17 +57734,17 @@ tmTime:                                 // @tmTime
 	mov	x8, x0
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
-	tbnz	x8, #63, .LBB690_6
+	tbnz	x8, #63, .LBB691_6
 // %bb.1:                               // %"$1"
-	tbnz	x1, #63, .LBB690_6
+	tbnz	x1, #63, .LBB691_6
 // %bb.2:                               // %"$1"
 	cmp	x1, #59                         // =59
-	b.hi	.LBB690_6
+	b.hi	.LBB691_6
 // %bb.3:                               // %"$1"
-	tbnz	x2, #63, .LBB690_6
+	tbnz	x2, #63, .LBB691_6
 // %bb.4:                               // %"$1"
 	cmp	x2, #59                         // =59
-	b.hi	.LBB690_6
+	b.hi	.LBB691_6
 // %bb.5:                               // %"$7"
 	mov	w9, #3600
 	mov	w10, #60
@@ -57720,10 +57753,10 @@ tmTime:                                 // @tmTime
 	add	x8, x8, x2
 	mov	w0, #2
 	bfi	x0, x8, #4, #60
-.LBB690_6:                              // %"$9"
+.LBB691_6:                              // %"$9"
 	ret
-.Lfunc_end690:
-	.size	tmTime, .Lfunc_end690-tmTime
+.Lfunc_end691:
+	.size	tmTime, .Lfunc_end691-tmTime
 	.cfi_endproc
                                         // -- End function
 	.globl	_date                           // -- Begin function _date
@@ -57735,8 +57768,8 @@ _date:                                  // @_date
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ret
-.Lfunc_end691:
-	.size	_date, .Lfunc_end691-_date
+.Lfunc_end692:
+	.size	_date, .Lfunc_end692-_date
 	.cfi_endproc
                                         // -- End function
 	.globl	_time                           // -- Begin function _time
@@ -57748,8 +57781,8 @@ _time:                                  // @_time
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ret
-.Lfunc_end692:
-	.size	_time, .Lfunc_end692-_time
+.Lfunc_end693:
+	.size	_time, .Lfunc_end693-_time
 	.cfi_endproc
                                         // -- End function
 	.globl	pathSize                        // -- Begin function pathSize
@@ -57764,53 +57797,53 @@ pathSize:                               // @pathSize
 	.cfi_offset w30, -16
 	mov	x19, x0
 	bl	bufSize
-	tbz	w19, #1, .LBB693_2
+	tbz	w19, #1, .LBB694_2
 // %bb.1:                               // %"$2"
 	lsr	x8, x19, #4
-	b	.LBB693_3
-.LBB693_2:                              // %"$3"
+	b	.LBB694_3
+.LBB694_2:                              // %"$3"
 	ldp	w8, w9, [x19, #-4]
 	bfi	x8, x9, #32, #32
-.LBB693_3:                              // %"$4"
+.LBB694_3:                              // %"$4"
 	and	w9, w8, #0xff
 	cmp	w9, #126                        // =126
-	b.eq	.LBB693_11
+	b.eq	.LBB694_11
 // %bb.4:                               // %"$4"
 	cmp	w9, #64                         // =64
-	b.eq	.LBB693_7
+	b.eq	.LBB694_7
 // %bb.5:                               // %"$4"
 	cmp	w9, #43                         // =43
-	b.ne	.LBB693_13
+	b.ne	.LBB694_13
 // %bb.6:                               // %"$9"
 	ubfx	w9, w8, #8, #8
 	cmp	w9, #64                         // =64
-	b.ne	.LBB693_8
-.LBB693_7:                              // %"$11"
+	b.ne	.LBB694_8
+.LBB694_7:                              // %"$11"
 	adrp	x8, ($PilLen)
 	ldr	x8, [x8, :lo12:($PilLen)]
-	b	.LBB693_12
-.LBB693_8:                              // %"$10"
+	b	.LBB694_12
+.LBB694_8:                              // %"$10"
 	and	w9, w8, #0xff
 	cmp	w9, #126                        // =126
-	b.eq	.LBB693_11
+	b.eq	.LBB694_11
 // %bb.9:                               // %"$10"
 	cmp	w9, #43                         // =43
-	b.ne	.LBB693_13
+	b.ne	.LBB694_13
 // %bb.10:                              // %"$15"
 	ubfx	w8, w8, #8, #8
 	cmp	w8, #126                        // =126
-	b.ne	.LBB693_13
-.LBB693_11:                             // %"$17"
+	b.ne	.LBB694_13
+.LBB694_11:                             // %"$17"
 	adrp	x8, ($UsrLen)
 	ldr	x8, [x8, :lo12:($UsrLen)]
-.LBB693_12:                             // %"$5"
+.LBB694_12:                             // %"$5"
 	add	x8, x0, x8
 	sub	x0, x8, #1                      // =1
-.LBB693_13:                             // %"$5"
+.LBB694_13:                             // %"$5"
 	ldp	x30, x19, [sp], #16             // 16-byte Folded Reload
 	ret
-.Lfunc_end693:
-	.size	pathSize, .Lfunc_end693-pathSize
+.Lfunc_end694:
+	.size	pathSize, .Lfunc_end694-pathSize
 	.cfi_endproc
                                         // -- End function
 	.globl	pathString                      // -- Begin function pathString
@@ -57834,60 +57867,60 @@ pathString:                             // @pathString
 	and	w8, w0, #0xff
 	mov	x20, x19
 	cmp	w8, #43                         // =43
-	b.ne	.LBB694_2
+	b.ne	.LBB695_2
 // %bb.1:                               // %"$2"
 	strb	w0, [x20], #1
 	mov	x0, sp
 	bl	symByte
-.LBB694_2:                              // %"$3"
+.LBB695_2:                              // %"$3"
 	and	w8, w0, #0xff
 	cmp	w8, #126                        // =126
-	b.eq	.LBB694_6
+	b.eq	.LBB695_6
 // %bb.3:                               // %"$3"
 	cmp	w8, #64                         // =64
-	b.ne	.LBB694_9
+	b.ne	.LBB695_9
 // %bb.4:                               // %"$6"
 	adrp	x8, ($PilLen)
 	ldr	x21, [x8, :lo12:($PilLen)]
-	cbz	x21, .LBB694_11
+	cbz	x21, .LBB695_11
 // %bb.5:                               // %"$8"
 	adrp	x8, ($PilHome)
 	ldr	x1, [x8, :lo12:($PilHome)]
-	b	.LBB694_8
-.LBB694_6:                              // %"$7"
+	b	.LBB695_8
+.LBB695_6:                              // %"$7"
 	adrp	x8, ($UsrLen)
 	ldr	x21, [x8, :lo12:($UsrLen)]
-	cbz	x21, .LBB694_11
+	cbz	x21, .LBB695_11
 // %bb.7:                               // %"$10"
 	adrp	x8, ($UsrHome)
 	ldr	x1, [x8, :lo12:($UsrHome)]
-.LBB694_8:                              // %"$12.preheader"
+.LBB695_8:                              // %"$12.preheader"
 	mov	x0, x20
 	mov	x2, x21
 	bl	memcpy2
 	add	x20, x20, x21
-	b	.LBB694_11
-.LBB694_9:                              // %"$4"
+	b	.LBB695_11
+.LBB695_9:                              // %"$4"
 	strb	w0, [x20], #1
-	b	.LBB694_11
-.LBB694_10:                             // %"$13"
-                                        //   in Loop: Header=BB694_11 Depth=1
+	b	.LBB695_11
+.LBB695_10:                             // %"$13"
+                                        //   in Loop: Header=BB695_11 Depth=1
 	add	x20, x20, #1                    // =1
-.LBB694_11:                             // %"$12"
+.LBB695_11:                             // %"$12"
                                         // =>This Inner Loop Header: Depth=1
 	mov	x0, sp
 	bl	symByte
 	tst	w0, #0xff
 	strb	w0, [x20]
-	b.ne	.LBB694_10
+	b.ne	.LBB695_10
 // %bb.12:                              // %"$14"
 	mov	x0, x19
 	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
 	ldp	x30, x21, [sp, #16]             // 16-byte Folded Reload
 	add	sp, sp, #48                     // =48
 	ret
-.Lfunc_end694:
-	.size	pathString, .Lfunc_end694-pathString
+.Lfunc_end695:
+	.size	pathString, .Lfunc_end695-pathString
 	.cfi_endproc
                                         // -- End function
 	.globl	mkStrE                          // -- Begin function mkStrE
@@ -57917,19 +57950,19 @@ mkStrE:                                 // @mkStrE
 	add	x8, x9, #16                     // =16
 	str	x8, [x21, :lo12:env]
 	cmp	x19, x20
-	b.eq	.LBB695_3
-.LBB695_1:                              // %"$3"
+	b.eq	.LBB696_3
+.LBB696_1:                              // %"$3"
                                         // =>This Inner Loop Header: Depth=1
 	ldrb	w0, [x20]
-	cbz	w0, .LBB695_3
+	cbz	w0, .LBB696_3
 // %bb.2:                               // %"$5"
-                                        //   in Loop: Header=BB695_1 Depth=1
+                                        //   in Loop: Header=BB696_1 Depth=1
 	mov	x1, sp
 	bl	byteSym
 	add	x20, x20, #1                    // =1
 	cmp	x19, x20
-	b.ne	.LBB695_1
-.LBB695_3:                              // %"$4"
+	b.ne	.LBB696_1
+.LBB696_3:                              // %"$4"
 	ldr	x0, [sp, #16]
 	bl	consStr
 	ldr	x8, [sp, #24]
@@ -57938,8 +57971,8 @@ mkStrE:                                 // @mkStrE
 	ldp	x30, x21, [sp, #32]             // 16-byte Folded Reload
 	add	sp, sp, #64                     // =64
 	ret
-.Lfunc_end695:
-	.size	mkStrE, .Lfunc_end695-mkStrE
+.Lfunc_end696:
+	.size	mkStrE, .Lfunc_end696-mkStrE
 	.cfi_endproc
                                         // -- End function
 	.globl	openErr                         // -- Begin function openErr
@@ -57963,8 +57996,8 @@ openErr:                                // @openErr
 	mov	x0, x20
 	mov	x1, x19
 	bl	err
-.Lfunc_end696:
-	.size	openErr, .Lfunc_end696-openErr
+.Lfunc_end697:
+	.size	openErr, .Lfunc_end697-openErr
 	.cfi_endproc
                                         // -- End function
 	.globl	pipeErr                         // -- Begin function pipeErr
@@ -57985,8 +58018,8 @@ pipeErr:                                // @pipeErr
 	mov	x0, x19
 	mov	x1, xzr
 	bl	err
-.Lfunc_end697:
-	.size	pipeErr, .Lfunc_end697-pipeErr
+.Lfunc_end698:
+	.size	pipeErr, .Lfunc_end698-pipeErr
 	.cfi_endproc
                                         // -- End function
 	.globl	badFd                           // -- Begin function badFd
@@ -58002,8 +58035,8 @@ badFd:                                  // @badFd
 	add	x2, x2, :lo12:.L$139
 	mov	x3, xzr
 	bl	err
-.Lfunc_end698:
-	.size	badFd, .Lfunc_end698-badFd
+.Lfunc_end699:
+	.size	badFd, .Lfunc_end699-badFd
 	.cfi_endproc
                                         // -- End function
 	.globl	writeErr                        // -- Begin function writeErr
@@ -58023,8 +58056,8 @@ writeErr:                               // @writeErr
 	mov	x1, xzr
 	mov	x2, x19
 	bl	err
-.Lfunc_end699:
-	.size	writeErr, .Lfunc_end699-writeErr
+.Lfunc_end700:
+	.size	writeErr, .Lfunc_end700-writeErr
 	.cfi_endproc
                                         // -- End function
 	.globl	selectErr                       // -- Begin function selectErr
@@ -58045,8 +58078,8 @@ selectErr:                              // @selectErr
 	mov	x0, x19
 	mov	x1, xzr
 	bl	err
-.Lfunc_end700:
-	.size	selectErr, .Lfunc_end700-selectErr
+.Lfunc_end701:
+	.size	selectErr, .Lfunc_end701-selectErr
 	.cfi_endproc
                                         // -- End function
 	.globl	closeOnExec                     // -- Begin function closeOnExec
@@ -58061,11 +58094,11 @@ closeOnExec:                            // @closeOnExec
 	.cfi_offset w30, -16
 	mov	x19, x0
 	bl	fcntlCloExec
-	tbnz	w0, #31, .LBB701_2
+	tbnz	w0, #31, .LBB702_2
 // %bb.1:                               // %"$3"
 	ldp	x30, x19, [sp], #16             // 16-byte Folded Reload
 	ret
-.LBB701_2:                              // %"$2"
+.LBB702_2:                              // %"$2"
 	bl	strErrno
 	mov	x3, x0
 	adrp	x2, .L$141
@@ -58073,8 +58106,8 @@ closeOnExec:                            // @closeOnExec
 	mov	x0, x19
 	mov	x1, xzr
 	bl	err
-.Lfunc_end701:
-	.size	closeOnExec, .Lfunc_end701-closeOnExec
+.Lfunc_end702:
+	.size	closeOnExec, .Lfunc_end702-closeOnExec
 	.cfi_endproc
                                         // -- End function
 	.globl	initInFile                      // -- Begin function initInFile
@@ -58085,8 +58118,8 @@ initInFile:                             // @initInFile
 // %bb.0:                               // %"$1"
 	mov	x0, xzr
 	ret
-.Lfunc_end702:
-	.size	initInFile, .Lfunc_end702-initInFile
+.Lfunc_end703:
+	.size	initInFile, .Lfunc_end703-initInFile
 	.cfi_endproc
                                         // -- End function
 	.globl	initOutFile                     // -- Begin function initOutFile
@@ -58097,8 +58130,8 @@ initOutFile:                            // @initOutFile
 // %bb.0:                               // %"$1"
 	mov	x0, xzr
 	ret
-.Lfunc_end703:
-	.size	initOutFile, .Lfunc_end703-initOutFile
+.Lfunc_end704:
+	.size	initOutFile, .Lfunc_end704-initOutFile
 	.cfi_endproc
                                         // -- End function
 	.globl	slow                            // -- Begin function slow
@@ -58116,34 +58149,34 @@ slow:                                   // @slow
 	mov	x19, x0
 	str	wzr, [x0, #24]
 	adrp	x20, ($Signal)
-.LBB704_1:                              // %"$2"
+.LBB705_1:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	bl	read
-	tbz	w0, #31, .LBB704_6
+	tbz	w0, #31, .LBB705_6
 // %bb.2:                               // %"$3"
-                                        //   in Loop: Header=BB704_1 Depth=1
+                                        //   in Loop: Header=BB705_1 Depth=1
 	bl	gErrno
 	cmp	w0, #2                          // =2
-	b.ne	.LBB704_5
+	b.ne	.LBB705_5
 // %bb.3:                               // %"$6"
-                                        //   in Loop: Header=BB704_1 Depth=1
+                                        //   in Loop: Header=BB705_1 Depth=1
 	ldr	w8, [x20, :lo12:($Signal)]
-	cbz	w8, .LBB704_1
+	cbz	w8, .LBB705_1
 // %bb.4:                               // %"$8"
-                                        //   in Loop: Header=BB704_1 Depth=1
+                                        //   in Loop: Header=BB705_1 Depth=1
 	mov	x0, xzr
 	bl	sighandler
-	b	.LBB704_1
-.LBB704_5:
+	b	.LBB705_1
+.LBB705_5:
 	mov	w0, wzr
-.LBB704_6:                              // %"$4"
+.LBB705_6:                              // %"$4"
 	str	w0, [x19, #28]
                                         // kill: def $w0 killed $w0 killed $x0
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #32                  // 8-byte Folded Reload
 	ret
-.Lfunc_end704:
-	.size	slow, .Lfunc_end704-slow
+.Lfunc_end705:
+	.size	slow, .Lfunc_end705-slow
 	.cfi_endproc
                                         // -- End function
 	.globl	slowNb                          // -- Begin function slowNb
@@ -58161,54 +58194,54 @@ slowNb:                                 // @slowNb
 	.cfi_offset w30, -32
 	mov	x19, x0
 	adrp	x21, ($Signal)
-.LBB705_1:                              // %"$2"
+.LBB706_1:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	bl	nonBlocking
 	bl	read
 	mov	x20, x0
 	bl	fcntlSetFl
 	cmp	w20, #1                         // =1
-	b.ge	.LBB705_6
+	b.ge	.LBB706_6
 // %bb.2:                               // %"$3"
-                                        //   in Loop: Header=BB705_1 Depth=1
-	cbz	w20, .LBB705_7
+                                        //   in Loop: Header=BB706_1 Depth=1
+	cbz	w20, .LBB706_7
 // %bb.3:                               // %"$6"
-                                        //   in Loop: Header=BB705_1 Depth=1
+                                        //   in Loop: Header=BB706_1 Depth=1
 	bl	gErrno
 	cmp	w0, #2                          // =2
-	b.ne	.LBB705_8
+	b.ne	.LBB706_8
 // %bb.4:                               // %"$10"
-                                        //   in Loop: Header=BB705_1 Depth=1
+                                        //   in Loop: Header=BB706_1 Depth=1
 	ldr	w8, [x21, :lo12:($Signal)]
-	cbz	w8, .LBB705_1
+	cbz	w8, .LBB706_1
 // %bb.5:                               // %"$12"
-                                        //   in Loop: Header=BB705_1 Depth=1
+                                        //   in Loop: Header=BB706_1 Depth=1
 	mov	x0, xzr
 	bl	sighandler
-	b	.LBB705_1
-.LBB705_6:                              // %"$5"
+	b	.LBB706_1
+.LBB706_6:                              // %"$5"
 	stp	wzr, w20, [x19, #24]
-	b	.LBB705_11
-.LBB705_7:                              // %"$7"
+	b	.LBB706_11
+.LBB706_7:                              // %"$7"
 	mov	w8, #-1
 	stp	w8, w8, [x19, #24]
-	b	.LBB705_11
-.LBB705_8:                              // %"$6"
+	b	.LBB706_11
+.LBB706_8:                              // %"$6"
 	cmp	w0, #4                          // =4
-	b.ne	.LBB705_10
+	b.ne	.LBB706_10
 // %bb.9:                               // %"$4.loopexit"
 	mov	w20, #-1
-	b	.LBB705_11
-.LBB705_10:                             // %"$11"
+	b	.LBB706_11
+.LBB706_10:                             // %"$11"
 	mov	w20, wzr
 	stp	wzr, wzr, [x19, #24]
-.LBB705_11:                             // %"$4"
+.LBB706_11:                             // %"$4"
 	mov	w0, w20
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x21, [sp], #32             // 16-byte Folded Reload
 	ret
-.Lfunc_end705:
-	.size	slowNb, .Lfunc_end705-slowNb
+.Lfunc_end706:
+	.size	slowNb, .Lfunc_end706-slowNb
 	.cfi_endproc
                                         // -- End function
 	.globl	rdBytes                         // -- Begin function rdBytes
@@ -58227,50 +58260,50 @@ rdBytes:                                // @rdBytes
 	mov	w19, w2
 	mov	x20, x1
 	adrp	x21, ($Signal)
-	b	.LBB706_2
-.LBB706_1:                              // %"$6"
-                                        //   in Loop: Header=BB706_2 Depth=1
+	b	.LBB707_2
+.LBB707_1:                              // %"$6"
+                                        //   in Loop: Header=BB707_2 Depth=1
 	add	x20, x20, w0, sxtw
 	subs	w19, w19, w0
-	b.eq	.LBB706_8
-.LBB706_2:                              // %"$3"
+	b.eq	.LBB707_8
+.LBB707_2:                              // %"$3"
                                         // =>This Inner Loop Header: Depth=1
 	bl	read
 	cmp	w0, #1                          // =1
-	b.ge	.LBB706_1
+	b.ge	.LBB707_1
 // %bb.3:                               // %"$4"
-                                        //   in Loop: Header=BB706_2 Depth=1
-	cbz	w0, .LBB706_5
+                                        //   in Loop: Header=BB707_2 Depth=1
+	cbz	w0, .LBB707_5
 // %bb.4:                               // %"$8"
-                                        //   in Loop: Header=BB706_2 Depth=1
+                                        //   in Loop: Header=BB707_2 Depth=1
 	bl	gErrno
 	cmp	w0, #2                          // =2
 	cset	w8, eq
-	tbnz	w8, #0, .LBB706_6
-	b	.LBB706_9
-.LBB706_5:                              //   in Loop: Header=BB706_2 Depth=1
+	tbnz	w8, #0, .LBB707_6
+	b	.LBB707_9
+.LBB707_5:                              //   in Loop: Header=BB707_2 Depth=1
 	mov	w8, wzr
-	tbz	w8, #0, .LBB706_9
-.LBB706_6:                              // %"$10"
-                                        //   in Loop: Header=BB706_2 Depth=1
+	tbz	w8, #0, .LBB707_9
+.LBB707_6:                              // %"$10"
+                                        //   in Loop: Header=BB707_2 Depth=1
 	ldr	w8, [x21, :lo12:($Signal)]
-	cbz	w8, .LBB706_2
+	cbz	w8, .LBB707_2
 // %bb.7:                               // %"$11"
-                                        //   in Loop: Header=BB706_2 Depth=1
+                                        //   in Loop: Header=BB707_2 Depth=1
 	mov	x0, xzr
 	bl	sighandler
-	b	.LBB706_2
-.LBB706_8:                              // %"$14"
+	b	.LBB707_2
+.LBB707_8:                              // %"$14"
 	mov	w0, #1
-	b	.LBB706_10
-.LBB706_9:                              // %"$9"
+	b	.LBB707_10
+.LBB707_9:                              // %"$9"
 	mov	w0, wzr
-.LBB706_10:                             // %"$9"
+.LBB707_10:                             // %"$9"
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x21, [sp], #32             // 16-byte Folded Reload
 	ret
-.Lfunc_end706:
-	.size	rdBytes, .Lfunc_end706-rdBytes
+.Lfunc_end707:
+	.size	rdBytes, .Lfunc_end707-rdBytes
 	.cfi_endproc
                                         // -- End function
 	.globl	rdBytesNb                       // -- Begin function rdBytesNb
@@ -58291,87 +58324,87 @@ rdBytesNb:                              // @rdBytesNb
 	mov	w19, w2
 	mov	x20, x1
 	adrp	x22, ($Signal)
-.LBB707_1:                              // %"$2"
+.LBB708_1:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	bl	nonBlocking
 	bl	read
 	mov	x21, x0
 	bl	fcntlSetFl
 	cmp	w21, #1                         // =1
-	b.ge	.LBB707_14
+	b.ge	.LBB708_14
 // %bb.2:                               // %"$4"
-                                        //   in Loop: Header=BB707_1 Depth=1
-	cbz	w21, .LBB707_16
+                                        //   in Loop: Header=BB708_1 Depth=1
+	cbz	w21, .LBB708_16
 // %bb.3:                               // %"$17"
-                                        //   in Loop: Header=BB707_1 Depth=1
+                                        //   in Loop: Header=BB708_1 Depth=1
 	bl	gErrno
 	cmp	w0, #4                          // =4
-	b.eq	.LBB707_17
+	b.eq	.LBB708_17
 // %bb.4:                               // %"$20"
-                                        //   in Loop: Header=BB707_1 Depth=1
+                                        //   in Loop: Header=BB708_1 Depth=1
 	cmp	w0, #2                          // =2
-	b.ne	.LBB707_16
+	b.ne	.LBB708_16
 // %bb.5:                               // %"$22"
-                                        //   in Loop: Header=BB707_1 Depth=1
+                                        //   in Loop: Header=BB708_1 Depth=1
 	ldr	w8, [x22, :lo12:($Signal)]
-	cbz	w8, .LBB707_1
+	cbz	w8, .LBB708_1
 // %bb.6:                               // %"$24"
-                                        //   in Loop: Header=BB707_1 Depth=1
+                                        //   in Loop: Header=BB708_1 Depth=1
 	mov	x0, xzr
 	bl	sighandler
-	b	.LBB707_1
-.LBB707_7:                              // %"$7"
-                                        //   in Loop: Header=BB707_14 Depth=1
+	b	.LBB708_1
+.LBB708_7:                              // %"$7"
+                                        //   in Loop: Header=BB708_14 Depth=1
 	add	x20, x20, w21, sxtw
-.LBB707_8:                              // %"$8"
-                                        //   Parent Loop BB707_14 Depth=1
+.LBB708_8:                              // %"$8"
+                                        //   Parent Loop BB708_14 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	bl	read
 	mov	x21, x0
 	cmp	w21, #0                         // =0
-	b.gt	.LBB707_14
+	b.gt	.LBB708_14
 // %bb.9:                               // %"$9"
-                                        //   in Loop: Header=BB707_8 Depth=2
-	cbz	w21, .LBB707_11
+                                        //   in Loop: Header=BB708_8 Depth=2
+	cbz	w21, .LBB708_11
 // %bb.10:                              // %"$12"
-                                        //   in Loop: Header=BB707_8 Depth=2
+                                        //   in Loop: Header=BB708_8 Depth=2
 	bl	gErrno
 	cmp	w0, #2                          // =2
 	cset	w8, eq
-	tbnz	w8, #0, .LBB707_12
-	b	.LBB707_16
-.LBB707_11:                             //   in Loop: Header=BB707_8 Depth=2
+	tbnz	w8, #0, .LBB708_12
+	b	.LBB708_16
+.LBB708_11:                             //   in Loop: Header=BB708_8 Depth=2
 	mov	w8, wzr
-	tbz	w8, #0, .LBB707_16
-.LBB707_12:                             // %"$14"
-                                        //   in Loop: Header=BB707_8 Depth=2
+	tbz	w8, #0, .LBB708_16
+.LBB708_12:                             // %"$14"
+                                        //   in Loop: Header=BB708_8 Depth=2
 	ldr	w8, [x22, :lo12:($Signal)]
-	cbz	w8, .LBB707_8
+	cbz	w8, .LBB708_8
 // %bb.13:                              // %"$15"
-                                        //   in Loop: Header=BB707_8 Depth=2
+                                        //   in Loop: Header=BB708_8 Depth=2
 	mov	x0, xzr
 	bl	sighandler
-	b	.LBB707_8
-.LBB707_14:                             // %"$5"
+	b	.LBB708_8
+.LBB708_14:                             // %"$5"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB707_8 Depth 2
+                                        //     Child Loop BB708_8 Depth 2
 	subs	w19, w19, w21
-	b.ne	.LBB707_7
+	b.ne	.LBB708_7
 // %bb.15:                              // %"$6"
 	mov	w0, #1
-	b	.LBB707_18
-.LBB707_16:
+	b	.LBB708_18
+.LBB708_16:
 	mov	x0, xzr
-	b	.LBB707_18
-.LBB707_17:
+	b	.LBB708_18
+.LBB708_17:
 	mov	x0, #-1
-.LBB707_18:                             // %"$18"
+.LBB708_18:                             // %"$18"
 	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #48                  // 8-byte Folded Reload
 	ret
-.Lfunc_end707:
-	.size	rdBytesNb, .Lfunc_end707-rdBytesNb
+.Lfunc_end708:
+	.size	rdBytesNb, .Lfunc_end708-rdBytesNb
 	.cfi_endproc
                                         // -- End function
 	.globl	wrBytes                         // -- Begin function wrBytes
@@ -58393,66 +58426,66 @@ wrBytes:                                // @wrBytes
 	mov	x21, x1
 	mov	w20, w0
 	adrp	x22, ($Signal)
-.LBB708_1:                              // %"$2"
+.LBB709_1:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	bl	write
-	tbnz	w0, #31, .LBB708_4
+	tbnz	w0, #31, .LBB709_4
 // %bb.2:                               // %"$4"
-                                        //   in Loop: Header=BB708_1 Depth=1
+                                        //   in Loop: Header=BB709_1 Depth=1
 	subs	w19, w19, w0
-	b.eq	.LBB708_11
+	b.eq	.LBB709_11
 // %bb.3:                               // %"$19"
-                                        //   in Loop: Header=BB708_1 Depth=1
+                                        //   in Loop: Header=BB709_1 Depth=1
 	add	x21, x21, w0, sxtw
-	b	.LBB708_1
-.LBB708_4:                              // %"$3"
-                                        //   in Loop: Header=BB708_1 Depth=1
+	b	.LBB709_1
+.LBB709_4:                              // %"$3"
+                                        //   in Loop: Header=BB709_1 Depth=1
 	bl	gErrno
 	cmp	w0, #3                          // =3
-	b.eq	.LBB708_10
+	b.eq	.LBB709_10
 // %bb.5:                               // %"$6"
-                                        //   in Loop: Header=BB708_1 Depth=1
+                                        //   in Loop: Header=BB709_1 Depth=1
 	cmp	w0, #6                          // =6
-	b.eq	.LBB708_10
+	b.eq	.LBB709_10
 // %bb.6:                               // %"$9"
-                                        //   in Loop: Header=BB708_1 Depth=1
+                                        //   in Loop: Header=BB709_1 Depth=1
 	cmp	w0, #7                          // =7
-	b.eq	.LBB708_10
+	b.eq	.LBB709_10
 // %bb.7:                               // %"$11"
-                                        //   in Loop: Header=BB708_1 Depth=1
+                                        //   in Loop: Header=BB709_1 Depth=1
 	cmp	w0, #2                          // =2
-	b.ne	.LBB708_13
+	b.ne	.LBB709_13
 // %bb.8:                               // %"$14"
-                                        //   in Loop: Header=BB708_1 Depth=1
+                                        //   in Loop: Header=BB709_1 Depth=1
 	ldr	w8, [x22, :lo12:($Signal)]
-	cbz	w8, .LBB708_1
+	cbz	w8, .LBB709_1
 // %bb.9:                               // %"$17"
-                                        //   in Loop: Header=BB708_1 Depth=1
+                                        //   in Loop: Header=BB709_1 Depth=1
 	mov	x0, xzr
 	bl	sighandler
-	b	.LBB708_1
-.LBB708_10:
+	b	.LBB709_1
+.LBB709_10:
 	mov	w0, wzr
-	b	.LBB708_12
-.LBB708_11:
+	b	.LBB709_12
+.LBB709_11:
 	mov	w0, #1
-.LBB708_12:                             // %"$7"
+.LBB709_12:                             // %"$7"
 	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #48                  // 8-byte Folded Reload
 	ret
-.LBB708_13:                             // %"$13"
+.LBB709_13:                             // %"$13"
 	cmp	w20, #2                         // =2
-	b.ne	.LBB708_15
+	b.ne	.LBB709_15
 // %bb.14:                              // %"$15"
 	mov	w0, #2
 	bl	bye
-.LBB708_15:                             // %"$16"
+.LBB709_15:                             // %"$16"
 	adrp	x0, .L$142
 	add	x0, x0, :lo12:.L$142
 	bl	writeErr
-.Lfunc_end708:
-	.size	wrBytes, .Lfunc_end708-wrBytes
+.Lfunc_end709:
+	.size	wrBytes, .Lfunc_end709-wrBytes
 	.cfi_endproc
                                         // -- End function
 	.globl	clsChild                        // -- Begin function clsChild
@@ -58469,8 +58502,8 @@ clsChild:                               // @clsChild
 	bl	outString
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end709:
-	.size	clsChild, .Lfunc_end709-clsChild
+.Lfunc_end710:
+	.size	clsChild, .Lfunc_end710-clsChild
 	.cfi_endproc
                                         // -- End function
 	.globl	wrChild                         // -- Begin function wrChild
@@ -58487,8 +58520,8 @@ wrChild:                                // @wrChild
 	bl	outString
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end710:
-	.size	wrChild, .Lfunc_end710-wrChild
+.Lfunc_end711:
+	.size	wrChild, .Lfunc_end711-wrChild
 	.cfi_endproc
                                         // -- End function
 	.globl	flushAll                        // -- Begin function flushAll
@@ -58505,8 +58538,8 @@ flushAll:                               // @flushAll
 	bl	outString
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end711:
-	.size	flushAll, .Lfunc_end711-flushAll
+.Lfunc_end712:
+	.size	flushAll, .Lfunc_end712-flushAll
 	.cfi_endproc
                                         // -- End function
 	.globl	getBinary                       // -- Begin function getBinary
@@ -58523,31 +58556,31 @@ getBinary:                              // @getBinary
 	ldr	x19, [x8, :lo12:($InFile)]
 	ldp	w8, w9, [x19, #24]
 	cmp	w8, w9
-	b.ne	.LBB712_5
+	b.ne	.LBB713_5
 // %bb.1:                               // %"$2"
-	tbnz	w8, #31, .LBB712_4
+	tbnz	w8, #31, .LBB713_4
 // %bb.2:                               // %"$5"
 	mov	x0, x19
 	bl	slow
 	cmp	w0, #0                          // =0
 	cset	w8, eq
-	cbz	w8, .LBB712_5
-.LBB712_3:                              // %"$6"
+	cbz	w8, .LBB713_5
+.LBB713_3:                              // %"$6"
 	mov	w0, #-1
 	ldp	x30, x19, [sp], #16             // 16-byte Folded Reload
 	ret
-.LBB712_4:
+.LBB713_4:
 	mov	w8, #1
-	cbnz	w8, .LBB712_3
-.LBB712_5:                              // %"$3"
+	cbnz	w8, .LBB713_3
+.LBB713_5:                              // %"$3"
 	add	w9, w8, #1                      // =1
 	str	w9, [x19, #24]
 	add	x8, x19, w8, sxtw
 	ldrb	w0, [x8, #32]
 	ldp	x30, x19, [sp], #16             // 16-byte Folded Reload
 	ret
-.Lfunc_end712:
-	.size	getBinary, .Lfunc_end712-getBinary
+.Lfunc_end713:
+	.size	getBinary, .Lfunc_end713-getBinary
 	.cfi_endproc
                                         // -- End function
 	.globl	pr                              // -- Begin function pr
@@ -58561,8 +58594,8 @@ pr:                                     // @pr
 	adrp	x9, ($PutBin)
 	str	x8, [x9, :lo12:($PutBin)]
 	b	binPrint
-.Lfunc_end713:
-	.size	pr, .Lfunc_end713-pr
+.Lfunc_end714:
+	.size	pr, .Lfunc_end714-pr
 	.cfi_endproc
                                         // -- End function
 	.globl	putTell                         // -- Begin function putTell
@@ -58581,19 +58614,19 @@ putTell:                                // @putTell
 	adrp	x8, ($End)
 	ldr	x8, [x8, :lo12:($End)]
 	cmp	x9, x8
-	b.eq	.LBB714_2
+	b.eq	.LBB715_2
 // %bb.1:                               // %"$3"
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.LBB714_2:                              // %"$2"
+.LBB715_2:                              // %"$2"
 	adrp	x2, .L$147
 	add	x2, x2, :lo12:.L$147
 	mov	x0, xzr
 	mov	x1, xzr
 	mov	x3, xzr
 	bl	err
-.Lfunc_end714:
-	.size	putTell, .Lfunc_end714-putTell
+.Lfunc_end715:
+	.size	putTell, .Lfunc_end715-putTell
 	.cfi_endproc
                                         // -- End function
 	.globl	prTell                          // -- Begin function prTell
@@ -58609,8 +58642,8 @@ prTell:                                 // @prTell
 	adrp	x8, ($Extn)
 	str	wzr, [x8, :lo12:($Extn)]
 	b	binPrint
-.Lfunc_end715:
-	.size	prTell, .Lfunc_end715-prTell
+.Lfunc_end716:
+	.size	prTell, .Lfunc_end716-prTell
 	.cfi_endproc
                                         // -- End function
 	.globl	tellBeg                         // -- Begin function tellBeg
@@ -58620,8 +58653,8 @@ tellBeg:                                // @tellBeg
 	.cfi_startproc
 // %bb.0:                               // %"$1"
 	ret
-.Lfunc_end716:
-	.size	tellBeg, .Lfunc_end716-tellBeg
+.Lfunc_end717:
+	.size	tellBeg, .Lfunc_end717-tellBeg
 	.cfi_endproc
                                         // -- End function
 	.globl	tellEnd                         // -- Begin function tellEnd
@@ -58652,16 +58685,16 @@ tellEnd:                                // @tellEnd
 	stp	w0, w20, [x22]
 	adrp	x21, ($Tell)
 	ldr	w0, [x21, :lo12:($Tell)]
-	cbz	w0, .LBB717_3
+	cbz	w0, .LBB718_3
 // %bb.1:                               // %"$2"
 	add	w2, w8, #1                      // =1
 	mov	x1, x22
 	bl	wrBytes
-	tbnz	w0, #0, .LBB717_3
+	tbnz	w0, #0, .LBB718_3
 // %bb.2:                               // %"$4"
 	bl	close
 	str	wzr, [x21, :lo12:($Tell)]
-.LBB717_3:                              // %"$3"
+.LBB718_3:                              // %"$3"
 	adrp	x8, ($Child)
 	ldr	x21, [x8, :lo12:($Child)]
 	adrp	x8, ($Children)
@@ -58670,47 +58703,47 @@ tellEnd:                                // @tellEnd
 	mul	w8, w8, w9
 	add	x23, x21, w8, sxtw
 	add	x22, x22, #8                    // =8
-	b	.LBB717_5
-.LBB717_4:                              // %"$14"
-                                        //   in Loop: Header=BB717_5 Depth=1
+	b	.LBB718_5
+.LBB718_4:                              // %"$14"
+                                        //   in Loop: Header=BB718_5 Depth=1
 	add	x21, x21, #28                   // =28
-.LBB717_5:                              // %"$6"
+.LBB718_5:                              // %"$6"
                                         // =>This Inner Loop Header: Depth=1
 	cmp	x21, x23
-	b.eq	.LBB717_12
+	b.eq	.LBB718_12
 // %bb.6:                               // %"$7"
-                                        //   in Loop: Header=BB717_5 Depth=1
+                                        //   in Loop: Header=BB718_5 Depth=1
 	ldr	w8, [x21, #16]
-	cbz	w8, .LBB717_9
+	cbz	w8, .LBB718_9
 // %bb.7:                               // %"$10"
-                                        //   in Loop: Header=BB717_5 Depth=1
-	cbz	w19, .LBB717_11
+                                        //   in Loop: Header=BB718_5 Depth=1
+	cbz	w19, .LBB718_11
 // %bb.8:                               // %"$12"
-                                        //   in Loop: Header=BB717_5 Depth=1
+                                        //   in Loop: Header=BB718_5 Depth=1
 	ldr	w8, [x21, #16]
 	cmp	w19, w8
 	cset	w8, eq
-.LBB717_9:                              // %"$9"
-                                        //   in Loop: Header=BB717_5 Depth=1
-	cbz	w8, .LBB717_4
-.LBB717_10:                             // %"$13"
-                                        //   in Loop: Header=BB717_5 Depth=1
+.LBB718_9:                              // %"$9"
+                                        //   in Loop: Header=BB718_5 Depth=1
+	cbz	w8, .LBB718_4
+.LBB718_10:                             // %"$13"
+                                        //   in Loop: Header=BB718_5 Depth=1
 	mov	x0, x21
 	mov	x1, x22
 	mov	w2, w20
 	bl	wrChild
-	b	.LBB717_4
-.LBB717_11:                             //   in Loop: Header=BB717_5 Depth=1
+	b	.LBB718_4
+.LBB718_11:                             //   in Loop: Header=BB718_5 Depth=1
 	mov	w8, #1
-	cbz	w8, .LBB717_4
-	b	.LBB717_10
-.LBB717_12:                             // %"$8"
+	cbz	w8, .LBB718_4
+	b	.LBB718_10
+.LBB718_12:                             // %"$8"
 	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x23, [sp], #48             // 16-byte Folded Reload
 	ret
-.Lfunc_end717:
-	.size	tellEnd, .Lfunc_end717-tellEnd
+.Lfunc_end718:
+	.size	tellEnd, .Lfunc_end718-tellEnd
 	.cfi_endproc
                                         // -- End function
 	.globl	unsync                          // -- Begin function unsync
@@ -58728,7 +58761,7 @@ unsync:                                 // @unsync
 	.cfi_offset w29, -32
 	adrp	x19, ($Tell)
 	ldr	w0, [x19, :lo12:($Tell)]
-	cbz	w0, .LBB718_3
+	cbz	w0, .LBB719_3
 // %bb.1:                               // %"$2"
 	mov	x8, sp
 	sub	x1, x8, #16                     // =16
@@ -58736,19 +58769,19 @@ unsync:                                 // @unsync
 	stp	wzr, wzr, [x8, #-16]
 	mov	w2, #8
 	bl	wrBytes
-	tbnz	w0, #0, .LBB718_3
+	tbnz	w0, #0, .LBB719_3
 // %bb.2:                               // %"$4"
 	bl	close
 	str	wzr, [x19, :lo12:($Tell)]
-.LBB718_3:                              // %"$3"
+.LBB719_3:                              // %"$3"
 	adrp	x8, ($Sync)
 	strb	wzr, [x8, :lo12:($Sync)]
 	mov	sp, x29
 	ldr	x19, [sp, #16]                  // 8-byte Folded Reload
 	ldp	x29, x30, [sp], #32             // 16-byte Folded Reload
 	ret
-.Lfunc_end718:
-	.size	unsync, .Lfunc_end718-unsync
+.Lfunc_end719:
+	.size	unsync, .Lfunc_end719-unsync
 	.cfi_endproc
                                         // -- End function
 	.globl	pushErrFile                     // -- Begin function pushErrFile
@@ -58762,8 +58795,8 @@ pushErrFile:                            // @pushErrFile
 	str	x9, [x0]
 	str	x0, [x8, :lo12:env+64]
 	ret
-.Lfunc_end719:
-	.size	pushErrFile, .Lfunc_end719-pushErrFile
+.Lfunc_end720:
+	.size	pushErrFile, .Lfunc_end720-pushErrFile
 	.cfi_endproc
                                         // -- End function
 	.globl	pushCtlFile                     // -- Begin function pushCtlFile
@@ -58777,8 +58810,8 @@ pushCtlFile:                            // @pushCtlFile
 	str	x9, [x0]
 	str	x0, [x8, :lo12:env+72]
 	ret
-.Lfunc_end720:
-	.size	pushCtlFile, .Lfunc_end720-pushCtlFile
+.Lfunc_end721:
+	.size	pushCtlFile, .Lfunc_end721-pushCtlFile
 	.cfi_endproc
                                         // -- End function
 	.globl	_path                           // -- Begin function _path
@@ -58815,8 +58848,8 @@ _path:                                  // @_path
 	ldr	x19, [sp, #16]                  // 8-byte Folded Reload
 	ldp	x29, x30, [sp], #32             // 16-byte Folded Reload
 	ret
-.Lfunc_end721:
-	.size	_path, .Lfunc_end721-_path
+.Lfunc_end722:
+	.size	_path, .Lfunc_end722-_path
 	.cfi_endproc
                                         // -- End function
 	.globl	pollfd                          // -- Begin function pollfd
@@ -58837,7 +58870,7 @@ pollfd:                                 // @pollfd
 	ldr	w20, [x8, :lo12:($Nfds)]
 	cmp	w0, w20
 	adrp	x21, ($Poll)
-	b.lt	.LBB722_4
+	b.lt	.LBB723_4
 // %bb.1:                               // %"$2"
 	ldr	x0, [x21, :lo12:($Poll)]
 	add	w9, w19, #1                     // =1
@@ -58845,23 +58878,23 @@ pollfd:                                 // @pollfd
 	sbfiz	x1, x9, #3, #32
 	bl	alloc
 	str	x0, [x21, :lo12:($Poll)]
-.LBB722_2:                              // %"$4"
+.LBB723_2:                              // %"$4"
                                         // =>This Inner Loop Header: Depth=1
 	bl	pollIgn
 	cmp	w19, w20
-	b.eq	.LBB722_4
+	b.eq	.LBB723_4
 // %bb.3:                               // %"$5"
-                                        //   in Loop: Header=BB722_2 Depth=1
+                                        //   in Loop: Header=BB723_2 Depth=1
 	add	w20, w20, #1                    // =1
-	b	.LBB722_2
-.LBB722_4:                              // %"$3"
+	b	.LBB723_2
+.LBB723_4:                              // %"$3"
 	ldr	x8, [x21, :lo12:($Poll)]
 	add	x0, x8, w19, sxtw #3
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x21, [sp], #32             // 16-byte Folded Reload
 	ret
-.Lfunc_end722:
-	.size	pollfd, .Lfunc_end722-pollfd
+.Lfunc_end723:
+	.size	pollfd, .Lfunc_end723-pollfd
 	.cfi_endproc
                                         // -- End function
 	.globl	hasData                         // -- Begin function hasData
@@ -58873,25 +58906,25 @@ hasData:                                // @hasData
 	adrp	x8, ($InFDs)
 	ldr	w8, [x8, :lo12:($InFDs)]
 	cmp	w8, w0
-	b.le	.LBB723_4
+	b.le	.LBB724_4
 // %bb.1:                               // %"$3"
 	adrp	x8, ($InFiles)
 	ldr	x8, [x8, :lo12:($InFiles)]
 	ldr	x8, [x8, w0, sxtw #3]
-	cbz	x8, .LBB723_4
+	cbz	x8, .LBB724_4
 // %bb.2:                               // %"$4"
 	ldr	w9, [x8, #8]
-	tbnz	w9, #31, .LBB723_4
+	tbnz	w9, #31, .LBB724_4
 // %bb.3:                               // %"$6"
 	ldp	w8, w9, [x8, #24]
 	cmp	w9, w8
 	cset	w0, gt
 	ret
-.LBB723_4:
+.LBB724_4:
 	mov	w0, wzr
 	ret
-.Lfunc_end723:
-	.size	hasData, .Lfunc_end723-hasData
+.Lfunc_end724:
+	.size	hasData, .Lfunc_end724-hasData
 	.cfi_endproc
                                         // -- End function
 	.globl	inReady                         // -- Begin function inReady
@@ -58912,44 +58945,44 @@ inReady:                                // @inReady
 	adrp	x8, ($InFDs)
 	ldr	w8, [x8, :lo12:($InFDs)]
 	cmp	w20, w8
-	b.ge	.LBB724_5
+	b.ge	.LBB725_5
 // %bb.1:                               // %"$3"
 	adrp	x8, ($InFiles)
 	ldr	x8, [x8, :lo12:($InFiles)]
 	ldr	x20, [x8, w20, sxtw #3]
-	cbz	x20, .LBB724_5
+	cbz	x20, .LBB725_5
 // %bb.2:                               // %"$5"
 	ldr	w8, [x20, #8]
-	tbnz	w8, #31, .LBB724_5
+	tbnz	w8, #31, .LBB725_5
 // %bb.3:                               // %"$8"
 	ldp	w9, w8, [x20, #24]
 	cmp	w8, w9
-	b.le	.LBB724_7
+	b.le	.LBB725_7
 // %bb.4:
 	mov	w0, #1
-	b	.LBB724_6
-.LBB724_5:                              // %"$4"
+	b	.LBB725_6
+.LBB725_5:                              // %"$4"
 	bl	readyIn
-.LBB724_6:                              // %"$2"
+.LBB725_6:                              // %"$2"
 	and	w0, w0, #0x1
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #32                  // 8-byte Folded Reload
 	ret
-.LBB724_7:                              // %"$11"
+.LBB725_7:                              // %"$11"
 	bl	readyIn
 	mov	w8, w0
 	sbfx	w0, w0, #0, #1
-	tbz	w8, #0, .LBB724_6
+	tbz	w8, #0, .LBB725_6
 // %bb.8:                               // %"$11"
-	tbnz	w19, #0, .LBB724_6
+	tbnz	w19, #0, .LBB725_6
 // %bb.9:                               // %"$15"
 	mov	x0, x20
 	bl	slowNb
 	mvn	w8, w0
 	lsr	w0, w8, #31
-	b	.LBB724_6
-.Lfunc_end724:
-	.size	inReady, .Lfunc_end724-inReady
+	b	.LBB725_6
+.Lfunc_end725:
+	.size	inReady, .Lfunc_end725-inReady
 	.cfi_endproc
                                         // -- End function
 	.globl	waitFd                          // -- Begin function waitFd
@@ -58967,8 +59000,8 @@ waitFd:                                 // @waitFd
 	mov	x0, xzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end725:
-	.size	waitFd, .Lfunc_end725-waitFd
+.Lfunc_end726:
+	.size	waitFd, .Lfunc_end726-waitFd
 	.cfi_endproc
                                         // -- End function
 	.globl	_wait                           // -- Begin function _wait
@@ -58995,36 +59028,36 @@ _wait:                                  // @_wait
 	ldp	w21, w8, [x9, #8]
 	bfi	x21, x8, #32, #32
 	tst	x1, #0x6
-	b.ne	.LBB726_4
+	b.ne	.LBB727_4
 // %bb.1:                               // %"$3"
-	tbz	w1, #3, .LBB726_3
+	tbz	w1, #3, .LBB727_3
 // %bb.2:                               // %"$6"
 	ldp	w1, w8, [x1]
 	bfi	x1, x8, #32, #32
-	b	.LBB726_4
-.LBB726_3:                              // %"$5"
+	b	.LBB727_4
+.LBB727_3:                              // %"$5"
 	mov	x0, x1
 	bl	evList
 	mov	x1, x0
-.LBB726_4:                              // %"$2"
+.LBB727_4:                              // %"$2"
 	adrp	x22, SymTab+8
 	add	x22, x22, :lo12:SymTab+8
 	cmp	x1, x22
-	b.ne	.LBB726_6
+	b.ne	.LBB727_6
 // %bb.5:
 	mov	x20, #9223372036854775807
-	b	.LBB726_7
-.LBB726_6:                              // %"$8"
+	b	.LBB727_7
+.LBB727_6:                              // %"$8"
 	mov	x0, x19
 	bl	xCnt
 	mov	x20, x0
-.LBB726_7:                              // %"$9"
+.LBB727_7:                              // %"$9"
 	ldp	w9, w8, [x21]
 	bfi	x9, x8, #32, #32
 	adrp	x8, SymTab+216
 	add	x8, x8, :lo12:SymTab+216
 	cmp	x9, x8
-	b.ne	.LBB726_10
+	b.ne	.LBB727_10
 // %bb.8:                               // %"$10"
 	ldp	w1, w8, [x21, #8]
 	bfi	x1, x8, #32, #32
@@ -59035,99 +59068,99 @@ _wait:                                  // @_wait
 	mov	w1, w21
 	mov	x2, x20
 	bl	waitFd
-	cbz	x0, .LBB726_26
+	cbz	x0, .LBB727_26
 // %bb.9:                               // %"$13"
 	mov	w0, #2
 	bfi	x0, x21, #4, #60
-	b	.LBB726_28
-.LBB726_10:                             // %"$16"
+	b	.LBB727_28
+.LBB727_10:                             // %"$16"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB726_11 Depth 2
+                                        //     Child Loop BB727_11 Depth 2
 	mov	x23, x21
-.LBB726_11:                             // %"$17"
-                                        //   Parent Loop BB726_10 Depth=1
+.LBB727_11:                             // %"$17"
+                                        //   Parent Loop BB727_10 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	ldp	w0, w8, [x23]
 	bfi	x0, x8, #32, #32
 	ldp	w23, w8, [x23, #8]
 	bfi	x23, x8, #32, #32
 	tst	x23, #0xf
-	b.ne	.LBB726_14
+	b.ne	.LBB727_14
 // %bb.12:                              // %"$18"
-                                        //   in Loop: Header=BB726_11 Depth=2
+                                        //   in Loop: Header=BB727_11 Depth=2
 	tst	x0, #0xf
-	b.ne	.LBB726_11
+	b.ne	.LBB727_11
 // %bb.13:                              // %"$27"
-                                        //   in Loop: Header=BB726_11 Depth=2
+                                        //   in Loop: Header=BB727_11 Depth=2
 	bl	evList
-	b	.LBB726_11
-.LBB726_14:                             // %"$20"
-                                        //   in Loop: Header=BB726_10 Depth=1
+	b	.LBB727_11
+.LBB727_14:                             // %"$20"
+                                        //   in Loop: Header=BB727_10 Depth=1
 	tst	x0, #0x6
-	b.ne	.LBB726_17
+	b.ne	.LBB727_17
 // %bb.15:                              // %"$22"
-                                        //   in Loop: Header=BB726_10 Depth=1
-	tbz	w0, #3, .LBB726_19
+                                        //   in Loop: Header=BB727_10 Depth=1
+	tbz	w0, #3, .LBB727_19
 // %bb.16:                              // %"$25"
-                                        //   in Loop: Header=BB726_10 Depth=1
+                                        //   in Loop: Header=BB727_10 Depth=1
 	ldp	w0, w8, [x0]
 	bfi	x0, x8, #32, #32
-.LBB726_17:                             // %"$19"
-                                        //   in Loop: Header=BB726_10 Depth=1
+.LBB727_17:                             // %"$19"
+                                        //   in Loop: Header=BB727_10 Depth=1
 	cmp	x0, x22
-	b.ne	.LBB726_28
-.LBB726_18:                             // %"$28"
-                                        //   in Loop: Header=BB726_10 Depth=1
+	b.ne	.LBB727_28
+.LBB727_18:                             // %"$28"
+                                        //   in Loop: Header=BB727_10 Depth=1
 	mov	x0, x19
 	mov	w1, #-1
 	mov	x2, x20
 	bl	waitFd
 	mov	x20, x0
-	cbnz	x0, .LBB726_10
-	b	.LBB726_22
-.LBB726_19:                             // %"$24"
-                                        //   in Loop: Header=BB726_10 Depth=1
+	cbnz	x0, .LBB727_10
+	b	.LBB727_22
+.LBB727_19:                             // %"$24"
+                                        //   in Loop: Header=BB727_10 Depth=1
 	bl	evList
 	cmp	x0, x22
-	b.eq	.LBB726_18
-	b	.LBB726_28
-.LBB726_20:                             // %"$34"
-                                        //   in Loop: Header=BB726_22 Depth=1
+	b.eq	.LBB727_18
+	b	.LBB727_28
+.LBB727_20:                             // %"$34"
+                                        //   in Loop: Header=BB727_22 Depth=1
 	tst	x0, #0xf
-	b.ne	.LBB726_22
+	b.ne	.LBB727_22
 // %bb.21:                              // %"$43"
-                                        //   in Loop: Header=BB726_22 Depth=1
+                                        //   in Loop: Header=BB727_22 Depth=1
 	bl	evList
-.LBB726_22:                             // %"$33"
+.LBB727_22:                             // %"$33"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w0, w8, [x21]
 	bfi	x0, x8, #32, #32
 	ldp	w21, w8, [x21, #8]
 	bfi	x21, x8, #32, #32
 	tst	x21, #0xf
-	b.eq	.LBB726_20
+	b.eq	.LBB727_20
 // %bb.23:                              // %"$36"
 	tst	x0, #0x6
-	b.ne	.LBB726_28
+	b.ne	.LBB727_28
 // %bb.24:                              // %"$38"
-	tbz	w0, #3, .LBB726_27
+	tbz	w0, #3, .LBB727_27
 // %bb.25:                              // %"$41"
 	ldp	w0, w8, [x0]
 	bfi	x0, x8, #32, #32
-	b	.LBB726_28
-.LBB726_26:
+	b	.LBB727_28
+.LBB727_26:
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
-	b	.LBB726_28
-.LBB726_27:                             // %"$40"
+	b	.LBB727_28
+.LBB727_27:                             // %"$40"
 	bl	evList
-.LBB726_28:                             // %"$12"
+.LBB727_28:                             // %"$12"
 	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x23, [sp], #48             // 16-byte Folded Reload
 	ret
-.Lfunc_end726:
-	.size	_wait, .Lfunc_end726-_wait
+.Lfunc_end727:
+	.size	_wait, .Lfunc_end727-_wait
 	.cfi_endproc
                                         // -- End function
 	.globl	_sync                           // -- Begin function _sync
@@ -59146,8 +59179,8 @@ _sync:                                  // @_sync
 	add	x0, x0, :lo12:SymTab+8
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end727:
-	.size	_sync, .Lfunc_end727-_sync
+.Lfunc_end728:
+	.size	_sync, .Lfunc_end728-_sync
 	.cfi_endproc
                                         // -- End function
 	.globl	_hear                           // -- Begin function _hear
@@ -59166,8 +59199,8 @@ _hear:                                  // @_hear
 	add	x0, x0, :lo12:SymTab+8
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end728:
-	.size	_hear, .Lfunc_end728-_hear
+.Lfunc_end729:
+	.size	_hear, .Lfunc_end729-_hear
 	.cfi_endproc
                                         // -- End function
 	.globl	_tell                           // -- Begin function _tell
@@ -59186,8 +59219,8 @@ _tell:                                  // @_tell
 	add	x0, x0, :lo12:SymTab+8
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end729:
-	.size	_tell, .Lfunc_end729-_tell
+.Lfunc_end730:
+	.size	_tell, .Lfunc_end730-_tell
 	.cfi_endproc
                                         // -- End function
 	.globl	_poll                           // -- Begin function _poll
@@ -59206,8 +59239,8 @@ _poll:                                  // @_poll
 	add	x0, x0, :lo12:SymTab+8
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end730:
-	.size	_poll, .Lfunc_end730-_poll
+.Lfunc_end731:
+	.size	_poll, .Lfunc_end731-_poll
 	.cfi_endproc
                                         // -- End function
 	.globl	rdOpen                          // -- Begin function rdOpen
@@ -59236,266 +59269,11 @@ rdOpen:                                 // @rdOpen
 	adrp	x8, SymTab+8
 	add	x8, x8, :lo12:SymTab+8
 	cmp	x1, x8
-	b.ne	.LBB731_2
+	b.ne	.LBB732_2
 // %bb.1:                               // %"$4"
 	adrp	x8, ($InFiles)
 	ldr	x8, [x8, :lo12:($InFiles)]
 	ldr	x1, [x8]
-	b	.LBB731_18
-.LBB731_2:                              // %"$3"
-	mov	x21, x1
-	mov	x20, x0
-	tst	x1, #0x6
-	b.eq	.LBB731_8
-// %bb.3:                               // %"$6"
-	lsr	x8, x21, #4
-	tbz	w21, #3, .LBB731_16
-// %bb.4:                               // %"$9"
-	adrp	x9, env+48
-	ldr	x9, [x9, :lo12:env+48]
-.LBB731_5:                              // %"$10"
-                                        // =>This Inner Loop Header: Depth=1
-	ldr	x9, [x9]
-	cbz	x9, .LBB731_30
-// %bb.6:                               // %"$12"
-                                        //   in Loop: Header=BB731_5 Depth=1
-	subs	w8, w8, #1                      // =1
-	b.ne	.LBB731_5
-// %bb.7:                               // %"$14"
-	ldr	x1, [x9, #8]
-	b	.LBB731_18
-.LBB731_8:                              // %"$5"
-	tbz	w21, #3, .LBB731_20
-// %bb.9:                               // %"$20"
-	mov	x0, x20
-	mov	x1, x21
-	bl	xName
-	mov	x22, x0
-	bl	pathSize
-	add	x8, x0, #15                     // =15
-	and	x8, x8, #0xfffffffffffffff0
-	mov	x9, sp
-	sub	x1, x9, x8
-	mov	sp, x1
-	mov	x0, x22
-	bl	pathString
-	ldrb	w23, [x0]
-	cmp	w23, #43                        // =43
-	adrp	x24, ($Signal)
-.LBB731_10:                             // %"$23"
-                                        // =>This Inner Loop Header: Depth=1
-	cmp	w23, #43                        // =43
-	b.ne	.LBB731_12
-// %bb.11:                              // %"$24"
-                                        //   in Loop: Header=BB731_10 Depth=1
-	bl	openRdWrAppend
-	mov	w22, w0
-	tbnz	w0, #31, .LBB731_13
-	b	.LBB731_29
-.LBB731_12:                             // %"$25"
-                                        //   in Loop: Header=BB731_10 Depth=1
-	bl	openRd
-	mov	w22, w0
-	tbz	w0, #31, .LBB731_29
-.LBB731_13:                             // %"$27"
-                                        //   in Loop: Header=BB731_10 Depth=1
-	bl	gErrno
-	cmp	w0, #2                          // =2
-	b.ne	.LBB731_31
-// %bb.14:                              // %"$30"
-                                        //   in Loop: Header=BB731_10 Depth=1
-	ldr	w8, [x24, :lo12:($Signal)]
-	cbz	w8, .LBB731_10
-// %bb.15:                              // %"$31"
-                                        //   in Loop: Header=BB731_10 Depth=1
-	mov	x0, x20
-	bl	sighandler
-	b	.LBB731_10
-.LBB731_16:                             // %"$8"
-	adrp	x9, ($InFDs)
-	ldr	w9, [x9, :lo12:($InFDs)]
-	cmp	w8, w9
-	b.ge	.LBB731_30
-// %bb.17:                              // %"$15"
-	adrp	x9, ($InFiles)
-	ldr	x9, [x9, :lo12:($InFiles)]
-	ldr	x1, [x9, w8, sxtw #3]
-	cbz	x1, .LBB731_30
-.LBB731_18:                             // %"$7"
-	mov	x0, x19
-	mov	w2, wzr
-.LBB731_19:                             // %"$2"
-	bl	pushInFile
-	mov	sp, x29
-	ldp	x20, x19, [sp, #64]             // 16-byte Folded Reload
-	ldp	x22, x21, [sp, #48]             // 16-byte Folded Reload
-	ldp	x24, x23, [sp, #32]             // 16-byte Folded Reload
-	ldr	x25, [sp, #16]                  // 8-byte Folded Reload
-	ldp	x29, x30, [sp], #80             // 16-byte Folded Reload
-	ret
-.LBB731_20:                             // %"$19"
-	sub	x23, sp, #16                    // =16
-	mov	sp, x23
-	mov	x8, xzr
-	mov	x9, x21
-	tst	x9, #0xf
-	b.ne	.LBB731_22
-.LBB731_21:                             // %"$34"
-                                        // =>This Inner Loop Header: Depth=1
-	ldp	w9, w10, [x9, #8]
-	bfi	x9, x10, #32, #32
-	add	x8, x8, #1                      // =1
-	tst	x9, #0xf
-	b.eq	.LBB731_21
-.LBB731_22:                             // %"$35"
-	lsl	x8, x8, #3
-	mov	x9, sp
-	add	x8, x8, #23                     // =23
-	and	x8, x8, #0xfffffffffffffff0
-	sub	x24, x9, x8
-	mov	sp, x24
-	ldp	w0, w8, [x21]
-	bfi	x0, x8, #32, #32
-	bl	xSym
-	mov	x1, x0
-	mov	x0, x20
-	bl	xName
-	mov	x22, x0
-	bl	pipe
-	tbnz	w0, #31, .LBB731_32
-// %bb.23:                              // %"$37"
-	mov	x0, x22
-	bl	pathSize
-	mov	x8, sp
-	add	x9, x0, #15                     // =15
-	and	x9, x9, #0xfffffffffffffff0
-	sub	x1, x8, x9
-	mov	sp, x1
-	mov	x0, x22
-	bl	pathString
-	str	x0, [x24]
-	mov	x25, x24
-.LBB731_24:                             // %"$38"
-                                        // =>This Inner Loop Header: Depth=1
-	ldp	w21, w8, [x21, #8]
-	bfi	x21, x8, #32, #32
-	tst	x21, #0xf
-	b.ne	.LBB731_26
-// %bb.25:                              // %"$39"
-                                        //   in Loop: Header=BB731_24 Depth=1
-	ldp	w0, w8, [x21]
-	bfi	x0, x8, #32, #32
-	bl	xSym
-	mov	x1, x0
-	mov	x0, x20
-	bl	xName
-	mov	x22, x0
-	bl	bufSize
-	add	x8, x0, #15                     // =15
-	and	x8, x8, #0xfffffffffffffff0
-	mov	x9, sp
-	sub	x1, x9, x8
-	mov	sp, x1
-	mov	x0, x22
-	bl	bufString
-	str	x0, [x25, #8]!
-	b	.LBB731_24
-.LBB731_26:                             // %"$40"
-	str	xzr, [x25, #8]
-	bl	fork
-	tbnz	w0, #31, .LBB731_33
-// %bb.27:                              // %"$42"
-	mov	w21, w0
-	cbz	w0, .LBB731_34
-// %bb.28:                              // %"$41"
-	ldr	w22, [x23]
-	bl	setpgid
-	bl	close
-	mov	x0, x20
-	mov	w1, w22
-	bl	closeOnExec
-	mov	w0, w22
-	mov	x1, xzr
-	bl	initInFile
-	mov	x1, x0
-	mov	x0, x19
-	mov	w2, w21
-	b	.LBB731_19
-.LBB731_29:                             // %"$28"
-	mov	x0, x20
-	mov	w1, w22
-	bl	closeOnExec
-	bl	strdup
-	mov	x1, x0
-	mov	w0, w22
-	bl	initInFile
-	mov	x1, x0
-	mov	x0, x19
-	mov	w2, #1
-	b	.LBB731_19
-.LBB731_30:                             // %"$11"
-	mov	x0, x20
-	mov	x1, x21
-	bl	badFd
-.LBB731_31:                             // %"$29"
-	mov	x0, x20
-	mov	x1, x21
-	bl	openErr
-.LBB731_32:                             // %"$36"
-	mov	x0, x20
-	bl	pipeErr
-.LBB731_33:                             // %"$43"
-	mov	x0, x20
-	bl	forkErr
-.LBB731_34:                             // %"$45"
-	bl	setpgid
-	bl	close
-	ldr	w8, [x23, #4]
-	cmp	w8, #1                          // =1
-	b.eq	.LBB731_36
-// %bb.35:                              // %"$46"
-	bl	dup2
-	bl	close
-.LBB731_36:                             // %"$47"
-	bl	signal
-	bl	execvp
-	ldr	x0, [x24]
-	bl	execErr
-.Lfunc_end731:
-	.size	rdOpen, .Lfunc_end731-rdOpen
-	.cfi_endproc
-                                        // -- End function
-	.globl	wrOpen                          // -- Begin function wrOpen
-	.p2align	4
-	.type	wrOpen,@function
-wrOpen:                                 // @wrOpen
-	.cfi_startproc
-// %bb.0:                               // %"$1"
-	stp	x29, x30, [sp, #-80]!           // 16-byte Folded Spill
-	str	x25, [sp, #16]                  // 8-byte Folded Spill
-	stp	x24, x23, [sp, #32]             // 16-byte Folded Spill
-	stp	x22, x21, [sp, #48]             // 16-byte Folded Spill
-	stp	x20, x19, [sp, #64]             // 16-byte Folded Spill
-	mov	x29, sp
-	.cfi_def_cfa w29, 80
-	.cfi_offset w19, -8
-	.cfi_offset w20, -16
-	.cfi_offset w21, -24
-	.cfi_offset w22, -32
-	.cfi_offset w23, -40
-	.cfi_offset w24, -48
-	.cfi_offset w25, -64
-	.cfi_offset w30, -72
-	.cfi_offset w29, -80
-	mov	x19, x2
-	adrp	x8, SymTab+8
-	add	x8, x8, :lo12:SymTab+8
-	cmp	x1, x8
-	b.ne	.LBB732_2
-// %bb.1:                               // %"$4"
-	adrp	x8, ($OutFiles)
-	ldr	x8, [x8, :lo12:($OutFiles)]
-	ldr	x1, [x8, #8]
 	b	.LBB732_18
 .LBB732_2:                              // %"$3"
 	mov	x21, x1
@@ -59506,8 +59284,8 @@ wrOpen:                                 // @wrOpen
 	lsr	x8, x21, #4
 	tbz	w21, #3, .LBB732_16
 // %bb.4:                               // %"$9"
-	adrp	x9, env+56
-	ldr	x9, [x9, :lo12:env+56]
+	adrp	x9, env+48
+	ldr	x9, [x9, :lo12:env+48]
 .LBB732_5:                              // %"$10"
                                         // =>This Inner Loop Header: Depth=1
 	ldr	x9, [x9]
@@ -59543,13 +59321,13 @@ wrOpen:                                 // @wrOpen
 	b.ne	.LBB732_12
 // %bb.11:                              // %"$24"
                                         //   in Loop: Header=BB732_10 Depth=1
-	bl	openWrAppend
+	bl	openRdWrAppend
 	mov	w22, w0
 	tbnz	w0, #31, .LBB732_13
 	b	.LBB732_29
 .LBB732_12:                             // %"$25"
                                         //   in Loop: Header=BB732_10 Depth=1
-	bl	openWr
+	bl	openRd
 	mov	w22, w0
 	tbz	w0, #31, .LBB732_29
 .LBB732_13:                             // %"$27"
@@ -59567,20 +59345,20 @@ wrOpen:                                 // @wrOpen
 	bl	sighandler
 	b	.LBB732_10
 .LBB732_16:                             // %"$8"
-	adrp	x9, ($OutFDs)
-	ldr	w9, [x9, :lo12:($OutFDs)]
+	adrp	x9, ($InFDs)
+	ldr	w9, [x9, :lo12:($InFDs)]
 	cmp	w8, w9
 	b.ge	.LBB732_30
 // %bb.17:                              // %"$15"
-	adrp	x9, ($OutFiles)
-	ldr	x9, [x9, :lo12:($OutFiles)]
+	adrp	x9, ($InFiles)
+	ldr	x9, [x9, :lo12:($InFiles)]
 	ldr	x1, [x9, w8, sxtw #3]
 	cbz	x1, .LBB732_30
 .LBB732_18:                             // %"$7"
 	mov	x0, x19
 	mov	w2, wzr
 .LBB732_19:                             // %"$2"
-	bl	pushOutFile
+	bl	pushInFile
 	mov	sp, x29
 	ldp	x20, x19, [sp, #64]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #48]             // 16-byte Folded Reload
@@ -59663,14 +59441,15 @@ wrOpen:                                 // @wrOpen
 	mov	w21, w0
 	cbz	w0, .LBB732_34
 // %bb.28:                              // %"$41"
-	ldr	w22, [x23, #4]
+	ldr	w22, [x23]
 	bl	setpgid
 	bl	close
 	mov	x0, x20
 	mov	w1, w22
 	bl	closeOnExec
 	mov	w0, w22
-	bl	initOutFile
+	mov	x1, xzr
+	bl	initInFile
 	mov	x1, x0
 	mov	x0, x19
 	mov	w2, w21
@@ -59679,8 +59458,10 @@ wrOpen:                                 // @wrOpen
 	mov	x0, x20
 	mov	w1, w22
 	bl	closeOnExec
+	bl	strdup
+	mov	x1, x0
 	mov	w0, w22
-	bl	initOutFile
+	bl	initInFile
 	mov	x1, x0
 	mov	x0, x19
 	mov	w2, #1
@@ -59702,17 +59483,269 @@ wrOpen:                                 // @wrOpen
 .LBB732_34:                             // %"$45"
 	bl	setpgid
 	bl	close
-	ldr	w8, [x23]
-	cbz	w8, .LBB732_36
+	ldr	w8, [x23, #4]
+	cmp	w8, #1                          // =1
+	b.eq	.LBB732_36
 // %bb.35:                              // %"$46"
 	bl	dup2
 	bl	close
 .LBB732_36:                             // %"$47"
+	bl	signal
 	bl	execvp
 	ldr	x0, [x24]
 	bl	execErr
 .Lfunc_end732:
-	.size	wrOpen, .Lfunc_end732-wrOpen
+	.size	rdOpen, .Lfunc_end732-rdOpen
+	.cfi_endproc
+                                        // -- End function
+	.globl	wrOpen                          // -- Begin function wrOpen
+	.p2align	4
+	.type	wrOpen,@function
+wrOpen:                                 // @wrOpen
+	.cfi_startproc
+// %bb.0:                               // %"$1"
+	stp	x29, x30, [sp, #-80]!           // 16-byte Folded Spill
+	str	x25, [sp, #16]                  // 8-byte Folded Spill
+	stp	x24, x23, [sp, #32]             // 16-byte Folded Spill
+	stp	x22, x21, [sp, #48]             // 16-byte Folded Spill
+	stp	x20, x19, [sp, #64]             // 16-byte Folded Spill
+	mov	x29, sp
+	.cfi_def_cfa w29, 80
+	.cfi_offset w19, -8
+	.cfi_offset w20, -16
+	.cfi_offset w21, -24
+	.cfi_offset w22, -32
+	.cfi_offset w23, -40
+	.cfi_offset w24, -48
+	.cfi_offset w25, -64
+	.cfi_offset w30, -72
+	.cfi_offset w29, -80
+	mov	x19, x2
+	adrp	x8, SymTab+8
+	add	x8, x8, :lo12:SymTab+8
+	cmp	x1, x8
+	b.ne	.LBB733_2
+// %bb.1:                               // %"$4"
+	adrp	x8, ($OutFiles)
+	ldr	x8, [x8, :lo12:($OutFiles)]
+	ldr	x1, [x8, #8]
+	b	.LBB733_18
+.LBB733_2:                              // %"$3"
+	mov	x21, x1
+	mov	x20, x0
+	tst	x1, #0x6
+	b.eq	.LBB733_8
+// %bb.3:                               // %"$6"
+	lsr	x8, x21, #4
+	tbz	w21, #3, .LBB733_16
+// %bb.4:                               // %"$9"
+	adrp	x9, env+56
+	ldr	x9, [x9, :lo12:env+56]
+.LBB733_5:                              // %"$10"
+                                        // =>This Inner Loop Header: Depth=1
+	ldr	x9, [x9]
+	cbz	x9, .LBB733_30
+// %bb.6:                               // %"$12"
+                                        //   in Loop: Header=BB733_5 Depth=1
+	subs	w8, w8, #1                      // =1
+	b.ne	.LBB733_5
+// %bb.7:                               // %"$14"
+	ldr	x1, [x9, #8]
+	b	.LBB733_18
+.LBB733_8:                              // %"$5"
+	tbz	w21, #3, .LBB733_20
+// %bb.9:                               // %"$20"
+	mov	x0, x20
+	mov	x1, x21
+	bl	xName
+	mov	x22, x0
+	bl	pathSize
+	add	x8, x0, #15                     // =15
+	and	x8, x8, #0xfffffffffffffff0
+	mov	x9, sp
+	sub	x1, x9, x8
+	mov	sp, x1
+	mov	x0, x22
+	bl	pathString
+	ldrb	w23, [x0]
+	cmp	w23, #43                        // =43
+	adrp	x24, ($Signal)
+.LBB733_10:                             // %"$23"
+                                        // =>This Inner Loop Header: Depth=1
+	cmp	w23, #43                        // =43
+	b.ne	.LBB733_12
+// %bb.11:                              // %"$24"
+                                        //   in Loop: Header=BB733_10 Depth=1
+	bl	openWrAppend
+	mov	w22, w0
+	tbnz	w0, #31, .LBB733_13
+	b	.LBB733_29
+.LBB733_12:                             // %"$25"
+                                        //   in Loop: Header=BB733_10 Depth=1
+	bl	openWr
+	mov	w22, w0
+	tbz	w0, #31, .LBB733_29
+.LBB733_13:                             // %"$27"
+                                        //   in Loop: Header=BB733_10 Depth=1
+	bl	gErrno
+	cmp	w0, #2                          // =2
+	b.ne	.LBB733_31
+// %bb.14:                              // %"$30"
+                                        //   in Loop: Header=BB733_10 Depth=1
+	ldr	w8, [x24, :lo12:($Signal)]
+	cbz	w8, .LBB733_10
+// %bb.15:                              // %"$31"
+                                        //   in Loop: Header=BB733_10 Depth=1
+	mov	x0, x20
+	bl	sighandler
+	b	.LBB733_10
+.LBB733_16:                             // %"$8"
+	adrp	x9, ($OutFDs)
+	ldr	w9, [x9, :lo12:($OutFDs)]
+	cmp	w8, w9
+	b.ge	.LBB733_30
+// %bb.17:                              // %"$15"
+	adrp	x9, ($OutFiles)
+	ldr	x9, [x9, :lo12:($OutFiles)]
+	ldr	x1, [x9, w8, sxtw #3]
+	cbz	x1, .LBB733_30
+.LBB733_18:                             // %"$7"
+	mov	x0, x19
+	mov	w2, wzr
+.LBB733_19:                             // %"$2"
+	bl	pushOutFile
+	mov	sp, x29
+	ldp	x20, x19, [sp, #64]             // 16-byte Folded Reload
+	ldp	x22, x21, [sp, #48]             // 16-byte Folded Reload
+	ldp	x24, x23, [sp, #32]             // 16-byte Folded Reload
+	ldr	x25, [sp, #16]                  // 8-byte Folded Reload
+	ldp	x29, x30, [sp], #80             // 16-byte Folded Reload
+	ret
+.LBB733_20:                             // %"$19"
+	sub	x23, sp, #16                    // =16
+	mov	sp, x23
+	mov	x8, xzr
+	mov	x9, x21
+	tst	x9, #0xf
+	b.ne	.LBB733_22
+.LBB733_21:                             // %"$34"
+                                        // =>This Inner Loop Header: Depth=1
+	ldp	w9, w10, [x9, #8]
+	bfi	x9, x10, #32, #32
+	add	x8, x8, #1                      // =1
+	tst	x9, #0xf
+	b.eq	.LBB733_21
+.LBB733_22:                             // %"$35"
+	lsl	x8, x8, #3
+	mov	x9, sp
+	add	x8, x8, #23                     // =23
+	and	x8, x8, #0xfffffffffffffff0
+	sub	x24, x9, x8
+	mov	sp, x24
+	ldp	w0, w8, [x21]
+	bfi	x0, x8, #32, #32
+	bl	xSym
+	mov	x1, x0
+	mov	x0, x20
+	bl	xName
+	mov	x22, x0
+	bl	pipe
+	tbnz	w0, #31, .LBB733_32
+// %bb.23:                              // %"$37"
+	mov	x0, x22
+	bl	pathSize
+	mov	x8, sp
+	add	x9, x0, #15                     // =15
+	and	x9, x9, #0xfffffffffffffff0
+	sub	x1, x8, x9
+	mov	sp, x1
+	mov	x0, x22
+	bl	pathString
+	str	x0, [x24]
+	mov	x25, x24
+.LBB733_24:                             // %"$38"
+                                        // =>This Inner Loop Header: Depth=1
+	ldp	w21, w8, [x21, #8]
+	bfi	x21, x8, #32, #32
+	tst	x21, #0xf
+	b.ne	.LBB733_26
+// %bb.25:                              // %"$39"
+                                        //   in Loop: Header=BB733_24 Depth=1
+	ldp	w0, w8, [x21]
+	bfi	x0, x8, #32, #32
+	bl	xSym
+	mov	x1, x0
+	mov	x0, x20
+	bl	xName
+	mov	x22, x0
+	bl	bufSize
+	add	x8, x0, #15                     // =15
+	and	x8, x8, #0xfffffffffffffff0
+	mov	x9, sp
+	sub	x1, x9, x8
+	mov	sp, x1
+	mov	x0, x22
+	bl	bufString
+	str	x0, [x25, #8]!
+	b	.LBB733_24
+.LBB733_26:                             // %"$40"
+	str	xzr, [x25, #8]
+	bl	fork
+	tbnz	w0, #31, .LBB733_33
+// %bb.27:                              // %"$42"
+	mov	w21, w0
+	cbz	w0, .LBB733_34
+// %bb.28:                              // %"$41"
+	ldr	w22, [x23, #4]
+	bl	setpgid
+	bl	close
+	mov	x0, x20
+	mov	w1, w22
+	bl	closeOnExec
+	mov	w0, w22
+	bl	initOutFile
+	mov	x1, x0
+	mov	x0, x19
+	mov	w2, w21
+	b	.LBB733_19
+.LBB733_29:                             // %"$28"
+	mov	x0, x20
+	mov	w1, w22
+	bl	closeOnExec
+	mov	w0, w22
+	bl	initOutFile
+	mov	x1, x0
+	mov	x0, x19
+	mov	w2, #1
+	b	.LBB733_19
+.LBB733_30:                             // %"$11"
+	mov	x0, x20
+	mov	x1, x21
+	bl	badFd
+.LBB733_31:                             // %"$29"
+	mov	x0, x20
+	mov	x1, x21
+	bl	openErr
+.LBB733_32:                             // %"$36"
+	mov	x0, x20
+	bl	pipeErr
+.LBB733_33:                             // %"$43"
+	mov	x0, x20
+	bl	forkErr
+.LBB733_34:                             // %"$45"
+	bl	setpgid
+	bl	close
+	ldr	w8, [x23]
+	cbz	w8, .LBB733_36
+// %bb.35:                              // %"$46"
+	bl	dup2
+	bl	close
+.LBB733_36:                             // %"$47"
+	bl	execvp
+	ldr	x0, [x24]
+	bl	execErr
+.Lfunc_end733:
+	.size	wrOpen, .Lfunc_end733-wrOpen
 	.cfi_endproc
                                         // -- End function
 	.globl	erOpen                          // -- Begin function erOpen
@@ -59741,16 +59774,16 @@ erOpen:                                 // @erOpen
 	str	w0, [x19, #8]
 	eor	w8, w20, #0x8
 	tst	x8, #0xe
-	b.ne	.LBB733_13
+	b.ne	.LBB734_13
 // %bb.1:                               // %"$3"
 	adrp	x8, SymTab+8
 	add	x8, x8, :lo12:SymTab+8
 	cmp	x20, x8
-	b.ne	.LBB733_3
+	b.ne	.LBB734_3
 // %bb.2:                               // %"$4"
 	bl	dup
-	b	.LBB733_11
-.LBB733_3:                              // %"$5"
+	b	.LBB734_11
+.LBB734_3:                              // %"$5"
 	mov	x0, x21
 	mov	x1, x20
 	bl	xName
@@ -59766,39 +59799,39 @@ erOpen:                                 // @erOpen
 	ldrb	w22, [x0]
 	cmp	w22, #43                        // =43
 	adrp	x23, ($Signal)
-.LBB733_4:                              // %"$9"
+.LBB734_4:                              // %"$9"
                                         // =>This Inner Loop Header: Depth=1
 	cmp	w22, #43                        // =43
-	b.ne	.LBB733_6
+	b.ne	.LBB734_6
 // %bb.5:                               // %"$10"
-                                        //   in Loop: Header=BB733_4 Depth=1
+                                        //   in Loop: Header=BB734_4 Depth=1
 	bl	openWrAppend
 	mov	w1, w0
-	tbnz	w0, #31, .LBB733_7
-	b	.LBB733_10
-.LBB733_6:                              // %"$11"
-                                        //   in Loop: Header=BB733_4 Depth=1
+	tbnz	w0, #31, .LBB734_7
+	b	.LBB734_10
+.LBB734_6:                              // %"$11"
+                                        //   in Loop: Header=BB734_4 Depth=1
 	bl	openWr
 	mov	w1, w0
-	tbz	w0, #31, .LBB733_10
-.LBB733_7:                              // %"$13"
-                                        //   in Loop: Header=BB733_4 Depth=1
+	tbz	w0, #31, .LBB734_10
+.LBB734_7:                              // %"$13"
+                                        //   in Loop: Header=BB734_4 Depth=1
 	bl	gErrno
 	cmp	w0, #2                          // =2
-	b.ne	.LBB733_12
+	b.ne	.LBB734_12
 // %bb.8:                               // %"$16"
-                                        //   in Loop: Header=BB733_4 Depth=1
+                                        //   in Loop: Header=BB734_4 Depth=1
 	ldr	w8, [x23, :lo12:($Signal)]
-	cbz	w8, .LBB733_4
+	cbz	w8, .LBB734_4
 // %bb.9:                               // %"$17"
-                                        //   in Loop: Header=BB733_4 Depth=1
+                                        //   in Loop: Header=BB734_4 Depth=1
 	mov	x0, x21
 	bl	sighandler
-	b	.LBB733_4
-.LBB733_10:                             // %"$14"
+	b	.LBB734_4
+.LBB734_10:                             // %"$14"
 	mov	x0, x21
 	bl	closeOnExec
-.LBB733_11:                             // %"$6"
+.LBB734_11:                             // %"$6"
 	bl	dup2
 	bl	close
 	mov	x0, x19
@@ -59809,16 +59842,16 @@ erOpen:                                 // @erOpen
 	ldr	x23, [sp, #16]                  // 8-byte Folded Reload
 	ldp	x29, x30, [sp], #64             // 16-byte Folded Reload
 	ret
-.LBB733_12:                             // %"$15"
+.LBB734_12:                             // %"$15"
 	mov	x0, x21
 	mov	x1, x20
 	bl	openErr
-.LBB733_13:                             // %"$2"
+.LBB734_13:                             // %"$2"
 	mov	x0, x21
 	mov	x1, x20
 	bl	symErr
-.Lfunc_end733:
-	.size	erOpen, .Lfunc_end733-erOpen
+.Lfunc_end734:
+	.size	erOpen, .Lfunc_end734-erOpen
 	.cfi_endproc
                                         // -- End function
 	.globl	ctOpen                          // -- Begin function ctOpen
@@ -59845,13 +59878,13 @@ ctOpen:                                 // @ctOpen
 	mov	x20, x0
 	eor	w8, w21, #0x8
 	tst	x8, #0xe
-	b.ne	.LBB734_16
+	b.ne	.LBB735_16
 // %bb.1:                               // %"$4"
 	mov	x19, x2
 	adrp	x8, SymTab+8
 	add	x8, x8, :lo12:SymTab+8
 	cmp	x21, x8
-	b.ne	.LBB734_3
+	b.ne	.LBB735_3
 // %bb.2:                               // %"$6"
 	mov	w8, #-1
 	str	w8, [x19, #8]
@@ -59859,12 +59892,12 @@ ctOpen:                                 // @ctOpen
 	bl	currFd
 	mov	x1, xzr
 	bl	rdLockWait
-	b	.LBB734_14
-.LBB734_3:                              // %"$5"
+	b	.LBB735_14
+.LBB735_3:                              // %"$5"
 	adrp	x8, SymTab+216
 	add	x8, x8, :lo12:SymTab+216
 	cmp	x21, x8
-	b.ne	.LBB734_5
+	b.ne	.LBB735_5
 // %bb.4:                               // %"$8"
 	mov	w8, #-1
 	str	w8, [x19, #8]
@@ -59872,8 +59905,8 @@ ctOpen:                                 // @ctOpen
 	bl	currFd
 	mov	x1, xzr
 	bl	wrLockWait
-	b	.LBB734_14
-.LBB734_5:                              // %"$7"
+	b	.LBB735_14
+.LBB735_5:                              // %"$7"
 	mov	x0, x20
 	mov	x1, x21
 	bl	xName
@@ -59889,41 +59922,41 @@ ctOpen:                                 // @ctOpen
 	ldrb	w23, [x0]
 	cmp	w23, #43                        // =43
 	adrp	x24, ($Signal)
-.LBB734_6:                              // %"$11"
+.LBB735_6:                              // %"$11"
                                         // =>This Inner Loop Header: Depth=1
 	bl	openRdWrCreate
-	tbz	w0, #31, .LBB734_10
+	tbz	w0, #31, .LBB735_10
 // %bb.7:                               // %"$12"
-                                        //   in Loop: Header=BB734_6 Depth=1
+                                        //   in Loop: Header=BB735_6 Depth=1
 	bl	gErrno
 	cmp	w0, #2                          // =2
-	b.ne	.LBB734_15
+	b.ne	.LBB735_15
 // %bb.8:                               // %"$15"
-                                        //   in Loop: Header=BB734_6 Depth=1
+                                        //   in Loop: Header=BB735_6 Depth=1
 	ldr	w8, [x24, :lo12:($Signal)]
-	cbz	w8, .LBB734_6
+	cbz	w8, .LBB735_6
 // %bb.9:                               // %"$16"
-                                        //   in Loop: Header=BB734_6 Depth=1
+                                        //   in Loop: Header=BB735_6 Depth=1
 	mov	x0, x20
 	bl	sighandler
-	b	.LBB734_6
-.LBB734_10:                             // %"$13"
+	b	.LBB735_6
+.LBB735_10:                             // %"$13"
 	mov	w22, w0
 	str	w0, [x19, #8]
 	cmp	w23, #43                        // =43
-	b.ne	.LBB734_12
+	b.ne	.LBB735_12
 // %bb.11:                              // %"$18"
 	mov	x1, xzr
 	bl	rdLockWait
-	b	.LBB734_13
-.LBB734_12:                             // %"$19"
+	b	.LBB735_13
+.LBB735_12:                             // %"$19"
 	mov	x1, xzr
 	bl	wrLockWait
-.LBB734_13:                             // %"$20"
+.LBB735_13:                             // %"$20"
 	mov	x0, x20
 	mov	w1, w22
 	bl	closeOnExec
-.LBB734_14:                             // %"$2"
+.LBB735_14:                             // %"$2"
 	mov	x0, x19
 	bl	pushCtlFile
 	mov	sp, x29
@@ -59932,16 +59965,16 @@ ctOpen:                                 // @ctOpen
 	ldp	x24, x23, [sp, #16]             // 16-byte Folded Reload
 	ldp	x29, x30, [sp], #64             // 16-byte Folded Reload
 	ret
-.LBB734_15:                             // %"$14"
+.LBB735_15:                             // %"$14"
 	mov	x0, x20
 	mov	x1, x21
 	bl	openErr
-.LBB734_16:                             // %"$3"
+.LBB735_16:                             // %"$3"
 	mov	x0, x20
 	mov	x1, x21
 	bl	symErr
-.Lfunc_end734:
-	.size	ctOpen, .Lfunc_end734-ctOpen
+.Lfunc_end735:
+	.size	ctOpen, .Lfunc_end735-ctOpen
 	.cfi_endproc
                                         // -- End function
 	.globl	_peek                           // -- Begin function _peek
@@ -59955,111 +59988,31 @@ _peek:                                  // @_peek
 	.cfi_offset w30, -16
 	adrp	x8, ($Chr)
 	ldr	w0, [x8, :lo12:($Chr)]
-	cbz	w0, .LBB735_3
+	cbz	w0, .LBB736_3
 // %bb.1:                               // %"$3"
-	tbnz	w0, #31, .LBB735_4
-.LBB735_2:                              // %"$5"
+	tbnz	w0, #31, .LBB736_4
+.LBB736_2:                              // %"$5"
 	bl	mkChar
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.LBB735_3:                              // %"$2"
+.LBB736_3:                              // %"$2"
 	adrp	x8, ($Get)
 	ldr	x8, [x8, :lo12:($Get)]
 	blr	x8
-	tbz	w0, #31, .LBB735_2
-.LBB735_4:
+	tbz	w0, #31, .LBB736_2
+.LBB736_4:
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end735:
-	.size	_peek, .Lfunc_end735-_peek
+.Lfunc_end736:
+	.size	_peek, .Lfunc_end736-_peek
 	.cfi_endproc
                                         // -- End function
 	.globl	_in                             // -- Begin function _in
 	.p2align	4
 	.type	_in,@function
 _in:                                    // @_in
-	.cfi_startproc
-// %bb.0:                               // %"$1"
-	stp	x29, x30, [sp, #-32]!           // 16-byte Folded Spill
-	stp	x20, x19, [sp, #16]             // 16-byte Folded Spill
-	mov	x29, sp
-	.cfi_def_cfa w29, 32
-	.cfi_offset w19, -8
-	.cfi_offset w20, -16
-	.cfi_offset w30, -24
-	.cfi_offset w29, -32
-	mov	x19, x0
-	ldp	w9, w8, [x0, #8]
-	bfi	x9, x8, #32, #32
-	ldp	w1, w8, [x9]
-	bfi	x1, x8, #32, #32
-	ldp	w20, w8, [x9, #8]
-	bfi	x20, x8, #32, #32
-	tst	x1, #0x6
-	b.ne	.LBB736_4
-// %bb.1:                               // %"$3"
-	tbz	w1, #3, .LBB736_3
-// %bb.2:                               // %"$6"
-	ldp	w1, w8, [x1]
-	bfi	x1, x8, #32, #32
-	b	.LBB736_4
-.LBB736_3:                              // %"$5"
-	mov	x0, x1
-	bl	evList
-	mov	x1, x0
-.LBB736_4:                              // %"$2"
-	sub	x2, sp, #32                     // =32
-	mov	sp, x2
-	mov	x0, x19
-	bl	rdOpen
-.LBB736_5:                              // %"$7"
-                                        // =>This Inner Loop Header: Depth=1
-	ldp	w19, w8, [x20]
-	bfi	x19, x8, #32, #32
-	ldp	w20, w8, [x20, #8]
-	bfi	x20, x8, #32, #32
-	tst	x20, #0xf
-	b.ne	.LBB736_8
-// %bb.6:                               // %"$8"
-                                        //   in Loop: Header=BB736_5 Depth=1
-	tst	x19, #0xf
-	b.ne	.LBB736_5
-// %bb.7:                               // %"$17"
-                                        //   in Loop: Header=BB736_5 Depth=1
-	mov	x0, x19
-	bl	evList
-	b	.LBB736_5
-.LBB736_8:                              // %"$10"
-	tst	x19, #0x6
-	b.ne	.LBB736_12
-// %bb.9:                               // %"$12"
-	tbz	w19, #3, .LBB736_11
-// %bb.10:                              // %"$15"
-	ldp	w19, w8, [x19]
-	bfi	x19, x8, #32, #32
-	b	.LBB736_12
-.LBB736_11:                             // %"$14"
-	mov	x0, x19
-	bl	evList
-	mov	x19, x0
-.LBB736_12:                             // %"$9"
-	bl	popInFiles
-	bl	tosInFile
-	mov	x0, x19
-	mov	sp, x29
-	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
-	ldp	x29, x30, [sp], #32             // 16-byte Folded Reload
-	ret
-.Lfunc_end736:
-	.size	_in, .Lfunc_end736-_in
-	.cfi_endproc
-                                        // -- End function
-	.globl	_out                            // -- Begin function _out
-	.p2align	4
-	.type	_out,@function
-_out:                                   // @_out
 	.cfi_startproc
 // %bb.0:                               // %"$1"
 	stp	x29, x30, [sp, #-32]!           // 16-byte Folded Spill
@@ -60093,7 +60046,7 @@ _out:                                   // @_out
 	sub	x2, sp, #32                     // =32
 	mov	sp, x2
 	mov	x0, x19
-	bl	wrOpen
+	bl	rdOpen
 .LBB737_5:                              // %"$7"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w19, w8, [x20]
@@ -60125,21 +60078,21 @@ _out:                                   // @_out
 	bl	evList
 	mov	x19, x0
 .LBB737_12:                             // %"$9"
-	bl	popOutFiles
-	bl	tosOutFile
+	bl	popInFiles
+	bl	tosInFile
 	mov	x0, x19
 	mov	sp, x29
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldp	x29, x30, [sp], #32             // 16-byte Folded Reload
 	ret
 .Lfunc_end737:
-	.size	_out, .Lfunc_end737-_out
+	.size	_in, .Lfunc_end737-_in
 	.cfi_endproc
                                         // -- End function
-	.globl	_err                            // -- Begin function _err
+	.globl	_out                            // -- Begin function _out
 	.p2align	4
-	.type	_err,@function
-_err:                                   // @_err
+	.type	_out,@function
+_out:                                   // @_out
 	.cfi_startproc
 // %bb.0:                               // %"$1"
 	stp	x29, x30, [sp, #-32]!           // 16-byte Folded Spill
@@ -60170,10 +60123,10 @@ _err:                                   // @_err
 	bl	evList
 	mov	x1, x0
 .LBB738_4:                              // %"$2"
-	sub	x2, sp, #16                     // =16
+	sub	x2, sp, #32                     // =32
 	mov	sp, x2
 	mov	x0, x19
-	bl	erOpen
+	bl	wrOpen
 .LBB738_5:                              // %"$7"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w19, w8, [x20]
@@ -60205,14 +60158,94 @@ _err:                                   // @_err
 	bl	evList
 	mov	x19, x0
 .LBB738_12:                             // %"$9"
-	bl	popErrFiles
+	bl	popOutFiles
+	bl	tosOutFile
 	mov	x0, x19
 	mov	sp, x29
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldp	x29, x30, [sp], #32             // 16-byte Folded Reload
 	ret
 .Lfunc_end738:
-	.size	_err, .Lfunc_end738-_err
+	.size	_out, .Lfunc_end738-_out
+	.cfi_endproc
+                                        // -- End function
+	.globl	_err                            // -- Begin function _err
+	.p2align	4
+	.type	_err,@function
+_err:                                   // @_err
+	.cfi_startproc
+// %bb.0:                               // %"$1"
+	stp	x29, x30, [sp, #-32]!           // 16-byte Folded Spill
+	stp	x20, x19, [sp, #16]             // 16-byte Folded Spill
+	mov	x29, sp
+	.cfi_def_cfa w29, 32
+	.cfi_offset w19, -8
+	.cfi_offset w20, -16
+	.cfi_offset w30, -24
+	.cfi_offset w29, -32
+	mov	x19, x0
+	ldp	w9, w8, [x0, #8]
+	bfi	x9, x8, #32, #32
+	ldp	w1, w8, [x9]
+	bfi	x1, x8, #32, #32
+	ldp	w20, w8, [x9, #8]
+	bfi	x20, x8, #32, #32
+	tst	x1, #0x6
+	b.ne	.LBB739_4
+// %bb.1:                               // %"$3"
+	tbz	w1, #3, .LBB739_3
+// %bb.2:                               // %"$6"
+	ldp	w1, w8, [x1]
+	bfi	x1, x8, #32, #32
+	b	.LBB739_4
+.LBB739_3:                              // %"$5"
+	mov	x0, x1
+	bl	evList
+	mov	x1, x0
+.LBB739_4:                              // %"$2"
+	sub	x2, sp, #16                     // =16
+	mov	sp, x2
+	mov	x0, x19
+	bl	erOpen
+.LBB739_5:                              // %"$7"
+                                        // =>This Inner Loop Header: Depth=1
+	ldp	w19, w8, [x20]
+	bfi	x19, x8, #32, #32
+	ldp	w20, w8, [x20, #8]
+	bfi	x20, x8, #32, #32
+	tst	x20, #0xf
+	b.ne	.LBB739_8
+// %bb.6:                               // %"$8"
+                                        //   in Loop: Header=BB739_5 Depth=1
+	tst	x19, #0xf
+	b.ne	.LBB739_5
+// %bb.7:                               // %"$17"
+                                        //   in Loop: Header=BB739_5 Depth=1
+	mov	x0, x19
+	bl	evList
+	b	.LBB739_5
+.LBB739_8:                              // %"$10"
+	tst	x19, #0x6
+	b.ne	.LBB739_12
+// %bb.9:                               // %"$12"
+	tbz	w19, #3, .LBB739_11
+// %bb.10:                              // %"$15"
+	ldp	w19, w8, [x19]
+	bfi	x19, x8, #32, #32
+	b	.LBB739_12
+.LBB739_11:                             // %"$14"
+	mov	x0, x19
+	bl	evList
+	mov	x19, x0
+.LBB739_12:                             // %"$9"
+	bl	popErrFiles
+	mov	x0, x19
+	mov	sp, x29
+	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
+	ldp	x29, x30, [sp], #32             // 16-byte Folded Reload
+	ret
+.Lfunc_end739:
+	.size	_err, .Lfunc_end739-_err
 	.cfi_endproc
                                         // -- End function
 	.globl	_ctl                            // -- Begin function _ctl
@@ -60224,8 +60257,8 @@ _ctl:                                   // @_ctl
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ret
-.Lfunc_end739:
-	.size	_ctl, .Lfunc_end739-_ctl
+.Lfunc_end740:
+	.size	_ctl, .Lfunc_end740-_ctl
 	.cfi_endproc
                                         // -- End function
 	.globl	_fd                             // -- Begin function _fd
@@ -60244,8 +60277,8 @@ _fd:                                    // @_fd
 	bfi	x0, x8, #4, #60
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end740:
-	.size	_fd, .Lfunc_end740-_fd
+.Lfunc_end741:
+	.size	_fd, .Lfunc_end741-_fd
 	.cfi_endproc
                                         // -- End function
 	.globl	forkLisp                        // -- Begin function forkLisp
@@ -60256,8 +60289,8 @@ forkLisp:                               // @forkLisp
 // %bb.0:                               // %"$1"
 	mov	w0, wzr
 	ret
-.Lfunc_end741:
-	.size	forkLisp, .Lfunc_end741-forkLisp
+.Lfunc_end742:
+	.size	forkLisp, .Lfunc_end742-forkLisp
 	.cfi_endproc
                                         // -- End function
 	.globl	_pipe                           // -- Begin function _pipe
@@ -60269,8 +60302,8 @@ _pipe:                                  // @_pipe
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ret
-.Lfunc_end742:
-	.size	_pipe, .Lfunc_end742-_pipe
+.Lfunc_end743:
+	.size	_pipe, .Lfunc_end743-_pipe
 	.cfi_endproc
                                         // -- End function
 	.globl	_open                           // -- Begin function _open
@@ -60314,51 +60347,51 @@ _open:                                  // @_open
 	ldp	w20, w8, [x9]
 	bfi	x20, x8, #32, #32
 	tst	x20, #0x6
-	b.ne	.LBB743_4
+	b.ne	.LBB744_4
 // %bb.1:                               // %"$3"
-	tbz	w20, #3, .LBB743_3
+	tbz	w20, #3, .LBB744_3
 // %bb.2:                               // %"$6"
 	ldp	w20, w8, [x20]
 	bfi	x20, x8, #32, #32
-	b	.LBB743_4
-.LBB743_3:                              // %"$5"
+	b	.LBB744_4
+.LBB744_3:                              // %"$5"
 	mov	x0, x20
 	bl	evList
 	mov	x20, x0
-.LBB743_4:                              // %"$2"
+.LBB744_4:                              // %"$2"
 	adrp	x23, ($Signal)
 	adrp	x21, SymTab+8
 	add	x21, x21, :lo12:SymTab+8
-.LBB743_5:                              // %"$7"
+.LBB744_5:                              // %"$7"
                                         // =>This Inner Loop Header: Depth=1
 	cmp	x20, x21
-	b.ne	.LBB743_7
+	b.ne	.LBB744_7
 // %bb.6:                               // %"$8"
-                                        //   in Loop: Header=BB743_5 Depth=1
+                                        //   in Loop: Header=BB744_5 Depth=1
 	bl	openRdWrCreate
 	mov	w22, w0
-	tbnz	w0, #31, .LBB743_8
-	b	.LBB743_11
-.LBB743_7:                              // %"$9"
-                                        //   in Loop: Header=BB743_5 Depth=1
+	tbnz	w0, #31, .LBB744_8
+	b	.LBB744_11
+.LBB744_7:                              // %"$9"
+                                        //   in Loop: Header=BB744_5 Depth=1
 	bl	openRd
 	mov	w22, w0
-	tbz	w0, #31, .LBB743_11
-.LBB743_8:                              // %"$11"
-                                        //   in Loop: Header=BB743_5 Depth=1
+	tbz	w0, #31, .LBB744_11
+.LBB744_8:                              // %"$11"
+                                        //   in Loop: Header=BB744_5 Depth=1
 	bl	gErrno
 	cmp	w0, #2                          // =2
-	b.ne	.LBB743_12
+	b.ne	.LBB744_12
 // %bb.9:                               // %"$14"
-                                        //   in Loop: Header=BB743_5 Depth=1
+                                        //   in Loop: Header=BB744_5 Depth=1
 	ldr	w8, [x23, :lo12:($Signal)]
-	cbz	w8, .LBB743_5
+	cbz	w8, .LBB744_5
 // %bb.10:                              // %"$16"
-                                        //   in Loop: Header=BB743_5 Depth=1
+                                        //   in Loop: Header=BB744_5 Depth=1
 	mov	x0, x19
 	bl	sighandler
-	b	.LBB743_5
-.LBB743_11:                             // %"$13"
+	b	.LBB744_5
+.LBB744_11:                             // %"$13"
 	mov	x0, x19
 	mov	w1, w22
 	bl	closeOnExec
@@ -60371,7 +60404,7 @@ _open:                                  // @_open
 	sxtw	x8, w22
 	mov	w21, #2
 	bfi	x21, x8, #4, #60
-.LBB743_12:                             // %"$12"
+.LBB744_12:                             // %"$12"
 	mov	x0, x21
 	mov	sp, x29
 	ldp	x20, x19, [sp, #48]             // 16-byte Folded Reload
@@ -60379,8 +60412,8 @@ _open:                                  // @_open
 	ldr	x23, [sp, #16]                  // 8-byte Folded Reload
 	ldp	x29, x30, [sp], #64             // 16-byte Folded Reload
 	ret
-.Lfunc_end743:
-	.size	_open, .Lfunc_end743-_open
+.Lfunc_end744:
+	.size	_open, .Lfunc_end744-_open
 	.cfi_endproc
                                         // -- End function
 	.globl	_close                          // -- Begin function _close
@@ -60405,18 +60438,18 @@ _close:                                 // @_close
 	ldp	w19, w8, [x9]
 	bfi	x19, x8, #32, #32
 	tst	x19, #0x6
-	b.ne	.LBB744_4
+	b.ne	.LBB745_4
 // %bb.1:                               // %"$3"
-	tbz	w19, #3, .LBB744_3
+	tbz	w19, #3, .LBB745_3
 // %bb.2:                               // %"$6"
 	ldp	w19, w8, [x19]
 	bfi	x19, x8, #32, #32
-	b	.LBB744_4
-.LBB744_3:                              // %"$5"
+	b	.LBB745_4
+.LBB745_3:                              // %"$5"
 	mov	x0, x19
 	bl	evList
 	mov	x19, x0
-.LBB744_4:                              // %"$2"
+.LBB745_4:                              // %"$2"
 	mov	x0, x20
 	mov	x1, x19
 	bl	xCnt
@@ -60424,40 +60457,40 @@ _close:                                 // @_close
 	adrp	x23, ($Signal)
 	adrp	x22, SymTab+8
 	add	x22, x22, :lo12:SymTab+8
-.LBB744_5:                              // %"$7"
+.LBB745_5:                              // %"$7"
                                         // =>This Inner Loop Header: Depth=1
 	bl	close
-	cbz	w0, .LBB744_9
+	cbz	w0, .LBB745_9
 // %bb.6:                               // %"$8"
-                                        //   in Loop: Header=BB744_5 Depth=1
+                                        //   in Loop: Header=BB745_5 Depth=1
 	bl	gErrno
 	cmp	w0, #2                          // =2
-	b.ne	.LBB744_10
+	b.ne	.LBB745_10
 // %bb.7:                               // %"$11"
-                                        //   in Loop: Header=BB744_5 Depth=1
+                                        //   in Loop: Header=BB745_5 Depth=1
 	ldr	w8, [x23, :lo12:($Signal)]
-	cbz	w8, .LBB744_5
+	cbz	w8, .LBB745_5
 // %bb.8:                               // %"$13"
-                                        //   in Loop: Header=BB744_5 Depth=1
+                                        //   in Loop: Header=BB745_5 Depth=1
 	mov	x0, x20
 	bl	sighandler
-	b	.LBB744_5
-.LBB744_9:                              // %"$10"
+	b	.LBB745_5
+.LBB745_9:                              // %"$10"
 	mov	w0, w21
 	bl	closeInFile
 	mov	w0, w21
 	bl	closeOutFile
-	b	.LBB744_11
-.LBB744_10:
+	b	.LBB745_11
+.LBB745_10:
 	mov	x19, x22
-.LBB744_11:                             // %"$9"
+.LBB745_11:                             // %"$9"
 	mov	x0, x19
 	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x23, [sp], #48             // 16-byte Folded Reload
 	ret
-.Lfunc_end744:
-	.size	_close, .Lfunc_end744-_close
+.Lfunc_end745:
+	.size	_close, .Lfunc_end745-_close
 	.cfi_endproc
                                         // -- End function
 	.globl	_putStdout_uart                 // -- Begin function _putStdout_uart
@@ -60468,16 +60501,16 @@ _putStdout_uart:                        // @_putStdout_uart
 // %bb.0:                               // %"$1"
 	mov	w8, #4096
 	movk	w8, #65056, lsl #16
-.LBB745_1:                              // %"$2"
+.LBB746_1:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	ldrb	w9, [x8, #24]
-	tbnz	w9, #5, .LBB745_1
+	tbnz	w9, #5, .LBB746_1
 // %bb.2:                               // %"$4"
 	and	w9, w0, #0xff
 	str	w9, [x8]
 	ret
-.Lfunc_end745:
-	.size	_putStdout_uart, .Lfunc_end745-_putStdout_uart
+.Lfunc_end746:
+	.size	_putStdout_uart, .Lfunc_end746-_putStdout_uart
 	.cfi_endproc
                                         // -- End function
 	.globl	bufAo                           // -- Begin function bufAo
@@ -60492,18 +60525,18 @@ bufAo:                                  // @bufAo
 	.cfi_offset w30, -16
 	mov	w19, w1
 	cmp	w1, #16                         // =16
-	b.lt	.LBB746_2
+	b.lt	.LBB747_2
 // %bb.1:                               // %"$2"
 	lsr	w1, w19, #4
 	bl	bufAo
 	and	w19, w19, #0xf
-.LBB746_2:                              // %"$3"
+.LBB747_2:                              // %"$3"
 	add	w8, w19, #64                    // =64
 	strb	w8, [x0], #1
 	ldp	x30, x19, [sp], #16             // 16-byte Folded Reload
 	ret
-.Lfunc_end746:
-	.size	bufAo, .Lfunc_end746-bufAo
+.Lfunc_end747:
+	.size	bufAo, .Lfunc_end747-bufAo
 	.cfi_endproc
                                         // -- End function
 	.globl	prSym                           // -- Begin function prSym
@@ -60516,22 +60549,22 @@ prSym:                                  // @prSym
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
 	sub	x8, x0, #8                      // =8
-.LBB747_1:                              // %"$2"
+.LBB748_1:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w0, w9, [x8]
 	bfi	x0, x9, #32, #32
 	tst	x0, #0x6
-	b.ne	.LBB747_3
+	b.ne	.LBB748_3
 // %bb.2:                               // %"$3"
-                                        //   in Loop: Header=BB747_1 Depth=1
+                                        //   in Loop: Header=BB748_1 Depth=1
 	add	x8, x0, #8                      // =8
-	b	.LBB747_1
-.LBB747_3:                              // %"$4"
+	b	.LBB748_1
+.LBB748_3:                              // %"$4"
 	bl	prName
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end747:
-	.size	prSym, .Lfunc_end747-prSym
+.Lfunc_end748:
+	.size	prSym, .Lfunc_end748-prSym
 	.cfi_endproc
                                         // -- End function
 	.globl	_flush                          // -- Begin function _flush
@@ -60553,8 +60586,8 @@ _flush:                                 // @_flush
 	csel	x0, x9, x8, ne
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end748:
-	.size	_flush, .Lfunc_end748-_flush
+.Lfunc_end749:
+	.size	_flush, .Lfunc_end749-_flush
 	.cfi_endproc
                                         // -- End function
 	.globl	_rewind                         // -- Begin function _rewind
@@ -60568,19 +60601,19 @@ _rewind:                                // @_rewind
 	.cfi_offset w30, -16
 	adrp	x8, ($OutFile)
 	ldr	x8, [x8, :lo12:($OutFile)]
-	cbz	x8, .LBB749_3
+	cbz	x8, .LBB750_3
 // %bb.1:                               // %"$3"
 	str	wzr, [x8, #4]
 	bl	seek0
 	mov	w8, w0
 	mov	w0, wzr
-	tbz	w8, #0, .LBB749_4
+	tbz	w8, #0, .LBB750_4
 // %bb.2:                               // %"$5"
 	bl	truncate0
-	b	.LBB749_4
-.LBB749_3:
+	b	.LBB750_4
+.LBB750_3:
 	mov	w0, wzr
-.LBB749_4:                              // %"$2"
+.LBB750_4:                              // %"$2"
 	adrp	x8, SymTab+8
 	add	x8, x8, :lo12:SymTab+8
 	add	x9, x8, #208                    // =208
@@ -60588,8 +60621,8 @@ _rewind:                                // @_rewind
 	csel	x0, x9, x8, ne
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end749:
-	.size	_rewind, .Lfunc_end749-_rewind
+.Lfunc_end750:
+	.size	_rewind, .Lfunc_end750-_rewind
 	.cfi_endproc
                                         // -- End function
 	.globl	_ext                            // -- Begin function _ext
@@ -60614,40 +60647,40 @@ _ext:                                   // @_ext
 	str	w0, [x20, :lo12:($ExtN)]
 	ldp	w19, w8, [x19, #8]
 	bfi	x19, x8, #32, #32
-.LBB750_1:                              // %"$2"
+.LBB751_1:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w0, w8, [x19]
 	bfi	x0, x8, #32, #32
 	ldp	w19, w8, [x19, #8]
 	bfi	x19, x8, #32, #32
 	tst	x19, #0xf
-	b.ne	.LBB750_4
+	b.ne	.LBB751_4
 // %bb.2:                               // %"$3"
-                                        //   in Loop: Header=BB750_1 Depth=1
+                                        //   in Loop: Header=BB751_1 Depth=1
 	tst	x0, #0xf
-	b.ne	.LBB750_1
+	b.ne	.LBB751_1
 // %bb.3:                               // %"$12"
-                                        //   in Loop: Header=BB750_1 Depth=1
+                                        //   in Loop: Header=BB751_1 Depth=1
 	bl	evList
-	b	.LBB750_1
-.LBB750_4:                              // %"$5"
+	b	.LBB751_1
+.LBB751_4:                              // %"$5"
 	tst	x0, #0x6
-	b.ne	.LBB750_8
+	b.ne	.LBB751_8
 // %bb.5:                               // %"$7"
-	tbz	w0, #3, .LBB750_7
+	tbz	w0, #3, .LBB751_7
 // %bb.6:                               // %"$10"
 	ldp	w0, w8, [x0]
 	bfi	x0, x8, #32, #32
-	b	.LBB750_8
-.LBB750_7:                              // %"$9"
+	b	.LBB751_8
+.LBB751_7:                              // %"$9"
 	bl	evList
-.LBB750_8:                              // %"$4"
+.LBB751_8:                              // %"$4"
 	str	w21, [x20, :lo12:($ExtN)]
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x21, [sp], #32             // 16-byte Folded Reload
 	ret
-.Lfunc_end750:
-	.size	_ext, .Lfunc_end750-_ext
+.Lfunc_end751:
+	.size	_ext, .Lfunc_end751-_ext
 	.cfi_endproc
                                         // -- End function
 	.globl	_rd                             // -- Begin function _rd
@@ -60675,18 +60708,18 @@ _rd:                                    // @_rd
 	ldp	w19, w8, [x9]
 	bfi	x19, x8, #32, #32
 	tst	x19, #0x6
-	b.ne	.LBB751_4
+	b.ne	.LBB752_4
 // %bb.1:                               // %"$3"
-	tbz	w19, #3, .LBB751_3
+	tbz	w19, #3, .LBB752_3
 // %bb.2:                               // %"$6"
 	ldp	w19, w8, [x19]
 	bfi	x19, x8, #32, #32
-	b	.LBB751_4
-.LBB751_3:                              // %"$5"
+	b	.LBB752_4
+.LBB752_3:                              // %"$5"
 	mov	x0, x19
 	bl	evList
 	mov	x19, x0
-.LBB751_4:                              // %"$2"
+.LBB752_4:                              // %"$2"
 	adrp	x21, env
 	ldr	x8, [x21, :lo12:env]
 	mov	x9, sp
@@ -60700,10 +60733,10 @@ _rd:                                    // @_rd
 	adrp	x8, ($InFile)
 	ldr	x8, [x8, :lo12:($InFile)]
 	ldr	w8, [x8, #8]
-	tbnz	w8, #31, .LBB751_16
+	tbnz	w8, #31, .LBB752_16
 // %bb.5:                               // %"$8"
 	tst	x19, #0x6
-	b.eq	.LBB751_17
+	b.eq	.LBB752_17
 // %bb.6:                               // %"$11"
 	mov	x8, sp
 	sub	x20, x8, #32                    // =32
@@ -60719,33 +60752,33 @@ _rd:                                    // @_rd
 	stp	w9, w10, [x8, #-8]
 	lsr	x24, x19, #4
 	str	x23, [x21, :lo12:env]
-	cbz	x24, .LBB751_16
+	cbz	x24, .LBB752_16
 // %bb.7:                               // %"$13"
-	tbz	w19, #3, .LBB751_12
-.LBB751_8:                              // %"$17"
+	tbz	w19, #3, .LBB752_12
+.LBB752_8:                              // %"$17"
                                         // =>This Inner Loop Header: Depth=1
 	bl	getBinary
-	tbnz	w0, #31, .LBB751_20
+	tbnz	w0, #31, .LBB752_20
 // %bb.9:                               // %"$19"
-                                        //   in Loop: Header=BB751_8 Depth=1
+                                        //   in Loop: Header=BB752_8 Depth=1
 	mov	x1, x20
 	bl	byteNum
 	subs	x24, x24, #1                    // =1
-	b.ne	.LBB751_8
+	b.ne	.LBB752_8
 // %bb.10:                              // %"$21"
 	ldp	w0, w8, [x23]
 	bfi	x0, x8, #32, #32
-	tbz	w0, #1, .LBB751_15
+	tbz	w0, #1, .LBB752_15
 // %bb.11:                              // %"$22"
 	bl	twice
-	b	.LBB751_18
-.LBB751_12:                             // %"$25"
+	b	.LBB752_18
+.LBB752_12:                             // %"$25"
                                         // =>This Inner Loop Header: Depth=1
 	bl	getBinary
                                         // kill: def $w0 killed $w0 def $x0
-	tbnz	w0, #31, .LBB751_20
+	tbnz	w0, #31, .LBB752_20
 // %bb.13:                              // %"$27"
-                                        //   in Loop: Header=BB751_12 Depth=1
+                                        //   in Loop: Header=BB752_12 Depth=1
 	sxtw	x8, w0
 	mov	w19, #2
 	bfi	x19, x8, #4, #60
@@ -60761,19 +60794,19 @@ _rd:                                    // @_rd
 	lsr	x8, x0, #32
 	stp	w0, w8, [x23]
 	subs	x24, x24, #1                    // =1
-	b.ne	.LBB751_12
+	b.ne	.LBB752_12
 // %bb.14:                              // %"$29"
 	ldp	w0, w8, [x23]
 	bfi	x0, x8, #32, #32
-	tbnz	w0, #1, .LBB751_18
-.LBB751_15:                             // %"$23"
+	tbnz	w0, #1, .LBB752_18
+.LBB752_15:                             // %"$23"
 	bl	zapZero
-	b	.LBB751_18
-.LBB751_16:
+	b	.LBB752_18
+.LBB752_16:
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
-	b	.LBB751_18
-.LBB751_17:                             // %"$10"
+	b	.LBB752_18
+.LBB752_17:                             // %"$10"
 	adrp	x8, getBinary
 	add	x8, x8, :lo12:getBinary
 	adrp	x9, ($GetBin)
@@ -60785,26 +60818,26 @@ _rd:                                    // @_rd
 	bl	binRead
 	cmp	x0, #0                          // =0
 	csel	x0, x0, x19, ne
-.LBB751_18:                             // %"$7"
+.LBB752_18:                             // %"$7"
 	ldp	w9, w8, [x22, #8]
 	bfi	x9, x8, #32, #32
 	str	x9, [x21, :lo12:env]
-.LBB751_19:                             // %"$7"
+.LBB752_19:                             // %"$7"
 	mov	sp, x29
 	ldp	x20, x19, [sp, #48]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #32]             // 16-byte Folded Reload
 	ldp	x24, x23, [sp, #16]             // 16-byte Folded Reload
 	ldp	x29, x30, [sp], #64             // 16-byte Folded Reload
 	ret
-.LBB751_20:                             // %"$-1"
+.LBB752_20:                             // %"$-1"
 	ldp	w9, w8, [x22, #8]
 	bfi	x9, x8, #32, #32
 	str	x9, [x21, :lo12:env]
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
-	b	.LBB751_19
-.Lfunc_end751:
-	.size	_rd, .Lfunc_end751-_rd
+	b	.LBB752_19
+.Lfunc_end752:
+	.size	_rd, .Lfunc_end752-_rd
 	.cfi_endproc
                                         // -- End function
 	.globl	_pr                             // -- Begin function _pr
@@ -60826,60 +60859,6 @@ _pr:                                    // @_pr
 	bfi	x20, x8, #32, #32
 	adrp	x21, ($ExtN)
 	adrp	x22, ($Extn)
-	b	.LBB752_3
-.LBB752_1:                              // %"$6"
-                                        //   in Loop: Header=BB752_3 Depth=1
-	mov	x0, x19
-	bl	evList
-	mov	x19, x0
-.LBB752_2:                              // %"$3"
-                                        //   in Loop: Header=BB752_3 Depth=1
-	ldr	w8, [x21, :lo12:($ExtN)]
-	str	w8, [x22, :lo12:($Extn)]
-	mov	x0, x19
-	bl	pr
-	tst	x20, #0xf
-	b.ne	.LBB752_6
-.LBB752_3:                              // %"$2"
-                                        // =>This Inner Loop Header: Depth=1
-	ldp	w19, w8, [x20]
-	bfi	x19, x8, #32, #32
-	ldp	w20, w8, [x20, #8]
-	bfi	x20, x8, #32, #32
-	tst	x19, #0x6
-	b.ne	.LBB752_2
-// %bb.4:                               // %"$4"
-                                        //   in Loop: Header=BB752_3 Depth=1
-	tbz	w19, #3, .LBB752_1
-// %bb.5:                               // %"$7"
-                                        //   in Loop: Header=BB752_3 Depth=1
-	ldp	w19, w8, [x19]
-	bfi	x19, x8, #32, #32
-	b	.LBB752_2
-.LBB752_6:                              // %"$9"
-	mov	x0, x19
-	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
-	ldp	x22, x21, [sp, #16]             // 16-byte Folded Reload
-	ldr	x30, [sp], #48                  // 8-byte Folded Reload
-	ret
-.Lfunc_end752:
-	.size	_pr, .Lfunc_end752-_pr
-	.cfi_endproc
-                                        // -- End function
-	.globl	_wr                             // -- Begin function _wr
-	.p2align	4
-	.type	_wr,@function
-_wr:                                    // @_wr
-	.cfi_startproc
-// %bb.0:                               // %"$1"
-	str	x30, [sp, #-32]!                // 8-byte Folded Spill
-	stp	x20, x19, [sp, #16]             // 16-byte Folded Spill
-	.cfi_def_cfa_offset 32
-	.cfi_offset w19, -8
-	.cfi_offset w20, -16
-	.cfi_offset w30, -32
-	ldp	w20, w8, [x0, #8]
-	bfi	x20, x8, #32, #32
 	b	.LBB753_3
 .LBB753_1:                              // %"$6"
                                         //   in Loop: Header=BB753_3 Depth=1
@@ -60888,9 +60867,10 @@ _wr:                                    // @_wr
 	mov	x19, x0
 .LBB753_2:                              // %"$3"
                                         //   in Loop: Header=BB753_3 Depth=1
-	lsr	x0, x19, #4
-                                        // kill: def $w0 killed $w0 killed $x0
-	bl	_putStdout
+	ldr	w8, [x21, :lo12:($ExtN)]
+	str	w8, [x22, :lo12:($Extn)]
+	mov	x0, x19
+	bl	pr
 	tst	x20, #0xf
 	b.ne	.LBB753_6
 .LBB753_3:                              // %"$2"
@@ -60911,11 +60891,64 @@ _wr:                                    // @_wr
 	b	.LBB753_2
 .LBB753_6:                              // %"$9"
 	mov	x0, x19
+	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
+	ldp	x22, x21, [sp, #16]             // 16-byte Folded Reload
+	ldr	x30, [sp], #48                  // 8-byte Folded Reload
+	ret
+.Lfunc_end753:
+	.size	_pr, .Lfunc_end753-_pr
+	.cfi_endproc
+                                        // -- End function
+	.globl	_wr                             // -- Begin function _wr
+	.p2align	4
+	.type	_wr,@function
+_wr:                                    // @_wr
+	.cfi_startproc
+// %bb.0:                               // %"$1"
+	str	x30, [sp, #-32]!                // 8-byte Folded Spill
+	stp	x20, x19, [sp, #16]             // 16-byte Folded Spill
+	.cfi_def_cfa_offset 32
+	.cfi_offset w19, -8
+	.cfi_offset w20, -16
+	.cfi_offset w30, -32
+	ldp	w20, w8, [x0, #8]
+	bfi	x20, x8, #32, #32
+	b	.LBB754_3
+.LBB754_1:                              // %"$6"
+                                        //   in Loop: Header=BB754_3 Depth=1
+	mov	x0, x19
+	bl	evList
+	mov	x19, x0
+.LBB754_2:                              // %"$3"
+                                        //   in Loop: Header=BB754_3 Depth=1
+	lsr	x0, x19, #4
+                                        // kill: def $w0 killed $w0 killed $x0
+	bl	_putStdout
+	tst	x20, #0xf
+	b.ne	.LBB754_6
+.LBB754_3:                              // %"$2"
+                                        // =>This Inner Loop Header: Depth=1
+	ldp	w19, w8, [x20]
+	bfi	x19, x8, #32, #32
+	ldp	w20, w8, [x20, #8]
+	bfi	x20, x8, #32, #32
+	tst	x19, #0x6
+	b.ne	.LBB754_2
+// %bb.4:                               // %"$4"
+                                        //   in Loop: Header=BB754_3 Depth=1
+	tbz	w19, #3, .LBB754_1
+// %bb.5:                               // %"$7"
+                                        //   in Loop: Header=BB754_3 Depth=1
+	ldp	w19, w8, [x19]
+	bfi	x19, x8, #32, #32
+	b	.LBB754_2
+.LBB754_6:                              // %"$9"
+	mov	x0, x19
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #32                  // 8-byte Folded Reload
 	ret
-.Lfunc_end753:
-	.size	_wr, .Lfunc_end753-_wr
+.Lfunc_end754:
+	.size	_wr, .Lfunc_end754-_wr
 	.cfi_endproc
                                         // -- End function
 	.globl	tglString                       // -- Begin function tglString
@@ -60933,8 +60966,8 @@ tglString:                              // @tglString
 	bfi	x9, x10, #32, #32
 	str	x9, [x8, :lo12:($Put)]
 	ret
-.Lfunc_end754:
-	.size	tglString, .Lfunc_end754-tglString
+.Lfunc_end755:
+	.size	tglString, .Lfunc_end755-tglString
 	.cfi_endproc
                                         // -- End function
 	.globl	loadAll                         // -- Begin function loadAll
@@ -60953,32 +60986,32 @@ loadAll:                                // @loadAll
 	adrp	x20, ($AV)
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
-.LBB755_1:                              // %"$2"
+.LBB756_1:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	ldr	x9, [x20, :lo12:($AV)]
 	ldr	x8, [x9]
-	cbz	x8, .LBB755_4
+	cbz	x8, .LBB756_4
 // %bb.2:                               // %"$4"
-                                        //   in Loop: Header=BB755_1 Depth=1
+                                        //   in Loop: Header=BB756_1 Depth=1
 	ldrb	w10, [x8]
 	cmp	w10, #45                        // =45
-	b.ne	.LBB755_5
+	b.ne	.LBB756_5
 // %bb.3:                               // %"$6"
-                                        //   in Loop: Header=BB755_1 Depth=1
+                                        //   in Loop: Header=BB756_1 Depth=1
 	ldrb	w10, [x8, #1]
 	cmp	w10, #0                         // =0
 	cset	w10, eq
-	tbz	w10, #0, .LBB755_6
-	b	.LBB755_7
-.LBB755_4:                              //   in Loop: Header=BB755_1 Depth=1
+	tbz	w10, #0, .LBB756_6
+	b	.LBB756_7
+.LBB756_4:                              //   in Loop: Header=BB756_1 Depth=1
 	mov	w10, #1
-	tbz	w10, #0, .LBB755_6
-	b	.LBB755_7
-.LBB755_5:                              //   in Loop: Header=BB755_1 Depth=1
+	tbz	w10, #0, .LBB756_6
+	b	.LBB756_7
+.LBB756_5:                              //   in Loop: Header=BB756_1 Depth=1
 	mov	w10, wzr
-	tbnz	w10, #0, .LBB755_7
-.LBB755_6:                              // %"$7"
-                                        //   in Loop: Header=BB755_1 Depth=1
+	tbnz	w10, #0, .LBB756_7
+.LBB756_6:                              // %"$7"
+                                        //   in Loop: Header=BB756_1 Depth=1
 	add	x9, x9, #8                      // =8
 	str	x9, [x20, :lo12:($AV)]
 	mov	x0, x8
@@ -60987,13 +61020,13 @@ loadAll:                                // @loadAll
 	mov	x0, x19
 	mov	x1, xzr
 	bl	repl
-	b	.LBB755_1
-.LBB755_7:                              // %"$8"
+	b	.LBB756_1
+.LBB756_7:                              // %"$8"
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #32                  // 8-byte Folded Reload
 	ret
-.Lfunc_end755:
-	.size	loadAll, .Lfunc_end755-loadAll
+.Lfunc_end756:
+	.size	loadAll, .Lfunc_end756-loadAll
 	.cfi_endproc
                                         // -- End function
 	.globl	_load                           // -- Begin function _load
@@ -61019,51 +61052,51 @@ _load:                                  // @_load
 	bfi	x21, x8, #32, #32
 	adrp	x20, .L$162
 	add	x20, x20, :lo12:.L$162
-	b	.LBB756_2
-.LBB756_1:                              // %"$9"
-                                        //   in Loop: Header=BB756_2 Depth=1
+	b	.LBB757_2
+.LBB757_1:                              // %"$9"
+                                        //   in Loop: Header=BB757_2 Depth=1
 	mov	x1, x20
 	bl	repl
 	tst	x21, #0xf
-	b.ne	.LBB756_8
-.LBB756_2:                              // %"$2"
+	b.ne	.LBB757_8
+.LBB757_2:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w2, w8, [x21]
 	bfi	x2, x8, #32, #32
 	ldp	w21, w23, [x21, #8]
 	tst	x2, #0x6
-	b.ne	.LBB756_6
+	b.ne	.LBB757_6
 // %bb.3:                               // %"$4"
-                                        //   in Loop: Header=BB756_2 Depth=1
-	tbz	w2, #3, .LBB756_5
+                                        //   in Loop: Header=BB757_2 Depth=1
+	tbz	w2, #3, .LBB757_5
 // %bb.4:                               // %"$7"
-                                        //   in Loop: Header=BB756_2 Depth=1
+                                        //   in Loop: Header=BB757_2 Depth=1
 	ldp	w2, w8, [x2]
 	bfi	x2, x8, #32, #32
-	b	.LBB756_6
-.LBB756_5:                              // %"$6"
-                                        //   in Loop: Header=BB756_2 Depth=1
+	b	.LBB757_6
+.LBB757_5:                              // %"$6"
+                                        //   in Loop: Header=BB757_2 Depth=1
 	mov	x0, x2
 	bl	evList
 	mov	x2, x0
-.LBB756_6:                              // %"$3"
-                                        //   in Loop: Header=BB756_2 Depth=1
+.LBB757_6:                              // %"$3"
+                                        //   in Loop: Header=BB757_2 Depth=1
 	bfi	x21, x23, #32, #32
 	mov	x0, x19
 	cmp	x2, x22
-	b.ne	.LBB756_1
+	b.ne	.LBB757_1
 // %bb.7:                               // %"$8"
-                                        //   in Loop: Header=BB756_2 Depth=1
+                                        //   in Loop: Header=BB757_2 Depth=1
 	bl	loadAll
 	tst	x21, #0xf
-	b.eq	.LBB756_2
-.LBB756_8:                              // %"$12"
+	b.eq	.LBB757_2
+.LBB757_8:                              // %"$12"
 	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x23, [sp], #48             // 16-byte Folded Reload
 	ret
-.Lfunc_end756:
-	.size	_load, .Lfunc_end756-_load
+.Lfunc_end757:
+	.size	_load, .Lfunc_end757-_load
 	.cfi_endproc
                                         // -- End function
 	.globl	jnlErr                          // -- Begin function jnlErr
@@ -61080,8 +61113,8 @@ jnlErr:                                 // @jnlErr
 	mov	x1, xzr
 	mov	x3, xzr
 	bl	err
-.Lfunc_end757:
-	.size	jnlErr, .Lfunc_end757-jnlErr
+.Lfunc_end758:
+	.size	jnlErr, .Lfunc_end758-jnlErr
 	.cfi_endproc
                                         // -- End function
 	.globl	dbSyncErr                       // -- Begin function dbSyncErr
@@ -61102,8 +61135,8 @@ dbSyncErr:                              // @dbSyncErr
 	mov	x0, x19
 	mov	x1, xzr
 	bl	err
-.Lfunc_end758:
-	.size	dbSyncErr, .Lfunc_end758-dbSyncErr
+.Lfunc_end759:
+	.size	dbSyncErr, .Lfunc_end759-dbSyncErr
 	.cfi_endproc
                                         // -- End function
 	.globl	dbfBuf                          // -- Begin function dbfBuf
@@ -61118,7 +61151,7 @@ dbfBuf:                                 // @dbfBuf
 	adrp	x9, ($DBs)
 	ldr	w9, [x9, :lo12:($DBs)]
 	cmp	w9, w8
-	b.le	.LBB759_2
+	b.le	.LBB760_2
 // %bb.1:                               // %"$2"
 	adrp	x9, ($DbFiles)
 	ldr	x9, [x9, :lo12:($DbFiles)]
@@ -61128,11 +61161,11 @@ dbfBuf:                                 // @dbfBuf
 	adrp	x8, ($DbFile)
 	str	x0, [x8, :lo12:($DbFile)]
 	ret
-.LBB759_2:
+.LBB760_2:
 	mov	x0, xzr
 	ret
-.Lfunc_end759:
-	.size	dbfBuf, .Lfunc_end759-dbfBuf
+.Lfunc_end760:
+	.size	dbfBuf, .Lfunc_end760-dbfBuf
 	.cfi_endproc
                                         // -- End function
 	.globl	tryLock                         // -- Begin function tryLock
@@ -61149,65 +61182,65 @@ tryLock:                                // @tryLock
 	.cfi_offset w30, -32
 	mov	x19, x1
 	mov	x20, x0
-	b	.LBB760_2
-.LBB760_1:                              // %"$18"
-                                        //   in Loop: Header=BB760_2 Depth=1
+	b	.LBB761_2
+.LBB761_1:                              // %"$18"
+                                        //   in Loop: Header=BB761_2 Depth=1
 	cmp	w0, #1                          // =1
-	b.ge	.LBB760_12
-.LBB760_2:                              // %"$2"
+	b.ge	.LBB761_12
+.LBB761_2:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	bl	wrLock
-	tbz	w0, #31, .LBB760_7
+	tbz	w0, #31, .LBB761_7
 // %bb.3:                               // %"$3"
-                                        //   in Loop: Header=BB760_2 Depth=1
+                                        //   in Loop: Header=BB761_2 Depth=1
 	bl	gErrno
 	sub	w8, w0, #4                      // =4
 	cmp	w8, #2                          // =2
-	b.lo	.LBB760_5
-.LBB760_4:                              // %"$3"
-                                        //   in Loop: Header=BB760_2 Depth=1
+	b.lo	.LBB761_5
+.LBB761_4:                              // %"$3"
+                                        //   in Loop: Header=BB761_2 Depth=1
 	cmp	w0, #2                          // =2
-	b.ne	.LBB760_13
-.LBB760_5:                              // %"$16"
-                                        //   in Loop: Header=BB760_2 Depth=1
+	b.ne	.LBB761_13
+.LBB761_5:                              // %"$16"
+                                        //   in Loop: Header=BB761_2 Depth=1
 	bl	getLock
-	tbz	w0, #31, .LBB760_1
+	tbz	w0, #31, .LBB761_1
 // %bb.6:                               // %"$17"
-                                        //   in Loop: Header=BB760_2 Depth=1
+                                        //   in Loop: Header=BB761_2 Depth=1
 	bl	gErrno
-	b	.LBB760_4
-.LBB760_7:                              // %"$5"
+	b	.LBB761_4
+.LBB761_7:                              // %"$5"
 	mov	w8, #1
 	strb	w8, [x20, #40]
-	cbz	x19, .LBB760_10
+	cbz	x19, .LBB761_10
 // %bb.8:                               // %"$7"
 	adrp	x8, SymTab+216
 	add	x8, x8, :lo12:SymTab+216
 	ldr	x9, [x8, #144]
 	cmp	x9, x8
-	b.ne	.LBB760_11
+	b.ne	.LBB761_11
 // %bb.9:
 	mov	w0, wzr
-	b	.LBB760_12
-.LBB760_10:                             // %"$8"
+	b	.LBB761_12
+.LBB761_10:                             // %"$8"
 	mov	w0, wzr
 	adrp	x8, SymTab+216
 	add	x8, x8, :lo12:SymTab+216
 	str	x8, [x8, #144]
-	b	.LBB760_12
-.LBB760_11:                             // %"$10"
+	b	.LBB761_12
+.LBB761_11:                             // %"$10"
 	mov	w0, wzr
 	adrp	x8, SymTab+8
 	add	x8, x8, :lo12:SymTab+8
 	str	x8, [x8, #352]
-.LBB760_12:                             // %"$4"
+.LBB761_12:                             // %"$4"
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #32                  // 8-byte Folded Reload
 	ret
-.LBB760_13:                             // %"$14.critedge"
+.LBB761_13:                             // %"$14.critedge"
 	bl	lockErr
-.Lfunc_end760:
-	.size	tryLock, .Lfunc_end760-tryLock
+.Lfunc_end761:
+	.size	tryLock, .Lfunc_end761-tryLock
 	.cfi_endproc
                                         // -- End function
 	.globl	wrBlock                         // -- Begin function wrBlock
@@ -61232,8 +61265,8 @@ wrBlock:                                // @wrBlock
 	bl	blkPoke
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end761:
-	.size	wrBlock, .Lfunc_end761-wrBlock
+.Lfunc_end762:
+	.size	wrBlock, .Lfunc_end762-wrBlock
 	.cfi_endproc
                                         // -- End function
 	.globl	logBlock                        // -- Begin function logBlock
@@ -61259,15 +61292,15 @@ logBlock:                               // @logBlock
 	bl	setAdr
 	bl	fwrite
 	cmp	w0, #1                          // =1
-	b.ne	.LBB762_3
+	b.ne	.LBB763_3
 // %bb.1:                               // %"$3"
 	bl	fwrite
 	cmp	w0, #1                          // =1
-	b.ne	.LBB762_3
+	b.ne	.LBB763_3
 // %bb.2:                               // %"$5"
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.LBB762_3:                              // %"$4"
+.LBB763_3:                              // %"$4"
 	bl	strErrno
 	mov	x3, x0
 	adrp	x2, .L$169
@@ -61275,8 +61308,8 @@ logBlock:                               // @logBlock
 	mov	x0, xzr
 	mov	x1, xzr
 	bl	err
-.Lfunc_end762:
-	.size	logBlock, .Lfunc_end762-logBlock
+.Lfunc_end763:
+	.size	logBlock, .Lfunc_end763-logBlock
 	.cfi_endproc
                                         // -- End function
 	.globl	cleanUp                         // -- Begin function cleanUp
@@ -61308,7 +61341,7 @@ cleanUp:                                // @cleanUp
 	mov	x0, x20
 	bl	setAdr
 	mov	x21, xzr
-.LBB763_1:                              // %"$2"
+.LBB764_1:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	add	x1, sp, #8                      // =8
 	mov	x0, x21
@@ -61326,7 +61359,7 @@ cleanUp:                                // @cleanUp
 	add	x0, sp, #8                      // =8
 	bl	getAdr
 	mov	x20, x0
-	cbnz	x0, .LBB763_1
+	cbnz	x0, .LBB764_1
 // %bb.2:                               // %"$5"
 	add	x1, sp, #8                      // =8
 	mov	x0, x19
@@ -61339,8 +61372,8 @@ cleanUp:                                // @cleanUp
 	ldp	x22, x21, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #48                  // 8-byte Folded Reload
 	ret
-.Lfunc_end763:
-	.size	cleanUp, .Lfunc_end763-cleanUp
+.Lfunc_end764:
+	.size	cleanUp, .Lfunc_end764-cleanUp
 	.cfi_endproc
                                         // -- End function
 	.globl	putBlock                        // -- Begin function putBlock
@@ -61365,18 +61398,18 @@ putBlock:                               // @putBlock
 	adrp	x9, ($BlkEnd)
 	ldr	x9, [x9, :lo12:($BlkEnd)]
 	cmp	x8, x9
-	b.ne	.LBB764_5
+	b.ne	.LBB765_5
 // %bb.1:                               // %"$2"
 	adrp	x8, ($BlkLink)
 	ldr	x20, [x8, :lo12:($BlkLink)]
-	cbz	x20, .LBB764_3
+	cbz	x20, .LBB765_3
 // %bb.2:                               // %"$5"
 	bl	wrBlock
 	mov	x0, x20
 	bl	rdBlock
 	mov	x20, x0
-	b	.LBB764_4
-.LBB764_3:                              // %"$4"
+	b	.LBB765_4
+.LBB765_3:                              // %"$4"
 	bl	newBlock
 	mov	x21, x0
 	adrp	x8, ($DbBlock)
@@ -61392,17 +61425,17 @@ putBlock:                               // @putBlock
 	cinc	x0, x23, ne
 	mov	x1, x20
 	bl	setAdr
-.LBB764_4:                              // %"$6"
+.LBB765_4:                              // %"$6"
 	add	x8, x20, #6                     // =6
-.LBB764_5:                              // %"$3"
+.LBB765_5:                              // %"$3"
 	strb	w19, [x8], #1
 	str	x8, [x22, :lo12:($BlkPtr)]
 	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x23, [sp], #48             // 16-byte Folded Reload
 	ret
-.Lfunc_end764:
-	.size	putBlock, .Lfunc_end764-putBlock
+.Lfunc_end765:
+	.size	putBlock, .Lfunc_end765-putBlock
 	.cfi_endproc
                                         // -- End function
 	.globl	_rollback                       // -- Begin function _rollback
@@ -61414,8 +61447,8 @@ _rollback:                              // @_rollback
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ret
-.Lfunc_end765:
-	.size	_rollback, .Lfunc_end765-_rollback
+.Lfunc_end766:
+	.size	_rollback, .Lfunc_end766-_rollback
 	.cfi_endproc
                                         // -- End function
 	.globl	_extern                         // -- Begin function _extern
@@ -61441,36 +61474,36 @@ _extern:                                // @_extern
 	ldp	w1, w8, [x9]
 	bfi	x1, x8, #32, #32
 	tst	x1, #0x6
-	b.ne	.LBB766_4
+	b.ne	.LBB767_4
 // %bb.1:                               // %"$3"
-	tbz	w1, #3, .LBB766_3
+	tbz	w1, #3, .LBB767_3
 // %bb.2:                               // %"$6"
 	ldp	w1, w8, [x1]
 	bfi	x1, x8, #32, #32
-	b	.LBB766_4
-.LBB766_3:                              // %"$5"
+	b	.LBB767_4
+.LBB767_3:                              // %"$5"
 	mov	x0, x1
 	bl	evList
 	mov	x1, x0
-.LBB766_4:                              // %"$2"
+.LBB767_4:                              // %"$2"
 	eor	w8, w1, #0x8
 	tst	x8, #0xe
-	b.ne	.LBB766_9
+	b.ne	.LBB767_9
 // %bb.5:                               // %"$8"
 	ldp	w9, w8, [x1, #-8]
 	bfi	x9, x8, #32, #32
 	and	x8, x9, #0xfffffffffffffff7
 	tst	x8, #0x6
-	b.ne	.LBB766_7
-.LBB766_6:                              // %"$10"
+	b.ne	.LBB767_7
+.LBB767_6:                              // %"$10"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w8, w9, [x8, #8]
 	bfi	x8, x9, #32, #32
 	tst	x8, #0x6
-	b.eq	.LBB766_6
-.LBB766_7:                              // %"$11"
+	b.eq	.LBB767_6
+.LBB767_7:                              // %"$11"
 	cmp	x8, #2                          // =2
-	b.eq	.LBB766_10
+	b.eq	.LBB767_10
 // %bb.8:                               // %"$13"
 	mov	x9, sp
 	sub	x19, x9, #16                    // =16
@@ -61483,46 +61516,46 @@ _extern:                                // @_extern
 	mov	w21, wzr
 	mov	w20, wzr
 	cmp	w0, #123                        // =123
-	b.eq	.LBB766_12
-	b	.LBB766_13
-.LBB766_9:                              // %"$7"
+	b.eq	.LBB767_12
+	b	.LBB767_13
+.LBB767_9:                              // %"$7"
 	mov	x0, x19
 	bl	symErr
-.LBB766_10:                             // %"$12"
+.LBB767_10:                             // %"$12"
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
-.LBB766_11:                             // %"$12"
+.LBB767_11:                             // %"$12"
 	mov	sp, x29
 	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #16]             // 16-byte Folded Reload
 	ldp	x29, x30, [sp], #48             // 16-byte Folded Reload
 	ret
-.LBB766_12:                             // %"$16.sink.split"
+.LBB767_12:                             // %"$16.sink.split"
 	mov	x0, x19
 	bl	symChar
 	mov	w20, w21
-.LBB766_13:                             // %"$16"
+.LBB767_13:                             // %"$16"
 	cmp	w0, #63                         // =63
-	b.le	.LBB766_16
+	b.le	.LBB767_16
 // %bb.14:                              // %"$17"
 	cmp	w0, #80                         // =80
-	b.ge	.LBB766_10
+	b.ge	.LBB767_10
 // %bb.15:                              // %"$20"
 	sub	w8, w0, #64                     // =64
 	orr	w21, w8, w20, lsl #4
-	b	.LBB766_12
-.LBB766_16:                             // %"$21.preheader"
+	b	.LBB767_12
+.LBB767_16:                             // %"$21.preheader"
 	mov	x21, xzr
 	mov	w22, #1
-.LBB766_17:                             // %"$21"
+.LBB767_17:                             // %"$21"
                                         // =>This Inner Loop Header: Depth=1
 	cmp	w0, #56                         // =56
 	cset	w9, lt
 	subs	w8, w0, #48                     // =48
 	csel	w9, wzr, w9, lt
-	tbz	w9, #0, .LBB766_10
+	tbz	w9, #0, .LBB767_10
 // %bb.18:                              // %"$25"
-                                        //   in Loop: Header=BB766_17 Depth=1
+                                        //   in Loop: Header=BB767_17 Depth=1
 	sxtw	x8, w8
 	orr	x21, x8, x21, lsl #3
 	mov	x0, x19
@@ -61531,7 +61564,7 @@ _extern:                                // @_extern
 	cset	w8, eq
 	cmp	w0, #0                          // =0
 	csel	w8, w22, w8, eq
-	cbz	w8, .LBB766_17
+	cbz	w8, .LBB767_17
 // %bb.19:                              // %"$29"
 	mov	w0, w20
 	mov	x1, x21
@@ -61539,15 +61572,15 @@ _extern:                                // @_extern
 	bl	extern
 	mov	x19, x0
 	bl	isLife
-	tbnz	w0, #0, .LBB766_21
+	tbnz	w0, #0, .LBB767_21
 // %bb.20:                              // %"$31"
 	adrp	x19, SymTab+8
 	add	x19, x19, :lo12:SymTab+8
-.LBB766_21:                             // %"$32"
+.LBB767_21:                             // %"$32"
 	mov	x0, x19
-	b	.LBB766_11
-.Lfunc_end766:
-	.size	_extern, .Lfunc_end766-_extern
+	b	.LBB767_11
+.Lfunc_end767:
+	.size	_extern, .Lfunc_end767-_extern
 	.cfi_endproc
                                         // -- End function
 	.globl	ignLog                          // -- Begin function ignLog
@@ -61562,8 +61595,8 @@ ignLog:                                 // @ignLog
 	bl	stderrMsg
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end767:
-	.size	ignLog, .Lfunc_end767-ignLog
+.Lfunc_end768:
+	.size	ignLog, .Lfunc_end768-ignLog
 	.cfi_endproc
                                         // -- End function
 	.globl	transaction                     // -- Begin function transaction
@@ -61577,47 +61610,47 @@ transaction:                            // @transaction
 	.cfi_offset w30, -16
 	bl	fseek0
 	bl	fread
-	cbz	w0, .LBB768_6
-.LBB768_1:                              // %"$5"
+	cbz	w0, .LBB769_6
+.LBB769_1:                              // %"$5"
                                         // =>This Inner Loop Header: Depth=1
 	ldrsh	w8, [sp, #8]
 	cmn	w8, #1                          // =1
-	b.eq	.LBB768_9
+	b.eq	.LBB769_9
 // %bb.2:                               // %"$6"
-                                        //   in Loop: Header=BB768_1 Depth=1
+                                        //   in Loop: Header=BB769_1 Depth=1
 	add	x0, sp, #8                      // =8
 	bl	dbfBuf
-	cbz	x0, .LBB768_7
+	cbz	x0, .LBB769_7
 // %bb.3:                               // %"$10"
-                                        //   in Loop: Header=BB768_1 Depth=1
+                                        //   in Loop: Header=BB769_1 Depth=1
 	bl	fread
 	cmp	w0, #1                          // =1
-	b.ne	.LBB768_7
+	b.ne	.LBB769_7
 // %bb.4:                               // %"$11"
-                                        //   in Loop: Header=BB768_1 Depth=1
+                                        //   in Loop: Header=BB769_1 Depth=1
 	bl	fseekOfs
-	tbz	w0, #0, .LBB768_7
+	tbz	w0, #0, .LBB769_7
 // %bb.5:                               // %"$12"
-                                        //   in Loop: Header=BB768_1 Depth=1
+                                        //   in Loop: Header=BB769_1 Depth=1
 	bl	fread
 	cmp	w0, #1                          // =1
-	b.eq	.LBB768_1
-	b	.LBB768_7
-.LBB768_6:                              // %"$3"
+	b.eq	.LBB769_1
+	b	.LBB769_7
+.LBB769_6:                              // %"$3"
 	bl	feof
-	cbnz	w0, .LBB768_8
-.LBB768_7:                              // %"$15"
+	cbnz	w0, .LBB769_8
+.LBB769_7:                              // %"$15"
 	bl	ignLog
-.LBB768_8:                              // %"$4"
+.LBB769_8:                              // %"$4"
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.LBB768_9:
+.LBB769_9:
 	mov	w0, #1
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end768:
-	.size	transaction, .Lfunc_end768-transaction
+.Lfunc_end769:
+	.size	transaction, .Lfunc_end769-transaction
 	.cfi_endproc
                                         // -- End function
 	.globl	fsyncDB                         // -- Begin function fsyncDB
@@ -61638,38 +61671,38 @@ fsyncDB:                                // @fsyncDB
 	ldr	x20, [x8, :lo12:($DbFiles)]
 	adrp	x8, ($DBs)
 	ldr	w21, [x8, :lo12:($DBs)]
-.LBB769_1:                              // %"$2"
+.LBB770_1:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	ldrb	w8, [x20, #41]
 	cmp	w8, #1                          // =1
-	b.ne	.LBB769_3
+	b.ne	.LBB770_3
 // %bb.2:                               // %"$4"
-                                        //   in Loop: Header=BB769_1 Depth=1
+                                        //   in Loop: Header=BB770_1 Depth=1
 	bl	fsync
 	lsr	w8, w0, #31
-	b	.LBB769_4
-.LBB769_3:                              //   in Loop: Header=BB769_1 Depth=1
+	b	.LBB770_4
+.LBB770_3:                              //   in Loop: Header=BB770_1 Depth=1
 	mov	w8, wzr
-.LBB769_4:                              // %"$3"
-                                        //   in Loop: Header=BB769_1 Depth=1
-	cbnz	w8, .LBB769_8
+.LBB770_4:                              // %"$3"
+                                        //   in Loop: Header=BB770_1 Depth=1
+	cbnz	w8, .LBB770_8
 // %bb.5:                               // %"$6"
-                                        //   in Loop: Header=BB769_1 Depth=1
+                                        //   in Loop: Header=BB770_1 Depth=1
 	subs	w21, w21, #1                    // =1
-	b.eq	.LBB769_7
+	b.eq	.LBB770_7
 // %bb.6:                               // %"$7"
-                                        //   in Loop: Header=BB769_1 Depth=1
+                                        //   in Loop: Header=BB770_1 Depth=1
 	add	x20, x20, #42                   // =42
-	b	.LBB769_1
-.LBB769_7:                              // %"$8"
+	b	.LBB770_1
+.LBB770_7:                              // %"$8"
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x21, [sp], #32             // 16-byte Folded Reload
 	ret
-.LBB769_8:                              // %"$5"
+.LBB770_8:                              // %"$5"
 	mov	x0, x19
 	bl	dbSyncErr
-.Lfunc_end769:
-	.size	fsyncDB, .Lfunc_end769-fsyncDB
+.Lfunc_end770:
+	.size	fsyncDB, .Lfunc_end770-fsyncDB
 	.cfi_endproc
                                         // -- End function
 	.globl	restore                         // -- Begin function restore
@@ -61696,16 +61729,16 @@ restore:                                // @restore
 	ldr	x8, [x8, :lo12:($DbFiles)]
 	adrp	x9, ($DBs)
 	ldr	w9, [x9, :lo12:($DBs)]
-.LBB770_1:                              // %"$2"
+.LBB771_1:                              // %"$2"
                                         // =>This Inner Loop Header: Depth=1
 	sub	w9, w9, #1                      // =1
 	strb	wzr, [x8, #41]
-	cbz	w9, .LBB770_3
+	cbz	w9, .LBB771_3
 // %bb.2:                               // %"$3"
-                                        //   in Loop: Header=BB770_1 Depth=1
+                                        //   in Loop: Header=BB771_1 Depth=1
 	add	x8, x8, #42                     // =42
-	b	.LBB770_1
-.LBB770_3:                              // %"$4"
+	b	.LBB771_1
+.LBB771_3:                              // %"$4"
 	sub	x20, sp, #16                    // =16
 	mov	sp, x20
 	adrp	x8, ($MaxBlkSize)
@@ -61716,45 +61749,45 @@ restore:                                // @restore
 	sub	x8, x9, x8
 	mov	sp, x8
 	mov	w22, #1
-.LBB770_4:                              // %"$5"
+.LBB771_4:                              // %"$5"
                                         // =>This Inner Loop Header: Depth=1
 	bl	fread
 	cmp	w0, #1                          // =1
-	b.ne	.LBB770_12
+	b.ne	.LBB771_12
 // %bb.5:                               // %"$7"
-                                        //   in Loop: Header=BB770_4 Depth=1
+                                        //   in Loop: Header=BB771_4 Depth=1
 	ldrsh	w8, [x20]
 	cmn	w8, #1                          // =1
-	b.eq	.LBB770_11
+	b.eq	.LBB771_11
 // %bb.6:                               // %"$8"
-                                        //   in Loop: Header=BB770_4 Depth=1
+                                        //   in Loop: Header=BB771_4 Depth=1
 	mov	x0, x20
 	bl	dbfBuf
-	cbz	x0, .LBB770_12
+	cbz	x0, .LBB771_12
 // %bb.7:                               // %"$10"
-                                        //   in Loop: Header=BB770_4 Depth=1
+                                        //   in Loop: Header=BB771_4 Depth=1
 	mov	x21, x0
 	bl	fread
 	cmp	w0, #1                          // =1
-	b.ne	.LBB770_12
+	b.ne	.LBB771_12
 // %bb.8:                               // %"$14"
-                                        //   in Loop: Header=BB770_4 Depth=1
+                                        //   in Loop: Header=BB771_4 Depth=1
 	bl	fread
 	cmp	w0, #1                          // =1
-	b.ne	.LBB770_12
+	b.ne	.LBB771_12
 // %bb.9:                               // %"$16"
-                                        //   in Loop: Header=BB770_4 Depth=1
+                                        //   in Loop: Header=BB771_4 Depth=1
 	mov	x0, x20
 	bl	getAdr
 	bl	pwrite
 	ldrsw	x8, [x21, #12]
 	cmp	x0, x8
-	b.ne	.LBB770_13
+	b.ne	.LBB771_13
 // %bb.10:                              // %"$18"
-                                        //   in Loop: Header=BB770_4 Depth=1
+                                        //   in Loop: Header=BB771_4 Depth=1
 	strb	w22, [x21, #41]
-	b	.LBB770_4
-.LBB770_11:                             // %"$9"
+	b	.LBB771_4
+.LBB771_11:                             // %"$9"
 	mov	x0, x19
 	bl	fsyncDB
 	mov	sp, x29
@@ -61762,13 +61795,13 @@ restore:                                // @restore
 	ldp	x22, x21, [sp, #16]             // 16-byte Folded Reload
 	ldp	x29, x30, [sp], #48             // 16-byte Folded Reload
 	ret
-.LBB770_12:                             // %"$6"
+.LBB771_12:                             // %"$6"
 	mov	x0, x19
 	bl	jnlErr
-.LBB770_13:                             // %"$17"
+.LBB771_13:                             // %"$17"
 	bl	dbWrErr
-.Lfunc_end770:
-	.size	restore, .Lfunc_end770-restore
+.Lfunc_end771:
+	.size	restore, .Lfunc_end771-restore
 	.cfi_endproc
                                         // -- End function
 	.globl	truncLog                        // -- Begin function truncLog
@@ -61783,15 +61816,15 @@ truncLog:                               // @truncLog
 	.cfi_offset w30, -16
 	mov	x19, x0
 	bl	fseek0
-	tbz	w0, #0, .LBB771_3
+	tbz	w0, #0, .LBB772_3
 // %bb.1:                               // %"$3"
 	bl	fileno
 	bl	truncate0
-	tbz	w0, #0, .LBB771_3
+	tbz	w0, #0, .LBB772_3
 // %bb.2:                               // %"$5"
 	ldp	x30, x19, [sp], #16             // 16-byte Folded Reload
 	ret
-.LBB771_3:                              // %"$4"
+.LBB772_3:                              // %"$4"
 	bl	strErrno
 	mov	x3, x0
 	adrp	x2, .L$173
@@ -61799,8 +61832,8 @@ truncLog:                               // @truncLog
 	mov	x0, x19
 	mov	x1, xzr
 	bl	err
-.Lfunc_end771:
-	.size	truncLog, .Lfunc_end771-truncLog
+.Lfunc_end772:
+	.size	truncLog, .Lfunc_end772-truncLog
 	.cfi_endproc
                                         // -- End function
 	.globl	_pool                           // -- Begin function _pool
@@ -61812,8 +61845,8 @@ _pool:                                  // @_pool
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ret
-.Lfunc_end772:
-	.size	_pool, .Lfunc_end772-_pool
+.Lfunc_end773:
+	.size	_pool, .Lfunc_end773-_pool
 	.cfi_endproc
                                         // -- End function
 	.globl	_pool2                          // -- Begin function _pool2
@@ -61825,8 +61858,8 @@ _pool2:                                 // @_pool2
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ret
-.Lfunc_end773:
-	.size	_pool2, .Lfunc_end773-_pool2
+.Lfunc_end774:
+	.size	_pool2, .Lfunc_end774-_pool2
 	.cfi_endproc
                                         // -- End function
 	.globl	_journal                        // -- Begin function _journal
@@ -61870,7 +61903,7 @@ _journal:                               // @_journal
 	adrp	x9, ($StkLimit)
 	ldr	x9, [x9, :lo12:($StkLimit)]
 	cmp	x9, x8
-	b.hi	.LBB774_3
+	b.hi	.LBB775_3
 // %bb.1:                               // %"$3"
 	mov	x22, x0
 	adrp	x24, ($DbJnl)
@@ -61880,21 +61913,21 @@ _journal:                               // @_journal
 	adrp	x8, SymTab+216
 	add	x8, x8, :lo12:SymTab+216
 	cmp	x0, x8
-	b.ne	.LBB774_5
+	b.ne	.LBB775_5
 // %bb.2:                               // %"$4"
 	str	xzr, [x24, :lo12:($DbJnl)]
 	str	xzr, [x26, :lo12:($DbLog)]
 	ldp	w20, w8, [x20, #8]
 	bfi	x20, x8, #32, #32
-	b	.LBB774_4
-.LBB774_3:                              // %"$2"
+	b	.LBB775_4
+.LBB775_3:                              // %"$2"
 	mov	x0, x19
 	bl	stkErr
-.LBB774_4:                              // %"$6.sink.split"
+.LBB775_4:                              // %"$6.sink.split"
 	mov	x0, x20
 	bl	evSym
 	mov	x22, x0
-.LBB774_5:                              // %"$6"
+.LBB775_5:                              // %"$6"
 	mov	x0, x19
 	mov	x1, x22
 	bl	xName
@@ -61908,53 +61941,53 @@ _journal:                               // @_journal
 	mov	x0, x23
 	bl	pathString
 	bl	fopen
-	cbz	x0, .LBB774_22
+	cbz	x0, .LBB775_22
 // %bb.6:                               // %"$9"
 	bl	getc_unlocked
-	tbnz	w0, #31, .LBB774_18
-.LBB774_7:                              // %"$10"
+	tbnz	w0, #31, .LBB775_18
+.LBB775_7:                              // %"$10"
                                         // =>This Inner Loop Header: Depth=1
 	mov	w22, w0
 	bl	fread
 	cmp	w0, #1                          // =1
-	b.ne	.LBB774_20
+	b.ne	.LBB775_20
 // %bb.8:                               // %"$13"
-                                        //   in Loop: Header=BB774_7 Depth=1
+                                        //   in Loop: Header=BB775_7 Depth=1
 	add	x0, x29, #24                    // =24
 	bl	dbfBuf
-	cbz	x0, .LBB774_21
+	cbz	x0, .LBB775_21
 // %bb.9:                               // %"$14"
-                                        //   in Loop: Header=BB774_7 Depth=1
+                                        //   in Loop: Header=BB775_7 Depth=1
 	mov	x23, x0
 	cmp	w22, #64                        // =64
-	b.ne	.LBB774_11
+	b.ne	.LBB775_11
 // %bb.10:                              // %"$17"
-                                        //   in Loop: Header=BB774_7 Depth=1
+                                        //   in Loop: Header=BB775_7 Depth=1
 	ldr	w22, [x23, #12]
-.LBB774_11:                             // %"$18"
-                                        //   in Loop: Header=BB774_7 Depth=1
-	cbnz	w22, .LBB774_13
+.LBB775_11:                             // %"$18"
+                                        //   in Loop: Header=BB775_7 Depth=1
+	cbnz	w22, .LBB775_13
 // %bb.12:                              // %"$19"
-                                        //   in Loop: Header=BB774_7 Depth=1
+                                        //   in Loop: Header=BB775_7 Depth=1
 	ldr	w22, [x23, #12]
-.LBB774_13:                             // %"$20"
-                                        //   in Loop: Header=BB774_7 Depth=1
+.LBB775_13:                             // %"$20"
+                                        //   in Loop: Header=BB775_7 Depth=1
 	bl	fread
 	cmp	w0, #1                          // =1
-	b.ne	.LBB774_15
+	b.ne	.LBB775_15
 // %bb.14:                              // %"$22"
-                                        //   in Loop: Header=BB774_7 Depth=1
+                                        //   in Loop: Header=BB775_7 Depth=1
 	bl	fread
 	cmp	w0, #1                          // =1
 	cset	w8, eq
-	b	.LBB774_16
-.LBB774_15:                             //   in Loop: Header=BB774_7 Depth=1
+	b	.LBB775_16
+.LBB775_15:                             //   in Loop: Header=BB775_7 Depth=1
 	mov	w8, wzr
-.LBB774_16:                             // %"$21"
-                                        //   in Loop: Header=BB774_7 Depth=1
-	tbz	w8, #0, .LBB774_20
+.LBB775_16:                             // %"$21"
+                                        //   in Loop: Header=BB775_7 Depth=1
+	tbz	w8, #0, .LBB775_20
 // %bb.17:                              // %"$24"
-                                        //   in Loop: Header=BB774_7 Depth=1
+                                        //   in Loop: Header=BB775_7 Depth=1
 	add	x0, x29, #24                    // =24
 	bl	getAdr
 	ldrsw	x8, [x23, #8]
@@ -61963,13 +61996,13 @@ _journal:                               // @_journal
 	mov	w2, w22
 	bl	blkPoke
 	bl	getc_unlocked
-	tbz	w0, #31, .LBB774_7
-.LBB774_18:                             // %"$11"
+	tbz	w0, #31, .LBB775_7
+.LBB775_18:                             // %"$11"
 	bl	fclose
 	ldp	w20, w8, [x20, #8]
 	bfi	x20, x8, #32, #32
 	tst	x20, #0xf
-	b.eq	.LBB774_4
+	b.eq	.LBB775_4
 // %bb.19:                              // %"$26"
 	str	x27, [x26, :lo12:($DbLog)]
 	str	x25, [x24, :lo12:($DbJnl)]
@@ -61983,18 +62016,18 @@ _journal:                               // @_journal
 	ldr	x27, [sp, #16]                  // 8-byte Folded Reload
 	ldp	x29, x30, [sp], #96             // 16-byte Folded Reload
 	ret
-.LBB774_20:                             // %"$12"
+.LBB775_20:                             // %"$12"
 	mov	x0, x19
 	bl	jnlErr
-.LBB774_21:                             // %"$15"
+.LBB775_21:                             // %"$15"
 	mov	x0, x19
 	bl	dbfErr
-.LBB774_22:                             // %"$7"
+.LBB775_22:                             // %"$7"
 	mov	x0, x19
 	mov	x1, x22
 	bl	openErr
-.Lfunc_end774:
-	.size	_journal, .Lfunc_end774-_journal
+.Lfunc_end775:
+	.size	_journal, .Lfunc_end775-_journal
 	.cfi_endproc
                                         // -- End function
 	.globl	_id                             // -- Begin function _id
@@ -62018,54 +62051,54 @@ _id:                                    // @_id
 	ldp	w21, w8, [x9, #8]
 	bfi	x21, x8, #32, #32
 	tst	x20, #0x6
-	b.ne	.LBB775_3
+	b.ne	.LBB776_3
 // %bb.1:                               // %"$3"
-	tbz	w20, #3, .LBB775_7
+	tbz	w20, #3, .LBB776_7
 // %bb.2:                               // %"$6"
 	ldp	w20, w8, [x20]
 	bfi	x20, x8, #32, #32
-.LBB775_3:                              // %"$2"
-	tbz	w20, #1, .LBB775_8
-.LBB775_4:                              // %"$7"
+.LBB776_3:                              // %"$2"
+	tbz	w20, #1, .LBB776_8
+.LBB776_4:                              // %"$7"
 	ldp	w1, w8, [x21]
 	bfi	x1, x8, #32, #32
 	tst	x1, #0x6
-	b.ne	.LBB775_17
+	b.ne	.LBB776_17
 // %bb.5:                               // %"$11"
-	tbz	w1, #3, .LBB775_16
+	tbz	w1, #3, .LBB776_16
 // %bb.6:                               // %"$14"
 	ldp	w1, w8, [x1]
 	bfi	x1, x8, #32, #32
-	b	.LBB775_17
-.LBB775_7:                              // %"$5"
+	b	.LBB776_17
+.LBB776_7:                              // %"$5"
 	mov	x0, x20
 	bl	evList
 	mov	x20, x0
-	tbnz	w20, #1, .LBB775_4
-.LBB775_8:                              // %"$8"
+	tbnz	w20, #1, .LBB776_4
+.LBB776_8:                              // %"$8"
 	eor	w8, w20, #0x8
 	tst	x8, #0xe
-	b.ne	.LBB775_26
+	b.ne	.LBB776_26
 // %bb.9:                               // %"$19"
 	eor	w8, w20, #0x8
 	tst	x8, #0xe
-	b.ne	.LBB775_26
+	b.ne	.LBB776_26
 // %bb.10:                              // %"$21"
 	ldurb	w8, [x20, #-8]
-	tbz	w8, #3, .LBB775_27
+	tbz	w8, #3, .LBB776_27
 // %bb.11:                              // %"$23"
 	ldp	w9, w8, [x20, #-8]
 	bfi	x9, x8, #32, #32
 	and	x20, x9, #0xfffffffffffffff7
 	tst	x20, #0x6
-	b.ne	.LBB775_13
-.LBB775_12:                             // %"$25"
+	b.ne	.LBB776_13
+.LBB776_12:                             // %"$25"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w20, w8, [x20, #8]
 	bfi	x20, x8, #32, #32
 	tst	x20, #0x6
-	b.eq	.LBB775_12
-.LBB775_13:                             // %"$26"
+	b.eq	.LBB776_12
+.LBB776_13:                             // %"$26"
 	mov	x0, x20
 	bl	objId
 	mov	w19, #2
@@ -62073,44 +62106,44 @@ _id:                                    // @_id
 	ldp	w0, w8, [x21]
 	bfi	x0, x8, #32, #32
 	tst	x0, #0x6
-	b.ne	.LBB775_22
+	b.ne	.LBB776_22
 // %bb.14:                              // %"$28"
-	tbz	w0, #3, .LBB775_21
+	tbz	w0, #3, .LBB776_21
 // %bb.15:                              // %"$31"
 	ldp	w0, w8, [x0]
 	bfi	x0, x8, #32, #32
-	b	.LBB775_22
-.LBB775_16:                             // %"$13"
+	b	.LBB776_22
+.LBB776_16:                             // %"$13"
 	mov	x0, x1
 	bl	evList
 	mov	x1, x0
-.LBB775_17:                             // %"$10"
+.LBB776_17:                             // %"$10"
 	adrp	x9, SymTab+8
 	add	x9, x9, :lo12:SymTab+8
 	lsr	x8, x20, #4
 	cmp	x1, x9
-	b.ne	.LBB775_19
+	b.ne	.LBB776_19
 // %bb.18:                              // %"$15"
 	mov	w0, wzr
 	mov	x1, x8
-	b	.LBB775_20
-.LBB775_19:                             // %"$16"
+	b	.LBB776_20
+.LBB776_19:                             // %"$16"
 	sub	w20, w8, #1                     // =1
 	mov	x0, x19
 	bl	xCnt
 	mov	x1, x0
 	mov	w0, w20
-.LBB775_20:                             // %"$17"
+.LBB776_20:                             // %"$17"
 	bl	extNm
 	bl	extern
-	b	.LBB775_24
-.LBB775_21:                             // %"$30"
+	b	.LBB776_24
+.LBB776_21:                             // %"$30"
 	bl	evList
-.LBB775_22:                             // %"$27"
+.LBB776_22:                             // %"$27"
 	adrp	x8, SymTab+8
 	add	x8, x8, :lo12:SymTab+8
 	cmp	x0, x8
-	b.eq	.LBB775_25
+	b.eq	.LBB776_25
 // %bb.23:                              // %"$33"
 	mov	x0, x20
 	bl	objFile
@@ -62120,23 +62153,23 @@ _id:                                    // @_id
 	bfi	x0, x8, #4, #60
 	mov	x1, x19
 	bl	cons
-.LBB775_24:                             // %"$9"
+.LBB776_24:                             // %"$9"
 	mov	x19, x0
-.LBB775_25:                             // %"$9"
+.LBB776_25:                             // %"$9"
 	mov	x0, x19
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x21, [sp], #32             // 16-byte Folded Reload
 	ret
-.LBB775_26:                             // %"$18"
+.LBB776_26:                             // %"$18"
 	mov	x0, x19
 	mov	x1, x20
 	bl	symErr
-.LBB775_27:                             // %"$22"
+.LBB776_27:                             // %"$22"
 	mov	x0, x19
 	mov	x1, x20
 	bl	extErr
-.Lfunc_end775:
-	.size	_id, .Lfunc_end775-_id
+.Lfunc_end776:
+	.size	_id, .Lfunc_end776-_id
 	.cfi_endproc
                                         // -- End function
 	.globl	_blk                            // -- Begin function _blk
@@ -62148,8 +62181,8 @@ _blk:                                   // @_blk
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ret
-.Lfunc_end776:
-	.size	_blk, .Lfunc_end776-_blk
+.Lfunc_end777:
+	.size	_blk, .Lfunc_end777-_blk
 	.cfi_endproc
                                         // -- End function
 	.globl	_seq                            // -- Begin function _seq
@@ -62161,8 +62194,8 @@ _seq:                                   // @_seq
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ret
-.Lfunc_end777:
-	.size	_seq, .Lfunc_end777-_seq
+.Lfunc_end778:
+	.size	_seq, .Lfunc_end778-_seq
 	.cfi_endproc
                                         // -- End function
 	.globl	_lieu                           // -- Begin function _lieu
@@ -62179,57 +62212,57 @@ _lieu:                                  // @_lieu
 	ldp	w0, w8, [x9]
 	bfi	x0, x8, #32, #32
 	tst	x0, #0x6
-	b.ne	.LBB778_4
+	b.ne	.LBB779_4
 // %bb.1:                               // %"$3"
-	tbz	w0, #3, .LBB778_3
+	tbz	w0, #3, .LBB779_3
 // %bb.2:                               // %"$6"
 	ldp	w0, w8, [x0]
 	bfi	x0, x8, #32, #32
-	b	.LBB778_4
-.LBB778_3:                              // %"$5"
+	b	.LBB779_4
+.LBB779_3:                              // %"$5"
 	bl	evList
-.LBB778_4:                              // %"$2"
+.LBB779_4:                              // %"$2"
 	eor	w8, w0, #0x8
 	tst	x8, #0xe
-	b.ne	.LBB778_10
+	b.ne	.LBB779_10
 // %bb.5:                               // %"$8"
 	ldurb	w8, [x0, #-8]
-	tbz	w8, #3, .LBB778_10
+	tbz	w8, #3, .LBB779_10
 // %bb.6:                               // %"$10"
 	ldp	w9, w8, [x0, #-8]
 	bfi	x9, x8, #32, #32
 	and	x8, x9, #0xfffffffffffffff7
 	tst	x8, #0x6
-	b.ne	.LBB778_8
-.LBB778_7:                              // %"$13"
+	b.ne	.LBB779_8
+.LBB779_7:                              // %"$13"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w8, w9, [x8, #8]
 	bfi	x8, x9, #32, #32
 	tst	x8, #0x6
-	b.eq	.LBB778_7
-.LBB778_8:                              // %"$14"
+	b.eq	.LBB779_7
+.LBB779_8:                              // %"$14"
 	adds	x8, x8, x8
-	b.lo	.LBB778_11
+	b.lo	.LBB779_11
 // %bb.9:                               // %"$17"
 	cmn	x8, x8
-	b.lo	.LBB778_12
-.LBB778_10:
+	b.lo	.LBB779_12
+.LBB779_10:
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.LBB778_11:                             // %"$16"
+.LBB779_11:                             // %"$16"
 	cmn	x8, x8
 	adrp	x8, SymTab+8
 	add	x8, x8, :lo12:SymTab+8
 	cset	w9, hs
 	tst	w9, #0x1
 	csel	x0, x0, x8, ne
-.LBB778_12:                             // %"$7"
+.LBB779_12:                             // %"$7"
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end778:
-	.size	_lieu, .Lfunc_end778-_lieu
+.Lfunc_end779:
+	.size	_lieu, .Lfunc_end779-_lieu
 	.cfi_endproc
                                         // -- End function
 	.globl	_lock                           // -- Begin function _lock
@@ -62253,52 +62286,52 @@ _lock:                                  // @_lock
 	ldp	w1, w8, [x9]
 	bfi	x1, x8, #32, #32
 	tst	x1, #0x6
-	b.ne	.LBB779_4
+	b.ne	.LBB780_4
 // %bb.1:                               // %"$3"
-	tbz	w1, #3, .LBB779_3
+	tbz	w1, #3, .LBB780_3
 // %bb.2:                               // %"$6"
 	ldp	w1, w8, [x1]
 	bfi	x1, x8, #32, #32
-	b	.LBB779_4
-.LBB779_3:                              // %"$5"
+	b	.LBB780_4
+.LBB780_3:                              // %"$5"
 	mov	x0, x1
 	bl	evList
 	mov	x1, x0
-.LBB779_4:                              // %"$2"
+.LBB780_4:                              // %"$2"
 	adrp	x22, SymTab+8
 	add	x22, x22, :lo12:SymTab+8
 	cmp	x1, x22
-	b.ne	.LBB779_6
+	b.ne	.LBB780_6
 // %bb.5:                               // %"$7"
 	adrp	x8, ($DbFiles)
 	ldr	x0, [x8, :lo12:($DbFiles)]
 	mov	x1, xzr
 	mov	x2, xzr
-	b	.LBB779_13
-.LBB779_6:                              // %"$8"
+	b	.LBB780_13
+.LBB780_6:                              // %"$8"
 	eor	w8, w1, #0x8
 	tst	x8, #0xe
-	b.ne	.LBB779_14
+	b.ne	.LBB780_14
 // %bb.7:                               // %"$11"
 	eor	w8, w1, #0x8
 	tst	x8, #0xe
-	b.ne	.LBB779_14
+	b.ne	.LBB780_14
 // %bb.8:                               // %"$13"
 	ldurb	w8, [x1, #-8]
-	tbz	w8, #3, .LBB779_15
+	tbz	w8, #3, .LBB780_15
 // %bb.9:                               // %"$15"
 	ldp	w9, w8, [x1, #-8]
 	bfi	x9, x8, #32, #32
 	and	x20, x9, #0xfffffffffffffff7
 	tst	x20, #0x6
-	b.ne	.LBB779_11
-.LBB779_10:                             // %"$17"
+	b.ne	.LBB780_11
+.LBB780_10:                             // %"$17"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w20, w8, [x20, #8]
 	bfi	x20, x8, #32, #32
 	tst	x20, #0x6
-	b.eq	.LBB779_10
-.LBB779_11:                             // %"$18"
+	b.eq	.LBB780_10
+.LBB780_11:                             // %"$18"
 	mov	x0, x20
 	bl	objFile
 	mov	w21, w0
@@ -62307,7 +62340,7 @@ _lock:                                  // @_lock
 	adrp	x8, ($DBs)
 	ldr	w8, [x8, :lo12:($DBs)]
 	cmp	w21, w8
-	b.ge	.LBB779_16
+	b.ge	.LBB780_16
 // %bb.12:                              // %"$20"
 	adrp	x8, ($DbFiles)
 	ldr	x8, [x8, :lo12:($DbFiles)]
@@ -62318,7 +62351,7 @@ _lock:                                  // @_lock
 	mul	x1, x0, x9
 	mov	x0, x8
 	mov	w2, #1
-.LBB779_13:                             // %"$9"
+.LBB780_13:                             // %"$9"
 	bl	tryLock
                                         // kill: def $w0 killed $w0 def $x0
 	sxtw	x8, w0
@@ -62330,17 +62363,17 @@ _lock:                                  // @_lock
 	ldp	x22, x21, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #48                  // 8-byte Folded Reload
 	ret
-.LBB779_14:                             // %"$10"
+.LBB780_14:                             // %"$10"
 	mov	x0, x19
 	bl	symErr
-.LBB779_15:                             // %"$14"
+.LBB780_15:                             // %"$14"
 	mov	x0, x19
 	bl	extErr
-.LBB779_16:                             // %"$19"
+.LBB780_16:                             // %"$19"
 	mov	x0, x19
 	bl	dbfErr
-.Lfunc_end779:
-	.size	_lock, .Lfunc_end779-_lock
+.Lfunc_end780:
+	.size	_lock, .Lfunc_end780-_lock
 	.cfi_endproc
                                         // -- End function
 	.globl	_touch                          // -- Begin function _touch
@@ -62361,35 +62394,35 @@ _touch:                                 // @_touch
 	ldp	w20, w8, [x9]
 	bfi	x20, x8, #32, #32
 	tst	x20, #0x6
-	b.ne	.LBB780_4
+	b.ne	.LBB781_4
 // %bb.1:                               // %"$3"
-	tbz	w20, #3, .LBB780_3
+	tbz	w20, #3, .LBB781_3
 // %bb.2:                               // %"$6"
 	ldp	w20, w8, [x20]
 	bfi	x20, x8, #32, #32
-	b	.LBB780_4
-.LBB780_3:                              // %"$5"
+	b	.LBB781_4
+.LBB781_3:                              // %"$5"
 	mov	x0, x20
 	bl	evList
 	mov	x20, x0
-.LBB780_4:                              // %"$2"
+.LBB781_4:                              // %"$2"
 	eor	w8, w20, #0x8
 	tst	x8, #0xe
-	b.ne	.LBB780_7
+	b.ne	.LBB781_7
 // %bb.5:                               // %"$8"
 	ldurb	w8, [x20, #-8]
-	tbz	w8, #3, .LBB780_7
+	tbz	w8, #3, .LBB781_7
 // %bb.6:                               // %"$9"
 	mov	x0, x19
 	mov	x1, x20
 	bl	dbTouch
-.LBB780_7:                              // %"$10"
+.LBB781_7:                              // %"$10"
 	mov	x0, x20
 	ldp	x20, x19, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #32                  // 8-byte Folded Reload
 	ret
-.Lfunc_end780:
-	.size	_touch, .Lfunc_end780-_touch
+.Lfunc_end781:
+	.size	_touch, .Lfunc_end781-_touch
 	.cfi_endproc
                                         // -- End function
 	.globl	_commit                         // -- Begin function _commit
@@ -62401,8 +62434,8 @@ _commit:                                // @_commit
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ret
-.Lfunc_end781:
-	.size	_commit, .Lfunc_end781-_commit
+.Lfunc_end782:
+	.size	_commit, .Lfunc_end782-_commit
 	.cfi_endproc
                                         // -- End function
 	.globl	_mark                           // -- Begin function _mark
@@ -62430,11 +62463,11 @@ _mark:                                  // @_mark
 	bfi	x1, x8, #32, #32
 	ldp	w22, w20, [x9, #8]
 	tst	x1, #0x6
-	b.eq	.LBB782_4
+	b.eq	.LBB783_4
 // %bb.1:                               // %"$2"
 	cmp	x1, #2                          // =2
-	b.ne	.LBB782_7
-.LBB782_2:                              // %"$7"
+	b.ne	.LBB783_7
+.LBB783_2:                              // %"$7"
 	adrp	x8, ($DbFiles)
 	adrp	x9, ($DBs)
 	ldr	x8, [x8, :lo12:($DbFiles)]
@@ -62443,50 +62476,50 @@ _mark:                                  // @_mark
 	sub	w21, w9, #1                     // =1
 	adrp	x20, SymTab+8
 	add	x20, x20, :lo12:SymTab+8
-	tbnz	w21, #31, .LBB782_22
-.LBB782_3:                              // %"$11"
+	tbnz	w21, #31, .LBB783_22
+.LBB783_3:                              // %"$11"
                                         // =>This Inner Loop Header: Depth=1
 	stp	wzr, wzr, [x19, #8]
 	bl	free
 	str	xzr, [x19], #42
 	sub	w21, w21, #1                    // =1
-	tbz	w21, #31, .LBB782_3
-	b	.LBB782_22
-.LBB782_4:                              // %"$3"
-	tbz	w1, #3, .LBB782_6
+	tbz	w21, #31, .LBB783_3
+	b	.LBB783_22
+.LBB783_4:                              // %"$3"
+	tbz	w1, #3, .LBB783_6
 // %bb.5:                               // %"$6"
 	ldp	w1, w8, [x1]
 	bfi	x1, x8, #32, #32
 	cmp	x1, #2                          // =2
-	b.ne	.LBB782_7
-	b	.LBB782_2
-.LBB782_6:                              // %"$5"
+	b.ne	.LBB783_7
+	b	.LBB783_2
+.LBB783_6:                              // %"$5"
 	mov	x0, x1
 	bl	evList
 	mov	x1, x0
 	cmp	x1, #2                          // =2
-	b.eq	.LBB782_2
-.LBB782_7:                              // %"$8"
+	b.eq	.LBB783_2
+.LBB783_7:                              // %"$8"
 	eor	w8, w1, #0x8
 	tst	x8, #0xe
-	b.ne	.LBB782_25
+	b.ne	.LBB783_25
 // %bb.8:                               // %"$14"
 	ldurb	w8, [x1, #-8]
-	tbz	w8, #3, .LBB782_26
+	tbz	w8, #3, .LBB783_26
 // %bb.9:                               // %"$16"
 	bfi	x22, x20, #32, #32
 	ldp	w9, w8, [x1, #-8]
 	bfi	x9, x8, #32, #32
 	and	x19, x9, #0xfffffffffffffff7
 	tst	x19, #0x6
-	b.ne	.LBB782_11
-.LBB782_10:                             // %"$18"
+	b.ne	.LBB783_11
+.LBB783_10:                             // %"$18"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w19, w8, [x19, #8]
 	bfi	x19, x8, #32, #32
 	tst	x19, #0x6
-	b.eq	.LBB782_10
-.LBB782_11:                             // %"$19"
+	b.eq	.LBB783_10
+.LBB783_11:                             // %"$19"
 	mov	x0, x19
 	bl	objFile
 	mov	w21, w0
@@ -62495,24 +62528,24 @@ _mark:                                  // @_mark
 	adrp	x8, ($DBs)
 	ldr	w8, [x8, :lo12:($DBs)]
 	cmp	w21, w8
-	b.ge	.LBB782_21
+	b.ge	.LBB783_21
 // %bb.12:                              // %"$21"
 	mov	x20, x0
 	ldp	w19, w8, [x22]
 	bfi	x19, x8, #32, #32
 	tst	x19, #0x6
-	b.ne	.LBB782_16
+	b.ne	.LBB783_16
 // %bb.13:                              // %"$24"
-	tbz	w19, #3, .LBB782_15
+	tbz	w19, #3, .LBB783_15
 // %bb.14:                              // %"$27"
 	ldp	w19, w8, [x19]
 	bfi	x19, x8, #32, #32
-	b	.LBB782_16
-.LBB782_15:                             // %"$26"
+	b	.LBB783_16
+.LBB783_15:                             // %"$26"
 	mov	x0, x19
 	bl	evList
 	mov	x19, x0
-.LBB782_16:                             // %"$23"
+.LBB783_16:                             // %"$23"
 	adrp	x8, ($DbFiles)
 	ldr	x8, [x8, :lo12:($DbFiles)]
 	mov	w9, #42
@@ -62523,7 +62556,7 @@ _mark:                                  // @_mark
 	ldp	w9, w8, [x24, #24]
 	bfi	x9, x8, #32, #32
 	cmp	x23, x9
-	b.lo	.LBB782_18
+	b.lo	.LBB783_18
 // %bb.17:                              // %"$28"
 	add	x22, x23, #1                    // =1
 	mov	x0, x21
@@ -62540,49 +62573,49 @@ _mark:                                  // @_mark
 	bl	memset2
 	lsr	x8, x22, #32
 	stp	w22, w8, [x24]
-.LBB782_18:                             // %"$29"
+.LBB783_18:                             // %"$29"
 	and	x8, x20, #0x7
 	mov	w9, #1
 	lsl	w8, w9, w8
 	ldrb	w9, [x21, x23]
 	tst	w9, w8
-	b.eq	.LBB782_23
+	b.eq	.LBB783_23
 // %bb.19:                              // %"$32"
 	cmp	x19, #2                         // =2
-	b.ne	.LBB782_21
+	b.ne	.LBB783_21
 // %bb.20:                              // %"$33"
 	bic	w8, w9, w8
 	strb	w8, [x21, x23]
-.LBB782_21:
+.LBB783_21:
 	adrp	x20, SymTab+216
 	add	x20, x20, :lo12:SymTab+216
-.LBB782_22:                             // %"$9"
+.LBB783_22:                             // %"$9"
 	mov	x0, x20
 	ldp	x20, x19, [sp, #48]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #32]             // 16-byte Folded Reload
 	ldp	x24, x23, [sp, #16]             // 16-byte Folded Reload
 	ldr	x30, [sp], #64                  // 8-byte Folded Reload
 	ret
-.LBB782_23:                             // %"$31"
+.LBB783_23:                             // %"$31"
 	adrp	x20, SymTab+8
 	add	x20, x20, :lo12:SymTab+8
 	add	x10, x20, #208                  // =208
 	cmp	x10, x19
-	b.ne	.LBB782_22
+	b.ne	.LBB783_22
 // %bb.24:                              // %"$35"
 	orr	w8, w9, w8
 	strb	w8, [x21, x23]
 	adrp	x20, SymTab+8
 	add	x20, x20, :lo12:SymTab+8
-	b	.LBB782_22
-.LBB782_25:                             // %"$13"
+	b	.LBB783_22
+.LBB783_25:                             // %"$13"
 	mov	x0, x19
 	bl	symErr
-.LBB782_26:                             // %"$15"
+.LBB783_26:                             // %"$15"
 	mov	x0, x19
 	bl	extErr
-.Lfunc_end782:
-	.size	_mark, .Lfunc_end782-_mark
+.Lfunc_end783:
+	.size	_mark, .Lfunc_end783-_mark
 	.cfi_endproc
                                         // -- End function
 	.globl	_free                           // -- Begin function _free
@@ -62619,7 +62652,7 @@ _free:                                  // @_free
 	adrp	x8, ($DBs)
 	ldr	w8, [x8, :lo12:($DBs)]
 	cmp	w19, w8
-	b.ge	.LBB783_4
+	b.ge	.LBB784_4
 // %bb.1:                               // %"$3"
 	adrp	x8, ($DbFiles)
 	ldr	x8, [x8, :lo12:($DbFiles)]
@@ -62661,8 +62694,8 @@ _free:                                  // @_free
 	mov	x27, x0
 	str	x26, [x25, :lo12:env]
 	ldr	x22, [x24, :lo12:($BlkLink)]
-	cbz	x22, .LBB783_3
-.LBB783_2:                              // %"$5"
+	cbz	x22, .LBB784_3
+.LBB784_2:                              // %"$5"
                                         // =>This Inner Loop Header: Depth=1
 	lsr	x1, x22, #6
 	mov	w0, w19
@@ -62677,8 +62710,8 @@ _free:                                  // @_free
 	bl	rdBlock
 	mov	x27, x23
 	ldr	x22, [x24, :lo12:($BlkLink)]
-	cbnz	x22, .LBB783_2
-.LBB783_3:                              // %"$6"
+	cbnz	x22, .LBB784_2
+.LBB784_3:                              // %"$6"
 	mov	w0, #1
 	bl	unLockDb
 	ldp	w9, w8, [x26, #8]
@@ -62693,11 +62726,11 @@ _free:                                  // @_free
 	ldr	x27, [sp, #16]                  // 8-byte Folded Reload
 	ldp	x29, x30, [sp], #96             // 16-byte Folded Reload
 	ret
-.LBB783_4:                              // %"$2"
+.LBB784_4:                              // %"$2"
 	mov	x0, x20
 	bl	dbfErr
-.Lfunc_end783:
-	.size	_free, .Lfunc_end783-_free
+.Lfunc_end784:
+	.size	_free, .Lfunc_end784-_free
 	.cfi_endproc
                                         // -- End function
 	.globl	_dbck                           // -- Begin function _dbck
@@ -62733,30 +62766,30 @@ _dbck:                                  // @_dbck
 	ldp	w19, w8, [x22]
 	bfi	x19, x8, #32, #32
 	tst	x19, #0x6
-	b.ne	.LBB784_4
+	b.ne	.LBB785_4
 // %bb.1:                               // %"$3"
-	tbz	w19, #3, .LBB784_3
+	tbz	w19, #3, .LBB785_3
 // %bb.2:                               // %"$6"
 	ldp	w19, w8, [x19]
 	bfi	x19, x8, #32, #32
-	b	.LBB784_4
-.LBB784_3:                              // %"$5"
+	b	.LBB785_4
+.LBB785_3:                              // %"$5"
 	mov	x0, x19
 	bl	evList
 	mov	x19, x0
-.LBB784_4:                              // %"$2"
+.LBB785_4:                              // %"$2"
 	adrp	x28, ($DbJnl)
 	ldr	x24, [x28, :lo12:($DbJnl)]
 	sub	x20, sp, #16                    // =16
 	mov	sp, x20
-	tbz	w19, #1, .LBB784_9
+	tbz	w19, #1, .LBB785_9
 // %bb.5:                               // %"$7"
 	lsr	x8, x19, #4
 	sub	w8, w8, #1                      // =1
 	adrp	x9, ($DBs)
 	ldr	w9, [x9, :lo12:($DBs)]
 	cmp	w8, w9
-	b.ge	.LBB784_41
+	b.ge	.LBB785_41
 // %bb.6:                               // %"$11"
 	adrp	x9, ($DbFiles)
 	ldr	x9, [x9, :lo12:($DbFiles)]
@@ -62770,29 +62803,29 @@ _dbck:                                  // @_dbck
 	ldp	w19, w8, [x9]
 	bfi	x19, x8, #32, #32
 	tst	x19, #0x6
-	b.ne	.LBB784_10
+	b.ne	.LBB785_10
 // %bb.7:                               // %"$13"
-	tbz	w19, #3, .LBB784_32
+	tbz	w19, #3, .LBB785_32
 // %bb.8:                               // %"$16"
 	ldp	w19, w8, [x19]
 	bfi	x19, x8, #32, #32
-	b	.LBB784_10
-.LBB784_9:                              // %"$8"
+	b	.LBB785_10
+.LBB785_9:                              // %"$8"
 	adrp	x8, ($DbFiles)
 	ldr	x8, [x8, :lo12:($DbFiles)]
 	adrp	x9, ($DbFile)
 	str	x8, [x9, :lo12:($DbFile)]
-.LBB784_10:                             // %"$9"
+.LBB785_10:                             // %"$9"
 	adrp	x22, env+136
 	ldr	w8, [x22, :lo12:env+136]
 	add	w8, w8, #1                      // =1
 	str	w8, [x22, :lo12:env+136]
 	bl	wrLockDb
-	cbz	x24, .LBB784_12
+	cbz	x24, .LBB785_12
 // %bb.11:                              // %"$17"
 	bl	lockJnl
 	str	xzr, [x28, :lo12:($DbJnl)]
-.LBB784_12:                             // %"$18"
+.LBB785_12:                             // %"$18"
 	mov	x0, xzr
 	mov	x1, x20
 	mov	w2, #12
@@ -62806,8 +62839,8 @@ _dbck:                                  // @_dbck
 	mov	x21, x0
 	mov	w27, #64
 	ldr	x0, [x26, :lo12:($BlkLink)]
-	cbz	x0, .LBB784_15
-.LBB784_13:                             // %"$20"
+	cbz	x0, .LBB785_15
+.LBB785_13:                             // %"$20"
                                         // =>This Inner Loop Header: Depth=1
 	bl	rdBlock
 	ldrb	w8, [x0]
@@ -62815,39 +62848,39 @@ _dbck:                                  // @_dbck
 	strb	w8, [x0]
 	add	x27, x27, #64                   // =64
 	cmp	x27, x21
-	b.hi	.LBB784_25
+	b.hi	.LBB785_25
 // %bb.14:                              // %"$23"
-                                        //   in Loop: Header=BB784_13 Depth=1
+                                        //   in Loop: Header=BB785_13 Depth=1
 	bl	wrBlock
 	ldr	x0, [x26, :lo12:($BlkLink)]
-	cbnz	x0, .LBB784_13
-.LBB784_15:                             // %"$21"
+	cbnz	x0, .LBB785_13
+.LBB785_15:                             // %"$21"
 	stur	xzr, [x29, #-8]                 // 8-byte Folded Spill
 	mov	x23, xzr
 	str	x24, [x28, :lo12:($DbJnl)]
 	mov	w22, #64
-	b	.LBB784_17
-.LBB784_16:                             // %"$27"
-                                        //   in Loop: Header=BB784_17 Depth=1
+	b	.LBB785_17
+.LBB785_16:                             // %"$27"
+                                        //   in Loop: Header=BB785_17 Depth=1
 	add	x22, x22, #64                   // =64
-.LBB784_17:                             // %"$24"
+.LBB785_17:                             // %"$24"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB784_22 Depth 2
+                                        //     Child Loop BB785_22 Depth 2
 	cmp	x22, x21
-	b.eq	.LBB784_33
+	b.eq	.LBB785_33
 // %bb.18:                              // %"$25"
-                                        //   in Loop: Header=BB784_17 Depth=1
+                                        //   in Loop: Header=BB785_17 Depth=1
 	mov	x0, x22
 	bl	rdBlock
 	ldrb	w8, [x0]
 	and	w8, w8, #0x3f
 	cmp	w8, #1                          // =1
-	b.eq	.LBB784_21
+	b.eq	.LBB785_21
 // %bb.19:                              // %"$25"
-                                        //   in Loop: Header=BB784_17 Depth=1
-	cbnz	w8, .LBB784_16
+                                        //   in Loop: Header=BB785_17 Depth=1
+	cbnz	w8, .LBB785_16
 // %bb.20:                              // %"$28"
-                                        //   in Loop: Header=BB784_17 Depth=1
+                                        //   in Loop: Header=BB785_17 Depth=1
 	add	x27, x27, #64                   // =64
 	mov	x1, x20
 	mov	w2, #6
@@ -62860,53 +62893,53 @@ _dbck:                                  // @_dbck
 	mov	x1, x20
 	mov	w2, #6
 	bl	blkPoke
-	b	.LBB784_16
-.LBB784_21:                             // %"$29"
-                                        //   in Loop: Header=BB784_17 Depth=1
+	b	.LBB785_16
+.LBB785_21:                             // %"$29"
+                                        //   in Loop: Header=BB785_17 Depth=1
 	ldur	x8, [x29, #-8]                  // 8-byte Folded Reload
 	add	x8, x8, #1                      // =1
 	stur	x8, [x29, #-8]                  // 8-byte Folded Spill
 	mov	w25, #2
-.LBB784_22:                             // %"$30"
-                                        //   Parent Loop BB784_17 Depth=1
+.LBB785_22:                             // %"$30"
+                                        //   Parent Loop BB785_17 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	add	x23, x23, #1                    // =1
 	add	x27, x27, #64                   // =64
 	ldr	x0, [x26, :lo12:($BlkLink)]
-	cbz	x0, .LBB784_16
+	cbz	x0, .LBB785_16
 // %bb.23:                              // %"$31"
-                                        //   in Loop: Header=BB784_22 Depth=2
+                                        //   in Loop: Header=BB785_22 Depth=2
 	bl	rdBlock
 	ldrb	w8, [x0]
 	and	w8, w8, #0x3f
 	cmp	w8, w25, uxtb
-	b.ne	.LBB784_28
+	b.ne	.LBB785_28
 // %bb.24:                              // %"$34"
-                                        //   in Loop: Header=BB784_22 Depth=2
+                                        //   in Loop: Header=BB785_22 Depth=2
 	and	w8, w25, #0xff
 	cmp	w8, #62                         // =62
 	cinc	w25, w25, ls
-	b	.LBB784_22
-.LBB784_25:                             // %"$22"
+	b	.LBB785_22
+.LBB785_25:                             // %"$22"
 	adrp	x0, .L$176
 	add	x0, x0, :lo12:.L$176
-.LBB784_26:                             // %"$-9"
+.LBB785_26:                             // %"$-9"
 	bl	mkStr
-.LBB784_27:                             // %"$-9"
+.LBB785_27:                             // %"$-9"
 	mov	x19, x0
-	b	.LBB784_29
-.LBB784_28:                             // %"$33"
+	b	.LBB785_29
+.LBB785_28:                             // %"$33"
 	adrp	x0, .L$177
 	add	x0, x0, :lo12:.L$177
 	bl	mkStr
 	mov	x19, x0
 	adrp	x22, env+136
-.LBB784_29:                             // %"$-9"
+.LBB785_29:                             // %"$-9"
 	str	x24, [x28, :lo12:($DbJnl)]
-	cbz	x24, .LBB784_31
+	cbz	x24, .LBB785_31
 // %bb.30:                              // %"$47"
 	bl	unLockJnl
-.LBB784_31:                             // %"$48"
+.LBB785_31:                             // %"$48"
 	mov	w0, #1
 	bl	unLockDb
 	ldr	w8, [x22, :lo12:env+136]
@@ -62921,42 +62954,42 @@ _dbck:                                  // @_dbck
 	ldp	x28, x27, [sp, #16]             // 16-byte Folded Reload
 	ldp	x29, x30, [sp], #96             // 16-byte Folded Reload
 	ret
-.LBB784_32:                             // %"$15"
+.LBB785_32:                             // %"$15"
 	mov	x0, x19
 	bl	evList
 	mov	x19, x0
-	b	.LBB784_10
-.LBB784_33:                             // %"$26"
+	b	.LBB785_10
+.LBB785_33:                             // %"$26"
 	mov	x0, x20
 	bl	getAdr
 	str	x0, [x26, :lo12:($BlkLink)]
 	str	xzr, [x28, :lo12:($DbJnl)]
 	adrp	x22, env+136
-.LBB784_34:                             // %"$37"
+.LBB785_34:                             // %"$37"
                                         // =>This Inner Loop Header: Depth=1
 	ldr	x0, [x26, :lo12:($BlkLink)]
-	cbz	x0, .LBB784_37
+	cbz	x0, .LBB785_37
 // %bb.35:                              // %"$38"
-                                        //   in Loop: Header=BB784_34 Depth=1
+                                        //   in Loop: Header=BB785_34 Depth=1
 	bl	rdBlock
 	ldrb	w8, [x0]
 	tst	w8, #0x3f
-	b.eq	.LBB784_34
+	b.eq	.LBB785_34
 // %bb.36:                              // %"$40"
-                                        //   in Loop: Header=BB784_34 Depth=1
+                                        //   in Loop: Header=BB785_34 Depth=1
 	ldrb	w8, [x0]
 	and	w8, w8, #0xc0
 	strb	w8, [x0]
 	bl	wrBlock
-	b	.LBB784_34
-.LBB784_37:                             // %"$39"
+	b	.LBB785_34
+.LBB785_37:                             // %"$39"
 	cmp	x27, x21
-	b.ne	.LBB784_40
+	b.ne	.LBB785_40
 // %bb.38:                              // %"$43"
 	adrp	x8, SymTab+8
 	add	x8, x8, :lo12:SymTab+8
 	cmp	x19, x8
-	b.eq	.LBB784_29
+	b.eq	.LBB785_29
 // %bb.39:                              // %"$46"
 	mov	w1, #2
 	mov	w0, #2
@@ -62964,16 +62997,16 @@ _dbck:                                  // @_dbck
 	ldur	x8, [x29, #-8]                  // 8-byte Folded Reload
 	bfi	x1, x8, #4, #60
 	bl	cons
-	b	.LBB784_27
-.LBB784_40:                             // %"$44"
+	b	.LBB785_27
+.LBB785_40:                             // %"$44"
 	adrp	x0, .L$178
 	add	x0, x0, :lo12:.L$178
-	b	.LBB784_26
-.LBB784_41:                             // %"$10"
+	b	.LBB785_26
+.LBB785_41:                             // %"$10"
 	mov	x0, x21
 	bl	dbfErr
-.Lfunc_end784:
-	.size	_dbck, .Lfunc_end784-_dbck
+.Lfunc_end785:
+	.size	_dbck, .Lfunc_end785-_dbck
 	.cfi_endproc
                                         // -- End function
 	.globl	tabComplete                     // -- Begin function tabComplete
@@ -62999,11 +63032,11 @@ tabComplete:                            // @tabComplete
 	add	x20, x20, :lo12:SymTab+8
 	ldr	x8, [x20, #768]
 	cmp	x8, x20
-	b.ne	.LBB785_2
+	b.ne	.LBB786_2
 // %bb.1:
 	mov	x0, xzr
-	b	.LBB785_14
-.LBB785_2:                              // %"$3"
+	b	.LBB786_14
+.LBB786_2:                              // %"$3"
 	mov	x9, sp
 	sub	x23, x9, #48                    // =48
 	mov	sp, x23
@@ -63019,20 +63052,20 @@ tabComplete:                            // @tabComplete
 	stp	w10, wzr, [x9, #-32]
 	lsr	x10, x8, #32
 	stp	w8, w10, [x9, #-24]
-	cbz	x0, .LBB785_5
+	cbz	x0, .LBB786_5
 // %bb.3:                               // %"$6"
 	ldrb	w8, [x0]
-	cbz	w8, .LBB785_6
+	cbz	w8, .LBB786_6
 // %bb.4:                               // %"$8"
 	bl	mkStr
-	b	.LBB785_7
-.LBB785_5:
+	b	.LBB786_7
+.LBB786_5:
 	mov	x0, x20
-	b	.LBB785_7
-.LBB785_6:
+	b	.LBB786_7
+.LBB786_6:
 	adrp	x0, SymTab+216
 	add	x0, x0, :lo12:SymTab+216
-.LBB785_7:                              // %"$5"
+.LBB786_7:                              // %"$5"
 	lsr	x8, x0, #32
 	str	w8, [x23, #28]
 	mov	x22, x23
@@ -63054,24 +63087,24 @@ tabComplete:                            // @tabComplete
 	mov	x0, x19
 	bl	evList
 	cmp	x0, x20
-	b.ne	.LBB785_9
+	b.ne	.LBB786_9
 // %bb.8:
 	mov	x0, xzr
-	b	.LBB785_13
-.LBB785_9:                              // %"$11"
+	b	.LBB786_13
+.LBB786_9:                              // %"$11"
 	bl	xSym
 	sub	x8, x0, #8                      // =8
-.LBB785_10:                             // %"$13"
+.LBB786_10:                             // %"$13"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w19, w9, [x8]
 	bfi	x19, x9, #32, #32
 	tst	x19, #0x6
-	b.ne	.LBB785_12
+	b.ne	.LBB786_12
 // %bb.11:                              // %"$14"
-                                        //   in Loop: Header=BB785_10 Depth=1
+                                        //   in Loop: Header=BB786_10 Depth=1
 	add	x8, x19, #8                     // =8
-	b	.LBB785_10
-.LBB785_12:                             // %"$15"
+	b	.LBB786_10
+.LBB786_12:                             // %"$15"
 	mov	x0, x19
 	bl	bufSize
 	mov	x8, sp
@@ -63082,19 +63115,19 @@ tabComplete:                            // @tabComplete
 	mov	x0, x19
 	bl	bufString
 	bl	strdup
-.LBB785_13:                             // %"$12"
+.LBB786_13:                             // %"$12"
 	ldp	w9, w8, [x22, #8]
 	bfi	x9, x8, #32, #32
 	str	x9, [x21, :lo12:env]
-.LBB785_14:                             // %"$4"
+.LBB786_14:                             // %"$4"
 	mov	sp, x29
 	ldp	x20, x19, [sp, #48]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #32]             // 16-byte Folded Reload
 	ldr	x23, [sp, #16]                  // 8-byte Folded Reload
 	ldp	x29, x30, [sp], #64             // 16-byte Folded Reload
 	ret
-.Lfunc_end785:
-	.size	tabComplete, .Lfunc_end785-tabComplete
+.Lfunc_end786:
+	.size	tabComplete, .Lfunc_end786-tabComplete
 	.cfi_endproc
                                         // -- End function
 	.globl	_exec                           // -- Begin function _exec
@@ -63106,8 +63139,8 @@ _exec:                                  // @_exec
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ret
-.Lfunc_end786:
-	.size	_exec, .Lfunc_end786-_exec
+.Lfunc_end787:
+	.size	_exec, .Lfunc_end787-_exec
 	.cfi_endproc
                                         // -- End function
 	.globl	_call                           // -- Begin function _call
@@ -63119,8 +63152,8 @@ _call:                                  // @_call
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ret
-.Lfunc_end787:
-	.size	_call, .Lfunc_end787-_call
+.Lfunc_end788:
+	.size	_call, .Lfunc_end788-_call
 	.cfi_endproc
                                         // -- End function
 	.globl	_ipid                           // -- Begin function _ipid
@@ -63132,8 +63165,8 @@ _ipid:                                  // @_ipid
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ret
-.Lfunc_end788:
-	.size	_ipid, .Lfunc_end788-_ipid
+.Lfunc_end789:
+	.size	_ipid, .Lfunc_end789-_ipid
 	.cfi_endproc
                                         // -- End function
 	.globl	_opid                           // -- Begin function _opid
@@ -63145,8 +63178,8 @@ _opid:                                  // @_opid
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ret
-.Lfunc_end789:
-	.size	_opid, .Lfunc_end789-_opid
+.Lfunc_end790:
+	.size	_opid, .Lfunc_end790-_opid
 	.cfi_endproc
                                         // -- End function
 	.globl	_kill                           // -- Begin function _kill
@@ -63158,8 +63191,8 @@ _kill:                                  // @_kill
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ret
-.Lfunc_end790:
-	.size	_kill, .Lfunc_end790-_kill
+.Lfunc_end791:
+	.size	_kill, .Lfunc_end791-_kill
 	.cfi_endproc
                                         // -- End function
 	.globl	_fork                           // -- Begin function _fork
@@ -63171,8 +63204,8 @@ _fork:                                  // @_fork
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ret
-.Lfunc_end791:
-	.size	_fork, .Lfunc_end791-_fork
+.Lfunc_end792:
+	.size	_fork, .Lfunc_end792-_fork
 	.cfi_endproc
                                         // -- End function
 	.globl	_detach                         // -- Begin function _detach
@@ -63184,8 +63217,8 @@ _detach:                                // @_detach
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ret
-.Lfunc_end792:
-	.size	_detach, .Lfunc_end792-_detach
+.Lfunc_end793:
+	.size	_detach, .Lfunc_end793-_detach
 	.cfi_endproc
                                         // -- End function
 	.globl	_bye                            // -- Begin function _bye
@@ -63204,33 +63237,33 @@ _bye:                                   // @_bye
 	ldp	w1, w8, [x9]
 	bfi	x1, x8, #32, #32
 	tst	x1, #0x6
-	b.ne	.LBB793_4
+	b.ne	.LBB794_4
 // %bb.1:                               // %"$3"
-	tbz	w1, #3, .LBB793_3
+	tbz	w1, #3, .LBB794_3
 // %bb.2:                               // %"$6"
 	ldp	w1, w8, [x1]
 	bfi	x1, x8, #32, #32
-	b	.LBB793_4
-.LBB793_3:                              // %"$5"
+	b	.LBB794_4
+.LBB794_3:                              // %"$5"
 	mov	x0, x1
 	bl	evList
 	mov	x1, x0
-.LBB793_4:                              // %"$2"
+.LBB794_4:                              // %"$2"
 	adrp	x8, SymTab+8
 	add	x8, x8, :lo12:SymTab+8
 	cmp	x1, x8
-	b.ne	.LBB793_6
+	b.ne	.LBB794_6
 // %bb.5:
 	mov	w0, wzr
                                         // kill: def $w0 killed $w0 killed $x0
 	bl	bye
-.LBB793_6:                              // %"$8"
+.LBB794_6:                              // %"$8"
 	mov	x0, x19
 	bl	xCnt
                                         // kill: def $w0 killed $w0 killed $x0
 	bl	bye
-.Lfunc_end793:
-	.size	_bye, .Lfunc_end793-_bye
+.Lfunc_end794:
+	.size	_bye, .Lfunc_end794-_bye
 	.cfi_endproc
                                         // -- End function
 	.globl	_quit                           // -- Begin function _quit
@@ -63268,33 +63301,33 @@ _quit:                                  // @_quit
 	ldp	w8, w9, [x20, #8]
 	bfi	x8, x9, #32, #32
 	tst	x8, #0xf
-	b.eq	.LBB794_2
+	b.eq	.LBB795_2
 // %bb.1:
 	mov	x1, xzr
-	b	.LBB794_6
-.LBB794_2:                              // %"$3"
+	b	.LBB795_6
+.LBB795_2:                              // %"$3"
 	ldp	w1, w9, [x8]
 	bfi	x1, x9, #32, #32
 	tst	x1, #0x6
-	b.ne	.LBB794_6
+	b.ne	.LBB795_6
 // %bb.3:                               // %"$6"
-	tbz	w1, #3, .LBB794_5
+	tbz	w1, #3, .LBB795_5
 // %bb.4:                               // %"$9"
 	ldp	w1, w8, [x1]
 	bfi	x1, x8, #32, #32
-	b	.LBB794_6
-.LBB794_5:                              // %"$8"
+	b	.LBB795_6
+.LBB795_5:                              // %"$8"
 	mov	x0, x1
 	bl	evList
 	mov	x1, x0
-.LBB794_6:                              // %"$4"
+.LBB795_6:                              // %"$4"
 	adrp	x2, .L$195
 	add	x2, x2, :lo12:.L$195
 	mov	x0, xzr
 	mov	x3, x19
 	bl	err
-.Lfunc_end794:
-	.size	_quit, .Lfunc_end794-_quit
+.Lfunc_end795:
+	.size	_quit, .Lfunc_end795-_quit
 	.cfi_endproc
                                         // -- End function
 	.globl	_sys                            // -- Begin function _sys
@@ -63306,8 +63339,8 @@ _sys:                                   // @_sys
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ret
-.Lfunc_end795:
-	.size	_sys, .Lfunc_end795-_sys
+.Lfunc_end796:
+	.size	_sys, .Lfunc_end796-_sys
 	.cfi_endproc
                                         // -- End function
 	.globl	_pwd                            // -- Begin function _pwd
@@ -63319,8 +63352,8 @@ _pwd:                                   // @_pwd
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ret
-.Lfunc_end796:
-	.size	_pwd, .Lfunc_end796-_pwd
+.Lfunc_end797:
+	.size	_pwd, .Lfunc_end797-_pwd
 	.cfi_endproc
                                         // -- End function
 	.globl	_cd                             // -- Begin function _cd
@@ -63332,8 +63365,8 @@ _cd:                                    // @_cd
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ret
-.Lfunc_end797:
-	.size	_cd, .Lfunc_end797-_cd
+.Lfunc_end798:
+	.size	_cd, .Lfunc_end798-_cd
 	.cfi_endproc
                                         // -- End function
 	.globl	_ctty                           // -- Begin function _ctty
@@ -63345,8 +63378,8 @@ _ctty:                                  // @_ctty
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ret
-.Lfunc_end798:
-	.size	_ctty, .Lfunc_end798-_ctty
+.Lfunc_end799:
+	.size	_ctty, .Lfunc_end799-_ctty
 	.cfi_endproc
                                         // -- End function
 	.globl	_cmd                            // -- Begin function _cmd
@@ -63358,8 +63391,8 @@ _cmd:                                   // @_cmd
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ret
-.Lfunc_end799:
-	.size	_cmd, .Lfunc_end799-_cmd
+.Lfunc_end800:
+	.size	_cmd, .Lfunc_end800-_cmd
 	.cfi_endproc
                                         // -- End function
 	.globl	_dir                            // -- Begin function _dir
@@ -63371,8 +63404,8 @@ _dir:                                   // @_dir
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ret
-.Lfunc_end800:
-	.size	_dir, .Lfunc_end800-_dir
+.Lfunc_end801:
+	.size	_dir, .Lfunc_end801-_dir
 	.cfi_endproc
                                         // -- End function
 	.globl	_info                           // -- Begin function _info
@@ -63384,8 +63417,8 @@ _info:                                  // @_info
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ret
-.Lfunc_end801:
-	.size	_info, .Lfunc_end801-_info
+.Lfunc_end802:
+	.size	_info, .Lfunc_end802-_info
 	.cfi_endproc
                                         // -- End function
 	.globl	_file                           // -- Begin function _file
@@ -63397,8 +63430,8 @@ _file:                                  // @_file
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ret
-.Lfunc_end802:
-	.size	_file, .Lfunc_end802-_file
+.Lfunc_end803:
+	.size	_file, .Lfunc_end803-_file
 	.cfi_endproc
                                         // -- End function
 	.globl	_argv                           // -- Begin function _argv
@@ -63410,8 +63443,8 @@ _argv:                                  // @_argv
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ret
-.Lfunc_end803:
-	.size	_argv, .Lfunc_end803-_argv
+.Lfunc_end804:
+	.size	_argv, .Lfunc_end804-_argv
 	.cfi_endproc
                                         // -- End function
 	.globl	_opt                            // -- Begin function _opt
@@ -63423,8 +63456,8 @@ _opt:                                   // @_opt
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ret
-.Lfunc_end804:
-	.size	_opt, .Lfunc_end804-_opt
+.Lfunc_end805:
+	.size	_opt, .Lfunc_end805-_opt
 	.cfi_endproc
                                         // -- End function
 	.globl	_errno                          // -- Begin function _errno
@@ -63436,8 +63469,8 @@ _errno:                                 // @_errno
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ret
-.Lfunc_end805:
-	.size	_errno, .Lfunc_end805-_errno
+.Lfunc_end806:
+	.size	_errno, .Lfunc_end806-_errno
 	.cfi_endproc
                                         // -- End function
 	.globl	fetchChar                       // -- Begin function fetchChar
@@ -63449,42 +63482,42 @@ fetchChar:                              // @fetchChar
 	ldr	x9, [x0]
 	ldrb	w8, [x9], #1
 	cmp	w8, #128                        // =128
-	b.lt	.LBB806_10
+	b.lt	.LBB807_10
 // %bb.1:                               // %"$3"
 	cmp	w8, #255                        // =255
-	b.ne	.LBB806_3
+	b.ne	.LBB807_3
 // %bb.2:
 	mov	w8, #1114112
-	b	.LBB806_10
-.LBB806_3:                              // %"$5"
-	tbz	w8, #5, .LBB806_6
+	b	.LBB807_10
+.LBB807_3:                              // %"$5"
+	tbz	w8, #5, .LBB807_6
 // %bb.4:                               // %"$8"
-	tbz	w8, #4, .LBB806_7
+	tbz	w8, #4, .LBB807_7
 // %bb.5:                               // %"$11"
 	ldrb	w10, [x9], #1
 	and	w11, w8, #0x7
 	and	w8, w10, #0x3f
 	bfi	w8, w11, #6, #3
-	b	.LBB806_8
-.LBB806_6:                              // %"$7"
+	b	.LBB807_8
+.LBB807_6:                              // %"$7"
 	and	w10, w8, #0x1f
-	b	.LBB806_9
-.LBB806_7:                              // %"$10"
+	b	.LBB807_9
+.LBB807_7:                              // %"$10"
 	and	w8, w8, #0xf
-.LBB806_8:                              // %"$12"
+.LBB807_8:                              // %"$12"
 	ldrb	w10, [x9], #1
 	and	w10, w10, #0x3f
 	bfi	w10, w8, #6, #9
-.LBB806_9:                              // %"$9"
+.LBB807_9:                              // %"$9"
 	ldrb	w8, [x9], #1
 	and	w8, w8, #0x3f
 	bfi	w8, w10, #6, #15
-.LBB806_10:                             // %"$2"
+.LBB807_10:                             // %"$2"
 	str	x9, [x0]
 	mov	w0, w8
 	ret
-.Lfunc_end806:
-	.size	fetchChar, .Lfunc_end806-fetchChar
+.Lfunc_end807:
+	.size	fetchChar, .Lfunc_end807-fetchChar
 	.cfi_endproc
                                         // -- End function
 	.globl	natErr                          // -- Begin function natErr
@@ -63502,8 +63535,8 @@ natErr:                                 // @natErr
 	mov	x0, xzr
 	mov	x3, xzr
 	bl	err
-.Lfunc_end807:
-	.size	natErr, .Lfunc_end807-natErr
+.Lfunc_end808:
+	.size	natErr, .Lfunc_end808-natErr
 	.cfi_endproc
                                         // -- End function
 	.globl	ffi                             // -- Begin function ffi
@@ -63515,8 +63548,8 @@ ffi:                                    // @ffi
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ret
-.Lfunc_end808:
-	.size	ffi, .Lfunc_end808-ffi
+.Lfunc_end809:
+	.size	ffi, .Lfunc_end809-ffi
 	.cfi_endproc
                                         // -- End function
 	.globl	_nat                            // -- Begin function _nat
@@ -63552,18 +63585,18 @@ _nat:                                   // @_nat
 	ldp	w21, w8, [x9, #8]
 	bfi	x21, x8, #32, #32
 	tst	x20, #0x6
-	b.ne	.LBB809_4
+	b.ne	.LBB810_4
 // %bb.1:                               // %"$3"
-	tbz	w20, #3, .LBB809_3
+	tbz	w20, #3, .LBB810_3
 // %bb.2:                               // %"$6"
 	ldp	w20, w8, [x20]
 	bfi	x20, x8, #32, #32
-	b	.LBB809_4
-.LBB809_3:                              // %"$5"
+	b	.LBB810_4
+.LBB810_3:                              // %"$5"
 	mov	x0, x20
 	bl	evList
 	mov	x20, x0
-.LBB809_4:                              // %"$2"
+.LBB810_4:                              // %"$2"
 	adrp	x23, env
 	ldr	x8, [x23, :lo12:env]
 	mov	x9, sp
@@ -63579,16 +63612,16 @@ _nat:                                   // @_nat
 	ldp	w25, w8, [x21, #8]
 	bfi	x25, x8, #32, #32
 	tst	x0, #0x6
-	b.ne	.LBB809_8
+	b.ne	.LBB810_8
 // %bb.5:                               // %"$8"
-	tbz	w0, #3, .LBB809_7
+	tbz	w0, #3, .LBB810_7
 // %bb.6:                               // %"$11"
 	ldp	w0, w8, [x0]
 	bfi	x0, x8, #32, #32
-	b	.LBB809_8
-.LBB809_7:                              // %"$10"
+	b	.LBB810_8
+.LBB810_7:                              // %"$10"
 	bl	evList
-.LBB809_8:                              // %"$7"
+.LBB810_8:                              // %"$7"
 	adrp	x22, SymTab+8
 	add	x22, x22, :lo12:SymTab+8
 	mov	x1, x22
@@ -63605,12 +63638,12 @@ _nat:                                   // @_nat
 	lsr	x26, x22, #32
 	mov	x27, x0
 	str	x10, [x23, :lo12:env]
-	b	.LBB809_11
-.LBB809_9:                              // %"$18"
-                                        //   in Loop: Header=BB809_11 Depth=1
+	b	.LBB810_11
+.LBB810_9:                              // %"$18"
+                                        //   in Loop: Header=BB810_11 Depth=1
 	bl	evList
-.LBB809_10:                             // %"$15"
-                                        //   in Loop: Header=BB809_11 Depth=1
+.LBB810_10:                             // %"$15"
+                                        //   in Loop: Header=BB810_11 Depth=1
 	ldr	x8, [x23, :lo12:env]
 	mov	x9, sp
 	sub	x10, x9, #16                    // =16
@@ -63628,27 +63661,27 @@ _nat:                                   // @_nat
 	lsr	x8, x9, #32
 	stp	w9, w8, [x27, #8]
 	mov	x27, x9
-.LBB809_11:                             // %"$12"
+.LBB810_11:                             // %"$12"
                                         // =>This Inner Loop Header: Depth=1
 	tst	x25, #0xf
-	b.ne	.LBB809_15
+	b.ne	.LBB810_15
 // %bb.12:                              // %"$13"
-                                        //   in Loop: Header=BB809_11 Depth=1
+                                        //   in Loop: Header=BB810_11 Depth=1
 	ldp	w0, w8, [x25]
 	bfi	x0, x8, #32, #32
 	ldp	w25, w8, [x25, #8]
 	bfi	x25, x8, #32, #32
 	tst	x0, #0x6
-	b.ne	.LBB809_10
+	b.ne	.LBB810_10
 // %bb.13:                              // %"$16"
-                                        //   in Loop: Header=BB809_11 Depth=1
-	tbz	w0, #3, .LBB809_9
+                                        //   in Loop: Header=BB810_11 Depth=1
+	tbz	w0, #3, .LBB810_9
 // %bb.14:                              // %"$19"
-                                        //   in Loop: Header=BB809_11 Depth=1
+                                        //   in Loop: Header=BB810_11 Depth=1
 	ldp	w0, w8, [x0]
 	bfi	x0, x8, #32, #32
-	b	.LBB809_10
-.LBB809_15:                             // %"$14"
+	b	.LBB810_10
+.LBB810_15:                             // %"$14"
 	mov	x0, x19
 	mov	x1, xzr
 	mov	x2, x20
@@ -63665,8 +63698,8 @@ _nat:                                   // @_nat
 	ldr	x27, [sp, #16]                  // 8-byte Folded Reload
 	ldp	x29, x30, [sp], #96             // 16-byte Folded Reload
 	ret
-.Lfunc_end809:
-	.size	_nat, .Lfunc_end809-_nat
+.Lfunc_end810:
+	.size	_nat, .Lfunc_end810-_nat
 	.cfi_endproc
                                         // -- End function
 	.globl	_native                         // -- Begin function _native
@@ -63678,8 +63711,8 @@ _native:                                // @_native
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ret
-.Lfunc_end810:
-	.size	_native, .Lfunc_end810-_native
+.Lfunc_end811:
+	.size	_native, .Lfunc_end811-_native
 	.cfi_endproc
                                         // -- End function
 	.globl	_args                           // -- Begin function _args
@@ -63696,8 +63729,8 @@ _args:                                  // @_args
 	tst	w9, #0xf
 	csel	x0, x10, x8, eq
 	ret
-.Lfunc_end811:
-	.size	_args, .Lfunc_end811-_args
+.Lfunc_end812:
+	.size	_args, .Lfunc_end812-_args
 	.cfi_endproc
                                         // -- End function
 	.globl	_next                           // -- Begin function _next
@@ -63714,8 +63747,8 @@ _next:                                  // @_next
 	ldp	w0, w8, [x9, #8]
 	bfi	x0, x8, #32, #32
 	ret
-.Lfunc_end812:
-	.size	_next, .Lfunc_end812-_next
+.Lfunc_end813:
+	.size	_next, .Lfunc_end813-_next
 	.cfi_endproc
                                         // -- End function
 	.globl	_arg                            // -- Begin function _arg
@@ -63731,29 +63764,29 @@ _arg:                                   // @_arg
 	bfi	x1, x8, #32, #32
 	bl	evCnt
 	cmp	x0, #1                          // =1
-	b.ge	.LBB813_2
+	b.ge	.LBB814_2
 // %bb.1:
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.LBB813_2:                              // %"$5.preheader"
+.LBB814_2:                              // %"$5.preheader"
 	adrp	x8, env+96
 	add	x8, x8, :lo12:env+96
-.LBB813_3:                              // %"$5"
+.LBB814_3:                              // %"$5"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w8, w9, [x8]
 	bfi	x8, x9, #32, #32
 	sub	x0, x0, #1                      // =1
 	cmp	x0, #0                          // =0
-	b.gt	.LBB813_3
+	b.gt	.LBB814_3
 // %bb.4:                               // %"$7"
 	ldp	w0, w9, [x8, #8]
 	bfi	x0, x9, #32, #32
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
-.Lfunc_end813:
-	.size	_arg, .Lfunc_end813-_arg
+.Lfunc_end814:
+	.size	_arg, .Lfunc_end814-_arg
 	.cfi_endproc
                                         // -- End function
 	.globl	_rest                           // -- Begin function _rest
@@ -63779,11 +63812,11 @@ _rest:                                  // @_rest
 	adrp	x8, env+96
 	ldr	x21, [x8, :lo12:env+96]
 	tst	x21, #0xf
-	b.eq	.LBB814_2
+	b.eq	.LBB815_2
 // %bb.1:
 	mov	x19, x21
-	b	.LBB814_6
-.LBB814_2:                              // %"$3"
+	b	.LBB815_6
+.LBB815_2:                              // %"$3"
 	ldp	w0, w8, [x21, #8]
 	bfi	x0, x8, #32, #32
 	adrp	x20, SymTab+8
@@ -63802,14 +63835,14 @@ _rest:                                  // @_rest
 	stp	w8, w11, [x9, #-8]
 	mov	x24, x0
 	str	x23, [x22, :lo12:env]
-.LBB814_3:                              // %"$5"
+.LBB815_3:                              // %"$5"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w21, w8, [x21]
 	bfi	x21, x8, #32, #32
 	tst	x21, #0xf
-	b.ne	.LBB814_5
+	b.ne	.LBB815_5
 // %bb.4:                               // %"$6"
-                                        //   in Loop: Header=BB814_3 Depth=1
+                                        //   in Loop: Header=BB815_3 Depth=1
 	ldp	w0, w8, [x21, #8]
 	bfi	x0, x8, #32, #32
 	mov	x1, x20
@@ -63817,12 +63850,12 @@ _rest:                                  // @_rest
 	lsr	x8, x0, #32
 	stp	w0, w8, [x24, #8]
 	mov	x24, x0
-	b	.LBB814_3
-.LBB814_5:                              // %"$7"
+	b	.LBB815_3
+.LBB815_5:                              // %"$7"
 	ldp	w9, w8, [x23, #8]
 	bfi	x9, x8, #32, #32
 	str	x9, [x22, :lo12:env]
-.LBB814_6:                              // %"$4"
+.LBB815_6:                              // %"$4"
 	mov	x0, x19
 	mov	sp, x29
 	ldp	x20, x19, [sp, #48]             // 16-byte Folded Reload
@@ -63830,8 +63863,8 @@ _rest:                                  // @_rest
 	ldp	x24, x23, [sp, #16]             // 16-byte Folded Reload
 	ldp	x29, x30, [sp], #64             // 16-byte Folded Reload
 	ret
-.Lfunc_end814:
-	.size	_rest, .Lfunc_end814-_rest
+.Lfunc_end815:
+	.size	_rest, .Lfunc_end815-_rest
 	.cfi_endproc
                                         // -- End function
 	.globl	_env                            // -- Begin function _env
@@ -63865,15 +63898,15 @@ _env:                                   // @_env
 	sub	x8, x29, #16                    // =16
 	str	x8, [x21, :lo12:env]
 	tst	x22, #0xf
-	b.eq	.LBB815_8
+	b.eq	.LBB816_8
 // %bb.1:                               // %"$2"
 	adrp	x19, SymTab+8
 	add	x19, x19, :lo12:SymTab+8
 	adrp	x8, env+8
 	add	x8, x8, :lo12:env+8
-	b	.LBB815_4
-.LBB815_2:                              // %"$11"
-                                        //   in Loop: Header=BB815_4 Depth=1
+	b	.LBB816_4
+.LBB816_2:                              // %"$11"
+                                        //   in Loop: Header=BB816_4 Depth=1
 	ldp	w1, w8, [x0]
 	bfi	x1, x8, #32, #32
 	bl	cons
@@ -63881,39 +63914,39 @@ _env:                                   // @_env
 	bl	cons
 	mov	x19, x0
 	stur	x0, [x29, #-16]
-.LBB815_3:                              // %"$10"
-                                        //   in Loop: Header=BB815_4 Depth=1
+.LBB816_3:                              // %"$10"
+                                        //   in Loop: Header=BB816_4 Depth=1
 	add	x8, x20, #16                    // =16
-.LBB815_4:                              // %"$5"
+.LBB816_4:                              // %"$5"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB815_6 Depth 2
+                                        //     Child Loop BB816_6 Depth 2
 	ldp	w20, w9, [x8]
 	bfi	x20, x9, #32, #32
-	cbz	x20, .LBB815_25
+	cbz	x20, .LBB816_25
 // %bb.5:                               // %"$6"
-                                        //   in Loop: Header=BB815_4 Depth=1
+                                        //   in Loop: Header=BB816_4 Depth=1
 	ldp	w0, w8, [x20, #8]
 	bfi	x0, x8, #32, #32
 	mov	x8, x19
 	tst	x8, #0xf
-	b.ne	.LBB815_2
-.LBB815_6:                              // %"$9"
-                                        //   Parent Loop BB815_4 Depth=1
+	b.ne	.LBB816_2
+.LBB816_6:                              // %"$9"
+                                        //   Parent Loop BB816_4 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	ldp	w10, w9, [x8]
 	bfi	x10, x9, #32, #32
 	ldp	w10, w9, [x10]
 	bfi	x10, x9, #32, #32
 	cmp	x0, x10
-	b.eq	.LBB815_3
+	b.eq	.LBB816_3
 // %bb.7:                               // %"$12"
-                                        //   in Loop: Header=BB815_6 Depth=2
+                                        //   in Loop: Header=BB816_6 Depth=2
 	ldp	w8, w9, [x8, #8]
 	bfi	x8, x9, #32, #32
 	tst	x8, #0xf
-	b.eq	.LBB815_6
-	b	.LBB815_2
-.LBB815_8:                              // %"$3"
+	b.eq	.LBB816_6
+	b	.LBB816_2
+.LBB816_8:                              // %"$3"
 	mov	x8, sp
 	sub	x24, x8, #16                    // =16
 	mov	sp, x24
@@ -63924,77 +63957,77 @@ _env:                                   // @_env
 	stp	w9, w10, [x8, #-8]
 	str	x24, [x21, :lo12:env]
 	mov	x19, x23
-	b	.LBB815_12
-.LBB815_9:                              // %"$33"
-                                        //   in Loop: Header=BB815_12 Depth=1
+	b	.LBB816_12
+.LBB816_9:                              // %"$33"
+                                        //   in Loop: Header=BB816_12 Depth=1
 	mov	x0, x1
 	bl	evList
 	mov	x1, x0
-.LBB815_10:                             // %"$30"
-                                        //   in Loop: Header=BB815_12 Depth=1
+.LBB816_10:                             // %"$30"
+                                        //   in Loop: Header=BB816_12 Depth=1
 	mov	x0, x20
 	bl	cons
 	mov	x1, x19
 	bl	cons
 	mov	x19, x0
 	stur	x0, [x29, #-16]
-.LBB815_11:                             // %"$19"
-                                        //   in Loop: Header=BB815_12 Depth=1
+.LBB816_11:                             // %"$19"
+                                        //   in Loop: Header=BB816_12 Depth=1
 	tst	x22, #0xf
-	b.ne	.LBB815_25
-.LBB815_12:                             // %"$13"
+	b.ne	.LBB816_25
+.LBB816_12:                             // %"$13"
                                         // =>This Loop Header: Depth=1
-                                        //     Child Loop BB815_23 Depth 2
+                                        //     Child Loop BB816_23 Depth 2
 	ldp	w20, w8, [x22]
 	bfi	x20, x8, #32, #32
 	ldp	w22, w8, [x22, #8]
 	bfi	x22, x8, #32, #32
 	tst	x20, #0x6
-	b.ne	.LBB815_16
+	b.ne	.LBB816_16
 // %bb.13:                              // %"$15"
-                                        //   in Loop: Header=BB815_12 Depth=1
-	tbz	w20, #3, .LBB815_15
+                                        //   in Loop: Header=BB816_12 Depth=1
+	tbz	w20, #3, .LBB816_15
 // %bb.14:                              // %"$18"
-                                        //   in Loop: Header=BB815_12 Depth=1
+                                        //   in Loop: Header=BB816_12 Depth=1
 	ldp	w20, w8, [x20]
 	bfi	x20, x8, #32, #32
-	b	.LBB815_16
-.LBB815_15:                             // %"$17"
-                                        //   in Loop: Header=BB815_12 Depth=1
+	b	.LBB816_16
+.LBB816_15:                             // %"$17"
+                                        //   in Loop: Header=BB816_12 Depth=1
 	mov	x0, x20
 	bl	evList
 	mov	x20, x0
-.LBB815_16:                             // %"$14"
-                                        //   in Loop: Header=BB815_12 Depth=1
+.LBB816_16:                             // %"$14"
+                                        //   in Loop: Header=BB816_12 Depth=1
 	lsr	x8, x20, #32
 	stp	w20, w8, [x24]
 	tst	x20, #0xf
-	b.eq	.LBB815_23
+	b.eq	.LBB816_23
 // %bb.17:                              // %"$20"
-                                        //   in Loop: Header=BB815_12 Depth=1
+                                        //   in Loop: Header=BB816_12 Depth=1
 	cmp	x20, x23
-	b.eq	.LBB815_11
+	b.eq	.LBB816_11
 // %bb.18:                              // %"$29"
-                                        //   in Loop: Header=BB815_12 Depth=1
+                                        //   in Loop: Header=BB816_12 Depth=1
 	ldp	w1, w8, [x22]
 	bfi	x1, x8, #32, #32
 	ldp	w22, w8, [x22, #8]
 	bfi	x22, x8, #32, #32
 	tst	x1, #0x6
-	b.ne	.LBB815_10
+	b.ne	.LBB816_10
 // %bb.19:                              // %"$31"
-                                        //   in Loop: Header=BB815_12 Depth=1
-	tbz	w1, #3, .LBB815_9
+                                        //   in Loop: Header=BB816_12 Depth=1
+	tbz	w1, #3, .LBB816_9
 // %bb.20:                              // %"$34"
-                                        //   in Loop: Header=BB815_12 Depth=1
+                                        //   in Loop: Header=BB816_12 Depth=1
 	ldp	w1, w8, [x1]
 	bfi	x1, x8, #32, #32
-	b	.LBB815_10
-.LBB815_21:                             // %"$24"
-                                        //   in Loop: Header=BB815_23 Depth=2
+	b	.LBB816_10
+.LBB816_21:                             // %"$24"
+                                        //   in Loop: Header=BB816_23 Depth=2
 	mov	x8, x0
-.LBB815_22:                             // %"$25"
-                                        //   in Loop: Header=BB815_23 Depth=2
+.LBB816_22:                             // %"$25"
+                                        //   in Loop: Header=BB816_23 Depth=2
 	ldp	w1, w9, [x8]
 	bfi	x1, x9, #32, #32
 	bl	cons
@@ -64003,23 +64036,23 @@ _env:                                   // @_env
 	mov	x19, x0
 	stur	x0, [x29, #-16]
 	tst	x20, #0xf
-	b.ne	.LBB815_11
-.LBB815_23:                             // %"$22"
-                                        //   Parent Loop BB815_12 Depth=1
+	b.ne	.LBB816_11
+.LBB816_23:                             // %"$22"
+                                        //   Parent Loop BB816_12 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	ldp	w0, w8, [x20]
 	bfi	x0, x8, #32, #32
 	ldp	w20, w8, [x20, #8]
 	bfi	x20, x8, #32, #32
 	tst	x0, #0xf
-	b.ne	.LBB815_21
+	b.ne	.LBB816_21
 // %bb.24:                              // %"$23"
-                                        //   in Loop: Header=BB815_23 Depth=2
+                                        //   in Loop: Header=BB816_23 Depth=2
 	add	x8, x0, #8                      // =8
 	ldp	w0, w9, [x0]
 	bfi	x0, x9, #32, #32
-	b	.LBB815_22
-.LBB815_25:                             // %"$4"
+	b	.LBB816_22
+.LBB816_25:                             // %"$4"
 	ldur	x8, [x29, #-8]
 	str	x8, [x21, :lo12:env]
 	mov	x0, x19
@@ -64029,8 +64062,8 @@ _env:                                   // @_env
 	ldp	x24, x23, [sp, #16]             // 16-byte Folded Reload
 	ldp	x29, x30, [sp], #64             // 16-byte Folded Reload
 	ret
-.Lfunc_end815:
-	.size	_env, .Lfunc_end815-_env
+.Lfunc_end816:
+	.size	_env, .Lfunc_end816-_env
 	.cfi_endproc
                                         // -- End function
 	.globl	_trail                          // -- Begin function _trail
@@ -64054,18 +64087,18 @@ _trail:                                 // @_trail
 	ldp	w19, w8, [x9]
 	bfi	x19, x8, #32, #32
 	tst	x19, #0x6
-	b.ne	.LBB816_4
+	b.ne	.LBB817_4
 // %bb.1:                               // %"$3"
-	tbz	w19, #3, .LBB816_3
+	tbz	w19, #3, .LBB817_3
 // %bb.2:                               // %"$6"
 	ldp	w19, w8, [x19]
 	bfi	x19, x8, #32, #32
-	b	.LBB816_4
-.LBB816_3:                              // %"$5"
+	b	.LBB817_4
+.LBB817_3:                              // %"$5"
 	mov	x0, x19
 	bl	evList
 	mov	x19, x0
-.LBB816_4:                              // %"$2"
+.LBB817_4:                              // %"$2"
 	adrp	x21, SymTab+8
 	add	x21, x21, :lo12:SymTab+8
 	adrp	x8, env+8
@@ -64073,38 +64106,38 @@ _trail:                                 // @_trail
 	mov	x1, x21
 	adrp	x22, SymTab+376
 	add	x22, x22, :lo12:SymTab+376
-	b	.LBB816_7
-.LBB816_5:                              // %"$11"
-                                        //   in Loop: Header=BB816_7 Depth=1
+	b	.LBB817_7
+.LBB817_5:                              // %"$11"
+                                        //   in Loop: Header=BB817_7 Depth=1
 	cmp	x19, x21
-	b.ne	.LBB816_11
-.LBB816_6:                              // %"$10"
-                                        //   in Loop: Header=BB816_7 Depth=1
+	b.ne	.LBB817_11
+.LBB817_6:                              // %"$10"
+                                        //   in Loop: Header=BB817_7 Depth=1
 	add	x8, x23, #16                    // =16
-.LBB816_7:                              // %"$7"
+.LBB817_7:                              // %"$7"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w23, w9, [x8]
 	bfi	x23, x9, #32, #32
-	cbz	x23, .LBB816_12
+	cbz	x23, .LBB817_12
 // %bb.8:                               // %"$8"
-                                        //   in Loop: Header=BB816_7 Depth=1
+                                        //   in Loop: Header=BB817_7 Depth=1
 	ldp	w20, w8, [x23, #8]
 	bfi	x20, x8, #32, #32
 	cmp	x20, x22
-	b.ne	.LBB816_5
+	b.ne	.LBB817_5
 // %bb.9:                               // %"$12"
-                                        //   in Loop: Header=BB816_7 Depth=1
+                                        //   in Loop: Header=BB817_7 Depth=1
 	ldp	w0, w8, [x23, #24]
 	bfi	x0, x8, #32, #32
-	cbz	x0, .LBB816_6
+	cbz	x0, .LBB817_6
 // %bb.10:                              // %"$13"
-                                        //   in Loop: Header=BB816_7 Depth=1
+                                        //   in Loop: Header=BB817_7 Depth=1
 	bl	cons
 	mov	x1, x0
 	add	x8, x23, #16                    // =16
-	b	.LBB816_7
-.LBB816_11:                             // %"$16"
-                                        //   in Loop: Header=BB816_7 Depth=1
+	b	.LBB817_7
+.LBB817_11:                             // %"$16"
+                                        //   in Loop: Header=BB817_7 Depth=1
 	ldp	w0, w8, [x20]
 	bfi	x0, x8, #32, #32
 	bl	cons
@@ -64114,36 +64147,36 @@ _trail:                                 // @_trail
 	mov	x1, x0
 	ldp	w8, w9, [x23]
 	stp	w8, w9, [x20]
-	b	.LBB816_6
-.LBB816_12:
+	b	.LBB817_6
+.LBB817_12:
 	mov	x8, x1
-.LBB816_13:                             // %"$17"
+.LBB817_13:                             // %"$17"
                                         // =>This Inner Loop Header: Depth=1
 	tst	x8, #0xf
-	b.ne	.LBB816_16
+	b.ne	.LBB817_16
 // %bb.14:                              // %"$18"
-                                        //   in Loop: Header=BB816_13 Depth=1
+                                        //   in Loop: Header=BB817_13 Depth=1
 	ldp	w9, w10, [x8]
 	bfi	x9, x10, #32, #32
 	ldp	w8, w10, [x8, #8]
 	bfi	x8, x10, #32, #32
 	tst	x9, #0xf
-	b.eq	.LBB816_13
+	b.eq	.LBB817_13
 // %bb.15:                              // %"$20"
-                                        //   in Loop: Header=BB816_13 Depth=1
+                                        //   in Loop: Header=BB817_13 Depth=1
 	ldp	w10, w11, [x8]
 	ldp	w8, w12, [x8, #8]
 	bfi	x8, x12, #32, #32
 	stp	w10, w11, [x9]
-	b	.LBB816_13
-.LBB816_16:                             // %"$19"
+	b	.LBB817_13
+.LBB817_16:                             // %"$19"
 	mov	x0, x1
 	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x23, [sp], #48             // 16-byte Folded Reload
 	ret
-.Lfunc_end816:
-	.size	_trail, .Lfunc_end816-_trail
+.Lfunc_end817:
+	.size	_trail, .Lfunc_end817-_trail
 	.cfi_endproc
                                         // -- End function
 	.globl	_up                             // -- Begin function _up
@@ -64163,30 +64196,30 @@ _up:                                    // @_up
 	adrp	x8, env+8
 	ldr	x8, [x8, :lo12:env+8]
 	tst	x19, #0x6
-	b.eq	.LBB817_2
+	b.eq	.LBB818_2
 // %bb.1:                               // %"$2"
 	lsr	x9, x19, #4
 	ldp	w10, w11, [x10, #8]
 	bfi	x10, x11, #32, #32
 	ldp	w19, w11, [x10]
 	bfi	x19, x11, #32, #32
-	b	.LBB817_3
-.LBB817_2:
+	b	.LBB818_3
+.LBB818_2:
 	mov	w9, #1
-.LBB817_3:                              // %"$3"
+.LBB818_3:                              // %"$3"
 	adrp	x11, SymTab+8
 	add	x11, x11, :lo12:SymTab+8
 	cmp	x19, x11
-	b.ne	.LBB817_9
+	b.ne	.LBB818_9
 // %bb.4:                               // %"$4"
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
-	cbz	x9, .LBB817_8
+	cbz	x9, .LBB818_8
 // %bb.5:                               // %"$10.preheader"
 	adrp	x10, SymTab+376
 	add	x10, x10, :lo12:SymTab+376
-	cbz	x8, .LBB817_8
-.LBB817_6:                              // %"$11"
+	cbz	x8, .LBB818_8
+.LBB818_6:                              // %"$11"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w12, w11, [x8, #8]
 	bfi	x12, x11, #32, #32
@@ -64195,21 +64228,21 @@ _up:                                    // @_up
 	cmp	x10, x12
 	csel	x9, x9, x11, ne
 	csel	w11, wzr, w13, ne
-	cbnz	w11, .LBB817_19
+	cbnz	w11, .LBB818_19
 // %bb.7:                               // %"$16"
-                                        //   in Loop: Header=BB817_6 Depth=1
+                                        //   in Loop: Header=BB818_6 Depth=1
 	ldp	w8, w11, [x8, #16]
 	bfi	x8, x11, #32, #32
-	cbnz	x8, .LBB817_6
-.LBB817_8:                              // %"$6"
+	cbnz	x8, .LBB818_6
+.LBB818_8:                              // %"$6"
 	ldp	x30, x19, [sp], #16             // 16-byte Folded Reload
 	ret
-.LBB817_9:                              // %"$5"
-	cbz	x9, .LBB817_14
+.LBB818_9:                              // %"$5"
+	cbz	x9, .LBB818_14
 // %bb.10:                              // %"$23.preheader"
 	mov	x11, x19
-	cbz	x8, .LBB817_13
-.LBB817_11:                             // %"$24"
+	cbz	x8, .LBB818_13
+.LBB818_11:                             // %"$24"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w13, w12, [x8, #8]
 	bfi	x13, x12, #32, #32
@@ -64219,53 +64252,53 @@ _up:                                    // @_up
 	csel	x9, x9, x12, ne
 	csel	x11, x11, x8, ne
 	csel	w12, wzr, w14, ne
-	tbnz	w12, #0, .LBB817_13
+	tbnz	w12, #0, .LBB818_13
 // %bb.12:                              // %"$28"
-                                        //   in Loop: Header=BB817_11 Depth=1
+                                        //   in Loop: Header=BB818_11 Depth=1
 	ldp	w8, w12, [x8, #16]
 	bfi	x8, x12, #32, #32
-	cbnz	x8, .LBB817_11
-.LBB817_13:
+	cbnz	x8, .LBB818_11
+.LBB818_13:
 	mov	x19, x11
-.LBB817_14:                             // %"$22"
+.LBB818_14:                             // %"$22"
 	ldp	w8, w9, [x10, #8]
 	bfi	x8, x9, #32, #32
 	tst	x8, #0xf
-	b.eq	.LBB817_16
+	b.eq	.LBB818_16
 // %bb.15:                              // %"$29"
 	ldp	w0, w8, [x19]
 	bfi	x0, x8, #32, #32
 	ldp	x30, x19, [sp], #16             // 16-byte Folded Reload
 	ret
-.LBB817_16:                             // %"$30"
+.LBB818_16:                             // %"$30"
 	ldp	w0, w9, [x8]
 	bfi	x0, x9, #32, #32
 	tst	x0, #0x6
-	b.ne	.LBB817_22
+	b.ne	.LBB818_22
 // %bb.17:                              // %"$33"
-	tbz	w0, #3, .LBB817_21
+	tbz	w0, #3, .LBB818_21
 // %bb.18:                              // %"$36"
 	ldp	w0, w8, [x0]
 	bfi	x0, x8, #32, #32
-	b	.LBB817_22
-.LBB817_19:                             // %"$17"
+	b	.LBB818_22
+.LBB818_19:                             // %"$17"
 	ldp	w0, w9, [x8, #24]
 	bfi	x0, x9, #32, #32
-	cbnz	x0, .LBB817_8
+	cbnz	x0, .LBB818_8
 // %bb.20:                              // %"$19"
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ldp	x30, x19, [sp], #16             // 16-byte Folded Reload
 	ret
-.LBB817_21:                             // %"$35"
+.LBB818_21:                             // %"$35"
 	bl	evList
-.LBB817_22:                             // %"$32"
+.LBB818_22:                             // %"$32"
 	lsr	x8, x0, #32
 	stp	w0, w8, [x19]
 	ldp	x30, x19, [sp], #16             // 16-byte Folded Reload
 	ret
-.Lfunc_end817:
-	.size	_up, .Lfunc_end817-_up
+.Lfunc_end818:
+	.size	_up, .Lfunc_end818-_up
 	.cfi_endproc
                                         // -- End function
 	.globl	_history                        // -- Begin function _history
@@ -64277,8 +64310,8 @@ _history:                               // @_history
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
 	ret
-.Lfunc_end818:
-	.size	_history, .Lfunc_end818-_history
+.Lfunc_end819:
+	.size	_history, .Lfunc_end819-_history
 	.cfi_endproc
                                         // -- End function
 	.globl	main                            // -- Begin function main
@@ -64353,21 +64386,21 @@ main:                                   // @main
 	adrp	x0, .L$203
 	add	x0, x0, :lo12:.L$203
 	bl	outString
-	mov	w8, #5920
+	mov	w8, #5936
 	add	x22, x19, x8
 	mov	x20, x19
-	b	.LBB819_2
-.LBB819_1:                              // %"$7"
-                                        //   in Loop: Header=BB819_2 Depth=1
+	b	.LBB820_2
+.LBB820_1:                              // %"$7"
+                                        //   in Loop: Header=BB820_2 Depth=1
 	add	x20, x20, #16                   // =16
-.LBB819_2:                              // %"$5"
+.LBB820_2:                              // %"$5"
                                         // =>This Inner Loop Header: Depth=1
 	ldp	w21, w8, [x20, #-8]
 	bfi	x21, x8, #32, #32
 	tst	x21, #0x6
-	b.eq	.LBB819_1
+	b.eq	.LBB820_1
 // %bb.3:                               // %"$6"
-                                        //   in Loop: Header=BB819_2 Depth=1
+                                        //   in Loop: Header=BB820_2 Depth=1
 	ldr	x3, [x19, #64]
 	mov	x0, x20
 	mov	x1, xzr
@@ -64376,15 +64409,15 @@ main:                                   // @main
 	mov	w5, wzr
 	bl	intern
 	cmp	x20, x22
-	b.eq	.LBB819_6
+	b.eq	.LBB820_6
 // %bb.4:                               // %"$8"
-                                        //   in Loop: Header=BB819_2 Depth=1
-	tbz	w21, #2, .LBB819_1
+                                        //   in Loop: Header=BB820_2 Depth=1
+	tbz	w21, #2, .LBB820_1
 // %bb.5:                               // %"$10"
-                                        //   in Loop: Header=BB819_2 Depth=1
+                                        //   in Loop: Header=BB820_2 Depth=1
 	add	x20, x20, #16                   // =16
-	b	.LBB819_1
-.LBB819_6:                              // %"$9"
+	b	.LBB820_1
+.LBB820_6:                              // %"$9"
 	adrp	x0, .L$204
 	add	x0, x0, :lo12:.L$204
 	bl	outString
@@ -64428,8 +64461,8 @@ main:                                   // @main
 	ldp	x22, x21, [sp, #16]             // 16-byte Folded Reload
 	ldp	x30, x23, [sp], #48             // 16-byte Folded Reload
 	ret
-.Lfunc_end819:
-	.size	main, .Lfunc_end819-main
+.Lfunc_end820:
+	.size	main, .Lfunc_end820-main
 	.cfi_endproc
                                         // -- End function
 	.type	$Heap,@object                   // @"$Heap"
@@ -65681,31 +65714,33 @@ SymTab:
 	.xword	_wfe+2
 	.xword	27490915906                     // 0x666961642
 	.xword	_daif+2
+	.xword	3463464752706                   // 0x32666961642
+	.xword	_daif2+2
 	.xword	510919288690239026              // 0x7172662d746e632
 	.xword	"_cnt-frq"+2
-	.xword	SymTab+5716
+	.xword	SymTab+5732
 	.xword	"_cntv-ctl"+2
 	.xword	7814980300306673251             // 0x6c74632d76746e63
 	.xword	2                               // 0x2
-	.xword	SymTab+5748
+	.xword	SymTab+5764
 	.xword	"_cntv-cval"+2
 	.xword	7022909715842887267             // 0x6176632d76746e63
 	.xword	1730                            // 0x6c2
-	.xword	SymTab+5780
+	.xword	SymTab+5796
 	.xword	"_cntv-tval"+2
 	.xword	7022928407540559459             // 0x6176742d76746e63
 	.xword	1730                            // 0x6c2
 	.xword	2047528606819890                // 0x746376746e632
 	.xword	_cntvct+2
-	.xword	SymTab+5828
+	.xword	SymTab+5844
 	.xword	"_cntp-ctl"+2
 	.xword	7814980300206009955             // 0x6c74632d70746e63
 	.xword	2                               // 0x2
-	.xword	SymTab+5860
+	.xword	SymTab+5876
 	.xword	"_cntp-cval"+2
 	.xword	7022909715742223971             // 0x6176632d70746e63
 	.xword	1730                            // 0x6c2
-	.xword	SymTab+5892
+	.xword	SymTab+5908
 	.xword	"_cntp-tval"+2
 	.xword	7022928407439896163             // 0x6176742d70746e63
 	.xword	1730                            // 0x6c2
@@ -65713,7 +65748,7 @@ SymTab:
 	.xword	_cntpct+2
 	.xword	497355938196772706              // 0x6e6f69737265762
 	.xword	_version+2
-	.size	SymTab, 5936
+	.size	SymTab, 5952
 
 	.type	$Version,@object                // @"$Version"
 	.globl	$Version

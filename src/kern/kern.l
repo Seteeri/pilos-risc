@@ -99,7 +99,7 @@
   
   (prl-kern)
   
-  (gic~init)
+  (gic~init (hex "FF840000"))
   
   
   ############

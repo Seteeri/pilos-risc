@@ -4,6 +4,7 @@ PIL
 Interrupts
 * clean up gic
 * clean up uart
+  * mini vs full
 * move timers to kernel space
 
 Coroutines
