@@ -113,6 +113,7 @@
     (new '(gic~+Gic) (hex "FF840000")))
   
   (init-irq-timer)
+  # (alarm (handle-alarm))
   
   ############
   # start term

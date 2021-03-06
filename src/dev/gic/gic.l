@@ -26,12 +26,10 @@
   (=: dist (new '(+Dist) (+ P (hex "1000"))))
   (=: cpu  (new '(+Cpu)  (+ P (hex "2000")))))
 
-(dm enab> (Irq Val) ((if Val 'is-enab> 'ic-enab>) This Irq))
-(dm pend> (Irq Val) ((if Val 'is-pend> 'ic-pend>) This Irq))
-(dm act>  (Irq Val) ((if Val 'is-act>  'ic-act>)  This Irq))
-
-(dm on>   (Irq) (enab> This Irq T))
-(dm off>  (Irq) (enab> This Irq))
+# Pass T/NIL to set/clear
+(dm enab> (Irq Val) ((if Val 'is-enab> 'ic-enab>) (: dist) Irq))
+(dm pend> (Irq Val) ((if Val 'is-pend> 'ic-pend>) (: dist) Irq))
+(dm act>  (Irq Val) ((if Val 'is-act>  'ic-act>)  (: dist) Irq))
 
 (dm find-pend-irq> ()
   (let Irq NIL

@@ -2,6 +2,8 @@ PIL
 ===
 
 Interrupts
+* rename ptr32 -> int
+* rename ptr64 -> long
 * clean up gic
 * clean up uart
   * mini vs full

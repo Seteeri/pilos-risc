@@ -14,6 +14,7 @@
 (def 'LVL (hex "0")) # level-sensitive
 (def 'EDGE  (hex "2")) # edge-triggered 
 
+# store in Dist
 (def 'DIST-I-ID-MSK
   (list
     (cons 'PRODUCTID   '(31 24))
@@ -155,27 +156,60 @@
   # On distributor
   (on> This))
 
-# Get
+# Get set/clr register
   
-(dm is-enab> (Irq) (ui* (+ (: is-enab) (* (/ Irq 32) 4))))
-(dm is-pend> (Irq) (ui* (+ (: is-pend) (* (/ Irq 32) 4))))
-(dm is-act>  (Irq) (ui* (+ (: is-act)  (* (/ Irq 32) 4))))
+(dm is-enab> (Irq) 
+  (ui* (+ (: is-enab) 
+    (* (/ Irq 32) 4))))
+  
+(dm is-pend> (Irq) 
+  (ui* (+ (: is-pend) 
+    (* (/ Irq 32) 4))))
+  
+(dm is-act>  (Irq)
+  (ui* (+ (: is-act)  
+    (* (/ Irq 32) 4))))
 
 
-(dm ic-enab> (Irq Wd) (ui* (+ (: ic-enab) (* (/ Irq 32) 4)) Wd))
-(dm ic-pend> (Irq Wd) (ui* (+ (: ic-pend) (* (/ Irq 32) 4)) Wd))
-(dm ic-act>  (Irq Wd) (ui* (+ (: ic-act)  (* (/ Irq 32) 4)) Wd))
+(dm ic-enab> (Irq Wd)
+  (ui* (+ (: ic-enab) 
+    (* (/ Irq 32) 4)) Wd))
+  
+(dm ic-pend> (Irq Wd) 
+  (ui* (+ (: ic-pend) 
+    (* (/ Irq 32) 4)) Wd))
+  
+(dm ic-act>  (Irq Wd) 
+  (ui* (+ (: ic-act)  
+    (* (/ Irq 32) 4)) Wd))
 
 # Set
-
+#
 # ((volatile uint32_t *)(uintptr_t)(0x08000000 + 0x100 + ( (irq / 32) * 4 ) ))
-(dm is-enab-intr> (Irq) (ul* (+ (: is-enab) (* (/ Irq 32) 4)) (>> (- (% Irq 32)) 1)))
-(dm is-pend-intr> (Irq) (ui* (+ (: is-pend) (* (/ Irq 32) 4)) (>> (- (% Irq 32)) 1)))
-(dm is-act-intr>  (Irq) (ui* (+ (: is-act)  (* (/ Irq 32) 4)) (>> (- (% Irq 32)) 1)))
+
+(dm is-enab-intr> (Irq) 
+  (ui* (+ (: is-enab) (* (/ Irq 32) 4)) 
+    (>> (- (% Irq 32)) 1)))
+  
+(dm is-pend-intr> (Irq) 
+  (ui* (+ (: is-pend) (* (/ Irq 32) 4)) 
+    (>> (- (% Irq 32)) 1)))
+  
+(dm is-act-intr>  (Irq) 
+  (ui* (+ (: is-act)  (* (/ Irq 32) 4)) 
+    (>> (- (% Irq 32)) 1)))
                       
-(dm ic-enab-intr> (Irq) (ui* (+ (: ic-enab) (* (/ Irq 32) 4)) (>> (- (% Irq 32)) 1)))
-(dm ic-pend-intr> (Irq) (ui* (+ (: ic-pend) (* (/ Irq 32) 4)) (>> (- (% Irq 32)) 1)))
-(dm ic-act-intr>  (Irq) (ui* (+ (: ic-act)  (* (/ Irq 32) 4)) (>> (- (% Irq 32)) 1)))
+(dm ic-enab-intr> (Irq) 
+  (ui* (+ (: ic-enab) (* (/ Irq 32) 4)) 
+    (>> (- (% Irq 32)) 1)))
+  
+(dm ic-pend-intr> (Irq) 
+  (ui* (+ (: ic-pend) (* (/ Irq 32) 4)) 
+    (>> (- (% Irq 32)) 1)))
+  
+(dm ic-act-intr>  (Irq) 
+  (ui* (+ (: ic-act)  (* (/ Irq 32) 4)) 
+    (>> (- (% Irq 32)) 1)))
 
 
 (dm i-cfg> (Irq Cfg)
