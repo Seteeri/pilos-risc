@@ -7,9 +7,8 @@
  
 (class +Cpu)
 (dm T (P)
-  (=: p P)
-  
-  (=: ctl    (+ P (hex "0000")))
+
+  (=: ctl    P)
   (=: pm     (+ P (hex "0004")))
   (=: bp     (+ P (hex "0008")))
   (=: ia     (+ P (hex "000C")))
@@ -33,7 +32,7 @@
 
 (dm init> ()
  
-  (ui* (: ctl) CTL-OFF)
+  (ui* (: ctl) OFF-CTL)
   
   # Set the priority level as the lowest priority
   # Note: Higher priority corresponds to a lower Priority field value in the GIC_PMR.
@@ -52,7 +51,7 @@
                (ui* (: ia)))
         (setq Pen-IRQ (& (ui* (: ia)) (hex "3FF"))))))
   
-  (ui* (: ctl) CTL-ON))
+  (ui* (: ctl) ON-CTL))
 
   
 (symbols '(pico))

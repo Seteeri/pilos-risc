@@ -65,7 +65,7 @@
     (gic~is-enab> (: gic~dist) IRQ-TIMER T)))
 
 
-(de on-timer (Tm)
+(de on-timer (T1 T2)
 
   (daif2)
   
@@ -74,7 +74,7 @@
     (cntv-ctl C))
     
   (let (Cntfrq (cnt-frq)
-        Ticks (* Tm Cntfrq)
+        Ticks (* T1 Cntfrq)
         Cur-Cnt (cntvct))
     (cntv-cval (+ Cur-Cnt Ticks)))
     
@@ -84,7 +84,11 @@
 
   (daif2 T)
   
-  (pr-tim))
+  (alarm T (on-timer 1 1))
+  
+  (pr-tim)
+  
+  NIL)
 
   
 (de main ()
@@ -113,7 +117,6 @@
     (new '(gic~+Gic) (hex "FF840000")))
   
   (init-irq-timer)
-  (alarm T (on-timer 1))
   
   ############
   # start term

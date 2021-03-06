@@ -9,12 +9,13 @@
  dist-cfg      dist-i-prio dist-i-tgts 
  dist-clr-pend dist-on-intr dist-off-intr)
 
- 
+
 # 8.9.7 GICD_ICFGR<n>, Interrupt Configuration Registers
-(def 'LVL (hex "0")) # level-sensitive
+(def 'LVL   (hex "0")) # level-sensitive
 (def 'EDGE  (hex "2")) # edge-triggered 
 
-# store in Dist
+# create assoc list, store in Dist
+
 (def 'DIST-I-ID-MSK
   (list
     (cons 'PRODUCTID   '(31 24))
@@ -37,12 +38,11 @@
     ((X) (n0 X))    
     ((X) (* X 32))))
 
- 
+
 (class +Dist)
 (dm T (P)
-  (=: p P)
-  
-  (=: ctl          (+ P (hex "000")))
+
+  (=: ctl          P)
   (=: type-r       (+ P (hex "004")))
   (=: i-id         (+ P (hex "008")))
   (=: i-group      (+ P (hex "080")))
@@ -82,31 +82,7 @@
   (=: cid-3        (+ P (hex "FEC")))
   
   (init> This))
-
-(dm on> ()  (ui* (: ctl) CTL-ON))
-(dm off> () (ui* (: ctl) CTL-OFF))
-
-(dm type-r> (N) (mak-nm-lst (: type-r) DIST-TYPE-R-MSK N))
-(dm get-it-lines-number> () (type-r> This 'IT-LINES-NUMBER))
-
-(dm max-intr-id> () (* (+ (get-it-lines-number> This) 1) 32))
-
-(dm pr-type-r> () 
-  (prl-kern
-    (pack
-      "[gic] DIST-TYPE-R: "
-      (ui* (: type-r)) "="
-      (bin (ui* (: type-r)))))
-  (pr-reg (type-r> This) DIST-TYPE-R-PR))
-
-(dm i-id>   (N) (mak-nm-lst (: i-id) DIST-I-ID-MSK N))
-(dm pr-i-id> () 
-  (prl-kern
-    (pack
-      "[gic] DIST-I-ID: "
-      (ui* (: i-id)) "="
-      (bin (ui* (: i-id)))))
-  (pr-reg (i-id> This) NIL)) # No pr fns
+  
 
 (dm init> ()
 
@@ -154,7 +130,33 @@
           (ui* Cf LVL)))))
 
   # On distributor
-  (on> This))
+  (on> This))  
+
+
+(dm on> ()  (ui* (: ctl) ON-CTL))
+(dm off> () (ui* (: ctl) OFF-CTL))
+
+(dm type-r> (N) (mak-nm-lst (: type-r) DIST-TYPE-R-MSK N))
+(dm get-it-lines-number> () (type-r> This 'IT-LINES-NUMBER))
+
+(dm max-intr-id> () (* (+ (get-it-lines-number> This) 1) 32))
+
+(dm pr-type-r> () 
+  (prl-kern
+    (pack
+      "[gic] DIST-TYPE-R: "
+      (ui* (: type-r)) "="
+      (bin (ui* (: type-r)))))
+  (pr-reg (type-r> This) DIST-TYPE-R-PR))
+
+(dm i-id>   (N) (mak-nm-lst (: i-id) DIST-I-ID-MSK N))
+(dm pr-i-id> () 
+  (prl-kern
+    (pack
+      "[gic] DIST-I-ID: "
+      (ui* (: i-id)) "="
+      (bin (ui* (: i-id)))))
+  (pr-reg (i-id> This) NIL)) # No pr fns
 
 #####################
   
@@ -193,6 +195,7 @@
         Reg  (| Reg (>> (- Shft) X)))
     (ui* P Reg)))
 
+# FIX
 (dm i-prio> (Irq X)
   (let (Shft (* (% Irq 4) 8)
         P    (+ (: i-prio) (* (/ Irq 4) 4))
@@ -200,6 +203,7 @@
         Reg  (| Reg (>> (- Shft) X)))
     (setq Reg (hex "00FFFFFF"))
     (ui* P Reg)))
+
 
 (dm i-tgts> (Irq X)
   (let (Shft (* (% Irq 4) 8)

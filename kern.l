@@ -1728,11 +1728,11 @@
 (symbols '(gic pico))
 
 (local)
-(CTL-ON CTL-OFF)
+(ON-CTL OFF-CTL)
  
 # MOVE to GIC?
-(def 'CTL-ON (>> 0 1))
-(def 'CTL-OFF (>> 0 0))
+(def 'ON-CTL (>> 0 1))
+(def 'OFF-CTL (>> 0 0))
 
 
 (symbols '(pico))
@@ -1745,9 +1745,8 @@
  
 (class +Cpu)
 (dm T (P)
-  (=: p P)
-  
-  (=: ctl    (+ P (hex "0000")))
+
+  (=: ctl    P)
   (=: pm     (+ P (hex "0004")))
   (=: bp     (+ P (hex "0008")))
   (=: ia     (+ P (hex "000C")))
@@ -1771,7 +1770,7 @@
 
 (dm init> ()
  
-  (ui* (: ctl) CTL-OFF)
+  (ui* (: ctl) OFF-CTL)
   
   # Set the priority level as the lowest priority
   # Note: Higher priority corresponds to a lower Priority field value in the GIC_PMR.
@@ -1790,7 +1789,7 @@
                (ui* (: ia)))
         (setq Pen-IRQ (& (ui* (: ia)) (hex "3FF"))))))
   
-  (ui* (: ctl) CTL-ON))
+  (ui* (: ctl) ON-CTL))
 
   
 (symbols '(pico))
@@ -1805,12 +1804,13 @@
  dist-cfg      dist-i-prio dist-i-tgts 
  dist-clr-pend dist-on-intr dist-off-intr)
 
- 
+
 # 8.9.7 GICD_ICFGR<n>, Interrupt Configuration Registers
-(def 'LVL (hex "0")) # level-sensitive
+(def 'LVL   (hex "0")) # level-sensitive
 (def 'EDGE  (hex "2")) # edge-triggered 
 
-# store in Dist
+# create assoc list, store in Dist
+
 (def 'DIST-I-ID-MSK
   (list
     (cons 'PRODUCTID   '(31 24))
@@ -1833,12 +1833,11 @@
     ((X) (n0 X))    
     ((X) (* X 32))))
 
- 
+
 (class +Dist)
 (dm T (P)
-  (=: p P)
-  
-  (=: ctl          (+ P (hex "000")))
+
+  (=: ctl          P)
   (=: type-r       (+ P (hex "004")))
   (=: i-id         (+ P (hex "008")))
   (=: i-group      (+ P (hex "080")))
@@ -1878,31 +1877,7 @@
   (=: cid-3        (+ P (hex "FEC")))
   
   (init> This))
-
-(dm on> ()  (ui* (: ctl) CTL-ON))
-(dm off> () (ui* (: ctl) CTL-OFF))
-
-(dm type-r> (N) (mak-nm-lst (: type-r) DIST-TYPE-R-MSK N))
-(dm get-it-lines-number> () (type-r> This 'IT-LINES-NUMBER))
-
-(dm max-intr-id> () (* (+ (get-it-lines-number> This) 1) 32))
-
-(dm pr-type-r> () 
-  (prl-kern
-    (pack
-      "[gic] DIST-TYPE-R: "
-      (ui* (: type-r)) "="
-      (bin (ui* (: type-r)))))
-  (pr-reg (type-r> This) DIST-TYPE-R-PR))
-
-(dm i-id>   (N) (mak-nm-lst (: i-id) DIST-I-ID-MSK N))
-(dm pr-i-id> () 
-  (prl-kern
-    (pack
-      "[gic] DIST-I-ID: "
-      (ui* (: i-id)) "="
-      (bin (ui* (: i-id)))))
-  (pr-reg (i-id> This) NIL)) # No pr fns
+  
 
 (dm init> ()
 
@@ -1950,7 +1925,33 @@
           (ui* Cf LVL)))))
 
   # On distributor
-  (on> This))
+  (on> This))  
+
+
+(dm on> ()  (ui* (: ctl) ON-CTL))
+(dm off> () (ui* (: ctl) OFF-CTL))
+
+(dm type-r> (N) (mak-nm-lst (: type-r) DIST-TYPE-R-MSK N))
+(dm get-it-lines-number> () (type-r> This 'IT-LINES-NUMBER))
+
+(dm max-intr-id> () (* (+ (get-it-lines-number> This) 1) 32))
+
+(dm pr-type-r> () 
+  (prl-kern
+    (pack
+      "[gic] DIST-TYPE-R: "
+      (ui* (: type-r)) "="
+      (bin (ui* (: type-r)))))
+  (pr-reg (type-r> This) DIST-TYPE-R-PR))
+
+(dm i-id>   (N) (mak-nm-lst (: i-id) DIST-I-ID-MSK N))
+(dm pr-i-id> () 
+  (prl-kern
+    (pack
+      "[gic] DIST-I-ID: "
+      (ui* (: i-id)) "="
+      (bin (ui* (: i-id)))))
+  (pr-reg (i-id> This) NIL)) # No pr fns
 
 #####################
   
@@ -1989,6 +1990,7 @@
         Reg  (| Reg (>> (- Shft) X)))
     (ui* P Reg)))
 
+# FIX
 (dm i-prio> (Irq X)
   (let (Shft (* (% Irq 4) 8)
         P    (+ (: i-prio) (* (/ Irq 4) 4))
@@ -1996,6 +1998,7 @@
         Reg  (| Reg (>> (- Shft) X)))
     (setq Reg (hex "00FFFFFF"))
     (ui* P Reg)))
+
 
 (dm i-tgts> (Irq X)
   (let (Shft (* (% Irq 4) 8)
@@ -2259,7 +2262,7 @@
     (gic~is-enab> (: gic~dist) IRQ-TIMER T)))
 
 
-(de on-timer (Tm)
+(de on-timer (T1 T2)
 
   (daif2)
   
@@ -2268,7 +2271,7 @@
     (cntv-ctl C))
     
   (let (Cntfrq (cnt-frq)
-        Ticks (* Tm Cntfrq)
+        Ticks (* T1 Cntfrq)
         Cur-Cnt (cntvct))
     (cntv-cval (+ Cur-Cnt Ticks)))
     
@@ -2278,7 +2281,11 @@
 
   (daif2 T)
   
-  (pr-tim))
+  (alarm T (on-timer 1 1))
+  
+  (pr-tim)
+  
+  NIL)
 
   
 (de main ()
@@ -2307,7 +2314,6 @@
     (new '(gic~+Gic) (hex "FF840000")))
   
   (init-irq-timer)
-  (alarm T (on-timer 1))
   
   ############
   # start term
