@@ -1952,39 +1952,41 @@
   # On distributor
   (on> This))
 
-# Get set/clr register
+#####################
   
-(dm is-enab> (Irq) 
-  (ui* (+ (: is-enab) 
-    (* (/ Irq 32) 4))))
+# Rd
   
-(dm is-pend> (Irq) 
-  (ui* (+ (: is-pend) 
-    (* (/ Irq 32) 4))))
+(dm is-enab> (Irq X)
+  (ui* (+ (: is-enab) (* (/ Irq 32) 4))
+    (when X (>> (- (% Irq 32)) 1))))
   
-(dm is-act>  (Irq)
-  (ui* (+ (: is-act)  
-    (* (/ Irq 32) 4))))
+(dm is-pend> (Irq X) 
+  (ui* (+ (: is-pend) (* (/ Irq 32) 4))
+    (when X (>> (- (% Irq 32)) 1))))
+  
+(dm is-act>  (Irq X)
+  (ui* (+ (: is-act) (* (/ Irq 32) 4))
+    (when X (>> (- (% Irq 32)) 1))))
 
 
-(dm ic-enab> (Irq Wd)
-  (ui* (+ (: ic-enab) 
-    (* (/ Irq 32) 4)) Wd))
+(dm ic-enab> (Irq X)
+  (ui* (+ (: ic-enab) (* (/ Irq 32) 4))
+    (when X (>> (- (% Irq 32)) 1))))
   
-(dm ic-pend> (Irq Wd) 
-  (ui* (+ (: ic-pend) 
-    (* (/ Irq 32) 4)) Wd))
+(dm ic-pend> (Irq X) 
+  (ui* (+ (: ic-pend) (* (/ Irq 32) 4))
+    (when X (>> (- (% Irq 32)) 1))))
   
-(dm ic-act>  (Irq Wd) 
-  (ui* (+ (: ic-act)  
-    (* (/ Irq 32) 4)) Wd))
+(dm ic-act>  (Irq X) 
+  (ui* (+ (: ic-act) (* (/ Irq 32) 4))
+    (when X (>> (- (% Irq 32)) 1))))
 
-# Set
+# Wr
 #
 # ((volatile uint32_t *)(uintptr_t)(0x08000000 + 0x100 + ( (irq / 32) * 4 ) ))
 
-(dm is-enab-intr> (Irq) 
-  (ui* (+ (: is-enab) (* (/ Irq 32) 4)) 
+(dm is-enab-intr> (Irq)
+  (ui* (+ (: is-enab) (* (/ Irq 32) 4))
     (>> (- (% Irq 32)) 1)))
   
 (dm is-pend-intr> (Irq) 
@@ -2008,26 +2010,26 @@
     (>> (- (% Irq 32)) 1)))
 
 
-(dm i-cfg> (Irq Cfg)
+(dm i-cfg> (Irq X)
   (let (Shft (* (% Irq 16) 2)
         P    (+ (: i-cfg) (* (/ Irq 16) 4))
         Reg  (& (ui* P) (bw-not (>> (- Shft) (hex "03"))))
-        Reg  (| Reg (>> (- Shft) Cfg)))
+        Reg  (| Reg (>> (- Shft) X)))
     (ui* P Reg)))
 
-(dm i-prio> (Irq Prio)
+(dm i-prio> (Irq X)
   (let (Shft (* (% Irq 4) 8)
         P    (+ (: i-prio) (* (/ Irq 4) 4))
         Reg  (& (ui* P) (bw-not (>> (- Shft) (hex "FF"))))
-        Reg  (| Reg (>> (- Shft) Prio)))
+        Reg  (| Reg (>> (- Shft) X)))
     (setq Reg (hex "00FFFFFF"))
     (ui* P Reg)))
 
-(dm i-tgts> (Irq Proc)
+(dm i-tgts> (Irq X)
   (let (Shft (* (% Irq 4) 8)
         P    (+ (: i-tgts) (* (/ Irq 4) 4))
         Reg  (& (ui* P) (bw-not (>> (- Shft) (hex "FF"))))
-        Reg  (| Reg (>> (- Shft) Proc)))
+        Reg  (| Reg (>> (- Shft) X)))
     (ui* P Reg)))
 
 
@@ -2094,9 +2096,9 @@
   (=: cpu  (new '(+Cpu)  (+ P (hex "2000")))))
 
 # Pass T/NIL to set/clear
-(dm enab> (Irq Val) ((if Val 'is-enab> 'ic-enab>) (: dist) Irq))
-(dm pend> (Irq Val) ((if Val 'is-pend> 'ic-pend>) (: dist) Irq))
-(dm act>  (Irq Val) ((if Val 'is-act>  'ic-act>)  (: dist) Irq))
+(dm enab> (Irq Fn X) ((if Fn 'is-enab> 'ic-enab>) (: dist) Irq X))
+(dm pend> (Irq Fn X) ((if Fn 'is-pend> 'ic-pend>) (: dist) Irq X))
+(dm act>  (Irq Fn X) ((if Fn 'is-act>  'ic-act>)  (: dist) Irq X))
 
 (dm find-pend-irq> ()
   (let Irq NIL
@@ -2278,11 +2280,11 @@
 (def 'IRQ-TIMER 27)
 (de init-irq-timer ()
   (with *gic
-    (gic~i-cfg>        (: gic~dist) IRQ-TIMER gic~EDGE)
-    (gic~i-prio>       (: gic~dist) IRQ-TIMER (>> -4 0))
-    (gic~i-tgts>       (: gic~dist) IRQ-TIMER (hex "1")) # proc 0
-    (gic~ic-pend-intr> (: gic~dist) IRQ-TIMER)
-    (gic~is-enab-intr> (: gic~dist) IRQ-TIMER)))
+    (gic~i-cfg>   (: gic~dist) IRQ-TIMER gic~EDGE)
+    (gic~i-prio>  (: gic~dist) IRQ-TIMER (>> -4 0))
+    (gic~i-tgts>  (: gic~dist) IRQ-TIMER (hex "1")) # proc 0
+    (gic~ic-pend> (: gic~dist) IRQ-TIMER T)
+    (gic~is-enab> (: gic~dist) IRQ-TIMER T)))
 
 
 (de on-timer ()

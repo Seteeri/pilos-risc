@@ -27,9 +27,9 @@
   (=: cpu  (new '(+Cpu)  (+ P (hex "2000")))))
 
 # Pass T/NIL to set/clear
-(dm enab> (Irq Val) ((if Val 'is-enab> 'ic-enab>) (: dist) Irq))
-(dm pend> (Irq Val) ((if Val 'is-pend> 'ic-pend>) (: dist) Irq))
-(dm act>  (Irq Val) ((if Val 'is-act>  'ic-act>)  (: dist) Irq))
+(dm enab> (Irq Fn X) ((if Fn 'is-enab> 'ic-enab>) (: dist) Irq X))
+(dm pend> (Irq Fn X) ((if Fn 'is-pend> 'ic-pend>) (: dist) Irq X))
+(dm act>  (Irq Fn X) ((if Fn 'is-act>  'ic-act>)  (: dist) Irq X))
 
 (dm find-pend-irq> ()
   (let Irq NIL
