@@ -54,7 +54,17 @@
   (prl-kern (text "Stack Size: @1 KB" (stack 256)))
   (prl-kern (text "*Kern Load Time: @1" (usec))))
 
-  
+
+(def 'IRQ-TIMER 27)
+(de init-irq-timer ()
+  (with *gic
+    (i-cfg>        (: dist) IRQ-TIMER EDGE)
+    (i-prio>       (: dist) IRQ-TIMER (>> -4 0))
+    (i-tgts>       (: dist) IRQ-TIMER (hex "1")) # proc 0
+    (ic-pend-intr> (: dist) IRQ-TIMER)
+    (is-enab-intr> (: dist) IRQ-TIMER)))
+
+
 (de on-timer ()
 
   (daif2)
@@ -99,8 +109,9 @@
   
   (prl-kern)
   
-  (gic~init (hex "FF840000"))
+  (def '*gic (new '(gic~+Gic) (hex "FF840000")))
   
+  (init-irq-timer)
   
   ############
   # start term

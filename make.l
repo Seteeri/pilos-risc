@@ -26,7 +26,6 @@
                "src/dev/gic/def.l"
                "src/dev/gic/cpu.l"
                "src/dev/gic/dist.l"
-               "src/dev/gic/intr.l"           
                "src/dev/gic/gic.l"
                #"src/dev/timer.l"
                "src/kern/term.l"
