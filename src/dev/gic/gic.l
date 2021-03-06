@@ -1,7 +1,8 @@
 (symbols '(gic pico))
 
 (local)
-(+Gic +Vicb +Hyp +Vci)
+(ON-CTL OFF-CTL
+ +Gic +Vicb +Hyp +Vci)
   
 #{
 
@@ -15,17 +16,18 @@
 
 }#
 
-(class +Vicb)
-(class +Hyp)
-(class +Vci)
+(ON-CTL OFF-CTL)
+ 
+(def 'ON-CTL  (>> 0 1))
+(def 'OFF-CTL (>> 0 0))
 
 (class +Gic)
 (dm T (P)
   (=: p    P)
   
   (=: dist (new '(+Dist) (+ P (hex "1000"))))
-  (=: cpu  (new '(+Cpu)  (+ P (hex "2000")))))
-
+  (=: cpu  (new '(+Cpu)  (+ P (hex "2000")))))  
+  
 # Pass T/NIL to set/clear
 (dm enab> (Irq Fn X) ((if Fn 'is-enab> 'ic-enab>) (: dist) Irq X))
 (dm pend> (Irq Fn X) ((if Fn 'is-pend> 'ic-pend>) (: dist) Irq X))
@@ -42,4 +44,8 @@
           (setq Irq J))))
     Irq))
 
+(class +Vicb)
+(class +Hyp)
+(class +Vci)    
+    
 (symbols '(pico))

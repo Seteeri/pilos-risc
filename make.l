@@ -23,7 +23,6 @@
                "src/kern/bit.l"
                "src/dev/uart.mini.l"
                "src/dev/mbox.l"
-               "src/dev/gic/def.l"
                "src/dev/gic/cpu.l"
                "src/dev/gic/dist.l"
                "src/dev/gic/gic.l"
