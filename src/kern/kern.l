@@ -57,7 +57,7 @@
   
 (de on-timer ()
 
-  (daif)
+  (daif2)
   
   (let (C (cntv-ctl)
         C (& C (bw-not C))) # 0
@@ -72,7 +72,7 @@
         C (| C (>> 0 1))) # 1
     (cntv-ctl C))
 
-  (daif T)
+  (daif2 T)
   
   (pr-tim))
 

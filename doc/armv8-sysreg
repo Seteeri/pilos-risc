@@ -1,0 +1,1436 @@
+https://developer.arm.com/documentation/ddi0595/2020-12/Registers-by-Functional-Group?lang=en
+
+In the ID functional group:
+Exec state	Name	Description
+AArch32	CCSIDR 	Current Cache Size ID Register
+AArch32	CCSIDR2 	Current Cache Size ID Register 2
+AArch32	CLIDR 	Cache Level ID Register
+AArch32	CSSELR 	Cache Size Selection Register
+AArch32	CTR 	Cache Type Register
+AArch32	ID_AFR0 	Auxiliary Feature Register 0
+AArch32	ID_DFR0 	Debug Feature Register 0
+AArch32	ID_DFR1 	Debug Feature Register 1
+AArch32	ID_ISAR0 	Instruction Set Attribute Register 0
+AArch32	ID_ISAR1 	Instruction Set Attribute Register 1
+AArch32	ID_ISAR2 	Instruction Set Attribute Register 2
+AArch32	ID_ISAR3 	Instruction Set Attribute Register 3
+AArch32	ID_ISAR4 	Instruction Set Attribute Register 4
+AArch32	ID_ISAR5 	Instruction Set Attribute Register 5
+AArch32	ID_ISAR6 	Instruction Set Attribute Register 6
+AArch32	ID_MMFR0 	Memory Model Feature Register 0
+AArch32	ID_MMFR1 	Memory Model Feature Register 1
+AArch32	ID_MMFR2 	Memory Model Feature Register 2
+AArch32	ID_MMFR3 	Memory Model Feature Register 3
+AArch32	ID_MMFR4 	Memory Model Feature Register 4
+AArch32	ID_MMFR5 	Memory Model Feature Register 5
+AArch32	ID_PFR0 	Processor Feature Register 0
+AArch32	ID_PFR1 	Processor Feature Register 1
+AArch32	ID_PFR2 	Processor Feature Register 2
+AArch32	MIDR 	Main ID Register
+AArch32	MPIDR 	Multiprocessor Affinity Register
+AArch32	REVIDR 	Revision ID Register
+AArch32	TCMTR 	TCM Type Register
+AArch32	TLBTR 	TLB Type Register
+AArch64	CCSIDR2_EL1 	Current Cache Size ID Register 2
+AArch64	CCSIDR_EL1 	Current Cache Size ID Register
+AArch64	CLIDR_EL1 	Cache Level ID Register
+AArch64	CSSELR_EL1 	Cache Size Selection Register
+AArch64	CTR_EL0 	Cache Type Register
+AArch64	DCZID_EL0 	Data Cache Zero ID register
+AArch64	GMID_EL1 	Multiple tag transfer ID register
+AArch64	ID_AA64AFR0_EL1 	AArch64 Auxiliary Feature Register 0
+AArch64	ID_AA64AFR1_EL1 	AArch64 Auxiliary Feature Register 1
+AArch64	ID_AA64DFR0_EL1 	AArch64 Debug Feature Register 0
+AArch64	ID_AA64DFR1_EL1 	AArch64 Debug Feature Register 1
+AArch64	ID_AA64ISAR0_EL1 	AArch64 Instruction Set Attribute Register 0
+AArch64	ID_AA64ISAR1_EL1 	AArch64 Instruction Set Attribute Register 1
+AArch64	ID_AA64ISAR2_EL1 	AArch64 Instruction Set Attribute Register 2
+AArch64	ID_AA64MMFR0_EL1 	AArch64 Memory Model Feature Register 0
+AArch64	ID_AA64MMFR1_EL1 	AArch64 Memory Model Feature Register 1
+AArch64	ID_AA64MMFR2_EL1 	AArch64 Memory Model Feature Register 2
+AArch64	ID_AA64PFR0_EL1 	AArch64 Processor Feature Register 0
+AArch64	ID_AA64PFR1_EL1 	AArch64 Processor Feature Register 1
+AArch64	ID_AA64ZFR0_EL1 	SVE Feature ID register 0
+AArch64	ID_AFR0_EL1 	AArch32 Auxiliary Feature Register 0
+AArch64	ID_DFR0_EL1 	AArch32 Debug Feature Register 0
+AArch64	ID_DFR1_EL1 	Debug Feature Register 1
+AArch64	ID_ISAR0_EL1 	AArch32 Instruction Set Attribute Register 0
+AArch64	ID_ISAR1_EL1 	AArch32 Instruction Set Attribute Register 1
+AArch64	ID_ISAR2_EL1 	AArch32 Instruction Set Attribute Register 2
+AArch64	ID_ISAR3_EL1 	AArch32 Instruction Set Attribute Register 3
+AArch64	ID_ISAR4_EL1 	AArch32 Instruction Set Attribute Register 4
+AArch64	ID_ISAR5_EL1 	AArch32 Instruction Set Attribute Register 5
+AArch64	ID_ISAR6_EL1 	AArch32 Instruction Set Attribute Register 6
+AArch64	ID_MMFR0_EL1 	AArch32 Memory Model Feature Register 0
+AArch64	ID_MMFR1_EL1 	AArch32 Memory Model Feature Register 1
+AArch64	ID_MMFR2_EL1 	AArch32 Memory Model Feature Register 2
+AArch64	ID_MMFR3_EL1 	AArch32 Memory Model Feature Register 3
+AArch64	ID_MMFR4_EL1 	AArch32 Memory Model Feature Register 4
+AArch64	ID_MMFR5_EL1 	AArch32 Memory Model Feature Register 5
+AArch64	ID_PFR0_EL1 	AArch32 Processor Feature Register 0
+AArch64	ID_PFR1_EL1 	AArch32 Processor Feature Register 1
+AArch64	ID_PFR2_EL1 	AArch32 Processor Feature Register 2
+AArch64	MIDR_EL1 	Main ID Register
+AArch64	MPAMIDR_EL1 	MPAM ID Register (EL1)
+AArch64	MPIDR_EL1 	Multiprocessor Affinity Register
+AArch64	REVIDR_EL1 	Revision ID Register
+External	EDAA32PFR 	External Debug Auxiliary Processor Feature Register
+External	EDDFR 	External Debug Feature Register
+External	EDPFR 	External Debug Processor Feature Register
+External	MIDR_EL1 	Main ID Register
+
+
+In the Memory functional group:
+Exec state	Name	Description
+AArch32	AMAIR0 	Auxiliary Memory Attribute Indirection Register 0
+AArch32	AMAIR1 	Auxiliary Memory Attribute Indirection Register 1
+AArch32	CONTEXTIDR 	Context ID Register
+AArch32	DACR 	Domain Access Control Register
+AArch32	HAMAIR0 	Hyp Auxiliary Memory Attribute Indirection Register 0
+AArch32	HAMAIR1 	Hyp Auxiliary Memory Attribute Indirection Register 1
+AArch32	HMAIR0 	Hyp Memory Attribute Indirection Register 0
+AArch32	HMAIR1 	Hyp Memory Attribute Indirection Register 1
+AArch32	HTCR 	Hyp Translation Control Register
+AArch32	HTTBR 	Hyp Translation Table Base Register
+AArch32	MAIR0 	Memory Attribute Indirection Register 0
+AArch32	MAIR1 	Memory Attribute Indirection Register 1
+AArch32	NMRR 	Normal Memory Remap Register
+AArch32	PRRR 	Primary Region Remap Register
+AArch32	TTBCR 	Translation Table Base Control Register
+AArch32	TTBCR2 	Translation Table Base Control Register 2
+AArch32	TTBR0 	Translation Table Base Register 0
+AArch32	TTBR1 	Translation Table Base Register 1
+AArch32	VTCR 	Virtualization Translation Control Register
+AArch32	VTTBR 	Virtualization Translation Table Base Register
+AArch64	AMAIR_EL1 	Auxiliary Memory Attribute Indirection Register (EL1)
+AArch64	AMAIR_EL2 	Auxiliary Memory Attribute Indirection Register (EL2)
+AArch64	AMAIR_EL3 	Auxiliary Memory Attribute Indirection Register (EL3)
+AArch64	CONTEXTIDR_EL1 	Context ID Register (EL1)
+AArch64	CONTEXTIDR_EL2 	Context ID Register (EL2)
+AArch64	DACR32_EL2 	Domain Access Control Register
+AArch64	LORC_EL1 	LORegion Control (EL1)
+AArch64	LOREA_EL1 	LORegion End Address (EL1)
+AArch64	LORID_EL1 	LORegionID (EL1)
+AArch64	LORN_EL1 	LORegion Number (EL1)
+AArch64	LORSA_EL1 	LORegion Start Address (EL1)
+AArch64	MAIR_EL1 	Memory Attribute Indirection Register (EL1)
+AArch64	MAIR_EL2 	Memory Attribute Indirection Register (EL2)
+AArch64	MAIR_EL3 	Memory Attribute Indirection Register (EL3)
+AArch64	TCR_EL1 	Translation Control Register (EL1)
+AArch64	TCR_EL2 	Translation Control Register (EL2)
+AArch64	TCR_EL3 	Translation Control Register (EL3)
+AArch64	TTBR0_EL1 	Translation Table Base Register 0 (EL1)
+AArch64	TTBR0_EL2 	Translation Table Base Register 0 (EL2)
+AArch64	TTBR0_EL3 	Translation Table Base Register 0 (EL3)
+AArch64	TTBR1_EL1 	Translation Table Base Register 1 (EL1)
+AArch64	TTBR1_EL2 	Translation Table Base Register 1 (EL2)
+AArch64	VTCR_EL2 	Virtualization Translation Control Register
+AArch64	VTTBR_EL2 	Virtualization Translation Table Base Register
+
+
+In the Other functional group:
+Exec state	Name	Description
+AArch32	CPACR 	Architectural Feature Access Control Register
+AArch32	SCTLR 	System Control Register
+AArch64	CPACR_EL1 	Architectural Feature Access Control Register
+AArch64	SCTLR_EL1 	System Control Register (EL1)
+AArch64	SCTLR_EL3 	System Control Register (EL3)
+AArch64	ZCR_EL1 	SVE Control Register (EL1)
+AArch64	ZCR_EL2 	SVE Control Register (EL2)
+AArch64	ZCR_EL3 	SVE Control Register (EL3)
+
+
+In the Exception functional group:
+Exec state	Name	Description
+AArch32	ADFSR 	Auxiliary Data Fault Status Register
+AArch32	AIFSR 	Auxiliary Instruction Fault Status Register
+AArch32	DFAR 	Data Fault Address Register
+AArch32	DFSR 	Data Fault Status Register
+AArch32	HADFSR 	Hyp Auxiliary Data Fault Status Register
+AArch32	HAIFSR 	Hyp Auxiliary Instruction Fault Status Register
+AArch32	HDFAR 	Hyp Data Fault Address Register
+AArch32	HIFAR 	Hyp Instruction Fault Address Register
+AArch32	HPFAR 	Hyp IPA Fault Address Register
+AArch32	HSR 	Hyp Syndrome Register
+AArch32	HVBAR 	Hyp Vector Base Address Register
+AArch32	IFAR 	Instruction Fault Address Register
+AArch32	IFSR 	Instruction Fault Status Register
+AArch32	ISR 	Interrupt Status Register
+AArch32	MVBAR 	Monitor Vector Base Address Register
+AArch32	VBAR 	Vector Base Address Register
+AArch64	AFSR0_EL1 	Auxiliary Fault Status Register 0 (EL1)
+AArch64	AFSR0_EL2 	Auxiliary Fault Status Register 0 (EL2)
+AArch64	AFSR0_EL3 	Auxiliary Fault Status Register 0 (EL3)
+AArch64	AFSR1_EL1 	Auxiliary Fault Status Register 1 (EL1)
+AArch64	AFSR1_EL2 	Auxiliary Fault Status Register 1 (EL2)
+AArch64	AFSR1_EL3 	Auxiliary Fault Status Register 1 (EL3)
+AArch64	ESR_EL1 	Exception Syndrome Register (EL1)
+AArch64	ESR_EL2 	Exception Syndrome Register (EL2)
+AArch64	ESR_EL3 	Exception Syndrome Register (EL3)
+AArch64	FAR_EL1 	Fault Address Register (EL1)
+AArch64	FAR_EL2 	Fault Address Register (EL2)
+AArch64	FAR_EL3 	Fault Address Register (EL3)
+AArch64	HPFAR_EL2 	Hypervisor IPA Fault Address Register
+AArch64	IFSR32_EL2 	Instruction Fault Status Register (EL2)
+AArch64	ISR_EL1 	Interrupt Status Register
+AArch64	VBAR_EL1 	Vector Base Address Register (EL1)
+AArch64	VBAR_EL2 	Vector Base Address Register (EL2)
+AArch64	VBAR_EL3 	Vector Base Address Register (EL3)
+
+
+In the Special functional group:
+Exec state	Name	Description
+AArch32	DLR 	Debug Link Register
+AArch32	DSPSR 	Debug Saved Program Status Register
+AArch32	ELR_hyp 	Exception Link Register (Hyp mode)
+AArch32	SPSR 	Saved Program Status Register
+AArch32	SPSR_abt 	Saved Program Status Register (Abort mode)
+AArch32	SPSR_fiq 	Saved Program Status Register (FIQ mode)
+AArch32	SPSR_hyp 	Saved Program Status Register (Hyp mode)
+AArch32	SPSR_irq 	Saved Program Status Register (IRQ mode)
+AArch32	SPSR_mon 	Saved Program Status Register (Monitor mode)
+AArch32	SPSR_svc 	Saved Program Status Register (Supervisor mode)
+AArch32	SPSR_und 	Saved Program Status Register (Undefined mode)
+AArch64	ELR_EL1 	Exception Link Register (EL1)
+AArch64	ELR_EL2 	Exception Link Register (EL2)
+AArch64	ELR_EL3 	Exception Link Register (EL3)
+AArch64	SPSR_EL1 	Saved Program Status Register (EL1)
+AArch64	SPSR_EL2 	Saved Program Status Register (EL2)
+AArch64	SPSR_EL3 	Saved Program Status Register (EL3)
+AArch64	SPSR_abt 	Saved Program Status Register (Abort mode)
+AArch64	SPSR_fiq 	Saved Program Status Register (FIQ mode)
+AArch64	SPSR_irq 	Saved Program Status Register (IRQ mode)
+AArch64	SPSR_und 	Saved Program Status Register (Undefined mode)
+AArch64	SP_EL0 	Stack Pointer (EL0)
+AArch64	SP_EL1 	Stack Pointer (EL1)
+AArch64	SP_EL2 	Stack Pointer (EL2)
+AArch64	SP_EL3 	Stack Pointer (EL3)
+
+
+In the PSTATE functional group:
+Exec state	Name	Description
+AArch32	APSR 	Application Program Status Register
+AArch32	CPSR 	Current Program Status Register
+AArch64	CurrentEL 	Current Exception Level
+AArch64	DAIF 	Interrupt Mask Bits
+AArch64	DIT 	Data Independent Timing
+AArch64	NZCV 	Condition Flags
+AArch64	PAN 	Privileged Access Never
+AArch64	SPSel 	Stack Pointer Select
+AArch64	SSBS 	Speculative Store Bypass Safe
+AArch64	TCO 	Tag Check Override
+AArch64	UAO 	User Access Override
+
+
+In the Cache functional group:
+Exec state	Name	Description
+AArch32	BPIALL 	Branch Predictor Invalidate All
+AArch32	BPIALLIS 	Branch Predictor Invalidate All, Inner Shareable
+AArch32	BPIMVA 	Branch Predictor Invalidate by VA
+AArch32	DCCIMVAC 	Data Cache line Clean and Invalidate by VA to PoC
+AArch32	DCCISW 	Data Cache line Clean and Invalidate by Set/Way
+AArch32	DCCMVAC 	Data Cache line Clean by VA to PoC
+AArch32	DCCMVAU 	Data Cache line Clean by VA to PoU
+AArch32	DCCSW 	Data Cache line Clean by Set/Way
+AArch32	DCIMVAC 	Data Cache line Invalidate by VA to PoC
+AArch32	DCISW 	Data Cache line Invalidate by Set/Way
+AArch32	ICIALLU 	Instruction Cache Invalidate All to PoU
+AArch32	ICIALLUIS 	Instruction Cache Invalidate All to PoU, Inner Shareable
+AArch32	ICIMVAU 	Instruction Cache line Invalidate by VA to PoU
+AArch64	DC CGDSW 	Clean of Data and Allocation Tags by Set/Way
+AArch64	DC CGDVAC 	Clean of Data and Allocation Tags by VA to PoC
+AArch64	DC CGDVADP 	Clean of Data and Allocation Tags by VA to PoDP
+AArch64	DC CGDVAP 	Clean of Data and Allocation Tags by VA to PoP
+AArch64	DC CGSW 	Clean of Allocation Tags by Set/Way
+AArch64	DC CGVAC 	Clean of Allocation Tags by VA to PoC
+AArch64	DC CGVADP 	Clean of Allocation Tags by VA to PoDP
+AArch64	DC CGVAP 	Clean of Allocation Tags by VA to PoP
+AArch64	DC CIGDSW 	Clean and Invalidate of Data and Allocation Tags by Set/Way
+AArch64	DC CIGDVAC 	Clean and Invalidate of Data and Allocation Tags by VA to PoC
+AArch64	DC CIGSW 	Clean and Invalidate of Allocation Tags by Set/Way
+AArch64	DC CIGVAC 	Clean and Invalidate of Allocation Tags by VA to PoC
+AArch64	DC CISW 	Data or unified Cache line Clean and Invalidate by Set/Way
+AArch64	DC CIVAC 	Data or unified Cache line Clean and Invalidate by VA to PoC
+AArch64	DC CSW 	Data or unified Cache line Clean by Set/Way
+AArch64	DC CVAC 	Data or unified Cache line Clean by VA to PoC
+AArch64	DC CVADP 	Data or unified Cache line Clean by VA to PoDP
+AArch64	DC CVAP 	Data or unified Cache line Clean by VA to PoP
+AArch64	DC CVAU 	Data or unified Cache line Clean by VA to PoU
+AArch64	DC GVA 	Data Cache set Allocation Tag by VA
+AArch64	DC GZVA 	Data Cache set Allocation Tags and Zero by VA
+AArch64	DC IGDSW 	Invalidate of Data and Allocation Tags by Set/Way
+AArch64	DC IGDVAC 	Invalidate of Data and Allocation Tags by VA to PoC
+AArch64	DC IGSW 	Invalidate of Allocation Tags by Set/Way
+AArch64	DC IGVAC 	Invalidate of Allocation Tags by VA to PoC
+AArch64	DC ISW 	Data or unified Cache line Invalidate by Set/Way
+AArch64	DC IVAC 	Data or unified Cache line Invalidate by VA to PoC
+AArch64	DC ZVA 	Data Cache Zero by VA
+AArch64	IC IALLU 	Instruction Cache Invalidate All to PoU
+AArch64	IC IALLUIS 	Instruction Cache Invalidate All to PoU, Inner Shareable
+AArch64	IC IVAU 	Instruction Cache line Invalidate by VA to PoU
+
+
+In the Address functional group:
+Exec state	Name	Description
+AArch32	ATS12NSOPR 	Address Translate Stages 1 and 2 Non-secure Only PL1 Read
+AArch32	ATS12NSOPW 	Address Translate Stages 1 and 2 Non-secure Only PL1 Write
+AArch32	ATS12NSOUR 	Address Translate Stages 1 and 2 Non-secure Only Unprivileged Read
+AArch32	ATS12NSOUW 	Address Translate Stages 1 and 2 Non-secure Only Unprivileged Write
+AArch32	ATS1CPR 	Address Translate Stage 1 Current state PL1 Read
+AArch32	ATS1CPRP 	Address Translate Stage 1 Current state PL1 Read PAN
+AArch32	ATS1CPW 	Address Translate Stage 1 Current state PL1 Write
+AArch32	ATS1CPWP 	Address Translate Stage 1 Current state PL1 Write PAN
+AArch32	ATS1CUR 	Address Translate Stage 1 Current state Unprivileged Read
+AArch32	ATS1CUW 	Address Translate Stage 1 Current state Unprivileged Write
+AArch32	ATS1HR 	Address Translate Stage 1 Hyp mode Read
+AArch32	ATS1HW 	Address Translate Stage 1 Hyp mode Write
+AArch32	PAR 	Physical Address Register
+AArch64	AT S12E0R 	Address Translate Stages 1 and 2 EL0 Read
+AArch64	AT S12E0W 	Address Translate Stages 1 and 2 EL0 Write
+AArch64	AT S12E1R 	Address Translate Stages 1 and 2 EL1 Read
+AArch64	AT S12E1W 	Address Translate Stages 1 and 2 EL1 Write
+AArch64	AT S1E0R 	Address Translate Stage 1 EL0 Read
+AArch64	AT S1E0W 	Address Translate Stage 1 EL0 Write
+AArch64	AT S1E1R 	Address Translate Stage 1 EL1 Read
+AArch64	AT S1E1RP 	Address Translate Stage 1 EL1 Read PAN
+AArch64	AT S1E1W 	Address Translate Stage 1 EL1 Write
+AArch64	AT S1E1WP 	Address Translate Stage 1 EL1 Write PAN
+AArch64	AT S1E2R 	Address Translate Stage 1 EL2 Read
+AArch64	AT S1E2W 	Address Translate Stage 1 EL2 Write
+AArch64	AT S1E3R 	Address Translate Stage 1 EL3 Read
+AArch64	AT S1E3W 	Address Translate Stage 1 EL3 Write
+AArch64	PAR_EL1 	Physical Address Register
+
+
+In the TLB functional group:
+Exec state	Name	Description
+AArch32	CFPRCTX 	Control Flow Prediction Restriction by Context
+AArch32	CPPRCTX 	Cache Prefetch Prediction Restriction by Context
+AArch32	DTLBIALL 	Data TLB Invalidate All
+AArch32	DTLBIASID 	Data TLB Invalidate by ASID match
+AArch32	DTLBIMVA 	Data TLB Invalidate by VA
+AArch32	DVPRCTX 	Data Value Prediction Restriction by Context
+AArch32	ITLBIALL 	Instruction TLB Invalidate All
+AArch32	ITLBIASID 	Instruction TLB Invalidate by ASID match
+AArch32	ITLBIMVA 	Instruction TLB Invalidate by VA
+AArch32	TLBIALL 	TLB Invalidate All
+AArch32	TLBIALLH 	TLB Invalidate All, Hyp mode
+AArch32	TLBIALLHIS 	TLB Invalidate All, Hyp mode, Inner Shareable
+AArch32	TLBIALLIS 	TLB Invalidate All, Inner Shareable
+AArch32	TLBIALLNSNH 	TLB Invalidate All, Non-Secure Non-Hyp
+AArch32	TLBIALLNSNHIS 	TLB Invalidate All, Non-Secure Non-Hyp, Inner Shareable
+AArch32	TLBIASID 	TLB Invalidate by ASID match
+AArch32	TLBIASIDIS 	TLB Invalidate by ASID match, Inner Shareable
+AArch32	TLBIIPAS2 	TLB Invalidate by Intermediate Physical Address, Stage 2
+AArch32	TLBIIPAS2IS 	TLB Invalidate by Intermediate Physical Address, Stage 2, Inner Shareable
+AArch32	TLBIIPAS2L 	TLB Invalidate by Intermediate Physical Address, Stage 2, Last level
+AArch32	TLBIIPAS2LIS 	TLB Invalidate by Intermediate Physical Address, Stage 2, Last level, Inner Shareable
+AArch32	TLBIMVA 	TLB Invalidate by VA
+AArch32	TLBIMVAA 	TLB Invalidate by VA, All ASID
+AArch32	TLBIMVAAIS 	TLB Invalidate by VA, All ASID, Inner Shareable
+AArch32	TLBIMVAAL 	TLB Invalidate by VA, All ASID, Last level
+AArch32	TLBIMVAALIS 	TLB Invalidate by VA, All ASID, Last level, Inner Shareable
+AArch32	TLBIMVAH 	TLB Invalidate by VA, Hyp mode
+AArch32	TLBIMVAHIS 	TLB Invalidate by VA, Hyp mode, Inner Shareable
+AArch32	TLBIMVAIS 	TLB Invalidate by VA, Inner Shareable
+AArch32	TLBIMVAL 	TLB Invalidate by VA, Last level
+AArch32	TLBIMVALH 	TLB Invalidate by VA, Last level, Hyp mode
+AArch32	TLBIMVALHIS 	TLB Invalidate by VA, Last level, Hyp mode, Inner Shareable
+AArch32	TLBIMVALIS 	TLB Invalidate by VA, Last level, Inner Shareable
+AArch64	TLBI ALLE1, TLBI ALLE1NXS 	TLB Invalidate All, EL1
+AArch64	TLBI ALLE1IS, TLBI ALLE1ISNXS 	TLB Invalidate All, EL1, Inner Shareable
+AArch64	TLBI ALLE1OS, TLBI ALLE1OSNXS 	TLB Invalidate All, EL1, Outer Shareable
+AArch64	TLBI ALLE2, TLBI ALLE2NXS 	TLB Invalidate All, EL2
+AArch64	TLBI ALLE2IS, TLBI ALLE2ISNXS 	TLB Invalidate All, EL2, Inner Shareable
+AArch64	TLBI ALLE2OS, TLBI ALLE2OSNXS 	TLB Invalidate All, EL2, Outer Shareable
+AArch64	TLBI ALLE3, TLBI ALLE3NXS 	TLB Invalidate All, EL3
+AArch64	TLBI ALLE3IS, TLBI ALLE3ISNXS 	TLB Invalidate All, EL3, Inner Shareable
+AArch64	TLBI ALLE3OS, TLBI ALLE3OSNXS 	TLB Invalidate All, EL3, Outer Shareable
+AArch64	TLBI ASIDE1, TLBI ASIDE1NXS 	TLB Invalidate by ASID, EL1
+AArch64	TLBI ASIDE1IS, TLBI ASIDE1ISNXS 	TLB Invalidate by ASID, EL1, Inner Shareable
+AArch64	TLBI ASIDE1OS, TLBI ASIDE1OSNXS 	TLB Invalidate by ASID, EL1, Outer Shareable
+AArch64	TLBI IPAS2E1, TLBI IPAS2E1NXS 	TLB Invalidate by Intermediate Physical Address, Stage 2, EL1
+AArch64	TLBI IPAS2E1IS, TLBI IPAS2E1ISNXS 	TLB Invalidate by Intermediate Physical Address, Stage 2, EL1, Inner Shareable
+AArch64	TLBI IPAS2E1OS, TLBI IPAS2E1OSNXS 	TLB Invalidate by Intermediate Physical Address, Stage 2, EL1, Outer Shareable
+AArch64	TLBI IPAS2LE1, TLBI IPAS2LE1NXS 	TLB Invalidate by Intermediate Physical Address, Stage 2, Last level, EL1
+AArch64	TLBI IPAS2LE1IS, TLBI IPAS2LE1ISNXS 	TLB Invalidate by Intermediate Physical Address, Stage 2, Last level, EL1, Inner Shareable
+AArch64	TLBI IPAS2LE1OS, TLBI IPAS2LE1OSNXS 	TLB Invalidate by Intermediate Physical Address, Stage 2, Last level, EL1, Outer Shareable
+AArch64	TLBI RIPAS2E1, TLBI RIPAS2E1NXS 	TLB Range Invalidate by Intermediate Physical Address, Stage 2, EL1
+AArch64	TLBI RIPAS2E1IS, TLBI RIPAS2E1ISNXS 	TLB Range Invalidate by Intermediate Physical Address, Stage 2, EL1, Inner Shareable
+AArch64	TLBI RIPAS2E1OS, TLBI RIPAS2E1OSNXS 	TLB Range Invalidate by Intermediate Physical Address, Stage 2, EL1, Outer Shareable
+AArch64	TLBI RIPAS2LE1, TLBI RIPAS2LE1NXS 	TLB Range Invalidate by Intermediate Physical Address, Stage 2, Last level, EL1
+AArch64	TLBI RIPAS2LE1IS, TLBI RIPAS2LE1ISNXS 	TLB Range Invalidate by Intermediate Physical Address, Stage 2, Last level, EL1, Inner Shareable
+AArch64	TLBI RIPAS2LE1OS, TLBI RIPAS2LE1OSNXS 	TLB Range Invalidate by Intermediate Physical Address, Stage 2, Last level, EL1, Outer Shareable
+AArch64	TLBI RVAAE1, TLBI RVAAE1NXS 	TLB Range Invalidate by VA, All ASID, EL1
+AArch64	TLBI RVAAE1IS, TLBI RVAAE1ISNXS 	TLB Range Invalidate by VA, All ASID, EL1, Inner Shareable
+AArch64	TLBI RVAAE1OS, TLBI RVAAE1OSNXS 	TLB Range Invalidate by VA, All ASID, EL1, Outer Shareable
+AArch64	TLBI RVAALE1, TLBI RVAALE1NXS 	TLB Range Invalidate by VA, All ASID, Last level, EL1
+AArch64	TLBI RVAALE1IS, TLBI RVAALE1ISNXS 	TLB Range Invalidate by VA, All ASID, Last Level, EL1, Inner Shareable
+AArch64	TLBI RVAALE1OS, TLBI RVAALE1OSNXS 	TLB Range Invalidate by VA, All ASID, Last Level, EL1, Outer Shareable
+AArch64	TLBI RVAE1, TLBI RVAE1NXS 	TLB Range Invalidate by VA, EL1
+AArch64	TLBI RVAE1IS, TLBI RVAE1ISNXS 	TLB Range Invalidate by VA, EL1, Inner Shareable
+AArch64	TLBI RVAE1OS, TLBI RVAE1OSNXS 	TLB Range Invalidate by VA, EL1, Outer Shareable
+AArch64	TLBI RVAE2, TLBI RVAE2NXS 	TLB Range Invalidate by VA, EL2
+AArch64	TLBI RVAE2IS, TLBI RVAE2ISNXS 	TLB Range Invalidate by VA, EL2, Inner Shareable
+AArch64	TLBI RVAE2OS, TLBI RVAE2OSNXS 	TLB Range Invalidate by VA, EL2, Outer Shareable
+AArch64	TLBI RVAE3, TLBI RVAE3NXS 	TLB Range Invalidate by VA, EL3
+AArch64	TLBI RVAE3IS, TLBI RVAE3ISNXS 	TLB Range Invalidate by VA, EL3, Inner Shareable
+AArch64	TLBI RVAE3OS, TLBI RVAE3OSNXS 	TLB Range Invalidate by VA, EL3, Outer Shareable
+AArch64	TLBI RVALE1, TLBI RVALE1NXS 	TLB Range Invalidate by VA, Last level, EL1
+AArch64	TLBI RVALE1IS, TLBI RVALE1ISNXS 	TLB Range Invalidate by VA, Last level, EL1, Inner Shareable
+AArch64	TLBI RVALE1OS, TLBI RVALE1OSNXS 	TLB Range Invalidate by VA, Last level, EL1, Outer Shareable
+AArch64	TLBI RVALE2, TLBI RVALE2NXS 	TLB Range Invalidate by VA, Last level, EL2
+AArch64	TLBI RVALE2IS, TLBI RVALE2ISNXS 	TLB Range Invalidate by VA, Last level, EL2, Inner Shareable
+AArch64	TLBI RVALE2OS, TLBI RVALE2OSNXS 	TLB Range Invalidate by VA, Last level, EL2, Outer Shareable
+AArch64	TLBI RVALE3, TLBI RVALE3NXS 	TLB Range Invalidate by VA, Last level, EL3
+AArch64	TLBI RVALE3IS, TLBI RVALE3ISNXS 	TLB Range Invalidate by VA, Last level, EL3, Inner Shareable
+AArch64	TLBI RVALE3OS, TLBI RVALE3OSNXS 	TLB Range Invalidate by VA, Last level, EL3, Outer Shareable
+AArch64	TLBI VAAE1, TLBI VAAE1NXS 	TLB Invalidate by VA, All ASID, EL1
+AArch64	TLBI VAAE1IS, TLBI VAAE1ISNXS 	TLB Invalidate by VA, All ASID, EL1, Inner Shareable
+AArch64	TLBI VAAE1OS, TLBI VAAE1OSNXS 	TLB Invalidate by VA, All ASID, EL1, Outer Shareable
+AArch64	TLBI VAALE1, TLBI VAALE1NXS 	TLB Invalidate by VA, All ASID, Last level, EL1
+AArch64	TLBI VAALE1IS, TLBI VAALE1ISNXS 	TLB Invalidate by VA, All ASID, Last Level, EL1, Inner Shareable
+AArch64	TLBI VAALE1OS, TLBI VAALE1OSNXS 	TLB Invalidate by VA, All ASID, Last Level, EL1, Outer Shareable
+AArch64	TLBI VAE1, TLBI VAE1NXS 	TLB Invalidate by VA, EL1
+AArch64	TLBI VAE1IS, TLBI VAE1ISNXS 	TLB Invalidate by VA, EL1, Inner Shareable
+AArch64	TLBI VAE1OS, TLBI VAE1OSNXS 	TLB Invalidate by VA, EL1, Outer Shareable
+AArch64	TLBI VAE2, TLBI VAE2NXS 	TLB Invalidate by VA, EL2
+AArch64	TLBI VAE2IS, TLBI VAE2ISNXS 	TLB Invalidate by VA, EL2, Inner Shareable
+AArch64	TLBI VAE2OS, TLBI VAE2OSNXS 	TLB Invalidate by VA, EL2, Outer Shareable
+AArch64	TLBI VAE3, TLBI VAE3NXS 	TLB Invalidate by VA, EL3
+AArch64	TLBI VAE3IS, TLBI VAE3ISNXS 	TLB Invalidate by VA, EL3, Inner Shareable
+AArch64	TLBI VAE3OS, TLBI VAE3OSNXS 	TLB Invalidate by VA, EL3, Outer Shareable
+AArch64	TLBI VALE1, TLBI VALE1NXS 	TLB Invalidate by VA, Last level, EL1
+AArch64	TLBI VALE1IS, TLBI VALE1ISNXS 	TLB Invalidate by VA, Last level, EL1, Inner Shareable
+AArch64	TLBI VALE1OS, TLBI VALE1OSNXS 	TLB Invalidate by VA, Last level, EL1, Outer Shareable
+AArch64	TLBI VALE2, TLBI VALE2NXS 	TLB Invalidate by VA, Last level, EL2
+AArch64	TLBI VALE2IS, TLBI VALE2ISNXS 	TLB Invalidate by VA, Last level, EL2, Inner Shareable
+AArch64	TLBI VALE2OS, TLBI VALE2OSNXS 	TLB Invalidate by VA, Last level, EL2, Outer Shareable
+AArch64	TLBI VALE3, TLBI VALE3NXS 	TLB Invalidate by VA, Last level, EL3
+AArch64	TLBI VALE3IS, TLBI VALE3ISNXS 	TLB Invalidate by VA, Last level, EL3, Inner Shareable
+AArch64	TLBI VALE3OS, TLBI VALE3OSNXS 	TLB Invalidate by VA, Last level, EL3, Outer Shareable
+AArch64	TLBI VMALLE1, TLBI VMALLE1NXS 	TLB Invalidate by VMID, All at stage 1, EL1
+AArch64	TLBI VMALLE1IS, TLBI VMALLE1ISNXS 	TLB Invalidate by VMID, All at stage 1, EL1, Inner Shareable
+AArch64	TLBI VMALLE1OS, TLBI VMALLE1OSNXS 	TLB Invalidate by VMID, All at stage 1, EL1, Outer Shareable
+AArch64	TLBI VMALLS12E1, TLBI VMALLS12E1NXS 	TLB Invalidate by VMID, All at Stage 1 and 2, EL1
+AArch64	TLBI VMALLS12E1IS, TLBI VMALLS12E1ISNXS 	TLB Invalidate by VMID, All at Stage 1 and 2, EL1, Inner Shareable
+AArch64	TLBI VMALLS12E1OS, TLBI VMALLS12E1OSNXS 	TLB Invalidate by VMID, All at Stage 1 and 2, EL1, Outer Shareable
+
+
+In the PMU functional group:
+Exec state	Name	Description
+AArch32	PMCCFILTR 	Performance Monitors Cycle Count Filter Register
+AArch32	PMCCNTR 	Performance Monitors Cycle Count Register
+AArch32	PMCEID0 	Performance Monitors Common Event Identification register 0
+AArch32	PMCEID1 	Performance Monitors Common Event Identification register 1
+AArch32	PMCEID2 	Performance Monitors Common Event Identification register 2
+AArch32	PMCEID3 	Performance Monitors Common Event Identification register 3
+AArch32	PMCNTENCLR 	Performance Monitors Count Enable Clear register
+AArch32	PMCNTENSET 	Performance Monitors Count Enable Set register
+AArch32	PMCR 	Performance Monitors Control Register
+AArch32	PMEVCNTR<n> 	Performance Monitors Event Count Registers
+AArch32	PMEVTYPER<n> 	Performance Monitors Event Type Registers
+AArch32	PMINTENCLR 	Performance Monitors Interrupt Enable Clear register
+AArch32	PMINTENSET 	Performance Monitors Interrupt Enable Set register
+AArch32	PMMIR 	Performance Monitors Machine Identification Register
+AArch32	PMOVSR 	Performance Monitors Overflow Flag Status Register
+AArch32	PMOVSSET 	Performance Monitors Overflow Flag Status Set register
+AArch32	PMSELR 	Performance Monitors Event Counter Selection Register
+AArch32	PMSWINC 	Performance Monitors Software Increment register
+AArch32	PMUSERENR 	Performance Monitors User Enable Register
+AArch32	PMXEVCNTR 	Performance Monitors Selected Event Count Register
+AArch32	PMXEVTYPER 	Performance Monitors Selected Event Type Register
+AArch64	PMCCFILTR_EL0 	Performance Monitors Cycle Count Filter Register
+AArch64	PMCCNTR_EL0 	Performance Monitors Cycle Count Register
+AArch64	PMCEID0_EL0 	Performance Monitors Common Event Identification register 0
+AArch64	PMCEID1_EL0 	Performance Monitors Common Event Identification register 1
+AArch64	PMCNTENCLR_EL0 	Performance Monitors Count Enable Clear register
+AArch64	PMCNTENSET_EL0 	Performance Monitors Count Enable Set register
+AArch64	PMCR_EL0 	Performance Monitors Control Register
+AArch64	PMEVCNTR<n>_EL0 	Performance Monitors Event Count Registers
+AArch64	PMEVTYPER<n>_EL0 	Performance Monitors Event Type Registers
+AArch64	PMINTENCLR_EL1 	Performance Monitors Interrupt Enable Clear register
+AArch64	PMINTENSET_EL1 	Performance Monitors Interrupt Enable Set register
+AArch64	PMMIR_EL1 	Performance Monitors Machine Identification Register
+AArch64	PMOVSCLR_EL0 	Performance Monitors Overflow Flag Status Clear Register
+AArch64	PMOVSSET_EL0 	Performance Monitors Overflow Flag Status Set register
+AArch64	PMSELR_EL0 	Performance Monitors Event Counter Selection Register
+AArch64	PMSWINC_EL0 	Performance Monitors Software Increment register
+AArch64	PMUSERENR_EL0 	Performance Monitors User Enable Register
+AArch64	PMXEVCNTR_EL0 	Performance Monitors Selected Event Count Register
+AArch64	PMXEVTYPER_EL0 	Performance Monitors Selected Event Type Register
+External	PMAUTHSTATUS 	Performance Monitors Authentication Status register
+External	PMCCFILTR_EL0 	Performance Monitors Cycle Counter Filter Register
+External	PMCCNTR_EL0 	Performance Monitors Cycle Counter
+External	PMCEID0 	Performance Monitors Common Event Identification register 0
+External	PMCEID1 	Performance Monitors Common Event Identification register 1
+External	PMCEID2 	Performance Monitors Common Event Identification register 2
+External	PMCEID3 	Performance Monitors Common Event Identification register 3
+External	PMCFGR 	Performance Monitors Configuration Register
+External	PMCID1SR 	CONTEXTIDR_EL1 Sample Register
+External	PMCID2SR 	CONTEXTIDR_EL2 Sample Register
+External	PMCIDR0 	Performance Monitors Component Identification Register 0
+External	PMCIDR1 	Performance Monitors Component Identification Register 1
+External	PMCIDR2 	Performance Monitors Component Identification Register 2
+External	PMCIDR3 	Performance Monitors Component Identification Register 3
+External	PMCNTENCLR_EL0 	Performance Monitors Count Enable Clear register
+External	PMCNTENSET_EL0 	Performance Monitors Count Enable Set register
+External	PMCR_EL0 	Performance Monitors Control Register
+External	PMDEVAFF0 	Performance Monitors Device Affinity register 0
+External	PMDEVAFF1 	Performance Monitors Device Affinity register 1
+External	PMDEVARCH 	Performance Monitors Device Architecture register
+External	PMDEVID 	Performance Monitors Device ID register
+External	PMDEVTYPE 	Performance Monitors Device Type register
+External	PMEVCNTR<n>_EL0 	Performance Monitors Event Count Registers
+External	PMEVTYPER<n>_EL0 	Performance Monitors Event Type Registers
+External	PMINTENCLR_EL1 	Performance Monitors Interrupt Enable Clear register
+External	PMINTENSET_EL1 	Performance Monitors Interrupt Enable Set register
+External	PMITCTRL 	Performance Monitors Integration mode Control register
+External	PMLAR 	Performance Monitors Lock Access Register
+External	PMLSR 	Performance Monitors Lock Status Register
+External	PMMIR 	Performance Monitors Machine Identification Register
+External	PMOVSCLR_EL0 	Performance Monitors Overflow Flag Status Clear register
+External	PMOVSSET_EL0 	Performance Monitors Overflow Flag Status Set register
+External	PMPCSR 	Program Counter Sample Register
+External	PMPIDR0 	Performance Monitors Peripheral Identification Register 0
+External	PMPIDR1 	Performance Monitors Peripheral Identification Register 1
+External	PMPIDR2 	Performance Monitors Peripheral Identification Register 2
+External	PMPIDR3 	Performance Monitors Peripheral Identification Register 3
+External	PMPIDR4 	Performance Monitors Peripheral Identification Register 4
+External	PMSWINC_EL0 	Performance Monitors Software Increment register
+External	PMVIDSR 	VMID Sample Register
+
+
+In the Reset functional group:
+Exec state	Name	Description
+AArch32	HRMR 	Hyp Reset Management Register
+AArch32	RMR 	Reset Management Register
+AArch32	RVBAR 	Reset Vector Base Address Register
+AArch64	RMR_EL1 	Reset Management Register (EL1)
+AArch64	RMR_EL2 	Reset Management Register (EL2)
+AArch64	RMR_EL3 	Reset Management Register (EL3)
+AArch64	RVBAR_EL1 	Reset Vector Base Address Register (if EL2 and EL3 not implemented)
+AArch64	RVBAR_EL2 	Reset Vector Base Address Register (if EL3 not implemented)
+AArch64	RVBAR_EL3 	Reset Vector Base Address Register (if EL3 implemented)
+
+
+In the Thread functional group:
+Exec state	Name	Description
+AArch32	HTPIDR 	Hyp Software Thread ID Register
+AArch32	TPIDRPRW 	PL1 Software Thread ID Register
+AArch32	TPIDRURO 	PL0 Read-Only Software Thread ID Register
+AArch32	TPIDRURW 	PL0 Read/Write Software Thread ID Register
+AArch64	SCXTNUM_EL0 	EL0 Read/Write Software Context Number
+AArch64	SCXTNUM_EL1 	EL1 Read/Write Software Context Number
+AArch64	SCXTNUM_EL2 	EL2 Read/Write Software Context Number
+AArch64	SCXTNUM_EL3 	EL3 Read/Write Software Context Number
+AArch64	TPIDRRO_EL0 	EL0 Read-Only Software Thread ID Register
+AArch64	TPIDR_EL0 	EL0 Read/Write Software Thread ID Register
+AArch64	TPIDR_EL1 	EL1 Software Thread ID Register
+AArch64	TPIDR_EL2 	EL2 Software Thread ID Register
+AArch64	TPIDR_EL3 	EL3 Software Thread ID Register
+
+
+In the IMP DEF functional group:
+Exec state	Name	Description
+AArch32	ACTLR 	Auxiliary Control Register
+AArch32	ACTLR2 	Auxiliary Control Register 2
+AArch32	ADFSR 	Auxiliary Data Fault Status Register
+AArch32	AIDR 	Auxiliary ID Register
+AArch32	AIFSR 	Auxiliary Instruction Fault Status Register
+AArch32	AMAIR0 	Auxiliary Memory Attribute Indirection Register 0
+AArch32	AMAIR1 	Auxiliary Memory Attribute Indirection Register 1
+AArch32	HACTLR 	Hyp Auxiliary Control Register
+AArch32	HACTLR2 	Hyp Auxiliary Control Register 2
+AArch32	HADFSR 	Hyp Auxiliary Data Fault Status Register
+AArch32	HAIFSR 	Hyp Auxiliary Instruction Fault Status Register
+AArch32	HAMAIR0 	Hyp Auxiliary Memory Attribute Indirection Register 0
+AArch32	HAMAIR1 	Hyp Auxiliary Memory Attribute Indirection Register 1
+AArch64	ACTLR_EL1 	Auxiliary Control Register (EL1)
+AArch64	ACTLR_EL2 	Auxiliary Control Register (EL2)
+AArch64	ACTLR_EL3 	Auxiliary Control Register (EL3)
+AArch64	AFSR0_EL1 	Auxiliary Fault Status Register 0 (EL1)
+AArch64	AFSR0_EL2 	Auxiliary Fault Status Register 0 (EL2)
+AArch64	AFSR0_EL3 	Auxiliary Fault Status Register 0 (EL3)
+AArch64	AFSR1_EL1 	Auxiliary Fault Status Register 1 (EL1)
+AArch64	AFSR1_EL2 	Auxiliary Fault Status Register 1 (EL2)
+AArch64	AFSR1_EL3 	Auxiliary Fault Status Register 1 (EL3)
+AArch64	AIDR_EL1 	Auxiliary ID Register
+AArch64	AMAIR_EL1 	Auxiliary Memory Attribute Indirection Register (EL1)
+AArch64	AMAIR_EL2 	Auxiliary Memory Attribute Indirection Register (EL2)
+AArch64	AMAIR_EL3 	Auxiliary Memory Attribute Indirection Register (EL3)
+AArch64	HACR_EL2 	Hypervisor Auxiliary Control Register
+AArch64	S3_<op1>_<Cn>_<Cm>_<op2> 	IMPLEMENTATION DEFINED registers
+AArch64	SYS S1_<op1>_<Cn>_<Cm>_<op2>, SYSL S1_<op1>_<Cn>_<Cm>_<op2> 	IMPLEMENTATION DEFINED maintenance instructions
+
+
+In the Timer functional group:
+Exec state	Name	Description
+AArch32	CNTFRQ 	Counter-timer Frequency register
+AArch32	CNTHPS_CTL 	Counter-timer Secure Physical Timer Control Register (EL2)
+AArch32	CNTHPS_CVAL 	Counter-timer Secure Physical Timer CompareValue Register (EL2)
+AArch32	CNTHPS_TVAL 	Counter-timer Secure Physical Timer TimerValue Register (EL2)
+AArch32	CNTHP_CTL 	Counter-timer Hyp Physical Timer Control register
+AArch32	CNTHVS_CTL 	Counter-timer Secure Virtual Timer Control Register (EL2)
+AArch32	CNTHVS_CVAL 	Counter-timer Secure Virtual Timer CompareValue Register (EL2)
+AArch32	CNTHVS_TVAL 	Counter-timer Secure Virtual Timer TimerValue Register (EL2)
+AArch32	CNTHV_CTL 	Counter-timer Virtual Timer Control register (EL2)
+AArch32	CNTHV_CVAL 	Counter-timer Virtual Timer CompareValue register (EL2)
+AArch32	CNTHV_TVAL 	Counter-timer Virtual Timer TimerValue register (EL2)
+AArch32	CNTKCTL 	Counter-timer Kernel Control register
+AArch32	CNTPCT 	Counter-timer Physical Count register
+AArch32	CNTPCTSS 	Counter-timer Self-Synchronized Physical Count register
+AArch32	CNTP_CTL 	Counter-timer Physical Timer Control register
+AArch32	CNTP_CVAL 	Counter-timer Physical Timer CompareValue register
+AArch32	CNTP_TVAL 	Counter-timer Physical Timer TimerValue register
+AArch32	CNTVCT 	Counter-timer Virtual Count register
+AArch32	CNTVCTSS 	Counter-timer Self-Synchronized Virtual Count register
+AArch32	CNTV_CTL 	Counter-timer Virtual Timer Control register
+AArch32	CNTV_CVAL 	Counter-timer Virtual Timer CompareValue register
+AArch32	CNTV_TVAL 	Counter-timer Virtual Timer TimerValue register
+AArch64	CNTFRQ_EL0 	Counter-timer Frequency register
+AArch64	CNTHVS_CTL_EL2 	Counter-timer Secure Virtual Timer Control register (EL2)
+AArch64	CNTHVS_CVAL_EL2 	Counter-timer Secure Virtual Timer CompareValue register (EL2)
+AArch64	CNTHVS_TVAL_EL2 	Counter-timer Secure Virtual Timer TimerValue register (EL2)
+AArch64	CNTHV_CTL_EL2 	Counter-timer Virtual Timer Control register (EL2)
+AArch64	CNTHV_CVAL_EL2 	Counter-timer Virtual Timer CompareValue register (EL2)
+AArch64	CNTHV_TVAL_EL2 	Counter-timer Virtual Timer TimerValue Register (EL2)
+AArch64	CNTKCTL_EL1 	Counter-timer Kernel Control register
+AArch64	CNTPCTSS_EL0 	Counter-timer Self-Synchronized Physical Count register
+AArch64	CNTPCT_EL0 	Counter-timer Physical Count register
+AArch64	CNTPOFF_EL2 	Counter-timer Physical Offset register
+AArch64	CNTPS_CTL_EL1 	Counter-timer Physical Secure Timer Control register
+AArch64	CNTPS_CVAL_EL1 	Counter-timer Physical Secure Timer CompareValue register
+AArch64	CNTPS_TVAL_EL1 	Counter-timer Physical Secure Timer TimerValue register
+AArch64	CNTP_CTL_EL0 	Counter-timer Physical Timer Control register
+AArch64	CNTP_CVAL_EL0 	Counter-timer Physical Timer CompareValue register
+AArch64	CNTP_TVAL_EL0 	Counter-timer Physical Timer TimerValue register
+AArch64	CNTVCTSS_EL0 	Counter-timer Self-Synchronized Virtual Count register
+AArch64	CNTVCT_EL0 	Counter-timer Virtual Count register
+AArch64	CNTV_CTL_EL0 	Counter-timer Virtual Timer Control register
+AArch64	CNTV_CVAL_EL0 	Counter-timer Virtual Timer CompareValue register
+AArch64	CNTV_TVAL_EL0 	Counter-timer Virtual Timer TimerValue register
+External	CNTACR<n> 	Counter-timer Access Control Registers
+External	CNTCR 	Counter Control Register
+External	CNTCV 	Counter Count Value register
+External	CNTEL0ACR 	Counter-timer EL0 Access Control Register
+External	CNTFID0 	Counter Frequency ID
+External	CNTFID<n> 	Counter Frequency IDs, n > 0
+External	CNTFRQ 	Counter-timer Frequency
+External	CNTID 	Counter Identification Register
+External	CNTNSAR 	Counter-timer Non-secure Access Register
+External	CNTPCT 	Counter-timer Physical Count
+External	CNTP_CTL 	Counter-timer Physical Timer Control
+External	CNTP_CVAL 	Counter-timer Physical Timer CompareValue
+External	CNTP_TVAL 	Counter-timer Physical Timer TimerValue
+External	CNTSCR 	Counter Scale Register
+External	CNTSR 	Counter Status Register
+External	CNTTIDR 	Counter-timer Timer ID Register
+External	CNTVCT 	Counter-timer Virtual Count
+External	CNTVOFF 	Counter-timer Virtual Offset
+External	CNTVOFF<n> 	Counter-timer Virtual Offsets
+External	CNTV_CTL 	Counter-timer Virtual Timer Control
+External	CNTV_CVAL 	Counter-timer Virtual Timer CompareValue
+External	CNTV_TVAL 	Counter-timer Virtual Timer TimerValue
+External	CounterID<n> 	Counter ID registers
+
+
+In the Debug functional group:
+Exec state	Name	Description
+AArch32	DBGAUTHSTATUS 	Debug Authentication Status register
+AArch32	DBGBCR<n> 	Debug Breakpoint Control Registers
+AArch32	DBGBVR<n> 	Debug Breakpoint Value Registers
+AArch32	DBGBXVR<n> 	Debug Breakpoint Extended Value Registers
+AArch32	DBGCLAIMCLR 	Debug CLAIM Tag Clear register
+AArch32	DBGCLAIMSET 	Debug CLAIM Tag Set register
+AArch32	DBGDCCINT 	DCC Interrupt Enable Register
+AArch32	DBGDEVID 	Debug Device ID register 0
+AArch32	DBGDEVID1 	Debug Device ID register 1
+AArch32	DBGDEVID2 	Debug Device ID register 2
+AArch32	DBGDIDR 	Debug ID Register
+AArch32	DBGDRAR 	Debug ROM Address Register
+AArch32	DBGDSAR 	Debug Self Address Register
+AArch32	DBGDSCRext 	Debug Status and Control Register, External View
+AArch32	DBGDSCRint 	Debug Status and Control Register, Internal View
+AArch32	DBGDTRRXext 	Debug OS Lock Data Transfer Register, Receive, External View
+AArch32	DBGDTRRXint 	Debug Data Transfer Register, Receive
+AArch32	DBGDTRTXext 	Debug OS Lock Data Transfer Register, Transmit
+AArch32	DBGDTRTXint 	Debug Data Transfer Register, Transmit
+AArch32	DBGOSDLR 	Debug OS Double Lock Register
+AArch32	DBGOSECCR 	Debug OS Lock Exception Catch Control Register
+AArch32	DBGOSLAR 	Debug OS Lock Access Register
+AArch32	DBGOSLSR 	Debug OS Lock Status Register
+AArch32	DBGPRCR 	Debug Power Control Register
+AArch32	DBGVCR 	Debug Vector Catch Register
+AArch32	DBGWCR<n> 	Debug Watchpoint Control Registers
+AArch32	DBGWFAR 	Debug Watchpoint Fault Address Register
+AArch32	DBGWVR<n> 	Debug Watchpoint Value Registers
+AArch32	TRFCR 	Trace Filter Control Register
+AArch64	DBGAUTHSTATUS_EL1 	Debug Authentication Status register
+AArch64	DBGBCR<n>_EL1 	Debug Breakpoint Control Registers
+AArch64	DBGBVR<n>_EL1 	Debug Breakpoint Value Registers
+AArch64	DBGCLAIMCLR_EL1 	Debug CLAIM Tag Clear register
+AArch64	DBGCLAIMSET_EL1 	Debug CLAIM Tag Set register
+AArch64	DBGDTRRX_EL0 	Debug Data Transfer Register, Receive
+AArch64	DBGDTRTX_EL0 	Debug Data Transfer Register, Transmit
+AArch64	DBGDTR_EL0 	Debug Data Transfer Register, half-duplex
+AArch64	DBGPRCR_EL1 	Debug Power Control Register
+AArch64	DBGVCR32_EL2 	Debug Vector Catch Register
+AArch64	DBGWCR<n>_EL1 	Debug Watchpoint Control Registers
+AArch64	DBGWVR<n>_EL1 	Debug Watchpoint Value Registers
+AArch64	DLR_EL0 	Debug Link Register
+AArch64	DSPSR_EL0 	Debug Saved Program Status Register
+AArch64	MDCCINT_EL1 	Monitor DCC Interrupt Enable Register
+AArch64	MDCCSR_EL0 	Monitor DCC Status Register
+AArch64	MDRAR_EL1 	Monitor Debug ROM Address Register
+AArch64	MDSCR_EL1 	Monitor Debug System Control Register
+AArch64	OSDLR_EL1 	OS Double Lock Register
+AArch64	OSDTRRX_EL1 	OS Lock Data Transfer Register, Receive
+AArch64	OSDTRTX_EL1 	OS Lock Data Transfer Register, Transmit
+AArch64	OSECCR_EL1 	OS Lock Exception Catch Control Register
+AArch64	OSLAR_EL1 	OS Lock Access Register
+AArch64	OSLSR_EL1 	OS Lock Status Register
+AArch64	TRFCR_EL1 	Trace Filter Control Register (EL1)
+AArch64	TRFCR_EL2 	Trace Filter Control Register (EL2)
+External	DBGAUTHSTATUS_EL1 	Debug Authentication Status register
+External	DBGBCR<n>_EL1 	Debug Breakpoint Control Registers
+External	DBGBVR<n>_EL1 	Debug Breakpoint Value Registers
+External	DBGCLAIMCLR_EL1 	Debug CLAIM Tag Clear register
+External	DBGCLAIMSET_EL1 	Debug CLAIM Tag Set register
+External	DBGDTRRX_EL0 	Debug Data Transfer Register, Receive
+External	DBGDTRTX_EL0 	Debug Data Transfer Register, Transmit
+External	DBGWCR<n>_EL1 	Debug Watchpoint Control Registers
+External	DBGWVR<n>_EL1 	Debug Watchpoint Value Registers
+External	EDACR 	External Debug Auxiliary Control Register
+External	EDCIDR0 	External Debug Component Identification Register 0
+External	EDCIDR1 	External Debug Component Identification Register 1
+External	EDCIDR2 	External Debug Component Identification Register 2
+External	EDCIDR3 	External Debug Component Identification Register 3
+External	EDCIDSR 	External Debug Context ID Sample Register
+External	EDDEVAFF0 	External Debug Device Affinity register 0
+External	EDDEVAFF1 	External Debug Device Affinity register 1
+External	EDDEVARCH 	External Debug Device Architecture register
+External	EDDEVID 	External Debug Device ID register 0
+External	EDDEVID1 	External Debug Device ID register 1
+External	EDDEVID2 	External Debug Device ID register 2
+External	EDDEVTYPE 	External Debug Device Type register
+External	EDECCR 	External Debug Exception Catch Control Register
+External	EDECR 	External Debug Execution Control Register
+External	EDESR 	External Debug Event Status Register
+External	EDITCTRL 	External Debug Integration mode Control register
+External	EDITR 	External Debug Instruction Transfer Register
+External	EDLAR 	External Debug Lock Access Register
+External	EDLSR 	External Debug Lock Status Register
+External	EDPCSR 	External Debug Program Counter Sample Register
+External	EDPIDR0 	External Debug Peripheral Identification Register 0
+External	EDPIDR1 	External Debug Peripheral Identification Register 1
+External	EDPIDR2 	External Debug Peripheral Identification Register 2
+External	EDPIDR3 	External Debug Peripheral Identification Register 3
+External	EDPIDR4 	External Debug Peripheral Identification Register 4
+External	EDPRCR 	External Debug Power/Reset Control Register
+External	EDPRSR 	External Debug Processor Status Register
+External	EDRCR 	External Debug Reserve Control Register
+External	EDSCR 	External Debug Status and Control Register
+External	EDVIDSR 	External Debug Virtual Context Sample Register
+External	EDWAR 	External Debug Watchpoint Address Register
+External	OSLAR_EL1 	OS Lock Access Register
+
+
+In the CTI functional group:
+Exec state	Name	Description
+External	ASICCTL 	CTI External Multiplexer Control register
+External	CTIAPPCLEAR 	CTI Application Trigger Clear register
+External	CTIAPPPULSE 	CTI Application Pulse register
+External	CTIAPPSET 	CTI Application Trigger Set register
+External	CTIAUTHSTATUS 	CTI Authentication Status register
+External	CTICHINSTATUS 	CTI Channel In Status register
+External	CTICHOUTSTATUS 	CTI Channel Out Status register
+External	CTICIDR0 	CTI Component Identification Register 0
+External	CTICIDR1 	CTI Component Identification Register 1
+External	CTICIDR2 	CTI Component Identification Register 2
+External	CTICIDR3 	CTI Component Identification Register 3
+External	CTICLAIMCLR 	CTI CLAIM Tag Clear register
+External	CTICLAIMSET 	CTI CLAIM Tag Set register
+External	CTICONTROL 	CTI Control register
+External	CTIDEVAFF0 	CTI Device Affinity register 0
+External	CTIDEVAFF1 	CTI Device Affinity register 1
+External	CTIDEVARCH 	CTI Device Architecture register
+External	CTIDEVCTL 	CTI Device Control register
+External	CTIDEVID 	CTI Device ID register 0
+External	CTIDEVID1 	CTI Device ID register 1
+External	CTIDEVID2 	CTI Device ID register 2
+External	CTIDEVTYPE 	CTI Device Type register
+External	CTIGATE 	CTI Channel Gate Enable register
+External	CTIINEN<n> 	CTI Input Trigger to Output Channel Enable registers
+External	CTIINTACK 	CTI Output Trigger Acknowledge register
+External	CTIITCTRL 	CTI Integration mode Control register
+External	CTILAR 	CTI Lock Access Register
+External	CTILSR 	CTI Lock Status Register
+External	CTIOUTEN<n> 	CTI Input Channel to Output Trigger Enable registers
+External	CTIPIDR0 	CTI Peripheral Identification Register 0
+External	CTIPIDR1 	CTI Peripheral Identification Register 1
+External	CTIPIDR2 	CTI Peripheral Identification Register 2
+External	CTIPIDR3 	CTI Peripheral Identification Register 3
+External	CTIPIDR4 	CTI Peripheral Identification Register 4
+External	CTITRIGINSTATUS 	CTI Trigger In Status register
+External	CTITRIGOUTSTATUS 	CTI Trigger Out Status register
+
+
+In the Virt functional group:
+Exec state	Name	Description
+AArch32	ATS1HR 	Address Translate Stage 1 Hyp mode Read
+AArch32	ATS1HW 	Address Translate Stage 1 Hyp mode Write
+AArch32	CNTHCTL 	Counter-timer Hyp Control register
+AArch32	CNTHP_CVAL 	Counter-timer Hyp Physical CompareValue register
+AArch32	CNTHP_TVAL 	Counter-timer Hyp Physical Timer TimerValue register
+AArch32	CNTVOFF 	Counter-timer Virtual Offset register
+AArch32	HACR 	Hyp Auxiliary Configuration Register
+AArch32	HACTLR 	Hyp Auxiliary Control Register
+AArch32	HACTLR2 	Hyp Auxiliary Control Register 2
+AArch32	HADFSR 	Hyp Auxiliary Data Fault Status Register
+AArch32	HAIFSR 	Hyp Auxiliary Instruction Fault Status Register
+AArch32	HAMAIR0 	Hyp Auxiliary Memory Attribute Indirection Register 0
+AArch32	HAMAIR1 	Hyp Auxiliary Memory Attribute Indirection Register 1
+AArch32	HCPTR 	Hyp Architectural Feature Trap Register
+AArch32	HCR 	Hyp Configuration Register
+AArch32	HCR2 	Hyp Configuration Register 2
+AArch32	HDCR 	Hyp Debug Control Register
+AArch32	HDFAR 	Hyp Data Fault Address Register
+AArch32	HIFAR 	Hyp Instruction Fault Address Register
+AArch32	HMAIR0 	Hyp Memory Attribute Indirection Register 0
+AArch32	HMAIR1 	Hyp Memory Attribute Indirection Register 1
+AArch32	HPFAR 	Hyp IPA Fault Address Register
+AArch32	HRMR 	Hyp Reset Management Register
+AArch32	HSCTLR 	Hyp System Control Register
+AArch32	HSR 	Hyp Syndrome Register
+AArch32	HSTR 	Hyp System Trap Register
+AArch32	HTCR 	Hyp Translation Control Register
+AArch32	HTPIDR 	Hyp Software Thread ID Register
+AArch32	HTRFCR 	Hyp Trace Filter Control Register
+AArch32	HTTBR 	Hyp Translation Table Base Register
+AArch32	HVBAR 	Hyp Vector Base Address Register
+AArch32	ICC_HSRE 	Interrupt Controller Hyp System Register Enable register
+AArch32	ICH_AP0R<n> 	Interrupt Controller Hyp Active Priorities Group 0 Registers
+AArch32	ICH_AP1R<n> 	Interrupt Controller Hyp Active Priorities Group 1 Registers
+AArch32	ICH_EISR 	Interrupt Controller End of Interrupt Status Register
+AArch32	ICH_ELRSR 	Interrupt Controller Empty List Register Status Register
+AArch32	ICH_HCR 	Interrupt Controller Hyp Control Register
+AArch32	ICH_LR<n> 	Interrupt Controller List Registers
+AArch32	ICH_LRC<n> 	Interrupt Controller List Registers
+AArch32	ICH_MISR 	Interrupt Controller Maintenance Interrupt State Register
+AArch32	ICH_VMCR 	Interrupt Controller Virtual Machine Control Register
+AArch32	ICH_VTR 	Interrupt Controller VGIC Type Register
+AArch32	TLBIALLH 	TLB Invalidate All, Hyp mode
+AArch32	TLBIALLHIS 	TLB Invalidate All, Hyp mode, Inner Shareable
+AArch32	TLBIIPAS2 	TLB Invalidate by Intermediate Physical Address, Stage 2
+AArch32	TLBIIPAS2IS 	TLB Invalidate by Intermediate Physical Address, Stage 2, Inner Shareable
+AArch32	TLBIIPAS2L 	TLB Invalidate by Intermediate Physical Address, Stage 2, Last level
+AArch32	TLBIIPAS2LIS 	TLB Invalidate by Intermediate Physical Address, Stage 2, Last level, Inner Shareable
+AArch32	TLBIMVAH 	TLB Invalidate by VA, Hyp mode
+AArch32	TLBIMVAHIS 	TLB Invalidate by VA, Hyp mode, Inner Shareable
+AArch32	TLBIMVALH 	TLB Invalidate by VA, Last level, Hyp mode
+AArch32	TLBIMVALHIS 	TLB Invalidate by VA, Last level, Hyp mode, Inner Shareable
+AArch32	VMPIDR 	Virtualization Multiprocessor ID Register
+AArch32	VPIDR 	Virtualization Processor ID Register
+AArch32	VTCR 	Virtualization Translation Control Register
+AArch32	VTTBR 	Virtualization Translation Table Base Register
+AArch64	ACTLR_EL2 	Auxiliary Control Register (EL2)
+AArch64	AFSR0_EL2 	Auxiliary Fault Status Register 0 (EL2)
+AArch64	AFSR1_EL2 	Auxiliary Fault Status Register 1 (EL2)
+AArch64	AMAIR_EL2 	Auxiliary Memory Attribute Indirection Register (EL2)
+AArch64	CNTHCTL_EL2 	Counter-timer Hypervisor Control register
+AArch64	CNTHPS_CTL_EL2 	Counter-timer Secure Physical Timer Control register (EL2)
+AArch64	CNTHPS_CVAL_EL2 	Counter-timer Secure Physical Timer CompareValue register (EL2)
+AArch64	CNTHPS_TVAL_EL2 	Counter-timer Secure Physical Timer TimerValue register (EL2)
+AArch64	CNTHP_CTL_EL2 	Counter-timer Hypervisor Physical Timer Control register
+AArch64	CNTHP_CVAL_EL2 	Counter-timer Physical Timer CompareValue register (EL2)
+AArch64	CNTHP_TVAL_EL2 	Counter-timer Physical Timer TimerValue register (EL2)
+AArch64	CNTVOFF_EL2 	Counter-timer Virtual Offset register
+AArch64	CPTR_EL2 	Architectural Feature Trap Register (EL2)
+AArch64	ESR_EL2 	Exception Syndrome Register (EL2)
+AArch64	FAR_EL2 	Fault Address Register (EL2)
+AArch64	HACR_EL2 	Hypervisor Auxiliary Control Register
+AArch64	HCRX_EL2 	Extended Hypervisor Configuration Register
+AArch64	HCR_EL2 	Hypervisor Configuration Register
+AArch64	HPFAR_EL2 	Hypervisor IPA Fault Address Register
+AArch64	HSTR_EL2 	Hypervisor System Trap Register
+AArch64	ICC_SRE_EL2 	Interrupt Controller System Register Enable register (EL2)
+AArch64	ICH_AP0R<n>_EL2 	Interrupt Controller Hyp Active Priorities Group 0 Registers
+AArch64	ICH_AP1R<n>_EL2 	Interrupt Controller Hyp Active Priorities Group 1 Registers
+AArch64	ICH_EISR_EL2 	Interrupt Controller End of Interrupt Status Register
+AArch64	ICH_ELRSR_EL2 	Interrupt Controller Empty List Register Status Register
+AArch64	ICH_HCR_EL2 	Interrupt Controller Hyp Control Register
+AArch64	ICH_LR<n>_EL2 	Interrupt Controller List Registers
+AArch64	ICH_MISR_EL2 	Interrupt Controller Maintenance Interrupt State Register
+AArch64	ICH_VMCR_EL2 	Interrupt Controller Virtual Machine Control Register
+AArch64	ICH_VTR_EL2 	Interrupt Controller VGIC Type Register
+AArch64	MAIR_EL2 	Memory Attribute Indirection Register (EL2)
+AArch64	MDCR_EL2 	Monitor Debug Configuration Register (EL2)
+AArch64	RMR_EL2 	Reset Management Register (EL2)
+AArch64	SCTLR_EL2 	System Control Register (EL2)
+AArch64	TCR_EL2 	Translation Control Register (EL2)
+AArch64	TLBI IPAS2E1, TLBI IPAS2E1NXS 	TLB Invalidate by Intermediate Physical Address, Stage 2, EL1
+AArch64	TLBI IPAS2E1IS, TLBI IPAS2E1ISNXS 	TLB Invalidate by Intermediate Physical Address, Stage 2, EL1, Inner Shareable
+AArch64	TLBI IPAS2E1OS, TLBI IPAS2E1OSNXS 	TLB Invalidate by Intermediate Physical Address, Stage 2, EL1, Outer Shareable
+AArch64	TLBI IPAS2LE1, TLBI IPAS2LE1NXS 	TLB Invalidate by Intermediate Physical Address, Stage 2, Last level, EL1
+AArch64	TLBI IPAS2LE1IS, TLBI IPAS2LE1ISNXS 	TLB Invalidate by Intermediate Physical Address, Stage 2, Last level, EL1, Inner Shareable
+AArch64	TLBI IPAS2LE1OS, TLBI IPAS2LE1OSNXS 	TLB Invalidate by Intermediate Physical Address, Stage 2, Last level, EL1, Outer Shareable
+AArch64	TLBI RIPAS2E1, TLBI RIPAS2E1NXS 	TLB Range Invalidate by Intermediate Physical Address, Stage 2, EL1
+AArch64	TLBI RIPAS2E1IS, TLBI RIPAS2E1ISNXS 	TLB Range Invalidate by Intermediate Physical Address, Stage 2, EL1, Inner Shareable
+AArch64	TLBI RIPAS2E1OS, TLBI RIPAS2E1OSNXS 	TLB Range Invalidate by Intermediate Physical Address, Stage 2, EL1, Outer Shareable
+AArch64	TLBI RIPAS2LE1, TLBI RIPAS2LE1NXS 	TLB Range Invalidate by Intermediate Physical Address, Stage 2, Last level, EL1
+AArch64	TLBI RIPAS2LE1IS, TLBI RIPAS2LE1ISNXS 	TLB Range Invalidate by Intermediate Physical Address, Stage 2, Last level, EL1, Inner Shareable
+AArch64	TLBI RIPAS2LE1OS, TLBI RIPAS2LE1OSNXS 	TLB Range Invalidate by Intermediate Physical Address, Stage 2, Last level, EL1, Outer Shareable
+AArch64	TPIDR_EL2 	EL2 Software Thread ID Register
+AArch64	TTBR0_EL2 	Translation Table Base Register 0 (EL2)
+AArch64	TTBR1_EL2 	Translation Table Base Register 1 (EL2)
+AArch64	VBAR_EL2 	Vector Base Address Register (EL2)
+AArch64	VMPIDR_EL2 	Virtualization Multiprocessor ID Register
+AArch64	VPIDR_EL2 	Virtualization Processor ID Register
+AArch64	VTCR_EL2 	Virtualization Translation Control Register
+AArch64	VTTBR_EL2 	Virtualization Translation Table Base Register
+
+
+In the Secure functional group:
+Exec state	Name	Description
+AArch32	ICC_MCTLR 	Interrupt Controller Monitor Control Register
+AArch32	ICC_MSRE 	Interrupt Controller Monitor System Register Enable register
+AArch32	MVBAR 	Monitor Vector Base Address Register
+AArch32	NSACR 	Non-Secure Access Control Register
+AArch32	SCR 	Secure Configuration Register
+AArch32	SDCR 	Secure Debug Control Register
+AArch32	SDER 	Secure Debug Enable Register
+AArch64	ACTLR_EL3 	Auxiliary Control Register (EL3)
+AArch64	AFSR0_EL3 	Auxiliary Fault Status Register 0 (EL3)
+AArch64	AFSR1_EL3 	Auxiliary Fault Status Register 1 (EL3)
+AArch64	AMAIR_EL3 	Auxiliary Memory Attribute Indirection Register (EL3)
+AArch64	CPTR_EL3 	Architectural Feature Trap Register (EL3)
+AArch64	ICC_CTLR_EL3 	Interrupt Controller Control Register (EL3)
+AArch64	ICC_SRE_EL3 	Interrupt Controller System Register Enable register (EL3)
+AArch64	MDCR_EL3 	Monitor Debug Configuration Register (EL3)
+AArch64	SCR_EL3 	Secure Configuration Register
+AArch64	SDER32_EL3 	AArch32 Secure Debug Enable Register
+AArch64	VBAR_EL3 	Vector Base Address Register (EL3)
+
+
+In the Float functional group:
+Exec state	Name	Description
+AArch32	FPEXC 	Floating-Point Exception Control register
+AArch32	FPSCR 	Floating-Point Status and Control Register
+AArch32	FPSID 	Floating-Point System ID register
+AArch32	MVFR0 	Media and VFP Feature Register 0
+AArch32	MVFR1 	Media and VFP Feature Register 1
+AArch32	MVFR2 	Media and VFP Feature Register 2
+AArch64	FPCR 	Floating-point Control Register
+AArch64	FPEXC32_EL2 	Floating-Point Exception Control register
+AArch64	FPSR 	Floating-point Status Register
+AArch64	MVFR0_EL1 	AArch32 Media and VFP Feature Register 0
+AArch64	MVFR1_EL1 	AArch32 Media and VFP Feature Register 1
+AArch64	MVFR2_EL1 	AArch32 Media and VFP Feature Register 2
+
+
+In the Legacy functional group:
+Exec state	Name	Description
+AArch32	CP15DMB 	Data Memory Barrier System instruction
+AArch32	CP15DSB 	Data Synchronization Barrier System instruction
+AArch32	CP15ISB 	Instruction Synchronization Barrier System instruction
+AArch32	FCSEIDR 	FCSE Process ID register
+AArch32	JIDR 	Jazelle ID Register
+AArch32	JMCR 	Jazelle Main Configuration Register
+AArch32	JOSCR 	Jazelle OS Control Register
+
+
+In the GIC functional group:
+Exec state	Name	Description
+AArch32	ICC_AP0R<n> 	Interrupt Controller Active Priorities Group 0 Registers
+AArch32	ICC_AP1R<n> 	Interrupt Controller Active Priorities Group 1 Registers
+AArch32	ICC_ASGI1R 	Interrupt Controller Alias Software Generated Interrupt Group 1 Register
+AArch32	ICC_BPR0 	Interrupt Controller Binary Point Register 0
+AArch32	ICC_BPR1 	Interrupt Controller Binary Point Register 1
+AArch32	ICC_CTLR 	Interrupt Controller Control Register
+AArch32	ICC_DIR 	Interrupt Controller Deactivate Interrupt Register
+AArch32	ICC_EOIR0 	Interrupt Controller End Of Interrupt Register 0
+AArch32	ICC_EOIR1 	Interrupt Controller End Of Interrupt Register 1
+AArch32	ICC_HPPIR0 	Interrupt Controller Highest Priority Pending Interrupt Register 0
+AArch32	ICC_HPPIR1 	Interrupt Controller Highest Priority Pending Interrupt Register 1
+AArch32	ICC_HSRE 	Interrupt Controller Hyp System Register Enable register
+AArch32	ICC_IAR0 	Interrupt Controller Interrupt Acknowledge Register 0
+AArch32	ICC_IAR1 	Interrupt Controller Interrupt Acknowledge Register 1
+AArch32	ICC_IGRPEN0 	Interrupt Controller Interrupt Group 0 Enable register
+AArch32	ICC_IGRPEN1 	Interrupt Controller Interrupt Group 1 Enable register
+AArch32	ICC_MCTLR 	Interrupt Controller Monitor Control Register
+AArch32	ICC_MGRPEN1 	Interrupt Controller Monitor Interrupt Group 1 Enable register
+AArch32	ICC_MSRE 	Interrupt Controller Monitor System Register Enable register
+AArch32	ICC_PMR 	Interrupt Controller Interrupt Priority Mask Register
+AArch32	ICC_RPR 	Interrupt Controller Running Priority Register
+AArch32	ICC_SGI0R 	Interrupt Controller Software Generated Interrupt Group 0 Register
+AArch32	ICC_SGI1R 	Interrupt Controller Software Generated Interrupt Group 1 Register
+AArch32	ICC_SRE 	Interrupt Controller System Register Enable register
+AArch32	ICH_AP0R<n> 	Interrupt Controller Hyp Active Priorities Group 0 Registers
+AArch32	ICH_AP1R<n> 	Interrupt Controller Hyp Active Priorities Group 1 Registers
+AArch32	ICH_EISR 	Interrupt Controller End of Interrupt Status Register
+AArch32	ICH_ELRSR 	Interrupt Controller Empty List Register Status Register
+AArch32	ICH_HCR 	Interrupt Controller Hyp Control Register
+AArch32	ICH_LR<n> 	Interrupt Controller List Registers
+AArch32	ICH_LRC<n> 	Interrupt Controller List Registers
+AArch32	ICH_MISR 	Interrupt Controller Maintenance Interrupt State Register
+AArch32	ICH_VMCR 	Interrupt Controller Virtual Machine Control Register
+AArch32	ICH_VTR 	Interrupt Controller VGIC Type Register
+AArch32	ICV_AP0R<n> 	Interrupt Controller Virtual Active Priorities Group 0 Registers
+AArch32	ICV_AP1R<n> 	Interrupt Controller Virtual Active Priorities Group 1 Registers
+AArch32	ICV_BPR0 	Interrupt Controller Virtual Binary Point Register 0
+AArch32	ICV_BPR1 	Interrupt Controller Virtual Binary Point Register 1
+AArch32	ICV_CTLR 	Interrupt Controller Virtual Control Register
+AArch32	ICV_DIR 	Interrupt Controller Deactivate Virtual Interrupt Register
+AArch32	ICV_EOIR0 	Interrupt Controller Virtual End Of Interrupt Register 0
+AArch32	ICV_EOIR1 	Interrupt Controller Virtual End Of Interrupt Register 1
+AArch32	ICV_HPPIR0 	Interrupt Controller Virtual Highest Priority Pending Interrupt Register 0
+AArch32	ICV_HPPIR1 	Interrupt Controller Virtual Highest Priority Pending Interrupt Register 1
+AArch32	ICV_IAR0 	Interrupt Controller Virtual Interrupt Acknowledge Register 0
+AArch32	ICV_IAR1 	Interrupt Controller Virtual Interrupt Acknowledge Register 1
+AArch32	ICV_IGRPEN0 	Interrupt Controller Virtual Interrupt Group 0 Enable register
+AArch32	ICV_IGRPEN1 	Interrupt Controller Virtual Interrupt Group 1 Enable register
+AArch32	ICV_PMR 	Interrupt Controller Virtual Interrupt Priority Mask Register
+AArch32	ICV_RPR 	Interrupt Controller Virtual Running Priority Register
+AArch64	ICC_AP0R<n>_EL1 	Interrupt Controller Active Priorities Group 0 Registers
+AArch64	ICC_AP1R<n>_EL1 	Interrupt Controller Active Priorities Group 1 Registers
+AArch64	ICC_ASGI1R_EL1 	Interrupt Controller Alias Software Generated Interrupt Group 1 Register
+AArch64	ICC_BPR0_EL1 	Interrupt Controller Binary Point Register 0
+AArch64	ICC_BPR1_EL1 	Interrupt Controller Binary Point Register 1
+AArch64	ICC_CTLR_EL1 	Interrupt Controller Control Register (EL1)
+AArch64	ICC_CTLR_EL3 	Interrupt Controller Control Register (EL3)
+AArch64	ICC_DIR_EL1 	Interrupt Controller Deactivate Interrupt Register
+AArch64	ICC_EOIR0_EL1 	Interrupt Controller End Of Interrupt Register 0
+AArch64	ICC_EOIR1_EL1 	Interrupt Controller End Of Interrupt Register 1
+AArch64	ICC_HPPIR0_EL1 	Interrupt Controller Highest Priority Pending Interrupt Register 0
+AArch64	ICC_HPPIR1_EL1 	Interrupt Controller Highest Priority Pending Interrupt Register 1
+AArch64	ICC_IAR0_EL1 	Interrupt Controller Interrupt Acknowledge Register 0
+AArch64	ICC_IAR1_EL1 	Interrupt Controller Interrupt Acknowledge Register 1
+AArch64	ICC_IGRPEN0_EL1 	Interrupt Controller Interrupt Group 0 Enable register
+AArch64	ICC_IGRPEN1_EL1 	Interrupt Controller Interrupt Group 1 Enable register
+AArch64	ICC_IGRPEN1_EL3 	Interrupt Controller Interrupt Group 1 Enable register (EL3)
+AArch64	ICC_PMR_EL1 	Interrupt Controller Interrupt Priority Mask Register
+AArch64	ICC_RPR_EL1 	Interrupt Controller Running Priority Register
+AArch64	ICC_SGI0R_EL1 	Interrupt Controller Software Generated Interrupt Group 0 Register
+AArch64	ICC_SGI1R_EL1 	Interrupt Controller Software Generated Interrupt Group 1 Register
+AArch64	ICC_SRE_EL1 	Interrupt Controller System Register Enable register (EL1)
+AArch64	ICC_SRE_EL2 	Interrupt Controller System Register Enable register (EL2)
+AArch64	ICC_SRE_EL3 	Interrupt Controller System Register Enable register (EL3)
+AArch64	ICH_AP0R<n>_EL2 	Interrupt Controller Hyp Active Priorities Group 0 Registers
+AArch64	ICH_AP1R<n>_EL2 	Interrupt Controller Hyp Active Priorities Group 1 Registers
+AArch64	ICH_EISR_EL2 	Interrupt Controller End of Interrupt Status Register
+AArch64	ICH_ELRSR_EL2 	Interrupt Controller Empty List Register Status Register
+AArch64	ICH_HCR_EL2 	Interrupt Controller Hyp Control Register
+AArch64	ICH_LR<n>_EL2 	Interrupt Controller List Registers
+AArch64	ICH_MISR_EL2 	Interrupt Controller Maintenance Interrupt State Register
+AArch64	ICH_VMCR_EL2 	Interrupt Controller Virtual Machine Control Register
+AArch64	ICH_VTR_EL2 	Interrupt Controller VGIC Type Register
+AArch64	ICV_AP0R<n>_EL1 	Interrupt Controller Virtual Active Priorities Group 0 Registers
+AArch64	ICV_AP1R<n>_EL1 	Interrupt Controller Virtual Active Priorities Group 1 Registers
+AArch64	ICV_BPR0_EL1 	Interrupt Controller Virtual Binary Point Register 0
+AArch64	ICV_BPR1_EL1 	Interrupt Controller Virtual Binary Point Register 1
+AArch64	ICV_CTLR_EL1 	Interrupt Controller Virtual Control Register
+AArch64	ICV_DIR_EL1 	Interrupt Controller Deactivate Virtual Interrupt Register
+AArch64	ICV_EOIR0_EL1 	Interrupt Controller Virtual End Of Interrupt Register 0
+AArch64	ICV_EOIR1_EL1 	Interrupt Controller Virtual End Of Interrupt Register 1
+AArch64	ICV_HPPIR0_EL1 	Interrupt Controller Virtual Highest Priority Pending Interrupt Register 0
+AArch64	ICV_HPPIR1_EL1 	Interrupt Controller Virtual Highest Priority Pending Interrupt Register 1
+AArch64	ICV_IAR0_EL1 	Interrupt Controller Virtual Interrupt Acknowledge Register 0
+AArch64	ICV_IAR1_EL1 	Interrupt Controller Virtual Interrupt Acknowledge Register 1
+AArch64	ICV_IGRPEN0_EL1 	Interrupt Controller Virtual Interrupt Group 0 Enable register
+AArch64	ICV_IGRPEN1_EL1 	Interrupt Controller Virtual Interrupt Group 1 Enable register
+AArch64	ICV_PMR_EL1 	Interrupt Controller Virtual Interrupt Priority Mask Register
+AArch64	ICV_RPR_EL1 	Interrupt Controller Virtual Running Priority Register
+
+
+In the GICD functional group:
+Exec state	Name	Description
+External	GICD_CLRSPI_NSR 	Clear Non-secure SPI Pending Register
+External	GICD_CLRSPI_SR 	Clear Secure SPI Pending Register
+External	GICD_CPENDSGIR<n> 	SGI Clear-Pending Registers
+External	GICD_CTLR 	Distributor Control Register
+External	GICD_ICACTIVER<n> 	Interrupt Clear-Active Registers
+External	GICD_ICACTIVER<n>E 	Interrupt Clear-Active Registers (extended SPI range)
+External	GICD_ICENABLER<n> 	Interrupt Clear-Enable Registers
+External	GICD_ICENABLER<n>E 	Interrupt Clear-Enable Registers
+External	GICD_ICFGR<n> 	Interrupt Configuration Registers
+External	GICD_ICFGR<n>E 	Interrupt Configuration Registers (Extended SPI Range)
+External	GICD_ICPENDR<n> 	Interrupt Clear-Pending Registers
+External	GICD_ICPENDR<n>E 	Interrupt Clear-Pending Registers (extended SPI range)
+External	GICD_IGROUPR<n> 	Interrupt Group Registers
+External	GICD_IGROUPR<n>E 	Interrupt Group Registers (extended SPI range)
+External	GICD_IGRPMODR<n> 	Interrupt Group Modifier Registers
+External	GICD_IGRPMODR<n>E 	Interrupt Group Modifier Registers (extended SPI range)
+External	GICD_IIDR 	Distributor Implementer Identification Register
+External	GICD_IPRIORITYR<n> 	Interrupt Priority Registers
+External	GICD_IPRIORITYR<n>E 	Holds the priority of the corresponding interrupt for each extended SPI supported by the GIC.
+External	GICD_IROUTER<n> 	Interrupt Routing Registers
+External	GICD_IROUTER<n>E 	Interrupt Routing Registers (Extended SPI Range)
+External	GICD_ISACTIVER<n> 	Interrupt Set-Active Registers
+External	GICD_ISACTIVER<n>E 	Interrupt Set-Active Registers (extended SPI range)
+External	GICD_ISENABLER<n> 	Interrupt Set-Enable Registers
+External	GICD_ISENABLER<n>E 	Interrupt Set-Enable Registers
+External	GICD_ISPENDR<n> 	Interrupt Set-Pending Registers
+External	GICD_ISPENDR<n>E 	Interrupt Set-Pending Registers (extended SPI range)
+External	GICD_ITARGETSR<n> 	Interrupt Processor Targets Registers
+External	GICD_NSACR<n> 	Non-secure Access Control Registers
+External	GICD_NSACR<n>E 	Non-secure Access Control Registers
+External	GICD_SETSPI_NSR 	Set Non-secure SPI Pending Register
+External	GICD_SETSPI_SR 	Set Secure SPI Pending Register
+External	GICD_SGIR 	Software Generated Interrupt Register
+External	GICD_SPENDSGIR<n> 	SGI Set-Pending Registers
+External	GICD_STATUSR 	Error Reporting Status Register
+External	GICD_TYPER 	Interrupt Controller Type Register
+External	GICD_TYPER2 	Interrupt Controller Type Register 2
+External	GICM_CLRSPI_NSR 	Clear Non-secure SPI Pending Register
+External	GICM_CLRSPI_SR 	Clear Secure SPI Pending Register
+External	GICM_IIDR 	Distributor Implementer Identification Register
+External	GICM_SETSPI_NSR 	Set Non-secure SPI Pending Register
+External	GICM_SETSPI_SR 	Set Secure SPI Pending Register
+External	GICM_TYPER 	Distributor MSI Type Register
+
+
+In the GICR functional group:
+Exec state	Name	Description
+External	GICR_CLRLPIR 	Clear LPI Pending Register
+External	GICR_CTLR 	Redistributor Control Register
+External	GICR_ICACTIVER0 	Interrupt Clear-Active Register 0
+External	GICR_ICACTIVER<n>E 	Interrupt Clear-Active Registers
+External	GICR_ICENABLER0 	Interrupt Clear-Enable Register 0
+External	GICR_ICENABLER<n>E 	Interrupt Clear-Enable Registers
+External	GICR_ICFGR0 	Interrupt Configuration Register 0
+External	GICR_ICFGR1 	Interrupt Configuration Register 1
+External	GICR_ICFGR<n>E 	Interrupt configuration registers
+External	GICR_ICPENDR0 	Interrupt Clear-Pending Register 0
+External	GICR_ICPENDR<n>E 	Interrupt Clear-Pending Registers
+External	GICR_IGROUPR0 	Interrupt Group Register 0
+External	GICR_IGROUPR<n>E 	Interrupt Group Registers
+External	GICR_IGRPMODR0 	Interrupt Group Modifier Register 0
+External	GICR_IGRPMODR<n>E 	Interrupt Group Modifier Registers
+External	GICR_IIDR 	Redistributor Implementer Identification Register
+External	GICR_INVALLR 	Redistributor Invalidate All Register
+External	GICR_INVLPIR 	Redistributor Invalidate LPI Register
+External	GICR_IPRIORITYR<n> 	Interrupt Priority Registers
+External	GICR_IPRIORITYR<n>E 	Interrupt Priority Registers (extended PPI range)
+External	GICR_ISACTIVER0 	Interrupt Set-Active Register 0
+External	GICR_ISACTIVER<n>E 	Interrupt Set-Active Registers
+External	GICR_ISENABLER0 	Interrupt Set-Enable Register 0
+External	GICR_ISENABLER<n>E 	Interrupt Set-Enable Registers
+External	GICR_ISPENDR0 	Interrupt Set-Pending Register 0
+External	GICR_ISPENDR<n>E 	Interrupt Set-Pending Registers
+External	GICR_MPAMIDR 	Report maximum PARTID and PMG Register
+External	GICR_NSACR 	Non-secure Access Control Register
+External	GICR_PARTIDR 	Set PARTID and PMG Register
+External	GICR_PENDBASER 	Redistributor LPI Pending Table Base Address Register
+External	GICR_PROPBASER 	Redistributor Properties Base Address Register
+External	GICR_SETLPIR 	Set LPI Pending Register
+External	GICR_STATUSR 	Error Reporting Status Register
+External	GICR_SYNCR 	Redistributor Synchronize Register
+External	GICR_TYPER 	Redistributor Type Register
+External	GICR_VPENDBASER 	Virtual Redistributor LPI Pending Table Base Address Register
+External	GICR_VPROPBASER 	Virtual Redistributor Properties Base Address Register
+External	GICR_VSGIPENDR 	Redistributor virtual SGI pending state register
+External	GICR_VSGIR 	Redistributor virtual SGI pending state request register
+External	GICR_WAKER 	Redistributor Wake Register
+
+
+In the GICC functional group:
+Exec state	Name	Description
+External	GICC_ABPR 	CPU Interface Aliased Binary Point Register
+External	GICC_AEOIR 	CPU Interface Aliased End Of Interrupt Register
+External	GICC_AHPPIR 	CPU Interface Aliased Highest Priority Pending Interrupt Register
+External	GICC_AIAR 	CPU Interface Aliased Interrupt Acknowledge Register
+External	GICC_APR<n> 	CPU Interface Active Priorities Registers
+External	GICC_BPR 	CPU Interface Binary Point Register
+External	GICC_CTLR 	CPU Interface Control Register
+External	GICC_DIR 	CPU Interface Deactivate Interrupt Register
+External	GICC_EOIR 	CPU Interface End Of Interrupt Register
+External	GICC_HPPIR 	CPU Interface Highest Priority Pending Interrupt Register
+External	GICC_IAR 	CPU Interface Interrupt Acknowledge Register
+External	GICC_IIDR 	CPU Interface Identification Register
+External	GICC_NSAPR<n> 	CPU Interface Non-secure Active Priorities Registers
+External	GICC_PMR 	CPU Interface Priority Mask Register
+External	GICC_RPR 	CPU Interface Running Priority Register
+External	GICC_STATUSR 	CPU Interface Status Register
+
+
+In the GICV functional group:
+Exec state	Name	Description
+External	GICV_ABPR 	Virtual Machine Aliased Binary Point Register
+External	GICV_AEOIR 	Virtual Machine Aliased End Of Interrupt Register
+External	GICV_AHPPIR 	Virtual Machine Aliased Highest Priority Pending Interrupt Register
+External	GICV_AIAR 	Virtual Machine Aliased Interrupt Acknowledge Register
+External	GICV_APR<n> 	Virtual Machine Active Priorities Registers
+External	GICV_BPR 	Virtual Machine Binary Point Register
+External	GICV_CTLR 	Virtual Machine Control Register
+External	GICV_DIR 	Virtual Machine Deactivate Interrupt Register
+External	GICV_EOIR 	Virtual Machine End Of Interrupt Register
+External	GICV_HPPIR 	Virtual Machine Highest Priority Pending Interrupt Register
+External	GICV_IAR 	Virtual Machine Interrupt Acknowledge Register
+External	GICV_IIDR 	Virtual Machine CPU Interface Identification Register
+External	GICV_PMR 	Virtual Machine Priority Mask Register
+External	GICV_RPR 	Virtual Machine Running Priority Register
+External	GICV_STATUSR 	Virtual Machine Error Reporting Status Register
+
+
+In the GICH functional group:
+Exec state	Name	Description
+External	GICH_APR<n> 	Active Priorities Registers
+External	GICH_EISR 	End Interrupt Status Register
+External	GICH_ELRSR 	Empty List Register Status Register
+External	GICH_HCR 	Hypervisor Control Register
+External	GICH_LR<n> 	List Registers
+External	GICH_MISR 	Maintenance Interrupt Status Register
+External	GICH_VMCR 	Virtual Machine Control Register
+External	GICH_VTR 	Virtual Type Register
+
+
+In the GITS functional group:
+Exec state	Name	Description
+External	GITS_BASER<n> 	ITS Translation Table Descriptors
+External	GITS_CBASER 	ITS Command Queue Descriptor
+External	GITS_CREADR 	ITS Read Register
+External	GITS_CTLR 	ITS Control Register
+External	GITS_CWRITER 	ITS Write Register
+External	GITS_IIDR 	ITS Identification Register
+External	GITS_MPAMIDR 	Report maximum PARTID and PMG Register
+External	GITS_MPIDR 	Report ITS's affinity.
+External	GITS_PARTIDR 	Set PARTID and PMG Register
+External	GITS_SGIR 	ITS SGI Register
+External	GITS_STATUSR 	ITS Error Reporting Status Register
+External	GITS_TRANSLATER 	ITS Translation Register
+External	GITS_TYPER 	ITS Type Register
+External	GITS_UMSIR 	ITS Unmapped MSI register
+
+
+In the RAS functional group:
+Exec state	Name	Description
+AArch32	DISR 	Deferred Interrupt Status Register
+AArch32	ERRIDR 	Error Record ID Register
+AArch32	ERRSELR 	Error Record Select Register
+AArch32	ERXADDR 	Selected Error Record Address Register
+AArch32	ERXADDR2 	Selected Error Record Address Register 2
+AArch32	ERXCTLR 	Selected Error Record Control Register
+AArch32	ERXCTLR2 	Selected Error Record Control Register 2
+AArch32	ERXFR 	Selected Error Record Feature Register
+AArch32	ERXFR2 	Selected Error Record Feature Register 2
+AArch32	ERXMISC0 	Selected Error Record Miscellaneous Register 0
+AArch32	ERXMISC1 	Selected Error Record Miscellaneous Register 1
+AArch32	ERXMISC2 	Selected Error Record Miscellaneous Register 2
+AArch32	ERXMISC3 	Selected Error Record Miscellaneous Register 3
+AArch32	ERXMISC4 	Selected Error Record Miscellaneous Register 4
+AArch32	ERXMISC5 	Selected Error Record Miscellaneous Register 5
+AArch32	ERXMISC6 	Selected Error Record Miscellaneous Register 6
+AArch32	ERXMISC7 	Selected Error Record Miscellaneous Register 7
+AArch32	ERXSTATUS 	Selected Error Record Primary Status Register
+AArch32	VDFSR 	Virtual SError Exception Syndrome Register
+AArch32	VDISR 	Virtual Deferred Interrupt Status Register
+AArch64	DISR_EL1 	Deferred Interrupt Status Register
+AArch64	ERRIDR_EL1 	Error Record ID Register
+AArch64	ERRSELR_EL1 	Error Record Select Register
+AArch64	ERXADDR_EL1 	Selected Error Record Address Register
+AArch64	ERXCTLR_EL1 	Selected Error Record Control Register
+AArch64	ERXFR_EL1 	Selected Error Record Feature Register
+AArch64	ERXMISC0_EL1 	Selected Error Record Miscellaneous Register 0
+AArch64	ERXMISC1_EL1 	Selected Error Record Miscellaneous Register 1
+AArch64	ERXMISC2_EL1 	Selected Error Record Miscellaneous Register 2
+AArch64	ERXMISC3_EL1 	Selected Error Record Miscellaneous Register 3
+AArch64	ERXPFGCDN_EL1 	Selected Pseudo-fault Generation Countdown register
+AArch64	ERXPFGCTL_EL1 	Selected Pseudo-fault Generation Control register
+AArch64	ERXPFGF_EL1 	Selected Pseudo-fault Generation Feature register
+AArch64	ERXSTATUS_EL1 	Selected Error Record Primary Status Register
+AArch64	VDISR_EL2 	Virtual Deferred Interrupt Status Register
+AArch64	VSESR_EL2 	Virtual SError Exception Syndrome Register
+External	ERR<n>ADDR 	Error Record Address Register
+External	ERR<n>CTLR 	Error Record Control Register
+External	ERR<n>FR 	Error Record Feature Register
+External	ERR<n>MISC0 	Error Record Miscellaneous Register 0
+External	ERR<n>MISC1 	Error Record Miscellaneous Register 1
+External	ERR<n>MISC2 	Error Record Miscellaneous Register 2
+External	ERR<n>MISC3 	Error Record Miscellaneous Register 3
+External	ERR<n>PFGCDN 	Pseudo-fault Generation Countdown Register
+External	ERR<n>PFGCTL 	Pseudo-fault Generation Control Register
+External	ERR<n>PFGF 	Pseudo-fault Generation Feature Register
+External	ERR<n>STATUS 	Error Record Primary Status Register
+External	ERRCIDR0 	Component Identification Register 0
+External	ERRCIDR1 	Component Identification Register 1
+External	ERRCIDR2 	Component Identification Register 2
+External	ERRCIDR3 	Component Identification Register 3
+External	ERRCRICR0 	Critical Error Interrupt Configuration Register 0
+External	ERRCRICR1 	Critical Error Interrupt Configuration Register 1
+External	ERRCRICR2 	Critical Error Interrupt Configuration Register 2
+External	ERRDEVAFF 	Device Affinity Register
+External	ERRDEVARCH 	Device Architecture Register
+External	ERRDEVID 	Device Configuration Register
+External	ERRERICR0 	Error Recovery Interrupt Configuration Register 0
+External	ERRERICR1 	Error Recovery Interrupt Configuration Register 1
+External	ERRERICR2 	Error Recovery Interrupt Configuration Register 2
+External	ERRFHICR0 	Fault Handling Interrupt Configuration Register 0
+External	ERRFHICR1 	Fault Handling Interrupt Configuration Register 1
+External	ERRFHICR2 	Fault Handling Interrupt Configuration Register 2
+External	ERRGSR 	Error Group Status Register
+External	ERRIIDR 	Implementation Identification Register
+External	ERRIMPDEF<n> 	IMPLEMENTATION DEFINED Register <n>
+External	ERRIRQCR<n> 	Generic Error Interrupt Configuration Register
+External	ERRIRQSR 	Error Interrupt Status Register
+External	ERRPIDR0 	Peripheral Identification Register 0
+External	ERRPIDR1 	Peripheral Identification Register 1
+External	ERRPIDR2 	Peripheral Identification Register 2
+External	ERRPIDR3 	Peripheral Identification Register 3
+External	ERRPIDR4 	Peripheral Identification Register 4
+
+
+In the MPAM functional group:
+Exec state	Name	Description
+AArch64	MPAM0_EL1 	MPAM0 Register (EL1)
+AArch64	MPAM1_EL1 	MPAM1 Register (EL1)
+AArch64	MPAM2_EL2 	MPAM2 Register (EL2)
+AArch64	MPAM3_EL3 	MPAM3 Register (EL3)
+AArch64	MPAMHCR_EL2 	MPAM Hypervisor Control Register (EL2)
+AArch64	MPAMVPM0_EL2 	MPAM Virtual PARTID Mapping Register 0
+AArch64	MPAMVPM1_EL2 	MPAM Virtual PARTID Mapping Register 1
+AArch64	MPAMVPM2_EL2 	MPAM Virtual PARTID Mapping Register 2
+AArch64	MPAMVPM3_EL2 	MPAM Virtual PARTID Mapping Register 3
+AArch64	MPAMVPM4_EL2 	MPAM Virtual PARTID Mapping Register 4
+AArch64	MPAMVPM5_EL2 	MPAM Virtual PARTID Mapping Register 5
+AArch64	MPAMVPM6_EL2 	MPAM Virtual PARTID Mapping Register 6
+AArch64	MPAMVPM7_EL2 	MPAM Virtual PARTID Mapping Register 7
+AArch64	MPAMVPMV_EL2 	MPAM Virtual Partition Mapping Valid Register
+External	MPAMCFG_CMAX 	MPAM Cache Maximum Capacity Partition Configuration Register
+External	MPAMCFG_CPBM<n> 	MPAM Cache Portion Bitmap Partition Configuration Register
+External	MPAMCFG_INTPARTID 	MPAM Internal PARTID Narrowing Configuration Register
+External	MPAMCFG_MBW_MAX 	MPAM Memory Bandwidth Maximum Partition Configuration Register
+External	MPAMCFG_MBW_MIN 	MPAM Memory Bandwidth Minimum Partition Configuration Register
+External	MPAMCFG_MBW_PBM<n> 	MPAM Bandwidth Portion Bitmap Partition Configuration Register
+External	MPAMCFG_MBW_PROP 	MPAM Memory Bandwidth Proportional Stride Partition Configuration Register
+External	MPAMCFG_MBW_WINWD 	MPAM Memory Bandwidth Partitioning Window Width Configuration Register
+External	MPAMCFG_PART_SEL 	MPAM Partition Configuration Selection Register
+External	MPAMCFG_PRI 	MPAM Priority Partition Configuration Register
+External	MPAMF_AIDR 	MPAM Architecture Identification Register
+External	MPAMF_CCAP_IDR 	MPAM Features Cache Capacity Partitioning ID register
+External	MPAMF_CPOR_IDR 	MPAM Features Cache Portion Partitioning ID register
+External	MPAMF_CSUMON_IDR 	MPAM Features Cache Storage Usage Monitoring ID register
+External	MPAMF_ECR 	MPAM Error Control Register
+External	MPAMF_ERR_MSI_ADDR_H 	MPAM Error MSI High-part Address Register
+External	MPAMF_ERR_MSI_ADDR_L 	MPAM Error MSI Low-part Address Register
+External	MPAMF_ERR_MSI_ATTR 	MPAM Error MSI Write Attributes Register
+External	MPAMF_ERR_MSI_DATA 	MPAM Error MSI Data Register
+External	MPAMF_ERR_MSI_MPAM 	MPAM Error MSI Write MPAM Information Register
+External	MPAMF_ESR 	MPAM Error Status Register
+External	MPAMF_IDR 	MPAM Features Identification Register
+External	MPAMF_IIDR 	MPAM Implementation Identification Register
+External	MPAMF_IMPL_IDR 	MPAM Implementation-Specific Partitioning Feature Identification Register
+External	MPAMF_MBWUMON_IDR 	MPAM Features Memory Bandwidth Usage Monitoring ID register
+External	MPAMF_MBW_IDR 	MPAM Memory Bandwidth Partitioning Identification Register
+External	MPAMF_MSMON_IDR 	MPAM Resource Monitoring Identification Register
+External	MPAMF_PARTID_NRW_IDR 	MPAM PARTID Narrowing ID register
+External	MPAMF_PRI_IDR 	MPAM Priority Partitioning Identification Register
+External	MPAMF_SIDR 	MPAM Features Secure Identification Register
+External	MSMON_CAPT_EVNT 	MPAM Capture Event Generation Register
+External	MSMON_CFG_CSU_CTL 	MPAM Memory System Monitor Configure Cache Storage Usage Monitor Control Register
+External	MSMON_CFG_CSU_FLT 	MPAM Memory System Monitor Configure Cache Storage Usage Monitor Filter Register
+External	MSMON_CFG_MBWU_CTL 	MPAM Memory System Monitor Configure Memory Bandwidth Usage Monitor Control Register
+External	MSMON_CFG_MBWU_FLT 	MPAM Memory System Monitor Configure Memory Bandwidth Usage Monitor Filter Register
+External	MSMON_CFG_MON_SEL 	MPAM Monitor Instance Selection Register
+External	MSMON_CSU 	MPAM Cache Storage Usage Monitor Register
+External	MSMON_CSU_CAPTURE 	MPAM Cache Storage Usage Monitor Capture Register
+External	MSMON_CSU_OFSR 	MPAM CSU Monitor Overflow Status Register
+External	MSMON_MBWU 	MPAM Memory Bandwidth Usage Monitor Register
+External	MSMON_MBWU_CAPTURE 	MPAM Memory Bandwidth Usage Monitor Capture Register
+External	MSMON_MBWU_L 	MPAM Long Memory Bandwidth Usage Monitor Register
+External	MSMON_MBWU_L_CAPTURE 	MPAM Long Memory Bandwidth Usage Monitor Capture Register
+External	MSMON_MBWU_OFSR 	MPAM MBWU Monitor Overflow Status Register
+External	MSMON_OFLOW_MSI_ADDR_H 	MPAM Monitor Overflow MSI Write High-part Address Register
+External	MSMON_OFLOW_MSI_ADDR_L 	MPAM Monitor Overflow MSI Low-part Address Register
+External	MSMON_OFLOW_MSI_ATTR 	MPAM Monitor Overflow MSI Write Attributes Register
+External	MSMON_OFLOW_MSI_DATA 	MPAM Monitor Overflow MSI Write Data Register
+External	MSMON_OFLOW_MSI_MPAM 	MPAM Monitor Overflow MSI Write MPAM Information Register
+External	MSMON_OFLOW_SR 	MPAM Monitor Overflow Status Register
+
+
+In the Pointer authentication functional group:
+Exec state	Name	Description
+AArch64	APDAKeyHi_EL1 	Pointer Authentication Key A for Data (bits[127:64])
+AArch64	APDAKeyLo_EL1 	Pointer Authentication Key A for Data (bits[63:0])
+AArch64	APDBKeyHi_EL1 	Pointer Authentication Key B for Data (bits[127:64])
+AArch64	APDBKeyLo_EL1 	Pointer Authentication Key B for Data (bits[63:0])
+AArch64	APGAKeyHi_EL1 	Pointer Authentication Key A for Code (bits[127:64])
+AArch64	APGAKeyLo_EL1 	Pointer Authentication Key A for Code (bits[63:0])
+AArch64	APIAKeyHi_EL1 	Pointer Authentication Key A for Instruction (bits[127:64])
+AArch64	APIAKeyLo_EL1 	Pointer Authentication Key A for Instruction (bits[63:0])
+AArch64	APIBKeyHi_EL1 	Pointer Authentication Key B for Instruction (bits[127:64])
+AArch64	APIBKeyLo_EL1 	Pointer Authentication Key B for Instruction (bits[63:0])
+
+
+In the AMU functional group:
+Exec state	Name	Description
+AArch32	AMCFGR 	Activity Monitors Configuration Register
+AArch32	AMCGCR 	Activity Monitors Counter Group Configuration Register
+AArch32	AMCNTENCLR0 	Activity Monitors Count Enable Clear Register 0
+AArch32	AMCNTENCLR1 	Activity Monitors Count Enable Clear Register 1
+AArch32	AMCNTENSET0 	Activity Monitors Count Enable Set Register 0
+AArch32	AMCNTENSET1 	Activity Monitors Count Enable Set Register 1
+AArch32	AMCR 	Activity Monitors Control Register
+AArch32	AMEVCNTR0<n> 	Activity Monitors Event Counter Registers 0
+AArch32	AMEVCNTR1<n> 	Activity Monitors Event Counter Registers 1
+AArch32	AMEVTYPER0<n> 	Activity Monitors Event Type Registers 0
+AArch32	AMEVTYPER1<n> 	Activity Monitors Event Type Registers 1
+AArch32	AMUSERENR 	Activity Monitors User Enable Register
+AArch64	AMCFGR_EL0 	Activity Monitors Configuration Register
+AArch64	AMCG1IDR_EL0 	Activity Monitors Counter Group 1 Identification Register
+AArch64	AMCGCR_EL0 	Activity Monitors Counter Group Configuration Register
+AArch64	AMCNTENCLR0_EL0 	Activity Monitors Count Enable Clear Register 0
+AArch64	AMCNTENCLR1_EL0 	Activity Monitors Count Enable Clear Register 1
+AArch64	AMCNTENSET0_EL0 	Activity Monitors Count Enable Set Register 0
+AArch64	AMCNTENSET1_EL0 	Activity Monitors Count Enable Set Register 1
+AArch64	AMCR_EL0 	Activity Monitors Control Register
+AArch64	AMEVCNTR0<n>_EL0 	Activity Monitors Event Counter Registers 0
+AArch64	AMEVCNTR1<n>_EL0 	Activity Monitors Event Counter Registers 1
+AArch64	AMEVCNTVOFF0<n>_EL2 	Activity Monitors Event Counter Virtual Offset Registers 0
+AArch64	AMEVCNTVOFF1<n>_EL2 	Activity Monitors Event Counter Virtual Offset Registers 1
+AArch64	AMEVTYPER0<n>_EL0 	Activity Monitors Event Type Registers 0
+AArch64	AMEVTYPER1<n>_EL0 	Activity Monitors Event Type Registers 1
+AArch64	AMUSERENR_EL0 	Activity Monitors User Enable Register
+External	AMCFGR 	Activity Monitors Configuration Register
+External	AMCGCR 	Activity Monitors Counter Group Configuration Register
+External	AMCIDR0 	Activity Monitors Component Identification Register 0
+External	AMCIDR1 	Activity Monitors Component Identification Register 1
+External	AMCIDR2 	Activity Monitors Component Identification Register 2
+External	AMCIDR3 	Activity Monitors Component Identification Register 3
+External	AMCNTENCLR0 	Activity Monitors Count Enable Clear Register 0
+External	AMCNTENCLR1 	Activity Monitors Count Enable Clear Register 1
+External	AMCNTENSET0 	Activity Monitors Count Enable Set Register 0
+External	AMCNTENSET1 	Activity Monitors Count Enable Set Register 1
+External	AMCR 	Activity Monitors Control Register
+External	AMDEVAFF0 	Activity Monitors Device Affinity Register 0
+External	AMDEVAFF1 	Activity Monitors Device Affinity Register 1
+External	AMDEVARCH 	Activity Monitors Device Architecture Register
+External	AMDEVTYPE 	Activity Monitors Device Type Register
+External	AMEVCNTR0<n> 	Activity Monitors Event Counter Registers 0
+External	AMEVCNTR1<n> 	Activity Monitors Event Counter Registers 1
+External	AMEVTYPER0<n> 	Activity Monitors Event Type Registers 0
+External	AMEVTYPER1<n> 	Activity Monitors Event Type Registers 1
+External	AMIIDR 	Activity Monitors Implementation Identification Register
+External	AMPIDR0 	Activity Monitors Peripheral Identification Register 0
+External	AMPIDR1 	Activity Monitors Peripheral Identification Register 1
+External	AMPIDR2 	Activity Monitors Peripheral Identification Register 2
+External	AMPIDR3 	Activity Monitors Peripheral Identification Register 3
+External	AMPIDR4 	Activity Monitors Peripheral Identification Register 4
+
+
+In the GIC ITS registers functional group:
+Exec state	Name	Description
+External	GITS_BASER<n> 	ITS Translation Table Descriptors
+External	GITS_CBASER 	ITS Command Queue Descriptor
+External	GITS_CREADR 	ITS Read Register
+External	GITS_CTLR 	ITS Control Register
+External	GITS_CWRITER 	ITS Write Register
+External	GITS_IIDR 	ITS Identification Register
+External	GITS_MPAMIDR 	Report maximum PARTID and PMG Register
+External	GITS_MPIDR 	Report ITS's affinity.
+External	GITS_PARTIDR 	Set PARTID and PMG Register
+External	GITS_SGIR 	ITS SGI Register
+External	GITS_STATUSR 	ITS Error Reporting Status Register
+External	GITS_TRANSLATER 	ITS Translation Register
+External	GITS_TYPER 	ITS Type Register
+External	GITS_UMSIR 	ITS Unmapped MSI register

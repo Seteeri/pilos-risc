@@ -1,0 +1,48 @@
+https://developer.arm.com/documentation/ddi0595/2020-12/Registers-by-Functional-Group?lang=en#Timer
+
+AArch64 CNTPCT_EL0     Counter-timer Physical Count register
+AArch64 CNTP_CTL_EL0   Counter-timer Physical Timer Control register
+AArch64 CNTP_CVAL_EL0  Counter-timer Physical Timer CompareValue register
+AArch64 CNTP_TVAL_EL0  Counter-timer Physical Timer TimerValue register
+
+AArch64 CNTVCT_EL0    Counter-timer Virtual Count register
+AArch64 CNTV_CTL_EL0  Counter-timer Virtual Timer Control register
+AArch64 CNTV_CVAL_EL0 Counter-timer Virtual Timer CompareValue register
+AArch64 CNTV_TVAL_EL0 Counter-timer Virtual Timer TimerValue register
+
+# unused?
+AArch64 CNTPOFF_EL2 Counter-timer Physical Offset register
+AArch64 CNTVCTSS_EL0 Counter-timer Self-Synchronized Virtual Count register
+
+# subcommands
+
+     phys|virt  timer|count  ctl|val    tval|cval
+cnt  T|NIL      T|NIL        T|NIL|num  T|NIL|num  num
+
+
+CNT*CT_EL0 (rd only)
+
+(cnt  T|NIL  NIL) == (cnt  T|NIL)
+* if NIL, any args after NIL ignored
+
+
+CNT*_CTL_EL0
+
+(cnt  T|NIL  T  T  num)
+
+
+CNT*_TVAL_EL0
+
+(cnt  T|NIL  T  NIL  T  num)
+
+
+CNT*_CVAL_EL0
+
+(cnt  T|NIL  T  NIL  NIL  num)
+
+
+# Notes
+
+* tval is rel to cur
+* cval is abs
+* tval dec after cval condition met (shows time since cond)

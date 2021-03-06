@@ -2,7 +2,6 @@ PIL
 ===
 
 Interrupts
-* rename daif -> daif2
 * clean up gic
 * clean up uart
 * move timers to kernel space
@@ -59,24 +58,33 @@ General
 
 # Milestones
   
-* 0.0 (Lakenheath)
+* 0.0 ()
   * serial
   * interrupts
   * mailbox
-* 0.1 (Mildenhall)
+* 0.1 (Lakenheath)
   * sd card (ext syms)
   * display
 * 1.0 (Stuttgart)
-  * network/ethernet/TCP/IP
+  * Network/ethernet/TCP/IP
   * USB
   * Keyboard (need USB)
 * 2.0
+  * SMP (giant lock -> fine-grained)
+    * Malloc
   * Codecs (or <2.0)
     * Images: PNG, GIF, JPEG
-  * Audio
-  * Software Rasterizer
 * 3.0
-  * Graphics drivers
+  * Audio Driver
+* 4.0
+  * Software Rasterizer
+* 5.0
+  * Web Browser
+* 6.0
+  * Graphics Drivers
+  * Wifi/Modem Drivers
+  * Linux/C emulator/virtulization
+    * Compile C to Lisp?
 
 PLIO:
 (out "file.plio" (pr *Kernel))
@@ -84,3 +92,7 @@ PLIO:
 
 https://github.com/riscv/riscv-musl/issues/6
 __jmp_buf is declared to hold 22 words = 176 bytes
+
+https://news.ycombinator.com/item?id=1878608
+
+The maximum number of interrupts is 1020 (0b11111). Max ID = [1019 0]
