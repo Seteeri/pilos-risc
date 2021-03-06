@@ -42,9 +42,9 @@
 (de prl-kern (X)
   # Print with cnt time
   (prinl 
-    (pack "[" (cntvct) "] " X)))
+    (pack "(" (cntvct) ") " X)))
 
 (de pr-kern (X)
   # Print with cnt time
   (prin 
-    (pack "[" (cntvct) "] " X)))   
+    (pack "(" (cntvct) ") " X)))   

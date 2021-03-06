@@ -2044,10 +2044,10 @@
 
 (class +Gic)
 (dm T (P)
-  (=: p    P)
+  (=: p P)
   
   (=: dist (new '(+Dist) (+ P (hex "1000"))))
-  (=: cpu  (new '(+Cpu)  (+ P (hex "2000")))))  
+  (=: cpu  (new '(+Cpu)  (+ P (hex "2000")))))
   
 # Pass T/NIL to set/clear
 (dm enab> (Irq Fn X) ((if Fn 'is-enab> 'ic-enab>) (: dist) Irq X))
@@ -2061,6 +2061,7 @@
       (let (J (dec Id)
             W (is-pend> (: dist) J)
             B (>> (- (% J 32)) 1))
+        (prl-kern (pack "(find-pend-irq) " B " " W " " J))
         (when (n0 (& B W))
           (setq Irq J))))
     Irq))
@@ -2096,7 +2097,9 @@
   (prl-kern (text "cntp-ctl: @1"  (cntp-ctl)))
   (prl-kern (text "cntp-cval: @1" (cntp-cval)))
   (prl-kern (text "cntp-tval: @1" (cntp-tval)))
-  (prl-kern (text "cntpct: @1"    (cntpct))))
+  (prl-kern (text "cntpct: @1"    (cntpct)))
+  
+  NIL)
 
   
 (de init ()
@@ -2285,25 +2288,55 @@
   (prl-kern (text "Stack Size: @1 KB" (stack 256)))
   (prl-kern (text "*Kern Load Time: @1" (usec))))
 
+
 (de alarm-2 ()
 
+  #{
+  
+    When the GIC recognizes an interrupt request, it marks its state as pending. Regenerating a pending interrupt does
+    not affect the state of the interrupt.
+    
+    The GIC interrupt handling sequence is:
+    
+    1. The GIC determines the interrupts that are enabled.
+    2. For each pending interrupt, the GIC determines the targeted processor or processors.
+    3. For each CPU interface, the Distributor forwards the highest priority pending interrupt that targets that
+    interface.
+    4. Each CPU interface determines whether to signal an interrupt request to its processor, and if required, does so.
+    
+    5. The processor acknowledges the interrupt, and the GIC returns the interrupt ID and updates the interrupt
+    state.
+    6. After processing the interrupt, the processor signals End of Interrupt (EOI) to the GIC.  
+    
+  }#
+
+  (prl-kern)
   (prl-kern (pack "(alarm2)"))
 
-  # read iar...
+  # rd Interrupt Ack Register (IAR)
+  
   (let? Irq (gic~find-pend-irq> *gic)
   
-    (prl-kern (pack "(alarm2)" Irq))
+    (prl-kern (pack "(alarm2) " Irq))
     
-    # off
-    #(ic-enab-intr> (get *gic 'dist) Irq)
+    # mask all intrs (disable)
+    (daif2)
     
-    #(eoi> Irq)
-    #(ic-pend-intr> (get *gic 'dist) Irq)
+    # disable intr in gic
+    (gic~ic-enab> (get *gic 'gic~dist) Irq T)
     
-    #(set-timer 1)
+    # rd End of Interrupt Register (EOIR) in CPU
     
-    # on
-    #(is-enab-intr> (get *gic 'dist) Irq)
+    # clr pending intr
+    (gic~ic-pend> (get *gic 'gic~dist) Irq T)
+    
+    # rearm timer
+    
+    # enable intr in gic
+    (gic~is-enab> (get *gic 'gic~dist) Irq T)
+    
+    # unmask all intr (enable)
+    (daif2 T)
     
     T))  
 

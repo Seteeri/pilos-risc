@@ -48,7 +48,7 @@
     (let Pen-IRQ c # =255
       (while (not (= Pen-IRQ (hex "3FF")))
         (ui* (: eoi)
-               (ui* (: ia)))
+          (ui* (: ia)))
         (setq Pen-IRQ (& (ui* (: ia)) (hex "3FF"))))))
   
   (ui* (: ctl) ON-CTL))
