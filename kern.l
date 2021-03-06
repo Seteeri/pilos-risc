@@ -1728,17 +1728,6 @@
 (symbols '(gic pico))
 
 (local)
-(ON-CTL OFF-CTL)
- 
-# MOVE to GIC?
-(def 'ON-CTL (>> 0 1))
-(def 'OFF-CTL (>> 0 0))
-
-
-(symbols '(pico))
-(symbols '(gic pico))
-
-(local)
 (+Cpu
  init-cpu)
 
@@ -2045,7 +2034,8 @@
 (symbols '(gic pico))
 
 (local)
-(+Gic +Vicb +Hyp +Vci)
+(ON-CTL OFF-CTL
+ +Gic +Vicb +Hyp +Vci)
   
 #{
 
@@ -2059,17 +2049,18 @@
 
 }#
 
-(class +Vicb)
-(class +Hyp)
-(class +Vci)
+(ON-CTL OFF-CTL)
+ 
+(def 'ON-CTL  (>> 0 1))
+(def 'OFF-CTL (>> 0 0))
 
 (class +Gic)
 (dm T (P)
   (=: p    P)
   
   (=: dist (new '(+Dist) (+ P (hex "1000"))))
-  (=: cpu  (new '(+Cpu)  (+ P (hex "2000")))))
-
+  (=: cpu  (new '(+Cpu)  (+ P (hex "2000")))))  
+  
 # Pass T/NIL to set/clear
 (dm enab> (Irq Fn X) ((if Fn 'is-enab> 'ic-enab>) (: dist) Irq X))
 (dm pend> (Irq Fn X) ((if Fn 'is-pend> 'ic-pend>) (: dist) Irq X))
@@ -2085,6 +2076,20 @@
         (when (n0 (& B W))
           (setq Irq J))))
     Irq))
+
+(class +Vicb)
+(class +Hyp)
+(class +Vci)    
+    
+(symbols '(pico))
+(symbols '(irq pico))
+
+# Instead of namespace use table?
+
+# See ARM's "Generic Timer" doc
+
+(def 'TIMER-VIRT-EL1 27) # EL1 Virtual Timer
+(def 'TIMER-PHYS-EL1 30) # EL1 Virtual Timer
 
 (symbols '(pico))
 (symbols '(pico))
@@ -2252,14 +2257,13 @@
   (prl-kern (text "*Kern Load Time: @1" (usec))))
 
 
-(def 'IRQ-TIMER 27)
 (de init-irq-timer ()
   (with *gic
-    (gic~i-cfg>   (: gic~dist) IRQ-TIMER gic~EDGE)
-    (gic~i-prio>  (: gic~dist) IRQ-TIMER (>> -4 0))
-    (gic~i-tgts>  (: gic~dist) IRQ-TIMER (hex "1")) # proc 0
-    (gic~ic-pend> (: gic~dist) IRQ-TIMER T)
-    (gic~is-enab> (: gic~dist) IRQ-TIMER T)))
+    (gic~i-cfg>   (: gic~dist) irq~TIMER-VIRT-EL1 gic~EDGE)
+    (gic~i-prio>  (: gic~dist) irq~TIMER-VIRT-EL1 (>> -4 0))
+    (gic~i-tgts>  (: gic~dist) irq~TIMER-VIRT-EL1 (hex "1")) # proc 0
+    (gic~ic-pend> (: gic~dist) irq~TIMER-VIRT-EL1 T)
+    (gic~is-enab> (: gic~dist) irq~TIMER-VIRT-EL1 T)))
 
 
 (de on-timer (T1 T2)

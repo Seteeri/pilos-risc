@@ -15,8 +15,6 @@
   Meths use offsets
 
 }#
-
-(ON-CTL OFF-CTL)
  
 (def 'ON-CTL  (>> 0 1))
 (def 'OFF-CTL (>> 0 0))
