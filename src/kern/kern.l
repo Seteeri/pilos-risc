@@ -58,11 +58,11 @@
 (def 'IRQ-TIMER 27)
 (de init-irq-timer ()
   (with *gic
-    (i-cfg>        (: dist) IRQ-TIMER EDGE)
-    (i-prio>       (: dist) IRQ-TIMER (>> -4 0))
-    (i-tgts>       (: dist) IRQ-TIMER (hex "1")) # proc 0
-    (ic-pend-intr> (: dist) IRQ-TIMER)
-    (is-enab-intr> (: dist) IRQ-TIMER)))
+    (gic~i-cfg>        (: gic~dist) IRQ-TIMER gic~EDGE)
+    (gic~i-prio>       (: gic~dist) IRQ-TIMER (>> -4 0))
+    (gic~i-tgts>       (: gic~dist) IRQ-TIMER (hex "1")) # proc 0
+    (gic~ic-pend-intr> (: gic~dist) IRQ-TIMER)
+    (gic~is-enab-intr> (: gic~dist) IRQ-TIMER)))
 
 
 (de on-timer ()
@@ -109,7 +109,8 @@
   
   (prl-kern)
   
-  (def '*gic (new '(gic~+Gic) (hex "FF840000")))
+  (def '*gic
+    (new '(gic~+Gic) (hex "FF840000")))
   
   (init-irq-timer)
   
