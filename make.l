@@ -27,7 +27,7 @@
                "src/dev/gic/dist.l"
                "src/dev/gic/gic.l"
                "src/dev/irq.l"
-               #"src/dev/timer.l"
+               "src/dev/timer.l"
                "src/kern/term.l"
                "src/kern/kern.l")
         (in F (echo))))))

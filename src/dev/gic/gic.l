@@ -3,18 +3,6 @@
 (local)
 (ON-CTL OFF-CTL
  +Gic +Vicb +Hyp +Vci)
-  
-#{
-
-  Cls -> ptrs
-  - Intr use dist/cpu methods
-    - +Dist is singleton: *dist
-  - Dist/Cpu methods for ctl registers
-
-  Cls holds offsets
-  Meths use offsets
-
-}#
  
 (def 'ON-CTL  (>> 0 1))
 (def 'OFF-CTL (>> 0 0))

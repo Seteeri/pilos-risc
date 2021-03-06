@@ -25,7 +25,8 @@
 # misc, lib, bits are global (pico nsp);
 # considered part of "stdlib"
 (def '*nsp 
-  '(irq
+  '(timer
+    irq
     gic
     uart
     mbox))
