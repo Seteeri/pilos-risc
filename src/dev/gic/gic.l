@@ -1,8 +1,7 @@
 (symbols '(gic pico))
 
 (local)
-(+Gic
- +Vicb +Hyp +Vci)
+(+Gic +Vicb +Hyp +Vci)
   
 #{
 
