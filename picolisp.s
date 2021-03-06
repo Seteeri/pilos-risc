@@ -91,8 +91,8 @@ __meth:                                 // @__meth
 	mov	x1, x21
 	bl	symErr
 .LBB0_10:                               // %"$12"
-	adrp	x2, .L$181
-	add	x2, x2, :lo12:.L$181
+	adrp	x2, .L$180
+	add	x2, x2, :lo12:.L$180
 	mov	x0, x20
 	mov	x1, x19
 	bl	err
@@ -16256,8 +16256,8 @@ _dm:                                    // @_dm
 	ldp	x30, x23, [sp], #48             // 16-byte Folded Reload
 	ret
 .LBB130_29:                             // %"$20"
-	adrp	x2, .L$181
-	add	x2, x2, :lo12:.L$181
+	adrp	x2, .L$180
+	add	x2, x2, :lo12:.L$180
 	mov	x0, x23
 	mov	x1, x19
 	mov	x3, xzr
@@ -16940,8 +16940,8 @@ _send:                                  // @_send
 	mov	x1, x21
 	bl	symErr
 .LBB136_14:                             // %"$17"
-	adrp	x2, .L$181
-	add	x2, x2, :lo12:.L$181
+	adrp	x2, .L$180
+	add	x2, x2, :lo12:.L$180
 	mov	x0, x19
 	mov	x1, x20
 	bl	err
@@ -17129,8 +17129,8 @@ _super:                                 // @_super
 	tst	x22, #0xf
 	b.eq	.LBB138_4
 .LBB138_6:                              // %"$9"
-	adrp	x2, .L$182
-	add	x2, x2, :lo12:.L$182
+	adrp	x2, .L$181
+	add	x2, x2, :lo12:.L$181
 	mov	x0, x19
 	mov	x1, x20
 	mov	x3, xzr
@@ -17191,8 +17191,8 @@ _extra:                                 // @_extra
 	ldp	x30, x23, [sp], #48             // 16-byte Folded Reload
 	ret
 .LBB139_2:                              // %"$2"
-	adrp	x2, .L$183
-	add	x2, x2, :lo12:.L$183
+	adrp	x2, .L$182
+	add	x2, x2, :lo12:.L$182
 	mov	x0, x19
 	mov	x1, x20
 	mov	x3, xzr
@@ -21523,8 +21523,8 @@ _throw:                                 // @_throw
 	mov	w1, #1
 	bl	longjmp
 .LBB176_14:                             // %"$14"
-	adrp	x2, .L$184
-	add	x2, x2, :lo12:.L$184
+	adrp	x2, .L$183
+	add	x2, x2, :lo12:.L$183
 	mov	x0, x19
 	mov	x1, x20
 	mov	x3, xzr
@@ -21801,8 +21801,8 @@ _co:                                    // @_co
 	ldp	x29, x30, [sp], #80             // 16-byte Folded Reload
 	ret
 .LBB178_26:                             // %"$41"
-	adrp	x2, .L$186
-	add	x2, x2, :lo12:.L$186
+	adrp	x2, .L$185
+	add	x2, x2, :lo12:.L$185
 	mov	x0, x19
 	mov	x1, xzr
 	mov	x3, xzr
@@ -22010,8 +22010,8 @@ _yield:                                 // @_yield
 	ldr	x22, [x19, #24]
 	cbnz	x22, .LBB179_15
 // %bb.11:                              // %"$25"
-	adrp	x2, .L$189
-	add	x2, x2, :lo12:.L$189
+	adrp	x2, .L$188
+	add	x2, x2, :lo12:.L$188
 	b	.LBB179_61
 .LBB179_12:                             // %"$18"
                                         //   in Loop: Header=BB179_13 Depth=1
@@ -22362,14 +22362,14 @@ _yield:                                 // @_yield
 	ldp	x29, x30, [sp], #96             // 16-byte Folded Reload
 	ret
 .LBB179_59:                             // %"$23"
-	adrp	x2, .L$188
-	add	x2, x2, :lo12:.L$188
+	adrp	x2, .L$187
+	add	x2, x2, :lo12:.L$187
 	mov	x0, x21
 	mov	x3, xzr
 	bl	err
 .LBB179_60:                             // %"$12"
-	adrp	x2, .L$187
-	add	x2, x2, :lo12:.L$187
+	adrp	x2, .L$186
+	add	x2, x2, :lo12:.L$186
 .LBB179_61:                             // %"$12"
 	mov	x0, x21
 	mov	x1, xzr
@@ -22571,8 +22571,8 @@ _e:                                     // @_e
 	ldp	x29, x30, [sp], #80             // 16-byte Folded Reload
 	ret
 .LBB181_12:                             // %"$2"
-	adrp	x2, .L$191
-	add	x2, x2, :lo12:.L$191
+	adrp	x2, .L$190
+	add	x2, x2, :lo12:.L$190
 	mov	x0, x21
 	mov	x1, xzr
 	mov	x3, xzr
@@ -22661,8 +22661,8 @@ _trace:                                 // @_trace
 	str	w0, [x27, :lo12:env+144]
 	mov	x1, x19
 	bl	trace
-	adrp	x0, .L$192
-	add	x0, x0, :lo12:.L$192
+	adrp	x0, .L$191
+	add	x0, x0, :lo12:.L$191
 	bl	outString
 	tst	x29, #0xf
 	b.ne	.LBB182_7
@@ -22766,8 +22766,8 @@ _trace:                                 // @_trace
 	bl	trace
 	sub	w8, w21, #1                     // =1
 	str	w8, [x27, :lo12:env+144]
-	adrp	x0, .L$193
-	add	x0, x0, :lo12:.L$193
+	adrp	x0, .L$192
+	add	x0, x0, :lo12:.L$192
 	bl	outString
 	mov	x0, x20
 	bl	print
@@ -34844,8 +34844,8 @@ _lisp:                                  // @_lisp
 	cmp	x21, x8
 	b.ls	.LBB301_4
 // %bb.6:                               // %"$10"
-	adrp	x2, .L$197
-	add	x2, x2, :lo12:.L$197
+	adrp	x2, .L$196
+	add	x2, x2, :lo12:.L$196
 	mov	x0, x20
 	mov	x1, xzr
 	mov	x3, xzr
@@ -36270,8 +36270,8 @@ gc:                                     // @gc
 	adrp	x19, ($Heaps)
 	add	x19, x19, :lo12:($Heaps)
 	mov	w22, #1048560
-	adrp	x20, .L$130
-	add	x20, x20, :lo12:.L$130
+	adrp	x20, .L$129
+	add	x20, x20, :lo12:.L$129
 	b	.LBB322_88
 .LBB322_87:                             // %"$108"
                                         //   in Loop: Header=BB322_88 Depth=1
@@ -36519,9 +36519,6 @@ sighandler:                             // @sighandler
 	.cfi_def_cfa_offset 16
 	.cfi_offset w19, -8
 	.cfi_offset w30, -16
-	adrp	x0, .L$103
-	add	x0, x0, :lo12:.L$103
-	bl	outString
 	adrp	x19, env+136
 	ldr	w8, [x19, :lo12:env+136]
 	cbz	w8, .LBB327_2
@@ -37059,8 +37056,8 @@ undefined:                              // @undefined
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
 	mov	x8, x0
-	adrp	x2, .L$132
-	add	x2, x2, :lo12:.L$132
+	adrp	x2, .L$131
+	add	x2, x2, :lo12:.L$131
 	mov	x0, x1
 	mov	x1, x8
 	mov	x3, xzr
@@ -37080,8 +37077,8 @@ stkErr:                                 // @stkErr
 	.cfi_offset w30, -16
 	adrp	x8, ($StkLimit)
 	str	xzr, [x8, :lo12:($StkLimit)]
-	adrp	x2, .L$110
-	add	x2, x2, :lo12:.L$110
+	adrp	x2, .L$109
+	add	x2, x2, :lo12:.L$109
 	mov	x1, xzr
 	mov	x3, xzr
 	bl	err
@@ -37205,8 +37202,8 @@ err:                                    // @err
 	cbnz	w8, .LBB332_17
 	b	.LBB332_20
 .LBB332_15:                             // %"$22"
-	adrp	x0, .L$104
-	add	x0, x0, :lo12:.L$104
+	adrp	x0, .L$103
+	add	x0, x0, :lo12:.L$103
 	bl	outString
 	mov	x0, x21
 	bl	print
@@ -37215,8 +37212,8 @@ err:                                    // @err
 .LBB332_16:                             // %"$24"
 	mov	x0, x20
 	bl	print
-	adrp	x0, .L$105
-	add	x0, x0, :lo12:.L$105
+	adrp	x0, .L$104
+	add	x0, x0, :lo12:.L$104
 	bl	outString
 	ldrb	w8, [x22]
 	cbz	w8, .LBB332_20
@@ -37243,20 +37240,20 @@ err:                                    // @err
 	adrp	x9, _getStdin
 	add	x9, x9, :lo12:_getStdin
 	str	x9, [x8, :lo12:($Get)]
-	adrp	x1, .L$106
-	add	x1, x1, :lo12:.L$106
+	adrp	x1, .L$105
+	add	x1, x1, :lo12:.L$105
 	adrp	x2, SymTab+8
 	add	x2, x2, :lo12:SymTab+8
 	mov	x0, xzr
 	bl	repl2
 .LBB332_20:                             // %"$27"
-	adrp	x0, .L$107
-	add	x0, x0, :lo12:.L$107
+	adrp	x0, .L$106
+	add	x0, x0, :lo12:.L$106
 	bl	outString
 	mov	x0, xzr
 	bl	unwind
-	adrp	x0, .L$108
-	add	x0, x0, :lo12:.L$108
+	adrp	x0, .L$107
+	add	x0, x0, :lo12:.L$107
 	bl	outString
 	adrp	x8, env
 	add	x8, x8, :lo12:env
@@ -37265,8 +37262,8 @@ err:                                    // @err
 	str	x24, [x8, #96]
 	stp	xzr, xzr, [x8, #120]
 	str	wzr, [x8, #144]
-	adrp	x0, .L$109
-	add	x0, x0, :lo12:.L$109
+	adrp	x0, .L$108
+	add	x0, x0, :lo12:.L$108
 	bl	outString
 	adrp	x0, ($QuitRst)
 	add	x0, x0, :lo12:($QuitRst)
@@ -37821,8 +37818,8 @@ print:                                  // @print
 	cmp	x19, x0
 	b.ne	.LBB336_34
 // %bb.28:                              // %"$23"
-	adrp	x0, .L$156
-	add	x0, x0, :lo12:.L$156
+	adrp	x0, .L$155
+	add	x0, x0, :lo12:.L$155
 	bl	outString
 .LBB336_29:                             // %"$47"
 	mov	x0, x20
@@ -37881,8 +37878,8 @@ print:                                  // @print
 	mov	w22, #1
 	b	.LBB336_35
 .LBB336_40:                             // %"$61"
-	adrp	x0, .L$157
-	add	x0, x0, :lo12:.L$157
+	adrp	x0, .L$156
+	add	x0, x0, :lo12:.L$156
 	bl	outString
 	mov	x0, x19
 	bl	print
@@ -38139,8 +38136,8 @@ repl2:                                  // @repl2
 	adrp	x27, SymTab+376
 	add	x27, x27, :lo12:SymTab+376
 	stp	x26, x26, [x28]
-	adrp	x20, .L$158
-	add	x20, x20, :lo12:.L$158
+	adrp	x20, .L$157
+	add	x20, x20, :lo12:.L$157
 	adrp	x29, SymTab+376
 	mov	x22, x26
 	b	.LBB339_3
@@ -38555,8 +38552,8 @@ read0:                                  // @read0
 	bl	rdAtom
 	b	.LBB341_11
 .LBB341_52:                             // %"$14"
-	adrp	x2, .L$155
-	add	x2, x2, :lo12:.L$155
+	adrp	x2, .L$154
+	add	x2, x2, :lo12:.L$154
 	mov	x0, xzr
 	mov	x1, x19
 	mov	x3, xzr
@@ -38619,8 +38616,8 @@ eofErr:                                 // @eofErr
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	adrp	x2, .L$137
-	add	x2, x2, :lo12:.L$137
+	adrp	x2, .L$136
+	add	x2, x2, :lo12:.L$136
 	mov	x0, xzr
 	mov	x1, xzr
 	mov	x3, xzr
@@ -39441,8 +39438,8 @@ badInput:                               // @badInput
 	ldr	w8, [x8, :lo12:($Chr)]
 	strb	w8, [sp, #12]
 	strb	wzr, [sp, #13]
-	adrp	x2, .L$138
-	add	x2, x2, :lo12:.L$138
+	adrp	x2, .L$137
+	add	x2, x2, :lo12:.L$137
 	add	x3, sp, #12                     // =12
 	mov	x0, xzr
 	mov	x1, xzr
@@ -39981,8 +39978,8 @@ symNspErr:                              // @symNspErr
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	adrp	x2, .L$125
-	add	x2, x2, :lo12:.L$125
+	adrp	x2, .L$124
+	add	x2, x2, :lo12:.L$124
 	mov	x3, xzr
 	bl	err
 .Lfunc_end354:
@@ -41755,8 +41752,8 @@ rdl:                                    // @rdl
 	cmp	w8, #93                         // =93
 	b.eq	.LBB374_22
 // %bb.24:                              // %"$21"
-	adrp	x2, .L$154
-	add	x2, x2, :lo12:.L$154
+	adrp	x2, .L$153
+	add	x2, x2, :lo12:.L$153
 	mov	x0, xzr
 	mov	x1, x19
 	mov	x3, xzr
@@ -43003,8 +43000,8 @@ closeErr:                               // @closeErr
 	.cfi_offset w30, -16
 	bl	strErrno
 	mov	x3, x0
-	adrp	x2, .L$134
-	add	x2, x2, :lo12:.L$134
+	adrp	x2, .L$133
+	add	x2, x2, :lo12:.L$133
 	mov	x0, xzr
 	mov	x1, xzr
 	bl	err
@@ -43051,8 +43048,8 @@ flush:                                  // @flush
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	adrp	x0, .L$145
-	add	x0, x0, :lo12:.L$145
+	adrp	x0, .L$144
+	add	x0, x0, :lo12:.L$144
 	bl	outString
 	mov	w0, wzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
@@ -43130,8 +43127,8 @@ currFd:                                 // @currFd
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
 .LBB407_7:                              // %"$6"
-	adrp	x2, .L$148
-	add	x2, x2, :lo12:.L$148
+	adrp	x2, .L$147
+	add	x2, x2, :lo12:.L$147
 	mov	x0, xzr
 	mov	x1, xzr
 	mov	x3, xzr
@@ -43261,8 +43258,8 @@ nameErr:                                // @nameErr
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	adrp	x2, .L$116
-	add	x2, x2, :lo12:.L$116
+	adrp	x2, .L$115
+	add	x2, x2, :lo12:.L$115
 	mov	x3, xzr
 	bl	err
 .Lfunc_end411:
@@ -43297,8 +43294,8 @@ varErr:                                 // @varErr
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	adrp	x2, .L$120
-	add	x2, x2, :lo12:.L$120
+	adrp	x2, .L$119
+	add	x2, x2, :lo12:.L$119
 	mov	x3, xzr
 	bl	err
 .Lfunc_end413:
@@ -43314,8 +43311,8 @@ protErr:                                // @protErr
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	adrp	x2, .L$122
-	add	x2, x2, :lo12:.L$122
+	adrp	x2, .L$121
+	add	x2, x2, :lo12:.L$121
 	mov	x3, xzr
 	bl	err
 .Lfunc_end414:
@@ -43386,8 +43383,8 @@ cntErr:                                 // @cntErr
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	adrp	x2, .L$112
-	add	x2, x2, :lo12:.L$112
+	adrp	x2, .L$111
+	add	x2, x2, :lo12:.L$111
 	mov	x3, xzr
 	bl	err
 .Lfunc_end417:
@@ -44544,8 +44541,8 @@ numErr:                                 // @numErr
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	adrp	x2, .L$113
-	add	x2, x2, :lo12:.L$113
+	adrp	x2, .L$112
+	add	x2, x2, :lo12:.L$112
 	mov	x3, xzr
 	bl	err
 .Lfunc_end452:
@@ -46519,8 +46516,8 @@ db:                                     // @db
 	ldp	x29, x30, [sp], #48             // 16-byte Folded Reload
 	ret
 .LBB468_23:                             // %"$21"
-	adrp	x2, .L$175
-	add	x2, x2, :lo12:.L$175
+	adrp	x2, .L$174
+	add	x2, x2, :lo12:.L$174
 	mov	x0, x21
 	mov	x1, x19
 	mov	x3, xzr
@@ -46538,8 +46535,8 @@ dbfErr:                                 // @dbfErr
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	adrp	x2, .L$163
-	add	x2, x2, :lo12:.L$163
+	adrp	x2, .L$162
+	add	x2, x2, :lo12:.L$162
 	mov	x1, xzr
 	mov	x3, xzr
 	bl	err
@@ -47264,8 +47261,8 @@ dbRdErr:                                // @dbRdErr
 	.cfi_offset w30, -16
 	bl	strErrno
 	mov	x3, x0
-	adrp	x2, .L$164
-	add	x2, x2, :lo12:.L$164
+	adrp	x2, .L$163
+	add	x2, x2, :lo12:.L$163
 	mov	x0, xzr
 	mov	x1, xzr
 	bl	err
@@ -47330,8 +47327,8 @@ lockErr:                                // @lockErr
 	.cfi_offset w30, -16
 	bl	strErrno
 	mov	x3, x0
-	adrp	x2, .L$123
-	add	x2, x2, :lo12:.L$123
+	adrp	x2, .L$122
+	add	x2, x2, :lo12:.L$122
 	mov	x0, xzr
 	mov	x1, xzr
 	bl	err
@@ -47529,8 +47526,8 @@ makeErr:                                // @makeErr
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	adrp	x2, .L$194
-	add	x2, x2, :lo12:.L$194
+	adrp	x2, .L$193
+	add	x2, x2, :lo12:.L$193
 	mov	x1, xzr
 	mov	x3, xzr
 	bl	err
@@ -47547,8 +47544,8 @@ argErr:                                 // @argErr
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	adrp	x2, .L$111
-	add	x2, x2, :lo12:.L$111
+	adrp	x2, .L$110
+	add	x2, x2, :lo12:.L$110
 	mov	x3, xzr
 	bl	err
 .Lfunc_end488:
@@ -48062,8 +48059,8 @@ pairErr:                                // @pairErr
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	adrp	x2, .L$118
-	add	x2, x2, :lo12:.L$118
+	adrp	x2, .L$117
+	add	x2, x2, :lo12:.L$117
 	mov	x3, xzr
 	bl	err
 .Lfunc_end494:
@@ -48079,8 +48076,8 @@ lstErr:                                 // @lstErr
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	adrp	x2, .L$119
-	add	x2, x2, :lo12:.L$119
+	adrp	x2, .L$118
+	add	x2, x2, :lo12:.L$118
 	mov	x3, xzr
 	bl	err
 .Lfunc_end495:
@@ -48304,8 +48301,8 @@ brkLoad:                                // @brkLoad
 	mov	x0, x19
 	bl	print
 	bl	newline
-	adrp	x1, .L$190
-	add	x1, x1, :lo12:.L$190
+	adrp	x1, .L$189
+	add	x1, x1, :lo12:.L$189
 	mov	x0, xzr
 	mov	x2, x20
 	bl	repl
@@ -48544,8 +48541,8 @@ repl:                                   // @repl
 	str	x8, [x9, #32]
 	str	x23, [x9, #16]
 	str	x24, [x9]
-	adrp	x0, .L$161
-	add	x0, x0, :lo12:.L$161
+	adrp	x0, .L$160
+	add	x0, x0, :lo12:.L$160
 	bl	outString
 	mov	x0, x24
 	bl	print
@@ -48596,11 +48593,11 @@ repl:                                   // @repl
 .LBB502_17:                             // %"$18"
                                         //   in Loop: Header=BB502_12 Depth=1
 	str	x24, [x21, :lo12:($LinePrmt)]
-	adrp	x0, .L$159
-	add	x0, x0, :lo12:.L$159
+	adrp	x0, .L$158
+	add	x0, x0, :lo12:.L$158
 	bl	outString
-	adrp	x8, .L$160
-	add	x8, x8, :lo12:.L$160
+	adrp	x8, .L$159
+	add	x8, x8, :lo12:.L$159
 	str	x8, [x20, :lo12:($ContPrmt)]
 	mov	w0, #10
 	bl	read1
@@ -49493,8 +49490,8 @@ reentErr:                               // @reentErr
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	adrp	x2, .L$185
-	add	x2, x2, :lo12:.L$185
+	adrp	x2, .L$184
+	add	x2, x2, :lo12:.L$184
 	mov	x3, xzr
 	bl	err
 .Lfunc_end513:
@@ -50776,8 +50773,8 @@ symErr:                                 // @symErr
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	adrp	x2, .L$114
-	add	x2, x2, :lo12:.L$114
+	adrp	x2, .L$113
+	add	x2, x2, :lo12:.L$113
 	mov	x3, xzr
 	bl	err
 .Lfunc_end523:
@@ -51263,8 +51260,8 @@ newBlock:                               // @newBlock
 	ldp	x29, x30, [sp], #64             // 16-byte Folded Reload
 	ret
 .LBB529_7:                              // %"$8"
-	adrp	x2, .L$170
-	add	x2, x2, :lo12:.L$170
+	adrp	x2, .L$169
+	add	x2, x2, :lo12:.L$169
 	mov	x0, xzr
 	mov	x1, xzr
 	mov	x3, xzr
@@ -51408,8 +51405,8 @@ blkPoke:                                // @blkPoke
 .LBB534_5:                              // %"$11"
 	bl	strErrno
 	mov	x3, x0
-	adrp	x2, .L$168
-	add	x2, x2, :lo12:.L$168
+	adrp	x2, .L$167
+	add	x2, x2, :lo12:.L$167
 	mov	x0, xzr
 	mov	x1, xzr
 	bl	err
@@ -51470,8 +51467,8 @@ dbWrErr:                                // @dbWrErr
 	.cfi_offset w30, -16
 	bl	strErrno
 	mov	x3, x0
-	adrp	x2, .L$165
-	add	x2, x2, :lo12:.L$165
+	adrp	x2, .L$164
+	add	x2, x2, :lo12:.L$164
 	mov	x0, xzr
 	mov	x1, xzr
 	bl	err
@@ -51652,8 +51649,8 @@ redefMsg:                               // @redefMsg
 	adrp	x8, _putStdout
 	add	x8, x8, :lo12:_putStdout
 	str	x8, [x23, :lo12:($Put)]
-	adrp	x0, .L$179
-	add	x0, x0, :lo12:.L$179
+	adrp	x0, .L$178
+	add	x0, x0, :lo12:.L$178
 	bl	outString
 	mov	x0, x20
 	bl	print
@@ -51663,8 +51660,8 @@ redefMsg:                               // @redefMsg
 	mov	x0, x19
 	bl	print
 .LBB543_2:                              // %"$3"
-	adrp	x0, .L$180
-	add	x0, x0, :lo12:.L$180
+	adrp	x0, .L$179
+	add	x0, x0, :lo12:.L$179
 	bl	outString
 	str	x24, [x23, :lo12:($Put)]
 	str	x22, [x21, :lo12:($OutFile)]
@@ -52511,8 +52508,8 @@ sizeErr:                                // @sizeErr
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	adrp	x2, .L$136
-	add	x2, x2, :lo12:.L$136
+	adrp	x2, .L$135
+	add	x2, x2, :lo12:.L$135
 	mov	x1, xzr
 	mov	x3, xzr
 	bl	err
@@ -52777,8 +52774,8 @@ atomErr:                                // @atomErr
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	adrp	x2, .L$117
-	add	x2, x2, :lo12:.L$117
+	adrp	x2, .L$116
+	add	x2, x2, :lo12:.L$116
 	mov	x3, xzr
 	bl	err
 .Lfunc_end561:
@@ -53238,8 +53235,8 @@ itemErr:                                // @itemErr
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	adrp	x2, .L$121
-	add	x2, x2, :lo12:.L$121
+	adrp	x2, .L$120
+	add	x2, x2, :lo12:.L$120
 	mov	x3, xzr
 	bl	err
 .Lfunc_end568:
@@ -55156,8 +55153,8 @@ divErr:                                 // @divErr
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	adrp	x2, .L$131
-	add	x2, x2, :lo12:.L$131
+	adrp	x2, .L$130
+	add	x2, x2, :lo12:.L$130
 	mov	x1, xzr
 	mov	x3, xzr
 	bl	err
@@ -57470,8 +57467,8 @@ extErr:                                 // @extErr
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	adrp	x2, .L$115
-	add	x2, x2, :lo12:.L$115
+	adrp	x2, .L$114
+	add	x2, x2, :lo12:.L$114
 	mov	x3, xzr
 	bl	err
 .Lfunc_end683:
@@ -57487,8 +57484,8 @@ forkErr:                                // @forkErr
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	adrp	x2, .L$124
-	add	x2, x2, :lo12:.L$124
+	adrp	x2, .L$123
+	add	x2, x2, :lo12:.L$123
 	mov	x1, xzr
 	mov	x3, xzr
 	bl	err
@@ -57550,8 +57547,8 @@ _tty:                                   // @_tty
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	adrp	x0, .L$126
-	add	x0, x0, :lo12:.L$126
+	adrp	x0, .L$125
+	add	x0, x0, :lo12:.L$125
 	bl	outString
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
@@ -57570,8 +57567,8 @@ _raw:                                   // @_raw
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	adrp	x0, .L$127
-	add	x0, x0, :lo12:.L$127
+	adrp	x0, .L$126
+	add	x0, x0, :lo12:.L$126
 	bl	outString
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
@@ -57590,8 +57587,8 @@ _sigio:                                 // @_sigio
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	adrp	x0, .L$128
-	add	x0, x0, :lo12:.L$128
+	adrp	x0, .L$127
+	add	x0, x0, :lo12:.L$127
 	bl	outString
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
@@ -57610,8 +57607,8 @@ _kids:                                  // @_kids
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	adrp	x0, .L$129
-	add	x0, x0, :lo12:.L$129
+	adrp	x0, .L$128
+	add	x0, x0, :lo12:.L$128
 	bl	outString
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
@@ -57991,8 +57988,8 @@ openErr:                                // @openErr
 	mov	x20, x0
 	bl	strErrno
 	mov	x3, x0
-	adrp	x2, .L$133
-	add	x2, x2, :lo12:.L$133
+	adrp	x2, .L$132
+	add	x2, x2, :lo12:.L$132
 	mov	x0, x20
 	mov	x1, x19
 	bl	err
@@ -58013,8 +58010,8 @@ pipeErr:                                // @pipeErr
 	mov	x19, x0
 	bl	strErrno
 	mov	x3, x0
-	adrp	x2, .L$135
-	add	x2, x2, :lo12:.L$135
+	adrp	x2, .L$134
+	add	x2, x2, :lo12:.L$134
 	mov	x0, x19
 	mov	x1, xzr
 	bl	err
@@ -58031,8 +58028,8 @@ badFd:                                  // @badFd
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	adrp	x2, .L$139
-	add	x2, x2, :lo12:.L$139
+	adrp	x2, .L$138
+	add	x2, x2, :lo12:.L$138
 	mov	x3, xzr
 	bl	err
 .Lfunc_end699:
@@ -58073,8 +58070,8 @@ selectErr:                              // @selectErr
 	mov	x19, x0
 	bl	strErrno
 	mov	x3, x0
-	adrp	x2, .L$140
-	add	x2, x2, :lo12:.L$140
+	adrp	x2, .L$139
+	add	x2, x2, :lo12:.L$139
 	mov	x0, x19
 	mov	x1, xzr
 	bl	err
@@ -58101,8 +58098,8 @@ closeOnExec:                            // @closeOnExec
 .LBB702_2:                              // %"$2"
 	bl	strErrno
 	mov	x3, x0
-	adrp	x2, .L$141
-	add	x2, x2, :lo12:.L$141
+	adrp	x2, .L$140
+	add	x2, x2, :lo12:.L$140
 	mov	x0, x19
 	mov	x1, xzr
 	bl	err
@@ -58481,8 +58478,8 @@ wrBytes:                                // @wrBytes
 	mov	w0, #2
 	bl	bye
 .LBB709_15:                             // %"$16"
-	adrp	x0, .L$142
-	add	x0, x0, :lo12:.L$142
+	adrp	x0, .L$141
+	add	x0, x0, :lo12:.L$141
 	bl	writeErr
 .Lfunc_end709:
 	.size	wrBytes, .Lfunc_end709-wrBytes
@@ -58497,8 +58494,8 @@ clsChild:                               // @clsChild
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	adrp	x0, .L$143
-	add	x0, x0, :lo12:.L$143
+	adrp	x0, .L$142
+	add	x0, x0, :lo12:.L$142
 	bl	outString
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
@@ -58515,8 +58512,8 @@ wrChild:                                // @wrChild
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	adrp	x0, .L$144
-	add	x0, x0, :lo12:.L$144
+	adrp	x0, .L$143
+	add	x0, x0, :lo12:.L$143
 	bl	outString
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
@@ -58533,8 +58530,8 @@ flushAll:                               // @flushAll
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	adrp	x0, .L$146
-	add	x0, x0, :lo12:.L$146
+	adrp	x0, .L$145
+	add	x0, x0, :lo12:.L$145
 	bl	outString
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
@@ -58619,8 +58616,8 @@ putTell:                                // @putTell
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
 	ret
 .LBB715_2:                              // %"$2"
-	adrp	x2, .L$147
-	add	x2, x2, :lo12:.L$147
+	adrp	x2, .L$146
+	add	x2, x2, :lo12:.L$146
 	mov	x0, xzr
 	mov	x1, xzr
 	mov	x3, xzr
@@ -58994,8 +58991,8 @@ waitFd:                                 // @waitFd
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	adrp	x0, .L$149
-	add	x0, x0, :lo12:.L$149
+	adrp	x0, .L$148
+	add	x0, x0, :lo12:.L$148
 	bl	outString
 	mov	x0, xzr
 	ldr	x30, [sp], #16                  // 8-byte Folded Reload
@@ -59172,8 +59169,8 @@ _sync:                                  // @_sync
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	adrp	x0, .L$150
-	add	x0, x0, :lo12:.L$150
+	adrp	x0, .L$149
+	add	x0, x0, :lo12:.L$149
 	bl	outString
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
@@ -59192,8 +59189,8 @@ _hear:                                  // @_hear
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	adrp	x0, .L$151
-	add	x0, x0, :lo12:.L$151
+	adrp	x0, .L$150
+	add	x0, x0, :lo12:.L$150
 	bl	outString
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
@@ -59212,8 +59209,8 @@ _tell:                                  // @_tell
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	adrp	x0, .L$152
-	add	x0, x0, :lo12:.L$152
+	adrp	x0, .L$151
+	add	x0, x0, :lo12:.L$151
 	bl	outString
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
@@ -59232,8 +59229,8 @@ _poll:                                  // @_poll
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	adrp	x0, .L$153
-	add	x0, x0, :lo12:.L$153
+	adrp	x0, .L$152
+	add	x0, x0, :lo12:.L$152
 	bl	outString
 	adrp	x0, SymTab+8
 	add	x0, x0, :lo12:SymTab+8
@@ -61050,8 +61047,8 @@ _load:                                  // @_load
 	adrp	x22, SymTab+216
 	add	x22, x22, :lo12:SymTab+216
 	bfi	x21, x8, #32, #32
-	adrp	x20, .L$162
-	add	x20, x20, :lo12:.L$162
+	adrp	x20, .L$161
+	add	x20, x20, :lo12:.L$161
 	b	.LBB757_2
 .LBB757_1:                              // %"$9"
                                         //   in Loop: Header=BB757_2 Depth=1
@@ -61108,8 +61105,8 @@ jnlErr:                                 // @jnlErr
 	str	x30, [sp, #-16]!                // 8-byte Folded Spill
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
-	adrp	x2, .L$166
-	add	x2, x2, :lo12:.L$166
+	adrp	x2, .L$165
+	add	x2, x2, :lo12:.L$165
 	mov	x1, xzr
 	mov	x3, xzr
 	bl	err
@@ -61130,8 +61127,8 @@ dbSyncErr:                              // @dbSyncErr
 	mov	x19, x0
 	bl	strErrno
 	mov	x3, x0
-	adrp	x2, .L$167
-	add	x2, x2, :lo12:.L$167
+	adrp	x2, .L$166
+	add	x2, x2, :lo12:.L$166
 	mov	x0, x19
 	mov	x1, xzr
 	bl	err
@@ -61303,8 +61300,8 @@ logBlock:                               // @logBlock
 .LBB763_3:                              // %"$4"
 	bl	strErrno
 	mov	x3, x0
-	adrp	x2, .L$169
-	add	x2, x2, :lo12:.L$169
+	adrp	x2, .L$168
+	add	x2, x2, :lo12:.L$168
 	mov	x0, xzr
 	mov	x1, xzr
 	bl	err
@@ -61827,8 +61824,8 @@ truncLog:                               // @truncLog
 .LBB772_3:                              // %"$4"
 	bl	strErrno
 	mov	x3, x0
-	adrp	x2, .L$173
-	add	x2, x2, :lo12:.L$173
+	adrp	x2, .L$172
+	add	x2, x2, :lo12:.L$172
 	mov	x0, x19
 	mov	x1, xzr
 	bl	err
@@ -62921,16 +62918,16 @@ _dbck:                                  // @_dbck
 	cinc	w25, w25, ls
 	b	.LBB785_22
 .LBB785_25:                             // %"$22"
-	adrp	x0, .L$176
-	add	x0, x0, :lo12:.L$176
+	adrp	x0, .L$175
+	add	x0, x0, :lo12:.L$175
 .LBB785_26:                             // %"$-9"
 	bl	mkStr
 .LBB785_27:                             // %"$-9"
 	mov	x19, x0
 	b	.LBB785_29
 .LBB785_28:                             // %"$33"
-	adrp	x0, .L$177
-	add	x0, x0, :lo12:.L$177
+	adrp	x0, .L$176
+	add	x0, x0, :lo12:.L$176
 	bl	mkStr
 	mov	x19, x0
 	adrp	x22, env+136
@@ -62999,8 +62996,8 @@ _dbck:                                  // @_dbck
 	bl	cons
 	b	.LBB785_27
 .LBB785_40:                             // %"$44"
-	adrp	x0, .L$178
-	add	x0, x0, :lo12:.L$178
+	adrp	x0, .L$177
+	add	x0, x0, :lo12:.L$177
 	b	.LBB785_26
 .LBB785_41:                             // %"$10"
 	mov	x0, x21
@@ -63321,8 +63318,8 @@ _quit:                                  // @_quit
 	bl	evList
 	mov	x1, x0
 .LBB795_6:                              // %"$4"
-	adrp	x2, .L$195
-	add	x2, x2, :lo12:.L$195
+	adrp	x2, .L$194
+	add	x2, x2, :lo12:.L$194
 	mov	x0, xzr
 	mov	x3, x19
 	bl	err
@@ -63530,8 +63527,8 @@ natErr:                                 // @natErr
 	.cfi_def_cfa_offset 16
 	.cfi_offset w30, -16
 	mov	x1, x0
-	adrp	x2, .L$196
-	add	x2, x2, :lo12:.L$196
+	adrp	x2, .L$195
+	add	x2, x2, :lo12:.L$195
 	mov	x0, xzr
 	mov	x3, xzr
 	bl	err
@@ -64355,36 +64352,36 @@ main:                                   // @main
 	add	x20, x19, #752                  // =752
 	mov	w0, #10
 	blr	x9
-	adrp	x0, .L$198
-	add	x0, x0, :lo12:.L$198
+	adrp	x0, .L$197
+	add	x0, x0, :lo12:.L$197
 	bl	outString
 	mov	x0, x20
 	bl	print
 	bl	newline
+	adrp	x0, .L$198
+	add	x0, x0, :lo12:.L$198
+	bl	outString
+	ldrb	w0, [x21, :lo12:($QuitRst)]
+	bl	outWord
+	bl	newline
 	adrp	x0, .L$199
 	add	x0, x0, :lo12:.L$199
 	bl	outString
-	ldrb	w0, [x21, :lo12:($QuitRst)]
+	ldr	x0, [x22, :lo12:($Heap)]
 	bl	outWord
 	bl	newline
 	adrp	x0, .L$200
 	add	x0, x0, :lo12:.L$200
 	bl	outString
-	ldr	x0, [x22, :lo12:($Heap)]
+	ldr	x0, [x23, :lo12:($Limit)]
 	bl	outWord
 	bl	newline
 	adrp	x0, .L$201
 	add	x0, x0, :lo12:.L$201
 	bl	outString
-	ldr	x0, [x23, :lo12:($Limit)]
-	bl	outWord
-	bl	newline
+	bl	heapAlloc
 	adrp	x0, .L$202
 	add	x0, x0, :lo12:.L$202
-	bl	outString
-	bl	heapAlloc
-	adrp	x0, .L$203
-	add	x0, x0, :lo12:.L$203
 	bl	outString
 	mov	w8, #5936
 	add	x22, x19, x8
@@ -64418,8 +64415,8 @@ main:                                   // @main
 	add	x20, x20, #16                   // =16
 	b	.LBB820_1
 .LBB820_6:                              // %"$9"
-	adrp	x0, .L$204
-	add	x0, x0, :lo12:.L$204
+	adrp	x0, .L$203
+	add	x0, x0, :lo12:.L$203
 	bl	outString
 	str	x19, [x19, #720]
 	add	x0, x19, #336                   // =336
@@ -64439,8 +64436,8 @@ main:                                   // @main
 	add	x0, x0, :lo12:($Kerns)
 	bl	mkStr
 	str	x0, [x19, #736]
-	adrp	x0, .L$205
-	add	x0, x0, :lo12:.L$205
+	adrp	x0, .L$204
+	add	x0, x0, :lo12:.L$204
 	bl	outString
 	ldr	x0, [x20, :lo12:($USec)]
 	bl	outWord
@@ -64449,13 +64446,13 @@ main:                                   // @main
 	adrp	x0, ($QuitRst)
 	add	x0, x0, :lo12:($QuitRst)
 	bl	setjmp
-	adrp	x1, .L$206
-	add	x1, x1, :lo12:.L$206
+	adrp	x1, .L$205
+	add	x1, x1, :lo12:.L$205
 	mov	x0, xzr
 	mov	x2, x19
 	bl	repl2
-	adrp	x0, .L$207
-	add	x0, x0, :lo12:.L$207
+	adrp	x0, .L$206
+	add	x0, x0, :lo12:.L$206
 	bl	outString
 	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #16]             // 16-byte Folded Reload
@@ -65842,30 +65839,30 @@ gcData:
 	.xword	SymTab+8
 	.size	gcData, 416
 
-	.type	.L$130,@object                  // @"$130"
+	.type	.L$129,@object                  // @"$129"
 	.section	.rodata,"a",@progbits
 	.p2align	2
-.L$130:
+.L$129:
 	.asciz	"gc:free="
-	.size	.L$130, 9
+	.size	.L$129, 9
 
-	.type	.L$110,@object                  // @"$110"
+	.type	.L$109,@object                  // @"$109"
 	.p2align	2
-.L$110:
+.L$109:
 	.asciz	"Stack overflow"
-	.size	.L$110, 15
+	.size	.L$109, 15
+
+	.type	.L$103,@object                  // @"$103"
+	.p2align	2
+.L$103:
+	.asciz	"!? "
+	.size	.L$103, 4
 
 	.type	.L$104,@object                  // @"$104"
 	.p2align	2
 .L$104:
-	.asciz	"!? "
-	.size	.L$104, 4
-
-	.type	.L$105,@object                  // @"$105"
-	.p2align	2
-.L$105:
 	.asciz	" -- "
-	.size	.L$105, 5
+	.size	.L$104, 5
 
 	.type	$Jam,@object                    // @"$Jam"
 	.bss
@@ -65874,42 +65871,42 @@ $Jam:
 	.byte	0                               // 0x0
 	.size	$Jam, 1
 
-	.type	.L$106,@object                  // @"$106"
+	.type	.L$105,@object                  // @"$105"
 	.section	.rodata,"a",@progbits
 	.p2align	2
-.L$106:
+.L$105:
 	.asciz	"? "
-	.size	.L$106, 3
+	.size	.L$105, 3
+
+	.type	.L$106,@object                  // @"$106"
+	.p2align	2
+.L$106:
+	.asciz	"err 1\n"
+	.size	.L$106, 7
 
 	.type	.L$107,@object                  // @"$107"
 	.p2align	2
 .L$107:
-	.asciz	"err 1\n"
+	.asciz	"err 2\n"
 	.size	.L$107, 7
 
 	.type	.L$108,@object                  // @"$108"
 	.p2align	2
 .L$108:
-	.asciz	"err 2\n"
+	.asciz	"err 3\n"
 	.size	.L$108, 7
 
-	.type	.L$109,@object                  // @"$109"
+	.type	.L$157,@object                  // @"$157"
 	.p2align	2
-.L$109:
-	.asciz	"err 3\n"
-	.size	.L$109, 7
-
-	.type	.L$158,@object                  // @"$158"
-	.p2align	2
-.L$158:
+.L$157:
 	.asciz	"\n-> "
-	.size	.L$158, 5
+	.size	.L$157, 5
 
-	.type	.L$155,@object                  // @"$155"
+	.type	.L$154,@object                  // @"$154"
 	.p2align	4
-.L$155:
+.L$154:
 	.asciz	"Super parentheses mismatch"
-	.size	.L$155, 27
+	.size	.L$154, 27
 
 	.type	$Cell,@object                   // @"$Cell"
 	.data
@@ -65928,47 +65925,47 @@ $Delim:
 	.asciz	" \t\n\r\"'(),[]`{}~"
 	.size	$Delim, 16
 
-	.type	.L$125,@object                  // @"$125"
+	.type	.L$124,@object                  // @"$124"
 	.p2align	4
-.L$125:
+.L$124:
 	.asciz	"Bad symbol namespace"
-	.size	.L$125, 21
-
-	.type	.L$138,@object                  // @"$138"
-	.p2align	2
-.L$138:
-	.asciz	"Bad input '%s'"
-	.size	.L$138, 15
-
-	.type	.L$154,@object                  // @"$154"
-	.p2align	2
-.L$154:
-	.asciz	"Bad dotted pair"
-	.size	.L$154, 16
+	.size	.L$124, 21
 
 	.type	.L$137,@object                  // @"$137"
 	.p2align	2
 .L$137:
+	.asciz	"Bad input '%s'"
+	.size	.L$137, 15
+
+	.type	.L$153,@object                  // @"$153"
+	.p2align	2
+.L$153:
+	.asciz	"Bad dotted pair"
+	.size	.L$153, 16
+
+	.type	.L$136,@object                  // @"$136"
+	.p2align	2
+.L$136:
 	.asciz	"EOF Overrun"
-	.size	.L$137, 12
+	.size	.L$136, 12
+
+	.type	.L$155,@object                  // @"$155"
+	.p2align	2
+.L$155:
+	.asciz	"priv~"
+	.size	.L$155, 6
 
 	.type	.L$156,@object                  // @"$156"
 	.p2align	2
 .L$156:
-	.asciz	"priv~"
-	.size	.L$156, 6
-
-	.type	.L$157,@object                  // @"$157"
-	.p2align	2
-.L$157:
 	.asciz	" . "
-	.size	.L$157, 4
+	.size	.L$156, 4
 
-	.type	.L$134,@object                  // @"$134"
+	.type	.L$133,@object                  // @"$133"
 	.p2align	2
-.L$134:
+.L$133:
 	.asciz	"Close error: %s"
-	.size	.L$134, 16
+	.size	.L$133, 16
 
 	.type	.L$54,@object                   // @"$54"
 	.p2align	2
@@ -65994,11 +65991,11 @@ $Delim:
 	.asciz	"close        "
 	.size	.L$42, 14
 
-	.type	.L$145,@object                  // @"$145"
+	.type	.L$144,@object                  // @"$144"
 	.p2align	2
-.L$145:
+.L$144:
 	.asciz	"flush"
-	.size	.L$145, 6
+	.size	.L$144, 6
 
 	.type	.L$41,@object                   // @"$41"
 	.p2align	2
@@ -66012,47 +66009,41 @@ $Delim:
 	.asciz	"unLock "
 	.size	.L$99, 8
 
-	.type	.L$148,@object                  // @"$148"
+	.type	.L$147,@object                  // @"$147"
 	.p2align	2
-.L$148:
+.L$147:
 	.asciz	"No current fd"
-	.size	.L$148, 14
+	.size	.L$147, 14
 
-	.type	.L$116,@object                  // @"$116"
+	.type	.L$115,@object                  // @"$115"
 	.p2align	2
-.L$116:
+.L$115:
 	.asciz	"Name expected"
-	.size	.L$116, 14
+	.size	.L$115, 14
 
-	.type	.L$132,@object                  // @"$132"
+	.type	.L$131,@object                  // @"$131"
 	.p2align	2
-.L$132:
+.L$131:
 	.asciz	"Undefined"
-	.size	.L$132, 10
+	.size	.L$131, 10
 
-	.type	.L$122,@object                  // @"$122"
+	.type	.L$121,@object                  // @"$121"
 	.p2align	2
-.L$122:
+.L$121:
 	.asciz	"Protected"
-	.size	.L$122, 10
+	.size	.L$121, 10
 
-	.type	.L$120,@object                  // @"$120"
+	.type	.L$119,@object                  // @"$119"
 	.p2align	4
-.L$120:
+.L$119:
 	.asciz	"Variable expected"
-	.size	.L$120, 18
+	.size	.L$119, 18
 
-	.type	.L$103,@object                  // @"$103"
-	.p2align	2
-.L$103:
-	.asciz	"sighandler\n"
-	.size	.L$103, 12
-
-	.type	.L$112,@object                  // @"$112"
+	.type	.L$111,@object                  // @"$111"
 	.p2align	4
-.L$112:
+.L$111:
 	.asciz	"Small number expected"
-	.size	.L$112, 22
+	.size	.L$111, 22
 
 	.type	cbFuns,@object                  // @cbFuns
 	.data
@@ -66085,18 +66076,18 @@ cbFuns:
 	.xword	_cb24
 	.size	cbFuns, 192
 
-	.type	.L$197,@object                  // @"$197"
+	.type	.L$196,@object                  // @"$196"
 	.section	.rodata,"a",@progbits
 	.p2align	4
-.L$197:
+.L$196:
 	.asciz	"Too many callbacks"
-	.size	.L$197, 19
+	.size	.L$196, 19
 
-	.type	.L$113,@object                  // @"$113"
+	.type	.L$112,@object                  // @"$112"
 	.p2align	2
-.L$113:
+.L$112:
 	.asciz	"Number expected"
-	.size	.L$113, 16
+	.size	.L$112, 16
 
 	.type	$Pnl,@object                    // @"$Pnl"
 	.bss
@@ -66113,18 +66104,18 @@ $Penv:
 	.xword	0                               // 0x0
 	.size	$Penv, 8
 
-	.type	.L$175,@object                  // @"$175"
+	.type	.L$174,@object                  // @"$174"
 	.section	.rodata,"a",@progbits
 	.p2align	2
-.L$175:
+.L$174:
 	.asciz	"Bad ID"
-	.size	.L$175, 7
+	.size	.L$174, 7
 
-	.type	.L$164,@object                  // @"$164"
+	.type	.L$163,@object                  // @"$163"
 	.p2align	2
-.L$164:
+.L$163:
 	.asciz	"DB read: %s"
-	.size	.L$164, 12
+	.size	.L$163, 12
 
 	.type	.L$19,@object                   // @"$19"
 	.p2align	2
@@ -66132,11 +66123,11 @@ $Penv:
 	.asciz	"pread        "
 	.size	.L$19, 14
 
-	.type	.L$123,@object                  // @"$123"
+	.type	.L$122,@object                  // @"$122"
 	.p2align	2
-.L$123:
+.L$122:
 	.asciz	"File lock: %s"
-	.size	.L$123, 14
+	.size	.L$122, 14
 
 	.type	.L$97,@object                   // @"$97"
 	.p2align	2
@@ -66144,59 +66135,59 @@ $Penv:
 	.asciz	"rdLock "
 	.size	.L$97, 8
 
-	.type	.L$163,@object                  // @"$163"
+	.type	.L$162,@object                  // @"$162"
 	.p2align	2
-.L$163:
+.L$162:
 	.asciz	"Bad DB file"
-	.size	.L$163, 12
-
-	.type	.L$194,@object                  // @"$194"
-	.p2align	2
-.L$194:
-	.asciz	"Not making"
-	.size	.L$194, 11
-
-	.type	.L$111,@object                  // @"$111"
-	.p2align	2
-.L$111:
-	.asciz	"Bad argument"
-	.size	.L$111, 13
-
-	.type	.L$118,@object                  // @"$118"
-	.p2align	4
-.L$118:
-	.asciz	"Cons pair expected"
-	.size	.L$118, 19
-
-	.type	.L$119,@object                  // @"$119"
-	.p2align	2
-.L$119:
-	.asciz	"List expected"
-	.size	.L$119, 14
-
-	.type	.L$192,@object                  // @"$192"
-	.p2align	2
-.L$192:
-	.asciz	" :"
-	.size	.L$192, 3
+	.size	.L$162, 12
 
 	.type	.L$193,@object                  // @"$193"
 	.p2align	2
 .L$193:
-	.asciz	" = "
-	.size	.L$193, 4
+	.asciz	"Not making"
+	.size	.L$193, 11
+
+	.type	.L$110,@object                  // @"$110"
+	.p2align	2
+.L$110:
+	.asciz	"Bad argument"
+	.size	.L$110, 13
+
+	.type	.L$117,@object                  // @"$117"
+	.p2align	4
+.L$117:
+	.asciz	"Cons pair expected"
+	.size	.L$117, 19
+
+	.type	.L$118,@object                  // @"$118"
+	.p2align	2
+.L$118:
+	.asciz	"List expected"
+	.size	.L$118, 14
 
 	.type	.L$191,@object                  // @"$191"
 	.p2align	2
 .L$191:
-	.asciz	"No Break"
-	.size	.L$191, 9
+	.asciz	" :"
+	.size	.L$191, 3
+
+	.type	.L$192,@object                  // @"$192"
+	.p2align	2
+.L$192:
+	.asciz	" = "
+	.size	.L$192, 4
 
 	.type	.L$190,@object                  // @"$190"
 	.p2align	2
 .L$190:
+	.asciz	"No Break"
+	.size	.L$190, 9
+
+	.type	.L$189,@object                  // @"$189"
+	.p2align	2
+.L$189:
 	.asciz	"! "
-	.size	.L$190, 3
+	.size	.L$189, 3
 
 	.type	$Repl,@object                   // @"$Repl"
 	.bss
@@ -66212,24 +66203,24 @@ Sig:
 	.word	0                               // 0x0
 	.size	Sig, 4
 
-	.type	.L$159,@object                  // @"$159"
+	.type	.L$158,@object                  // @"$158"
 	.section	.rodata,"a",@progbits
 	.p2align	2
-.L$159:
+.L$158:
 	.asciz	"Y...\n"
-	.size	.L$159, 6
+	.size	.L$158, 6
+
+	.type	.L$159,@object                  // @"$159"
+	.p2align	2
+.L$159:
+	.asciz	"   "
+	.size	.L$159, 4
 
 	.type	.L$160,@object                  // @"$160"
 	.p2align	2
 .L$160:
-	.asciz	"   "
-	.size	.L$160, 4
-
-	.type	.L$161,@object                  // @"$161"
-	.p2align	2
-.L$161:
 	.asciz	"-> "
-	.size	.L$161, 4
+	.size	.L$160, 4
 
 	.type	.L$80,@object                   // @"$80"
 	.p2align	2
@@ -66243,65 +66234,65 @@ Sig:
 	.asciz	"isatty       "
 	.size	.L$15, 14
 
-	.type	.L$187,@object                  // @"$187"
+	.type	.L$186,@object                  // @"$186"
 	.p2align	2
-.L$187:
+.L$186:
 	.asciz	"No coroutines"
-	.size	.L$187, 14
+	.size	.L$186, 14
+
+	.type	.L$187,@object                  // @"$187"
+	.p2align	4
+.L$187:
+	.asciz	"Coroutine not found"
+	.size	.L$187, 20
 
 	.type	.L$188,@object                  // @"$188"
-	.p2align	4
-.L$188:
-	.asciz	"Coroutine not found"
-	.size	.L$188, 20
-
-	.type	.L$189,@object                  // @"$189"
 	.p2align	2
-.L$189:
+.L$188:
 	.asciz	"Tag expected"
-	.size	.L$189, 13
+	.size	.L$188, 13
+
+	.type	.L$184,@object                  // @"$184"
+	.p2align	4
+.L$184:
+	.asciz	"Reentrant coroutine"
+	.size	.L$184, 20
 
 	.type	.L$185,@object                  // @"$185"
 	.p2align	4
 .L$185:
-	.asciz	"Reentrant coroutine"
-	.size	.L$185, 20
-
-	.type	.L$186,@object                  // @"$186"
-	.p2align	4
-.L$186:
 	.asciz	"Can't stop main routine"
-	.size	.L$186, 24
-
-	.type	.L$184,@object                  // @"$184"
-	.p2align	2
-.L$184:
-	.asciz	"Tag not found"
-	.size	.L$184, 14
+	.size	.L$185, 24
 
 	.type	.L$183,@object                  // @"$183"
 	.p2align	2
 .L$183:
-	.asciz	"Bad extra"
-	.size	.L$183, 10
+	.asciz	"Tag not found"
+	.size	.L$183, 14
 
 	.type	.L$182,@object                  // @"$182"
 	.p2align	2
 .L$182:
-	.asciz	"Bad super"
+	.asciz	"Bad extra"
 	.size	.L$182, 10
 
 	.type	.L$181,@object                  // @"$181"
 	.p2align	2
 .L$181:
-	.asciz	"Bad message"
-	.size	.L$181, 12
+	.asciz	"Bad super"
+	.size	.L$181, 10
 
-	.type	.L$114,@object                  // @"$114"
+	.type	.L$180,@object                  // @"$180"
 	.p2align	2
-.L$114:
+.L$180:
+	.asciz	"Bad message"
+	.size	.L$180, 12
+
+	.type	.L$113,@object                  // @"$113"
+	.p2align	2
+.L$113:
 	.asciz	"Symbol expected"
-	.size	.L$114, 16
+	.size	.L$113, 16
 
 	.type	.L$29,@object                   // @"$29"
 	.p2align	2
@@ -66315,17 +66306,17 @@ Sig:
 	.asciz	"fflush       "
 	.size	.L$26, 14
 
-	.type	.L$170,@object                  // @"$170"
+	.type	.L$169,@object                  // @"$169"
 	.p2align	2
-.L$170:
+.L$169:
 	.asciz	"DB Oversize"
-	.size	.L$170, 12
+	.size	.L$169, 12
 
-	.type	.L$168,@object                  // @"$168"
+	.type	.L$167,@object                  // @"$167"
 	.p2align	4
-.L$168:
+.L$167:
 	.asciz	"Journal write: %s"
-	.size	.L$168, 18
+	.size	.L$167, 18
 
 	.type	.L$22,@object                   // @"$22"
 	.p2align	2
@@ -66339,11 +66330,11 @@ Sig:
 	.asciz	"putc_unlocked"
 	.size	.L$23, 14
 
-	.type	.L$165,@object                  // @"$165"
+	.type	.L$164,@object                  // @"$164"
 	.p2align	2
-.L$165:
+.L$164:
 	.asciz	"DB write: %s"
-	.size	.L$165, 13
+	.size	.L$164, 13
 
 	.type	.L$20,@object                   // @"$20"
 	.p2align	2
@@ -66357,23 +66348,23 @@ Sig:
 	.asciz	"wrLock "
 	.size	.L$98, 8
 
+	.type	.L$178,@object                  // @"$178"
+	.p2align	2
+.L$178:
+	.asciz	"# "
+	.size	.L$178, 3
+
 	.type	.L$179,@object                  // @"$179"
 	.p2align	2
 .L$179:
-	.asciz	"# "
-	.size	.L$179, 3
-
-	.type	.L$180,@object                  // @"$180"
-	.p2align	2
-.L$180:
 	.asciz	" redefined\n"
-	.size	.L$180, 12
+	.size	.L$179, 12
 
-	.type	.L$136,@object                  // @"$136"
+	.type	.L$135,@object                  // @"$135"
 	.p2align	2
-.L$136:
+.L$135:
 	.asciz	"Size overflow"
-	.size	.L$136, 14
+	.size	.L$135, 14
 
 	.type	.L$32,@object                   // @"$32"
 	.p2align	2
@@ -66381,23 +66372,23 @@ Sig:
 	.asciz	"memcmp       "
 	.size	.L$32, 14
 
-	.type	.L$117,@object                  // @"$117"
+	.type	.L$116,@object                  // @"$116"
 	.p2align	2
-.L$117:
+.L$116:
 	.asciz	"Atom expected"
-	.size	.L$117, 14
+	.size	.L$116, 14
 
-	.type	.L$121,@object                  // @"$121"
+	.type	.L$120,@object                  // @"$120"
 	.p2align	2
-.L$121:
+.L$120:
 	.asciz	"Item not found"
-	.size	.L$121, 15
+	.size	.L$120, 15
 
-	.type	.L$131,@object                  // @"$131"
+	.type	.L$130,@object                  // @"$130"
 	.p2align	2
-.L$131:
+.L$130:
 	.asciz	"Div/0"
-	.size	.L$131, 6
+	.size	.L$130, 6
 
 	.type	$TBuf,@object                   // @"$TBuf"
 	.data
@@ -66962,250 +66953,250 @@ SigIgn:
 	.asciz	"getLock"
 	.size	.L$100, 8
 
-	.type	.L$115,@object                  // @"$115"
+	.type	.L$114,@object                  // @"$114"
 	.p2align	4
-.L$115:
+.L$114:
 	.asciz	"External symbol expected"
-	.size	.L$115, 25
+	.size	.L$114, 25
 
-	.type	.L$124,@object                  // @"$124"
+	.type	.L$123,@object                  // @"$123"
 	.p2align	2
-.L$124:
+.L$123:
 	.asciz	"Can't fork"
-	.size	.L$124, 11
+	.size	.L$123, 11
+
+	.type	.L$125,@object                  // @"$125"
+	.p2align	2
+.L$125:
+	.asciz	"tty\n"
+	.size	.L$125, 5
 
 	.type	.L$126,@object                  // @"$126"
 	.p2align	2
 .L$126:
-	.asciz	"tty\n"
+	.asciz	"raw\n"
 	.size	.L$126, 5
 
 	.type	.L$127,@object                  // @"$127"
 	.p2align	2
 .L$127:
-	.asciz	"raw\n"
-	.size	.L$127, 5
+	.asciz	"sigio\n"
+	.size	.L$127, 7
 
 	.type	.L$128,@object                  // @"$128"
 	.p2align	2
 .L$128:
-	.asciz	"sigio\n"
-	.size	.L$128, 7
-
-	.type	.L$129,@object                  // @"$129"
-	.p2align	2
-.L$129:
 	.asciz	"kids\n"
-	.size	.L$129, 6
+	.size	.L$128, 6
 
-	.type	.L$133,@object                  // @"$133"
+	.type	.L$132,@object                  // @"$132"
 	.p2align	2
-.L$133:
+.L$132:
 	.asciz	"Open error: %s"
-	.size	.L$133, 15
+	.size	.L$132, 15
 
-	.type	.L$135,@object                  // @"$135"
+	.type	.L$134,@object                  // @"$134"
 	.p2align	2
-.L$135:
+.L$134:
 	.asciz	"Pipe error: %s"
-	.size	.L$135, 15
+	.size	.L$134, 15
+
+	.type	.L$138,@object                  // @"$138"
+	.p2align	2
+.L$138:
+	.asciz	"Bad FD"
+	.size	.L$138, 7
 
 	.type	.L$139,@object                  // @"$139"
-	.p2align	2
+	.p2align	4
 .L$139:
-	.asciz	"Bad FD"
-	.size	.L$139, 7
+	.asciz	"Select error: %s"
+	.size	.L$139, 17
 
 	.type	.L$140,@object                  // @"$140"
-	.p2align	4
+	.p2align	2
 .L$140:
-	.asciz	"Select error: %s"
-	.size	.L$140, 17
+	.asciz	"SETFD %s"
+	.size	.L$140, 9
 
 	.type	.L$141,@object                  // @"$141"
 	.p2align	2
 .L$141:
-	.asciz	"SETFD %s"
-	.size	.L$141, 9
+	.asciz	"bytes write: %s"
+	.size	.L$141, 16
 
 	.type	.L$142,@object                  // @"$142"
 	.p2align	2
 .L$142:
-	.asciz	"bytes write: %s"
-	.size	.L$142, 16
+	.asciz	"clsChild"
+	.size	.L$142, 9
 
 	.type	.L$143,@object                  // @"$143"
 	.p2align	2
 .L$143:
-	.asciz	"clsChild"
-	.size	.L$143, 9
-
-	.type	.L$144,@object                  // @"$144"
-	.p2align	2
-.L$144:
 	.asciz	"wrChild"
-	.size	.L$144, 8
+	.size	.L$143, 8
+
+	.type	.L$145,@object                  // @"$145"
+	.p2align	2
+.L$145:
+	.asciz	"flushAll"
+	.size	.L$145, 9
 
 	.type	.L$146,@object                  // @"$146"
 	.p2align	2
 .L$146:
-	.asciz	"flushAll"
-	.size	.L$146, 9
-
-	.type	.L$147,@object                  // @"$147"
-	.p2align	2
-.L$147:
 	.asciz	"Tell PIPE_BUF"
-	.size	.L$147, 14
+	.size	.L$146, 14
+
+	.type	.L$148,@object                  // @"$148"
+	.p2align	2
+.L$148:
+	.asciz	"waitFd\n"
+	.size	.L$148, 8
 
 	.type	.L$149,@object                  // @"$149"
 	.p2align	2
 .L$149:
-	.asciz	"waitFd\n"
-	.size	.L$149, 8
+	.asciz	"sync\n"
+	.size	.L$149, 6
 
 	.type	.L$150,@object                  // @"$150"
 	.p2align	2
 .L$150:
-	.asciz	"sync\n"
+	.asciz	"hear\n"
 	.size	.L$150, 6
 
 	.type	.L$151,@object                  // @"$151"
 	.p2align	2
 .L$151:
-	.asciz	"hear\n"
+	.asciz	"tell\n"
 	.size	.L$151, 6
 
 	.type	.L$152,@object                  // @"$152"
 	.p2align	2
 .L$152:
-	.asciz	"tell\n"
+	.asciz	"poll\n"
 	.size	.L$152, 6
 
-	.type	.L$153,@object                  // @"$153"
+	.type	.L$161,@object                  // @"$161"
 	.p2align	2
-.L$153:
-	.asciz	"poll\n"
-	.size	.L$153, 6
-
-	.type	.L$162,@object                  // @"$162"
-	.p2align	2
-.L$162:
+.L$161:
 	.asciz	"> "
-	.size	.L$162, 3
+	.size	.L$161, 3
+
+	.type	.L$165,@object                  // @"$165"
+	.p2align	2
+.L$165:
+	.asciz	"Bad Journal"
+	.size	.L$165, 12
 
 	.type	.L$166,@object                  // @"$166"
-	.p2align	2
+	.p2align	4
 .L$166:
-	.asciz	"Bad Journal"
-	.size	.L$166, 12
-
-	.type	.L$167,@object                  // @"$167"
-	.p2align	4
-.L$167:
 	.asciz	"DB fsync error: %s"
-	.size	.L$167, 19
+	.size	.L$166, 19
 
-	.type	.L$169,@object                  // @"$169"
+	.type	.L$168,@object                  // @"$168"
 	.p2align	2
-.L$169:
+.L$168:
 	.asciz	"Log write: %s"
-	.size	.L$169, 14
+	.size	.L$168, 14
 
-	.type	.L$173,@object                  // @"$173"
+	.type	.L$172,@object                  // @"$172"
 	.p2align	4
-.L$173:
+.L$172:
 	.asciz	"Log truncate error: %s"
-	.size	.L$173, 23
+	.size	.L$172, 23
+
+	.type	.L$175,@object                  // @"$175"
+	.p2align	4
+.L$175:
+	.asciz	"Circular free list"
+	.size	.L$175, 19
 
 	.type	.L$176,@object                  // @"$176"
-	.p2align	4
+	.p2align	2
 .L$176:
-	.asciz	"Circular free list"
-	.size	.L$176, 19
+	.asciz	"Bad chain"
+	.size	.L$176, 10
 
 	.type	.L$177,@object                  // @"$177"
 	.p2align	2
 .L$177:
-	.asciz	"Bad chain"
+	.asciz	"Bad count"
 	.size	.L$177, 10
 
-	.type	.L$178,@object                  // @"$178"
+	.type	.L$194,@object                  // @"$194"
 	.p2align	2
-.L$178:
-	.asciz	"Bad count"
-	.size	.L$178, 10
+.L$194:
+	.asciz	"%s"
+	.size	.L$194, 3
 
 	.type	.L$195,@object                  // @"$195"
 	.p2align	2
 .L$195:
-	.asciz	"%s"
-	.size	.L$195, 3
-
-	.type	.L$196,@object                  // @"$196"
-	.p2align	2
-.L$196:
 	.asciz	"Bad result spec"
-	.size	.L$196, 16
+	.size	.L$195, 16
+
+	.type	.L$197,@object                  // @"$197"
+	.p2align	2
+.L$197:
+	.asciz	"$MBox="
+	.size	.L$197, 7
 
 	.type	.L$198,@object                  // @"$198"
 	.p2align	2
 .L$198:
-	.asciz	"$MBox="
-	.size	.L$198, 7
+	.asciz	"$QuitRst="
+	.size	.L$198, 10
 
 	.type	.L$199,@object                  // @"$199"
 	.p2align	2
 .L$199:
-	.asciz	"$QuitRst="
-	.size	.L$199, 10
+	.asciz	"$Heap="
+	.size	.L$199, 7
 
 	.type	.L$200,@object                  // @"$200"
 	.p2align	2
 .L$200:
-	.asciz	"$Heap="
-	.size	.L$200, 7
+	.asciz	"$Limit="
+	.size	.L$200, 8
 
 	.type	.L$201,@object                  // @"$201"
-	.p2align	2
+	.p2align	4
 .L$201:
-	.asciz	"$Limit="
-	.size	.L$201, 8
+	.asciz	"Call heapAlloc...\n"
+	.size	.L$201, 19
 
 	.type	.L$202,@object                  // @"$202"
 	.p2align	4
 .L$202:
-	.asciz	"Call heapAlloc...\n"
-	.size	.L$202, 19
+	.asciz	"Init internal symbols...\n"
+	.size	.L$202, 26
 
 	.type	.L$203,@object                  // @"$203"
 	.p2align	4
 .L$203:
-	.asciz	"Init internal symbols...\n"
+	.asciz	"Init internal globals...\n"
 	.size	.L$203, 26
 
 	.type	.L$204,@object                  // @"$204"
-	.p2align	4
+	.p2align	2
 .L$204:
-	.asciz	"Init internal globals...\n"
-	.size	.L$204, 26
+	.asciz	"$USec="
+	.size	.L$204, 7
 
 	.type	.L$205,@object                  // @"$205"
 	.p2align	2
 .L$205:
-	.asciz	"$USec="
-	.size	.L$205, 7
+	.asciz	": "
+	.size	.L$205, 3
 
 	.type	.L$206,@object                  // @"$206"
 	.p2align	2
 .L$206:
-	.asciz	": "
-	.size	.L$206, 3
-
-	.type	.L$207,@object                  // @"$207"
-	.p2align	2
-.L$207:
 	.asciz	"pil21 bye"
-	.size	.L$207, 10
+	.size	.L$206, 10
 
 	.section	".note.GNU-stack","",@progbits

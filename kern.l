@@ -1976,38 +1976,10 @@
 (dm ic-pend> (Irq X) 
   (ui* (+ (: ic-pend) (* (/ Irq 32) 4))
     (when X (>> (- (% Irq 32)) 1))))
-  
+
 (dm ic-act>  (Irq X) 
   (ui* (+ (: ic-act) (* (/ Irq 32) 4))
     (when X (>> (- (% Irq 32)) 1))))
-
-# Wr
-#
-# ((volatile uint32_t *)(uintptr_t)(0x08000000 + 0x100 + ( (irq / 32) * 4 ) ))
-
-(dm is-enab-intr> (Irq)
-  (ui* (+ (: is-enab) (* (/ Irq 32) 4))
-    (>> (- (% Irq 32)) 1)))
-  
-(dm is-pend-intr> (Irq) 
-  (ui* (+ (: is-pend) (* (/ Irq 32) 4)) 
-    (>> (- (% Irq 32)) 1)))
-  
-(dm is-act-intr>  (Irq) 
-  (ui* (+ (: is-act)  (* (/ Irq 32) 4)) 
-    (>> (- (% Irq 32)) 1)))
-                      
-(dm ic-enab-intr> (Irq) 
-  (ui* (+ (: ic-enab) (* (/ Irq 32) 4)) 
-    (>> (- (% Irq 32)) 1)))
-  
-(dm ic-pend-intr> (Irq) 
-  (ui* (+ (: ic-pend) (* (/ Irq 32) 4)) 
-    (>> (- (% Irq 32)) 1)))
-  
-(dm ic-act-intr>  (Irq) 
-  (ui* (+ (: ic-act)  (* (/ Irq 32) 4)) 
-    (>> (- (% Irq 32)) 1)))
 
 
 (dm i-cfg> (Irq X)
@@ -2287,7 +2259,7 @@
     (gic~is-enab> (: gic~dist) IRQ-TIMER T)))
 
 
-(de on-timer ()
+(de on-timer (Tm)
 
   (daif2)
   
@@ -2296,7 +2268,7 @@
     (cntv-ctl C))
     
   (let (Cntfrq (cnt-frq)
-        Ticks (* 3 Cntfrq)
+        Ticks (* Tm Cntfrq)
         Cur-Cnt (cntvct))
     (cntv-cval (+ Cur-Cnt Ticks)))
     
@@ -2335,7 +2307,7 @@
     (new '(gic~+Gic) (hex "FF840000")))
   
   (init-irq-timer)
-  # (alarm (handle-alarm))
+  (alarm T (on-timer 1))
   
   ############
   # start term
