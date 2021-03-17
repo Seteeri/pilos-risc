@@ -19,8 +19,9 @@
 (dm pend> (Irq Fn X) ((if Fn 'is-pend> 'ic-pend>) (: dist) Irq X))
 (dm act>  (Irq Fn X) ((if Fn 'is-act>  'ic-act>)  (: dist) Irq X))
 
-# [366511298] (find-pend-irq) 111
-# [367337545] (find-pend-irq) 174
+#(1566154470) (find-pend-irq) 128 128 71
+#(1566764933) (find-pend-irq) 32768 32768 111
+#(1567660449) (find-pend-irq) 16384 16384 174
 
 (dm find-pend-irq> ()
   (let Irq NIL
@@ -29,8 +30,9 @@
       (let (J (dec Id)
             W (is-pend> (: dist) J)
             B (>> (- (% J 32)) 1))
+        #(prl-kern (pack "(find-pend-irq) " J "@" (+ (get (: dist) 'is-pend) (* (/ J 32) 4)) " " B " " W ))
         (when (n0 (& B W))
-          (prl-kern (pack "(find-pend-irq) " B " " W " " J))
+          (prl-kern (pack "(find-pend-irq) " J " " B " " W " <<<<"))
           (setq Irq J))))
     Irq))
 

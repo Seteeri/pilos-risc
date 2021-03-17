@@ -2,7 +2,9 @@
 
 (local)
 (+Cpu
- init-cpu)
+ init-cpu
+ ia>
+ eoi>)
 
  
 (class +Cpu)
@@ -32,26 +34,43 @@
 
 (dm init> ()
  
-  (ui* (: ctl) OFF-CTL)
+  (ptr32 (: ctl) OFF-CTL)
   
   # Set the priority level as the lowest priority
   # Note: Higher priority corresponds to a lower Priority field value in the GIC_PMR.
   # In addition to this, writing 255 to the GICC_PMR always sets it to the 
   # largest supported priority field value.
-  (ui* (: pm) (hex "FF")) # "F0"
+  (ptr32 (: pm) (hex "FF")) # "F0"
 
   # Handle all of interrupts in a single group
-  (ui* (: bp) (hex "0"))
+  (ptr32 (: bp) (hex "0"))
   
   # Clear all of the active interrupts
   (when NIL
     (let Pen-IRQ c # =255
       (while (not (= Pen-IRQ (hex "3FF")))
-        (ui* (: eoi)
-          (ui* (: ia)))
-        (setq Pen-IRQ (& (ui* (: ia)) (hex "3FF"))))))
+        (ptr32 (: eoi)
+          (ptr32 (: ia)))
+        (setq Pen-IRQ (& (ptr32 (: ia)) (hex "3FF"))))))
   
-  (ui* (: ctl) ON-CTL))
+  (ptr32 (: ctl) ON-CTL))
+
+  
+(dm ia> (X)
+  (if X
+      (ptr32 (: ia) X)
+      (ptr32 (: ia))))
+
+(dm eoi> (X)
+  (if X
+      (ptr32 (: eoi) X)
+      (ptr32 (: eoi))))
+      
+      
+(dm di> (X)
+  (if X
+      (ptr32 (: di) X)
+      (ptr32 (: di))))      
 
   
 (symbols '(pico))

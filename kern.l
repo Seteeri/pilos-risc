@@ -42,12 +42,12 @@
 (de prl-kern (X)
   # Print with cnt time
   (prinl 
-    (pack "[" (cntvct) "] " X)))
+    (pack (cntvct) " " X)))
 
 (de pr-kern (X)
   # Print with cnt time
   (prin 
-    (pack "[" (cntvct) "] " X)))   
+    (pack (cntvct) " " X)))   
 # 08oct20 Software Lab. Alexander Burger
 
 # *Allow
@@ -1526,10 +1526,10 @@
   (prinl)
   (for Y 9
     (for X 16
-      (prin (hex (byte (+ *MBox (* 16 (dec Y)) (dec X)))) " "))
+      (prin (hex (byte (+ pico~*MBox (* 16 (dec Y)) (dec X)))) " "))
       (prinl)))
 
-(de zero-buf () (for X (* 4 32) (ptr32 (+ *MBox X) 0)))
+(de zero-buf () (for X (* 4 32) (ptr32 (+ pico~*MBox X) 0)))
 
 (de madr ()
 
@@ -1537,27 +1537,27 @@
 
   (zero-buf)
   
-  (ui* (+ *MBox (* 4 0)) (* 4 8))         # msg sz
-  (ui* (+ *MBox (* 4 1)) 0)               # msg req/res code
-  (ui* (+ *MBox (* 4 2)) MAC-ADDRESS)  # tag id
-  (ui* (+ *MBox (* 4 3)) 8)               # val buf sz
-  (ui* (+ *MBox (* 4 4)) 8)               # buf req/res code (see md)
-  (ui* (+ *MBox (* 4 5)) 0)               # zero buf
-  (ui* (+ *MBox (* 4 6)) 0)               # zero buf  
-  (ui* (+ *MBox (* 4 7)) TAG-END)
+  (ui* (+ pico~*MBox (* 4 0)) (* 4 8))         # msg sz
+  (ui* (+ pico~*MBox (* 4 1)) 0)               # msg req/res code
+  (ui* (+ pico~*MBox (* 4 2)) MAC-ADDRESS)  # tag id
+  (ui* (+ pico~*MBox (* 4 3)) 8)               # val buf sz
+  (ui* (+ pico~*MBox (* 4 4)) 8)               # buf req/res code (see md)
+  (ui* (+ pico~*MBox (* 4 5)) 0)               # zero buf
+  (ui* (+ pico~*MBox (* 4 6)) 0)               # zero buf  
+  (ui* (+ pico~*MBox (* 4 7)) TAG-END)
   
-  (let R (| *MBox CH-PRO-AV)
+  (let R (| pico~*MBox CH-PRO-AV)
     (ptr32 WRITE1 R)
     (wait-rd R))
   
   # BE
   (list 
-    (hex (byte (+ *MBox (* 4 5) 0)))
-    (hex (byte (+ *MBox (* 4 5) 1)))
-    (hex (byte (+ *MBox (* 4 5) 2)))
-    (hex (byte (+ *MBox (* 4 5) 3)))
-    (hex (byte (+ *MBox (* 4 5) 4)))
-    (hex (byte (+ *MBox (* 4 5) 5)))))
+    (hex (byte (+ pico~*MBox (* 4 5) 0)))
+    (hex (byte (+ pico~*MBox (* 4 5) 1)))
+    (hex (byte (+ pico~*MBox (* 4 5) 2)))
+    (hex (byte (+ pico~*MBox (* 4 5) 3)))
+    (hex (byte (+ pico~*MBox (* 4 5) 4)))
+    (hex (byte (+ pico~*MBox (* 4 5) 5)))))
 
 
 (de amem ()
@@ -1566,22 +1566,22 @@
 
   (zero-buf)
   
-  (ui* (+ *MBox (* 4 0)) (* 4 8)) # This msg len
-  (ui* (+ *MBox (* 4 1)) 0) # REQ/RES
-  (ui* (+ *MBox (* 4 2)) ARM-MEMORY)
-  (ui* (+ *MBox (* 4 3)) 8) # req sz
-  (ui* (+ *MBox (* 4 4)) 8) # res sz
-  (ui* (+ *MBox (* 4 5)) 0)
-  (ui* (+ *MBox (* 4 6)) 0)
-  (ui* (+ *MBox (* 4 7)) TAG-END)
+  (ui* (+ pico~*MBox (* 4 0)) (* 4 8)) # This msg len
+  (ui* (+ pico~*MBox (* 4 1)) 0) # REQ/RES
+  (ui* (+ pico~*MBox (* 4 2)) ARM-MEMORY)
+  (ui* (+ pico~*MBox (* 4 3)) 8) # req sz
+  (ui* (+ pico~*MBox (* 4 4)) 8) # res sz
+  (ui* (+ pico~*MBox (* 4 5)) 0)
+  (ui* (+ pico~*MBox (* 4 6)) 0)
+  (ui* (+ pico~*MBox (* 4 7)) TAG-END)
   
-  (let R (| *MBox CH-PRO-AV)
+  (let R (| pico~*MBox CH-PRO-AV)
     (ptr32 WRITE1 R)
     (wait-rd R))
   
   (list 
-    (hex (ptr32 (+ *MBox (* 4 6))))
-    (hex (ptr32 (+ *MBox (* 4 5))))))
+    (hex (ptr32 (+ pico~*MBox (* 4 6))))
+    (hex (ptr32 (+ pico~*MBox (* 4 5))))))
     
     
 (de vmem ()
@@ -1590,22 +1590,22 @@
 
   (zero-buf)
   
-  (ui* (+ *MBox (* 4 0)) (* 4 8)) # This msg len
-  (ui* (+ *MBox (* 4 1)) 0) # REQ/RES
-  (ui* (+ *MBox (* 4 2)) VC-MEMORY)
-  (ui* (+ *MBox (* 4 3)) 8) # req sz
-  (ui* (+ *MBox (* 4 4)) 8) # res sz
-  (ui* (+ *MBox (* 4 5)) 0)
-  (ui* (+ *MBox (* 4 6)) 0)
-  (ui* (+ *MBox (* 4 7)) TAG-END)
+  (ui* (+ pico~*MBox (* 4 0)) (* 4 8)) # This msg len
+  (ui* (+ pico~*MBox (* 4 1)) 0) # REQ/RES
+  (ui* (+ pico~*MBox (* 4 2)) VC-MEMORY)
+  (ui* (+ pico~*MBox (* 4 3)) 8) # req sz
+  (ui* (+ pico~*MBox (* 4 4)) 8) # res sz
+  (ui* (+ pico~*MBox (* 4 5)) 0)
+  (ui* (+ pico~*MBox (* 4 6)) 0)
+  (ui* (+ pico~*MBox (* 4 7)) TAG-END)
   
-  (let R (| *MBox CH-PRO-AV)
+  (let R (| pico~*MBox CH-PRO-AV)
     (ptr32 WRITE1 R)
     (wait-rd R))
   
   (list 
-    (hex (ptr32 (+ *MBox (* 4 6))))
-    (hex (ptr32 (+ *MBox (* 4 5))))))
+    (hex (ptr32 (+ pico~*MBox (* 4 6))))
+    (hex (ptr32 (+ pico~*MBox (* 4 5))))))
 
 (de brev ()
 
@@ -1613,20 +1613,20 @@
 
   (zero-buf) 
   
-  (ui* (+ *MBox (* 4 0)) (* 4 7))            # msg len
-  (ui* (+ *MBox (* 4 1)) 0)                  # REQ
-  (ui* (+ *MBox (* 4 2)) BOARD-REVISION)  # tag ID
-  (ui* (+ *MBox (* 4 3)) 4)                  # val buf sz (for response)
-  (ui* (+ *MBox (* 4 4)) 4)                  # request/response code
-  (ui* (+ *MBox (* 4 5)) 0)
-  (ui* (+ *MBox (* 4 6)) TAG-END)
+  (ui* (+ pico~*MBox (* 4 0)) (* 4 7))            # msg len
+  (ui* (+ pico~*MBox (* 4 1)) 0)                  # REQ
+  (ui* (+ pico~*MBox (* 4 2)) BOARD-REVISION)  # tag ID
+  (ui* (+ pico~*MBox (* 4 3)) 4)                  # val buf sz (for response)
+  (ui* (+ pico~*MBox (* 4 4)) 4)                  # request/response code
+  (ui* (+ pico~*MBox (* 4 5)) 0)
+  (ui* (+ pico~*MBox (* 4 6)) TAG-END)
   
-  (let R (| *MBox CH-PRO-AV)
+  (let R (| pico~*MBox CH-PRO-AV)
     (ptr32 WRITE1 R)
     (wait-rd R))
   
   (list 
-    (hex (ptr32 (+ *MBox (* 4 5))))))
+    (hex (ptr32 (+ pico~*MBox (* 4 5))))))
     
   
 (de bmod ()
@@ -1635,20 +1635,20 @@
 
   (zero-buf)
   
-  (ui* (+ *MBox (* 4 0)) (* 4 7))            # msg len
-  (ui* (+ *MBox (* 4 1)) 0)                  # REQ
-  (ui* (+ *MBox (* 4 2)) BOARD-MODEL)  # tag ID
-  (ui* (+ *MBox (* 4 3)) 4)                  # val buf sz (for response)
-  (ui* (+ *MBox (* 4 4)) 4)                  # request/response code
-  (ui* (+ *MBox (* 4 5)) 0)
-  (ui* (+ *MBox (* 4 6)) TAG-END)
+  (ui* (+ pico~*MBox (* 4 0)) (* 4 7))            # msg len
+  (ui* (+ pico~*MBox (* 4 1)) 0)                  # REQ
+  (ui* (+ pico~*MBox (* 4 2)) BOARD-MODEL)  # tag ID
+  (ui* (+ pico~*MBox (* 4 3)) 4)                  # val buf sz (for response)
+  (ui* (+ pico~*MBox (* 4 4)) 4)                  # request/response code
+  (ui* (+ pico~*MBox (* 4 5)) 0)
+  (ui* (+ pico~*MBox (* 4 6)) TAG-END)
   
-  (let R (| *MBox CH-PRO-AV)
+  (let R (| pico~*MBox CH-PRO-AV)
     (ptr32 WRITE1 R)
     (wait-rd R))
   
   (list 
-    (hex (ptr32 (+ *MBox (* 4 5))))))
+    (hex (ptr32 (+ pico~*MBox (* 4 5))))))
     
   
 (de frev ()
@@ -1657,20 +1657,20 @@
 
   (zero-buf)
   
-  (ui* (+ *MBox (* 4 0)) (* 4 7))            # msg len
-  (ui* (+ *MBox (* 4 1)) 0)                  # REQ
-  (ui* (+ *MBox (* 4 2)) FIRMWARE-REVISION)  # tag ID
-  (ui* (+ *MBox (* 4 3)) 4)                  # val buf sz (for response)
-  (ui* (+ *MBox (* 4 4)) 4)                  # request/response code
-  (ui* (+ *MBox (* 4 5)) 0)
-  (ui* (+ *MBox (* 4 6)) TAG-END)
+  (ui* (+ pico~*MBox (* 4 0)) (* 4 7))            # msg len
+  (ui* (+ pico~*MBox (* 4 1)) 0)                  # REQ
+  (ui* (+ pico~*MBox (* 4 2)) FIRMWARE-REVISION)  # tag ID
+  (ui* (+ pico~*MBox (* 4 3)) 4)                  # val buf sz (for response)
+  (ui* (+ pico~*MBox (* 4 4)) 4)                  # request/response code
+  (ui* (+ pico~*MBox (* 4 5)) 0)
+  (ui* (+ pico~*MBox (* 4 6)) TAG-END)
   
-  (let R (| *MBox CH-PRO-AV)
+  (let R (| pico~*MBox CH-PRO-AV)
     (ptr32 WRITE1 R)
     (wait-rd R))
   
   (list 
-    (hex (ptr32 (+ *MBox (* 4 5))))))
+    (hex (ptr32 (+ pico~*MBox (* 4 5))))))
   
   
 (de bser ()
@@ -1679,22 +1679,22 @@
   
   (zero-buf)
   
-  (ui* (+ *MBox (* 4 0)) (* 4 8)) # This msg len
-  (ui* (+ *MBox (* 4 1)) 0) # REQ/RES
-  (ui* (+ *MBox (* 4 2)) BOARD-SERIAL)
-  (ui* (+ *MBox (* 4 3)) 8) # req sz
-  (ui* (+ *MBox (* 4 4)) 8) # res sz
-  (ui* (+ *MBox (* 4 5)) 0)
-  (ui* (+ *MBox (* 4 6)) 0)
-  (ui* (+ *MBox (* 4 7)) TAG-END)
+  (ui* (+ pico~*MBox (* 4 0)) (* 4 8)) # This msg len
+  (ui* (+ pico~*MBox (* 4 1)) 0) # REQ/RES
+  (ui* (+ pico~*MBox (* 4 2)) BOARD-SERIAL)
+  (ui* (+ pico~*MBox (* 4 3)) 8) # req sz
+  (ui* (+ pico~*MBox (* 4 4)) 8) # res sz
+  (ui* (+ pico~*MBox (* 4 5)) 0)
+  (ui* (+ pico~*MBox (* 4 6)) 0)
+  (ui* (+ pico~*MBox (* 4 7)) TAG-END)
   
-  (let R (| *MBox CH-PRO-AV)
+  (let R (| pico~*MBox CH-PRO-AV)
     (ptr32 WRITE1 R)
     (wait-rd R))
 
   (list 
-    (hex (ptr32 (+ *MBox (* 4 6))))
-    (hex (ptr32 (+ *MBox (* 4 5))))))
+    (hex (ptr32 (+ pico~*MBox (* 4 6))))
+    (hex (ptr32 (+ pico~*MBox (* 4 5))))))
     
 (de wait-wr-1 () (while (bit? FULL  (>> -4 (ptr32 STATUS0))) (prinl (ptr32 STATUS0))))
 
@@ -1724,14 +1724,16 @@
   (loop
     (while (bit? EMPTY (ptr32 STATUS0)))
     (T (= R (ptr32 READ0)))
-      (= RESP (ui* (+ *MBox (* 4 1))))))
+      (= RESP (ui* (+ pico~*MBox (* 4 1))))))
 
 (symbols '(pico))
 (symbols '(gic pico))
 
 (local)
 (+Cpu
- init-cpu)
+ init-cpu
+ ia>
+ eoi>)
 
  
 (class +Cpu)
@@ -1761,26 +1763,43 @@
 
 (dm init> ()
  
-  (ui* (: ctl) OFF-CTL)
+  (ptr32 (: ctl) OFF-CTL)
   
   # Set the priority level as the lowest priority
   # Note: Higher priority corresponds to a lower Priority field value in the GIC_PMR.
   # In addition to this, writing 255 to the GICC_PMR always sets it to the 
   # largest supported priority field value.
-  (ui* (: pm) (hex "FF")) # "F0"
+  (ptr32 (: pm) (hex "FF")) # "F0"
 
   # Handle all of interrupts in a single group
-  (ui* (: bp) (hex "0"))
+  (ptr32 (: bp) (hex "0"))
   
   # Clear all of the active interrupts
   (when NIL
     (let Pen-IRQ c # =255
       (while (not (= Pen-IRQ (hex "3FF")))
-        (ui* (: eoi)
-               (ui* (: ia)))
-        (setq Pen-IRQ (& (ui* (: ia)) (hex "3FF"))))))
+        (ptr32 (: eoi)
+          (ptr32 (: ia)))
+        (setq Pen-IRQ (& (ptr32 (: ia)) (hex "3FF"))))))
   
-  (ui* (: ctl) ON-CTL))
+  (ptr32 (: ctl) ON-CTL))
+
+  
+(dm ia> (X)
+  (if X
+      (ptr32 (: ia) X)
+      (ptr32 (: ia))))
+
+(dm eoi> (X)
+  (if X
+      (ptr32 (: eoi) X)
+      (ptr32 (: eoi))))
+      
+      
+(dm di> (X)
+  (if X
+      (ptr32 (: di) X)
+      (ptr32 (: di))))      
 
   
 (symbols '(pico))
@@ -1891,36 +1910,36 @@
             En (+ (: ic-enab) O)
             Pe (+ (: ic-pend) O))
         (when (=0 (% N 32))
-          (ui* En (hex "FFFFFFFF"))
-          (ui* Pe (hex "FFFFFFFF")))))
+          (ptr32 En (hex "FFFFFFFF"))
+          (ptr32 Pe (hex "FFFFFFFF")))))
 
     # Set intr priorities to lowest prior
     (for (N 0 (< N Max-Intr-ID) (inc N))
       (let (O (* 4 (/ N 4))
             Pr (+ (: i-prio) O))
         (when (=0 (% N 4))
-          (ui* Pr (hex "FFFFFFFF")))))
+          (ptr32 Pr (hex "FFFFFFFF")))))
 
     # Set tgt of spi's, proc 0
     (for (N 0 (< N Max-Intr-ID) (inc N))
       (let (O (* 4 (/ N 4))
             Ta (+ (: i-tgts) O))
         (when (=0 (% N 4))
-          (ui* Ta (hex "01010101")))))
+          (ptr32 Ta (hex "01010101")))))
 
     # Set trigger of spi's, level triggered
     (for (N 0 (< N Max-Intr-ID) (inc N))
       (let (O (* 4 (/ N 16))
             Cf (+ (: i-cfg) O))
         (when (=0 (% N 16))
-          (ui* Cf LVL)))))
+          (ptr32 Cf LVL)))))
 
   # On distributor
   (on> This))  
 
 
-(dm on> ()  (ui* (: ctl) ON-CTL))
-(dm off> () (ui* (: ctl) OFF-CTL))
+(dm on> ()  (ptr32 (: ctl) ON-CTL))
+(dm off> () (ptr32 (: ctl) OFF-CTL))
 
 (dm type-r> (N) (mak-nm-lst (: type-r) DIST-TYPE-R-MSK N))
 (dm get-it-lines-number> () (type-r> This 'IT-LINES-NUMBER))
@@ -1930,18 +1949,18 @@
 (dm pr-type-r> () 
   (prl-kern
     (pack
-      "[gic] DIST-TYPE-R: "
-      (ui* (: type-r)) "="
-      (bin (ui* (: type-r)))))
+      "gic DIST-TYPE-R: "
+      (ptr32 (: type-r)) " "
+      (bin (ptr32 (: type-r)))))
   (pr-reg (type-r> This) DIST-TYPE-R-PR))
 
 (dm i-id>   (N) (mak-nm-lst (: i-id) DIST-I-ID-MSK N))
 (dm pr-i-id> () 
   (prl-kern
     (pack
-      "[gic] DIST-I-ID: "
-      (ui* (: i-id)) "="
-      (bin (ui* (: i-id)))))
+      "gic DIST-I-ID: "
+      (ptr32 (: i-id)) " "
+      (bin (ptr32 (: i-id)))))
   (pr-reg (i-id> This) NIL)) # No pr fns
 
 #####################
@@ -1949,29 +1968,41 @@
 # Rd
   
 (dm is-enab> (Irq X)
-  (ui* (+ (: is-enab) (* (/ Irq 32) 4))
-    (when X (>> (- (% Irq 32)) 1))))
+  (if X
+      (ptr32 (+ (: is-enab) (* (/ Irq 32) 4))
+        (>> (- (% Irq 32)) 1))
+      (ptr32 (+ (: is-enab) (* (/ Irq 32) 4)))))
   
 (dm is-pend> (Irq X) 
-  (ui* (+ (: is-pend) (* (/ Irq 32) 4))
-    (when X (>> (- (% Irq 32)) 1))))
+  (if X
+      (ptr32 (+ (: is-pend) (* (/ Irq 32) 4))
+        (>> (- (% Irq 32)) 1))
+      (ptr32 (+ (: is-pend) (* (/ Irq 32) 4)))))
   
 (dm is-act>  (Irq X)
-  (ui* (+ (: is-act) (* (/ Irq 32) 4))
-    (when X (>> (- (% Irq 32)) 1))))
+  (if X
+      (ptr32 (+ (: is-act) (* (/ Irq 32) 4))
+        (>> (- (% Irq 32)) 1))
+      (ptr32 (+ (: is-act) (* (/ Irq 32) 4)))))
 
 
 (dm ic-enab> (Irq X)
-  (ui* (+ (: ic-enab) (* (/ Irq 32) 4))
-    (when X (>> (- (% Irq 32)) 1))))
+  (if X
+      (ptr32 (+ (: ic-enab) (* (/ Irq 32) 4))
+        (>> (- (% Irq 32)) 1))
+      (ptr32 (+ (: ic-enab) (* (/ Irq 32) 4)))))
   
 (dm ic-pend> (Irq X) 
-  (ui* (+ (: ic-pend) (* (/ Irq 32) 4))
-    (when X (>> (- (% Irq 32)) 1))))
+  (if X
+      (ptr32 (+ (: ic-pend) (* (/ Irq 32) 4))
+        (>> (- (% Irq 32)) 1))
+      (ptr32 (+ (: ic-pend) (* (/ Irq 32) 4)))))
 
 (dm ic-act>  (Irq X) 
-  (ui* (+ (: ic-act) (* (/ Irq 32) 4))
-    (when X (>> (- (% Irq 32)) 1))))
+  (if X
+      (ptr32 (+ (: ic-act) (* (/ Irq 32) 4))
+        (>> (- (% Irq 32)) 1))
+      (ptr32 (+ (: ic-act) (* (/ Irq 32) 4)))))
 
 
 (dm i-cfg> (Irq X)
@@ -1979,7 +2010,7 @@
         P    (+ (: i-cfg) (* (/ Irq 16) 4))
         Reg  (& (ui* P) (bw-not (>> (- Shft) (hex "03"))))
         Reg  (| Reg (>> (- Shft) X)))
-    (ui* P Reg)))
+    (ptr32 P Reg)))
 
 # FIX
 (dm i-prio> (Irq X)
@@ -1988,7 +2019,7 @@
         Reg  (& (ui* P) (bw-not (>> (- Shft) (hex "FF"))))
         Reg  (| Reg (>> (- Shft) X)))
     (setq Reg (hex "00FFFFFF"))
-    (ui* P Reg)))
+    (ptr32 P Reg)))
 
 
 (dm i-tgts> (Irq X)
@@ -1996,7 +2027,7 @@
         P    (+ (: i-tgts) (* (/ Irq 4) 4))
         Reg  (& (ui* P) (bw-not (>> (- Shft) (hex "FF"))))
         Reg  (| Reg (>> (- Shft) X)))
-    (ui* P Reg)))
+    (ptr32 P Reg)))
 
 
 #############################    
@@ -2027,7 +2058,7 @@
       (let (Nm  (car A)
             Va  (cdr A)
             Out (when Pr (Pr Va)))
-        (prl-kern (pack "[gic]  " Nm ": " Out "=" Va))))
+        (prl-kern (pack "gic  " Nm ": " Out " (" Va ")"))))
     Msk
     Fns))
 
@@ -2054,6 +2085,10 @@
 (dm pend> (Irq Fn X) ((if Fn 'is-pend> 'ic-pend>) (: dist) Irq X))
 (dm act>  (Irq Fn X) ((if Fn 'is-act>  'ic-act>)  (: dist) Irq X))
 
+#(1566154470) (find-pend-irq) 128 128 71
+#(1566764933) (find-pend-irq) 32768 32768 111
+#(1567660449) (find-pend-irq) 16384 16384 174
+
 (dm find-pend-irq> ()
   (let Irq NIL
     (for Id (max-intr-id> (: dist))
@@ -2061,8 +2096,9 @@
       (let (J (dec Id)
             W (is-pend> (: dist) J)
             B (>> (- (% J 32)) 1))
-        (prl-kern (pack "(find-pend-irq) " B " " W " " J))
+        #(prl-kern (pack "(find-pend-irq) " J "@" (+ (get (: dist) 'is-pend) (* (/ J 32) 4)) " " B " " W ))
         (when (n0 (& B W))
+          (prl-kern (pack "(find-pend-irq) " J " " B " " W " <<<<"))
           (setq Irq J))))
     Irq))
 
@@ -2071,71 +2107,369 @@
 (class +Vci)    
     
 (symbols '(pico))
-(symbols '(irq pico))
+(symbols '(gic pico))
 
-# Instead of namespace use table?
+(local) 
+(*IntrID
 
-# See ARM's "Generic Timer" doc
+  CORE-N-HP-TIMER 
+  CORE-N-V-TIMER  
+  LEGACY-FIQn     
+  CORE-N-PS-TIMER 
+  CORE-N-PNS-TIMER
+  LEGACY-IRQn     
 
-(def 'TIMER-VIRT-EL1 27) # EL1 Virtual Timer
-(def 'TIMER-PHYS-EL1 30) # EL1 Virtual Timer
+  MAILBOX-0 
+  MAILBOX-1 
+  MAILBOX-2 
+  MAILBOX-3 
+  MAILBOX-4 
+  MAILBOX-5 
+  MAILBOX-6 
+  MAILBOX-7 
+  MAILBOX-8 
+  MAILBOX-9 
+  MAILBOX-10
+  MAILBOX-11
+  MAILBOX-12
+  MAILBOX-13
+  MAILBOX-14
+  MAILBOX-15
+
+  CORE-0-PMU 
+  CORE-1-PMU 
+  CORE-2-PMU 
+  CORE-3-PMU 
+  AXIERR     
+  LOCAL-TIMER
+
+  TIMER                 
+  MAILBOX               
+  DOORBELL-0            
+  DOORBELL-1              
+  VPU0-HALTED           
+  VPU1-HALTED           
+  ARM-ADDRESS-ERROR     
+  ARM-AXI-ERROR           
+  SOFTWARE-INTERRUPT-0  
+  SOFTWARE-INTERRUPT-1  
+  SOFTWARE-INTERRUPT-2  
+  SOFTWARE-INTERRUPT-3    
+  SOFTWARE-INTERRUPT-4  
+  SOFTWARE-INTERRUPT-5  
+  SOFTWARE-INTERRUPT-6  
+  SOFTWARE-INTERRUPT-7
+
+  TIMER-0          
+  TIMER-1          
+  TIMER-2          
+  TIMER-3          
+  H264-0           
+  H264-1           
+  H264-2           
+  JPEG             
+  ISP              
+  USB              
+  V3D              
+  TRANSPOSER       
+  MULTICORE-SYNC-0 
+  MULTICORE-SYNC-1 
+  MULTICORE-SYNC-2 
+  MULTICORE-SYNC-3 
+  DMA-0            
+  DMA-1            
+  DMA-2            
+  DMA-3            
+  DMA-4            
+  DMA-5            
+  DMA-6            
+  DMA-7&8          
+  DMA-9&10         
+  DMA-11           
+  DMA-12           
+  DMA-13           
+  DMA-14           
+  AUX              
+  ARM              
+  DMA-15           
+  HDMI-CEC         
+  HVS              
+  RPIVID           
+  SDC              
+  DSI-0            
+  PIXEL-VALVE-2    
+  CAMERA-0         
+  CAMERA-1         
+  HDMI-0           
+  HDMI-1           
+  PIXEL-VALVE-3    
+  SPI/BSC-SLAVE    
+  DSI-1            
+  PIXEL-VALVE-0    
+  PIXEL-VALVE-1&4  
+  CPR              
+  SMI              
+  GPIO-0           
+  GPIO-1           
+  GPIO-2           
+  GPIO-3           
+  I2C-ALL          
+  SPI-ALL          
+  PCM/I2S          
+  SDHOST           
+  PL011-UART-ALL   
+  ETH-PCIe-L2-ALL  
+  VEC              
+  CPG              
+  RNG              
+  EMMC&2           
+  ETH-PCIe-SECURE  
+
+  AVS         
+  PCIE-0-INTA 
+  PCIE-0-INTB 
+  PCIE-0-INTC 
+  PCIE-0-INTD 
+  PCIE-0-MSI  
+  GENET-0-A   
+  GENET-0-B   
+  USB0-XHCI-0)
+
+# Source:
+#
+# Link: https://datasheets.raspberrypi.org/bcm2711/bcm2711-peripherals.pdf
+#
+# Sections:
+# 6.3. GIC-400 interrupt controller, Figure 7. GIC IRQ routing
+# 6.4. Legacy interrupt controller, Figure 9. Legacy IRQ status registers
+
+(de *IntrID
+
+  # Software Generated Interrupt (SGI) [0-15]
+  # none
+  
+  # Per Processor Interrupts (PPI) [16-31]
+  
+  (CORE-N-HP-TIMER  . 26)  # hypervisor timer
+  (CORE-N-V-TIMER   . 27)  # virtual timer
+  (LEGACY-FIQn      . 28)
+  (CORE-N-PS-TIMER  . 29)  # secure physical
+  (CORE-N-PNS-TIMER . 30)  # non-secure physical
+  (LEGACY-IRQn      . 31)
+
+  # Shared Processor Interrupts [32-1020]
+  
+  ################################
+  # Chapter 13. ARM Mailboxes [32-47]
+  (MAILBOX-0  . 32)
+  (MAILBOX-1  . 33)  
+  (MAILBOX-2  . 34)  
+  (MAILBOX-3  . 35)
+  (MAILBOX-4  . 36)
+  (MAILBOX-5  . 37)  
+  (MAILBOX-6  . 38)  
+  (MAILBOX-7  . 39)
+  (MAILBOX-8  . 40)
+  (MAILBOX-9  . 41)  
+  (MAILBOX-10 . 42)  
+  (MAILBOX-11 . 43)
+  (MAILBOX-12 . 44)
+  (MAILBOX-13 . 45)  
+  (MAILBOX-14 . 46)  
+  (MAILBOX-15 . 47)  
+  ################################
+  
+  (CORE-0-PMU  . 48)
+  (CORE-1-PMU  . 48)
+  (CORE-2-PMU  . 48)
+  (CORE-3-PMU  . 48)  
+  (AXIERR      . 52)
+  (LOCAL-TIMER . 53)
+  
+  ################################
+  # ARMC Peripheral Interrupts [64-79]
+  # 6.2.3. ARMC interrupts, Table 101. ARMC peripheral IRQs
+  (TIMER                . 64)  
+  (MAILBOX              . 65)  
+  (DOORBELL-0           . 66)  
+  (DOORBELL-1           . 67)    
+  (VPU0-HALTED          . 68)  
+  (VPU1-HALTED          . 69)  
+  (ARM-ADDRESS-ERROR    . 70)  
+  (ARM-AXI-ERROR        . 71)    
+  (SOFTWARE-INTERRUPT-0 . 72)  
+  (SOFTWARE-INTERRUPT-1 . 73)  
+  (SOFTWARE-INTERRUPT-2 . 74)  
+  (SOFTWARE-INTERRUPT-3 . 75)    
+  (SOFTWARE-INTERRUPT-4 . 76)  
+  (SOFTWARE-INTERRUPT-5 . 77)  
+  (SOFTWARE-INTERRUPT-6 . 78)  
+  (SOFTWARE-INTERRUPT-7 . 79)
+  
+  ################################
+  # VC Peripheral Interrupts [96-159]
+  # 6.2.4. VideoCore interrupts, Table 102. VC peripheral IRQs
+  (TIMER-0          . 96)
+  (TIMER-1          . 97)
+  (TIMER-2          . 98)
+  (TIMER-3          . 99)
+  (H264-0           . 100)
+  (H264-1           . 101)
+  (H264-2           . 102)
+  (JPEG             . 103)
+  (ISP              . 104)
+  (USB              . 105)
+  (V3D              . 106)
+  (TRANSPOSER       . 107)
+  (MULTICORE-SYNC-0 . 108)
+  (MULTICORE-SYNC-1 . 109)
+  (MULTICORE-SYNC-2 . 110)
+  (MULTICORE-SYNC-3 . 111)
+  (DMA-0            . 112)
+  (DMA-1            . 113)
+  (DMA-2            . 114)
+  (DMA-3            . 115)
+  (DMA-4            . 116)
+  (DMA-5            . 117)
+  (DMA-6            . 118)
+  (DMA-7&8          . 119)
+  (DMA-9&10         . 120)
+  (DMA-11           . 121)
+  (DMA-12           . 122)
+  (DMA-13           . 123)
+  (DMA-14           . 124)
+  (AUX              . 125) # UART1 + SPI1/2, Figure 6. Peripheral IRQ OR-ing
+  (ARM              . 126)
+  (DMA-15           . 127)
+  (HDMI-CEC         . 128)
+  (HVS              . 129)
+  (RPIVID           . 130)
+  (SDC              . 131)
+  (DSI-0            . 132)
+  (PIXEL-VALVE-2    . 133)
+  (CAMERA-0         . 134)
+  (CAMERA-1         . 135)
+  (HDMI-0           . 136)
+  (HDMI-1           . 137)
+  (PIXEL-VALVE-3    . 138)
+  (SPI/BSC-SLAVE    . 139)
+  (DSI-1            . 140)
+  (PIXEL-VALVE-0    . 141)
+  (PIXEL-VALVE-1&4  . 142)
+  (CPR              . 143)
+  (SMI              . 144)
+  (GPIO-0           . 145)
+  (GPIO-1           . 146)
+  (GPIO-2           . 147)
+  (GPIO-3           . 148)
+  (I2C-ALL          . 149) # [0-6], Figure 6. Peripheral IRQ OR-ing
+  (SPI-ALL          . 150) # [0-7], Figure 6. Peripheral IRQ OR-ing
+  (PCM/I2S          . 151)
+  (SDHOST           . 152)
+  (PL011-UART-ALL   . 153) # UART5/4/3/2/0, Figure 6. Peripheral IRQ OR-ing
+  (ETH-PCIe-L2-ALL  . 154)
+  (VEC              . 155)
+  (CPG              . 156)
+  (RNG              . 157)
+  (EMMC&2           . 158)
+  (ETH-PCIe-SECURE  . 159)
+  
+  ################################  
+  # ARMC Peripheral Interrupts [160-216]
+  # Unlisted IDs reserved
+  (AVS         . `(+ 160 9)) # ...216
+  (PCIE-0-INTA . `(+ 160 15))
+  (PCIE-0-INTB . `(+ 160 16))
+  (PCIE-0-INTC . `(+ 160 17))
+  (PCIE-0-INTD . `(+ 160 18))
+  (PCIE-0-MSI  . `(+ 160 20))
+  (GENET-0-A   . `(+ 160 29))  
+  (GENET-0-B   . `(+ 160 30))    
+  (USB0-XHCI-0 . `(+ 160 48)))
 
 (symbols '(pico))
 (symbols '(timer pico))
 
 (local)
-(init pr start)
+(init pr start stop)
 
 (de pr ()
-  (prl-kern (text "cnt-frq: @1"   (cnt-frq)))
+  (prl-kern (text "'cnt-frq @1"   (cnt-frq)))
   
-  (prl-kern (text "cntv-ctl: @1"  (cntv-ctl)))
-  (prl-kern (text "cntv-cval: @1" (cntv-cval)))
-  (prl-kern (text "cntv-tval: @1" (cntv-tval)))  
-  (prl-kern (text "cntvct: @1"    (cntvct)))
+  (prl-kern (text "'cntv-ctl @1"  (cntv-ctl)))
+  (prl-kern (text "'cntv-cval @1" (cntv-cval)))
+  (prl-kern (text "'cntv-tval @1" (cntv-tval)))  
+  (prl-kern (text "'cntvct @1"    (cntvct)))
   
-  (prl-kern (text "cntp-ctl: @1"  (cntp-ctl)))
-  (prl-kern (text "cntp-cval: @1" (cntp-cval)))
-  (prl-kern (text "cntp-tval: @1" (cntp-tval)))
-  (prl-kern (text "cntpct: @1"    (cntpct)))
+  (prl-kern (text "'cntp-ctl @1"  (cntp-ctl)))
+  (prl-kern (text "'cntp-cval @1" (cntp-cval)))
+  (prl-kern (text "'cntp-tval @1" (cntp-tval)))
+  (prl-kern (text "'cntpct @1"    (cntpct)))
   
   NIL)
 
   
 (de init ()
   (with pico~*gic
-    (gic~i-cfg>   (: gic~dist) irq~TIMER-VIRT-EL1 gic~EDGE)
-    (gic~i-prio>  (: gic~dist) irq~TIMER-VIRT-EL1 (>> -4 0))
-    (gic~i-tgts>  (: gic~dist) irq~TIMER-VIRT-EL1 (hex "1")) # proc 0
-    (gic~ic-pend> (: gic~dist) irq~TIMER-VIRT-EL1 T)
-    (gic~is-enab> (: gic~dist) irq~TIMER-VIRT-EL1 T)))    
-
-
-(de start (T1 T2)
+    (let IrqID (get gic~*IntrID 'gic~CORE-N-V-TIMER)
+      (gic~i-cfg>   (: gic~dist) IrqID gic~EDGE)
+      (gic~i-prio>  (: gic~dist) IrqID (>> -4 0))
+      (gic~i-tgts>  (: gic~dist) IrqID (hex "1")) # proc 0
+      (gic~ic-pend> (: gic~dist) IrqID T)
+      (gic~is-enab> (: gic~dist) IrqID T))))
+      
+(de start ()
 
   (daif2)
   
-  (let (C (cntv-ctl)
-        C (& C (bw-not C))) # 0
-    (cntv-ctl C))
-    
-  (let (Cntfrq (cnt-frq)
-        Ticks (* T1 Cntfrq)
-        Cur-Cnt (cntvct))
-    (cntv-cval (+ Cur-Cnt Ticks)))
-    
-  (let (C (cntv-ctl)
-        C (| C (>> 0 1))) # 1
-    (cntv-ctl C))
-
-  (daif2 T)
+  # status, mask, switch
+  # unmask = on
+  # mask = off/ignored
+  (cntv-ctl 0)
+  (isb)  
   
-  (alarm T (pico~alarm-2))
+  (cntv-cval (+ (cntvct) (* 2 (cnt-frq))))
+  (isb)    
+    
+  (cntv-ctl 1)
+  (isb)
+
+  (with pico~*gic
+    (let IrqID (get gic~*IntrID 'gic~CORE-N-V-TIMER)
+      (gic~ic-pend> (: gic~dist) IrqID T)
+      (gic~is-enab> (: gic~dist) IrqID T)))
+  
+  (daif2 T)
   
   (pr)
   
   NIL)
     
+    
+(de stop ()
+
+  (daif2)
+  
+  # status, mask, switch
+  # unmask = on
+  # mask = off/ignored
+  (cntv-ctl 0)
+  (isb)  
+  
+  (cntv-cval 0)
+  (isb)    
+
+  (with pico~*gic
+    (let IrqID (get gic~*IntrID 'gic~CORE-N-V-TIMER)
+      (gic~ic-pend> (: gic~dist) IrqID T)
+      (gic~ic-enab> (: gic~dist) IrqID T)))
+  
+  (daif2 T)
+  
+  (pr)
+  
+  NIL)
+
 
 (symbols '(pico))
 (symbols '(pico))
@@ -2289,57 +2623,12 @@
   (prl-kern (text "*Kern Load Time: @1" (usec))))
 
 
-(de alarm-2 ()
-
-  #{
+(de intr ()
+  (case *IntID
+    (27
+      (prl-kern (pack *IntID " Restart timer..."))    
+      (timer~start))))
   
-    When the GIC recognizes an interrupt request, it marks its state as pending. Regenerating a pending interrupt does
-    not affect the state of the interrupt.
-    
-    The GIC interrupt handling sequence is:
-    
-    1. The GIC determines the interrupts that are enabled.
-    2. For each pending interrupt, the GIC determines the targeted processor or processors.
-    3. For each CPU interface, the Distributor forwards the highest priority pending interrupt that targets that
-    interface.
-    4. Each CPU interface determines whether to signal an interrupt request to its processor, and if required, does so.
-    
-    5. The processor acknowledges the interrupt, and the GIC returns the interrupt ID and updates the interrupt
-    state.
-    6. After processing the interrupt, the processor signals End of Interrupt (EOI) to the GIC.  
-    
-  }#
-
-  (prl-kern)
-  (prl-kern (pack "(alarm2)"))
-
-  # rd Interrupt Ack Register (IAR)
-  
-  (let? Irq (gic~find-pend-irq> *gic)
-  
-    (prl-kern (pack "(alarm2) " Irq))
-    
-    # mask all intrs (disable)
-    (daif2)
-    
-    # disable intr in gic
-    (gic~ic-enab> (get *gic 'gic~dist) Irq T)
-    
-    # rd End of Interrupt Register (EOIR) in CPU
-    
-    # clr pending intr
-    (gic~ic-pend> (get *gic 'gic~dist) Irq T)
-    
-    # rearm timer
-    
-    # enable intr in gic
-    (gic~is-enab> (get *gic 'gic~dist) Irq T)
-    
-    # unmask all intr (enable)
-    (daif2 T)
-    
-    T))  
-
   
 (de main ()
   
@@ -2348,6 +2637,9 @@
   
   (prinl)
 
+  (setq *MBox (hex "4000000"))
+  (setq *Int intr)
+  
   (pr-mbox)
   
   (prl-kern)

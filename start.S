@@ -97,11 +97,6 @@ _start:
     
 4:  bl      uart_init
     bl      mmu_map_stage2
-    
-    ldr	    x1, =vectors
-    msr	    vbar_el1, x1
-    isb            
-    
     bl      uart_hello
     bl      main
     b       1b

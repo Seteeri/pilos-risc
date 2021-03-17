@@ -1,49 +1,69 @@
-PIL
-===
+Pre-Release
+===========
 
-Interrupts
-* rename ptr32 -> int
-* rename ptr64 -> long
-* clean up gic
-* clean up uart
-  * mini vs full
-* move timers to kernel space
+https://github.com/ARM-software/arm-trusted-firmware/blob/master/bl32/tsp/tsp_timer.c
 
-Coroutines
-* might work okay?
+KERN
+* const -> sym
+  * *basep
+  * *gicd, *gicc
+  * *aux, *uart
+    * *get/set
+* intr
+  * define gic constants
+  * symbols: *gic
+    * contains ptrs for distr and cpu
+    * based on mmu; user can change it
+      * can change mmu with ptrs and sys reg
+* uart
+  * test interrupts
+    * mini
+    * full
+    
+* mmu -> pil21 
+* move kern.l to end of bin
+  * read from &end
+    * main: mkStr &end
+  * embed plio instead of string...later?
+    * would need to translate lisp source code to bin data  
 
-SD Card
-* external symbols (after SD card)
+PIL21
+* ptr syms
+  * rename byte  -> ptr8
+  * add ptr16
+  * check ptr64
+  * ptr128?
+  * clean up c defs
+* remove unused fns
+* optimization needs volatile
+  * create 'setv for volatile wr
+  * add option for ptr*
+* fix jmps
+* move uart_init to picolisp
+  * or to kern if implement *put/*get
+    * replace (call $XXX) -> (eval (eval *XXX))
+    * uart vs mini uart
+  * technically could write all of start.S in pilsrc
 
-Later:
-
-Mailbox
-* more fn for display
-
-SD Card
 
 General
 =======
 * reimplement alloc
   * heapAlloc must check stack/heap bounds
   * poss create segment for coroutines
-* optimization needs volatile
 * rewrite drivers to use classes instead of namespace
-* move kern.l to end of bin
-* embed plio instead of string
-* create syms: *put *get
-  * replace (call $XXX) -> (eval (eval *XXX))
+
 * create syms: *repl [???]
+  * is it possible to move repl to kern space?
   * replace (call $XXX) -> (eval (eval *XXX))
-  * need to integrate error handling
-  * err jumps to repl
-    * jump to *repl instead  
+  * err jmps to repl
+    * jump to *repl instead
 * on kern error, jump to repl...
 
 * finish (cnt ...) api
+  * in kern
 * err return
-  * should not longjmp?
-  * talk to alex why not like CL
+  * talk to alex why not about CL system
 * gc
   * on free inter heap, push to list
   * what about arbitrarily sized allocs?
@@ -58,6 +78,7 @@ General
 * rewrite I/O fns:
   accept acquire any beep char close connect ctl dir echo eof eol err ext fd file flush format from hear here host in info ipid key line listen load mail msg once open opid out path peek pipe poll port pp pr prEval pretty prin prinl print println printsp rc rd read release rewind scl script show skip space str sym sync tab tell till tmp tty udp view wait wr
   
+* limit pointer use to system registers and peripheral access (MMIO)
 
 # Milestones
   
@@ -88,6 +109,9 @@ General
   * Wifi/Modem Drivers
   * Linux/C emulator/virtulization
     * Compile C to Lisp?
+
+    
+# Misc
 
 PLIO:
 (out "file.plio" (pr *Kernel))
