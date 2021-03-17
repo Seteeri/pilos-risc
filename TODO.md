@@ -4,17 +4,16 @@ Pre-Release
 https://github.com/ARM-software/arm-trusted-firmware/blob/master/bl32/tsp/tsp_timer.c
 
 KERN
+* remove eval from kern
+* remove unused fns
 * const -> sym
-  * *basep
+  * *peri
   * *gicd, *gicc
   * *aux, *uart
-    * *get/set
-* intr
-  * define gic constants
-  * symbols: *gic
-    * contains ptrs for distr and cpu
-    * based on mmu; user can change it
-      * can change mmu with ptrs and sys reg
+    * can sel be dynamic?
+      * config.txt requires reboot
+    * *serial = T = *uart
+  * *irq
 * uart
   * test interrupts
     * mini
@@ -26,6 +25,7 @@ KERN
     * main: mkStr &end
   * embed plio instead of string...later?
     * would need to translate lisp source code to bin data  
+* rebase pil21
 
 PIL21
 * ptr syms
@@ -34,17 +34,9 @@ PIL21
   * check ptr64
   * ptr128?
   * clean up c defs
-* remove unused fns
 * optimization needs volatile
   * create 'setv for volatile wr
   * add option for ptr*
-* fix jmps
-* move uart_init to picolisp
-  * or to kern if implement *put/*get
-    * replace (call $XXX) -> (eval (eval *XXX))
-    * uart vs mini uart
-  * technically could write all of start.S in pilsrc
-
 
 General
 =======

@@ -2,7 +2,7 @@
 
 (local)
 (ON-CTL OFF-CTL
- +Gic +Vicb +Hyp +Vci)
+ +Gic)
  
 (def 'ON-CTL  (>> 0 1))
 (def 'OFF-CTL (>> 0 0))
@@ -15,13 +15,9 @@
   (=: cpu  (new '(+Cpu)  (+ P (hex "2000")))))
   
 # Pass T/NIL to set/clear
-(dm enab> (Irq Fn X) ((if Fn 'is-enab> 'ic-enab>) (: dist) Irq X))
-(dm pend> (Irq Fn X) ((if Fn 'is-pend> 'ic-pend>) (: dist) Irq X))
-(dm act>  (Irq Fn X) ((if Fn 'is-act>  'ic-act>)  (: dist) Irq X))
-
-#(1566154470) (find-pend-irq) 128 128 71
-#(1566764933) (find-pend-irq) 32768 32768 111
-#(1567660449) (find-pend-irq) 16384 16384 174
+(dm enab> (Irq Fn) ((if Fn 'is-enab> 'ic-enab>) (: dist) Irq Fn))
+(dm pend> (Irq Fn) ((if Fn 'is-pend> 'ic-pend>) (: dist) Irq Fn))
+(dm act>  (Irq Fn) ((if Fn 'is-act>  'ic-act>)  (: dist) Irq Fn))
 
 (dm find-pend-irq> ()
   (let Irq NIL
@@ -35,9 +31,5 @@
           (prl-kern (pack "(find-pend-irq) " J " " B " " W " <<<<"))
           (setq Irq J))))
     Irq))
-
-(class +Vicb)
-(class +Hyp)
-(class +Vci)    
     
 (symbols '(pico))
