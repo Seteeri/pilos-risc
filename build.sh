@@ -1,1 +1,1 @@
-make && sudo cp kernel8.img /media/sdd1 && sync && sudo umount /media/sdd1 && sync
+make && sudo cp kernel8.img /media/sdc1 && sync && sudo umount /media/sdc1 && sync

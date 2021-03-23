@@ -51,7 +51,7 @@ clean:
 	rm kernel8.elf *.o >/dev/null 2>/dev/null || true
 
 minicom:
-	sudo minicom -b 115200 -o -D /dev/ttyUSB0
+	sudo minicom -b 115200 -o -D /dev/ttyUSB2
 	
 qemu:
 	qemu-system-aarch64 -M raspi3 -kernel kernel8.img -serial stdio
