@@ -82,6 +82,12 @@
   ###################
   # start term (repl)
 
+  # after kern done load, must signal pil to change
+  # $Get = ptr -> uart
+  #
+  # call fn?
+  # or 'Getc -> SUBR to EXPR
+
   (term))
 
 

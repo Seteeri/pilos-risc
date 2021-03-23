@@ -2487,11 +2487,15 @@
             (repl)
             T)
       (unless (=T E)
-        (pr-kern "Catch! ")
-        (println E ^)
-        # reset buf, print prompt
-        (off *buf-term)
-        (pr-kern ": ")))))
+        (do-err-repl E)))))
+
+
+(de do-err-repl (E)
+  (pr-kern "Catch! ")
+  (println E ^)
+  # reset buf, print prompt
+  (off *buf-term)
+  (pr-kern ": "))
 
 
 (de repl ()

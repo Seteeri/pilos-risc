@@ -54,6 +54,8 @@ https://github.com/ARM-software/arm-trusted-firmware/blob/master/bl32/tsp/tsp_ti
 
 * mmu -> pil21
 
+* fix div -> compile clangrt
+
 LATER
 * rebase pil21
 * ptr syms
