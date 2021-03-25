@@ -15,16 +15,16 @@ https://github.com/ARM-software/arm-trusted-firmware/blob/master/bl32/tsp/tsp_ti
     * like 'any or 'str
   * refactor kern to use this
 
-* uart
-  * test interrupts
-    * mini
-    * full
-
 * move kern.l to end of bin
   * read from &end
     * main: mkStr &end
   * embed plio instead of string...later?
     * would need to translate lisp source code to bin data
+
+* uart
+  * test interrupts
+    * mini
+    * full
 
 * mmu -> pil21
 

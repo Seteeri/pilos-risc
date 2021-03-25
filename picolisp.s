@@ -60140,7 +60140,7 @@ $Empty:
 	.globl	$Kerns
 	.p2align	4
 $Kerns:
-	.asciz	"\n(prinl \"No Kernel\")\nT\n"
+	.incbin "kern.l"
 	.size	$Kerns, 24
 
 	.type	Sig,@object                     // @Sig

@@ -52,7 +52,7 @@
 
   # Switch input
   # TODO: mov to nsp - load very first
-  (setq *Putc '(uart~wr))
+  (setq *Putc '(uart~wr-ch))
 
   # Switch input to UART1 (mini UART)
   # On exit, set NIL to switch back to kern input
@@ -70,7 +70,7 @@
   (prl-kern)
 
   ##############
-  # init drivers
+  # drivers
 
   (def '*gic
     (new '(gic~+Gic) (hex "FF840000")))
@@ -92,12 +92,6 @@
 
   ###################
   # start term (repl)
-
-  # after kern done load, must signal pil to change
-  # $Get = ptr -> uart
-  #
-  # call fn?
-  # or 'Getc -> SUBR to EXPR
 
   (term))
 
