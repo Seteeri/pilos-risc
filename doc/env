@@ -1,0 +1,115 @@
+env: let vs bind vs job vs use
+
+https://picolisp.com/wiki/?firstclassenvironments
+
+# env
+
+(env ['lst] | ['sym 'val] ..) -> lst
+Return a list of symbol-value pairs of all dynamically bound symbols if called without arguments, or of the symbols or symbol-value pairs in lst, or the explicitly given sym-val arguments. See also bind, job, trail and up.
+
+: (env)
+-> NIL
+: (let (A 1 B 2) (env))
+-> ((A . 1) (B . 2))
+: (let (A 1 B 2) (env '(A B)))
+-> ((B . 2) (A . 1))
+: (let (A 1 B 2) (env 'X 7 '(A B (C . 3)) 'Y 8))
+-> ((Y . 8) (C . 3) (B . 2) (A . 1) (X . 7))
+
+
+# let vs
+
+let vs ...
+bind : more flexible, syms @ runtime; uses sym-val pairs
+job  : similar to bind but modifies env (used for currying) and only uses sym-val pairs
+use  : simpler version of let without init values
+
+(let sym 'any . prg) -> any
+(let (sym|lst 'any ..) . prg) -> any
+Defines local variables. The value of the symbol sym - or the values of the symbols sym in the list of the second form - are saved and the symbols are bound to the evaluated any arguments. The lst arguments in the second form may consist only of symbols and sublists, and match the any argument (destructuring bind). prg is executed, then the symbols are restored to their original values.
+
+The result of prg is returned. It is an error condition to pass NIL as a sym argument. In destructuring patterns, NIL denotes a "don't care" position. See also let?, bind, recur, with, for, job and use.
+
+: (setq  X 123  Y 456)
+-> 456
+: (let X "Hello" (println X))
+"Hello"
+-> "Hello"
+: (let (X "Hello" Y "world") (prinl X " " Y))
+Hello world
+-> "world"
+: X
+-> 123
+: Y
+-> 456
+
+: (let (A 1  (B . C) (2 3)  D 4)
+   (list A B C D) )
+-> (1 2 (3) 4)
+
+: (let (((A . B) (C) . D) '((1 2 3) (4 5 6) 7 8 9))
+   (list A B C D) )
+-> (1 (2 3) 4 (7 8 9))
+
+: (let (((A . NIL) NIL NIL D) '((1 2 3) (4 5 6) 7 8 9))
+   (trail T) )
+-> (A 1 D 8)
+
+
+
+(bind 'sym|lst . prg) -> any
+Binds value(s) to symbol(s). The first argument must evaluate to a symbol, or a list of symbols or symbol-value pairs. The values of these symbols are saved (and the symbols bound to the values in the case of pairs), prg is executed, then the symbols are restored to their original values. During execution of prg, the values of the symbols can be temporarily modified.
+
+The return value is the result of prg. See also let, job and use.
+
+: (setq X 123)                               # X is 123
+-> 123
+: (bind 'X (setq X "Hello") (println X))  # Set X to "Hello", print it
+"Hello"
+-> "Hello"
+: (bind '((X . 3) (Y . 4)) (println X Y) (* X Y))
+3 4
+-> 12
+: X
+-> 123                                       # X is restored to 123
+
+
+(job 'lst . prg) -> any
+Executes a job within its own environment (as specified by symbol-value pairs in lst). The current values of all symbols are saved, the symbols are bound to the values in lst, prg is executed, then the (possibly modified) symbol values are (destructively) stored in the environment list, and the symbols are restored to their original values.
+
+The return value is the result of prg. Typically used in curried functions and *Run tasks. See also env, bind, let, use and state.
+
+: (de tst ()
+   (job '((A . 0) (B . 0))
+      (println (inc 'A) (inc 'B 2)) ) )
+-> tst
+: (tst)
+1 2
+-> 2
+: (tst)
+2 4
+-> 4
+: (tst)
+3 6
+-> 6
+: (pp 'tst)
+(de tst NIL
+   (job '((A . 3) (B . 6))
+      (println (inc 'A) (inc 'B 2)) ) )
+-> tst
+
+
+(use sym . prg) -> any
+(use (sym ..) . prg) -> any
+Defines local variables. The value of the symbol sym - or the values of the symbols sym in the list of the second form - are saved, prg is executed, then the symbols are restored to their original values. During execution of prg, the values of the symbols can be temporarily modified.
+
+The return value is the result of prg. See also bind, job and let.
+
+: (setq  X 123  Y 456)
+-> 456
+: (use (X Y) (setq  X 3  Y 4) (* X Y))
+-> 12
+: X
+-> 123
+: Y
+-> 456

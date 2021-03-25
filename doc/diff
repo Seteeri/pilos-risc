@@ -1,0 +1,49 @@
+Differences between PilOS and Pil21
+
+The goal is to retain the core functionality and paradigm as much as possible:
+* data types
+* memory management/gc
+* evaluation
+* coroutines
+* error handling (see debug for changes)
+* db
+
+Because pilOS runs bare metal and does not use the conventional UNIX/C file metaphor, much of the conventional OS related functionality is either removed or replaced with something similar.
+
+For unspecified symbols, functionality remains the same.
+
+# Misc
+* No libraries
+* No C interface
+  * struct/native
+* No quit or bye
+
+# Interrupts
+
+Deprecated:
+* alarm, sigio, *Hup, *Winch, *Sig[12] and *TStp[12]
+
+# I/O
+
+Deprecated:
+* in
+* out
+
+
+# Repl
+
+Deprecated:
+* load
+
+
+# Debug
+
+Deprecated:
+* Dbg
+* !
+* e
+
+
+# Ext Symbol
+
+TODO

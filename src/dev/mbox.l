@@ -13,17 +13,17 @@
     uint32_t Peek0;	       // 0x10
     uint32_t Sender0;      // 0x14
       uint32_t Status0;	// 0x18         Status of VC to ARM
-    uint32_t Config0;	// 0x1C        
+    uint32_t Config0;	// 0x1C
     uint32_t Write1;	// 0x20         Write data from ARM to VC
     uint32_t Unused2[3];	// 0x24-0x2F
     uint32_t Peek1;	   // 0x30
     uint32_t Sender1;  // 0x34
     uint32_t Status1;	  // 0x38         Status of ARM to VC
-    uint32_t Config1;	  // 0x3C 
+    uint32_t Config1;	  // 0x3C
   };
 }#
 
-(local) 
+(local)
 (MMIO MAILBOX
  zero-buf pr-buf set-mbox serial wait-wr wait-rd
  madr amem vmem bmod brev frev bser
@@ -36,33 +36,33 @@
  CH-TOU
  CH-PRO-AV
  CH-PRO-VA
- 
- READ0    
- UNUSED0  
- PEEK0    
- SENDER0  
- STATUS0  
- CONFIG0  
- WRITE1   
- UNUSED2  
- PEEK1    
- SENDER1  
- STATUS1  
- CONFIG1  
- 
- EMPTY 
- FULL  
+
+ READ0
+ UNUSED0
+ PEEK0
+ SENDER0
+ STATUS0
+ CONFIG0
+ WRITE1
+ UNUSED2
+ PEEK1
+ SENDER1
+ STATUS1
+ CONFIG1
+
+ EMPTY
+ FULL
  LEV
  RESP
- 
+
  FIRMWARE-REVISION
- BOARD-MODEL      
- BOARD-REVISION   
- MAC-ADDRESS      
- BOARD-SERIAL     
- ARM-MEMORY       
- VC-MEMORY        
- TAG-END           
+ BOARD-MODEL
+ BOARD-REVISION
+ MAC-ADDRESS
+ BOARD-SERIAL
+ ARM-MEMORY
+ VC-MEMORY
+ TAG-END
 
  )
 
@@ -97,8 +97,8 @@
 (def 'CH-BUT 5)    # Buttons
 (def 'CH-TOU 6)    # Touch screen
                    # Skip 7
-              
-# Request from ARM for response by VC                   
+
+# Request from ARM for response by VC
 (def 'CH-PRO-AV 8) # Property tags (ARM -> VC)
 
 # Request from VC for response by ARM (none currently defined)
@@ -128,22 +128,22 @@
   (wait-wr)
 
   (zero-buf)
-  
+
   (ui* (+ pico~*MBox (* 4 0)) (* 4 8))         # msg sz
   (ui* (+ pico~*MBox (* 4 1)) 0)               # msg req/res code
   (ui* (+ pico~*MBox (* 4 2)) MAC-ADDRESS)  # tag id
   (ui* (+ pico~*MBox (* 4 3)) 8)               # val buf sz
   (ui* (+ pico~*MBox (* 4 4)) 8)               # buf req/res code (see md)
   (ui* (+ pico~*MBox (* 4 5)) 0)               # zero buf
-  (ui* (+ pico~*MBox (* 4 6)) 0)               # zero buf  
+  (ui* (+ pico~*MBox (* 4 6)) 0)               # zero buf
   (ui* (+ pico~*MBox (* 4 7)) TAG-END)
-  
+
   (let R (| pico~*MBox CH-PRO-AV)
     (ptr32 WRITE1 R)
     (wait-rd R))
-  
+
   # BE
-  (list 
+  (list
     (hex (byte (+ pico~*MBox (* 4 5) 0)))
     (hex (byte (+ pico~*MBox (* 4 5) 1)))
     (hex (byte (+ pico~*MBox (* 4 5) 2)))
@@ -157,7 +157,7 @@
   (wait-wr)
 
   (zero-buf)
-  
+
   (ui* (+ pico~*MBox (* 4 0)) (* 4 8)) # This msg len
   (ui* (+ pico~*MBox (* 4 1)) 0) # REQ/RES
   (ui* (+ pico~*MBox (* 4 2)) ARM-MEMORY)
@@ -166,22 +166,22 @@
   (ui* (+ pico~*MBox (* 4 5)) 0)
   (ui* (+ pico~*MBox (* 4 6)) 0)
   (ui* (+ pico~*MBox (* 4 7)) TAG-END)
-  
+
   (let R (| pico~*MBox CH-PRO-AV)
     (ptr32 WRITE1 R)
     (wait-rd R))
-  
-  (list 
+
+  (list
     (hex (ptr32 (+ pico~*MBox (* 4 6))))
     (hex (ptr32 (+ pico~*MBox (* 4 5))))))
-    
-    
+
+
 (de vmem ()
 
   (wait-wr)
 
   (zero-buf)
-  
+
   (ui* (+ pico~*MBox (* 4 0)) (* 4 8)) # This msg len
   (ui* (+ pico~*MBox (* 4 1)) 0) # REQ/RES
   (ui* (+ pico~*MBox (* 4 2)) VC-MEMORY)
@@ -190,12 +190,12 @@
   (ui* (+ pico~*MBox (* 4 5)) 0)
   (ui* (+ pico~*MBox (* 4 6)) 0)
   (ui* (+ pico~*MBox (* 4 7)) TAG-END)
-  
+
   (let R (| pico~*MBox CH-PRO-AV)
     (ptr32 WRITE1 R)
     (wait-rd R))
-  
-  (list 
+
+  (list
     (hex (ptr32 (+ pico~*MBox (* 4 6))))
     (hex (ptr32 (+ pico~*MBox (* 4 5))))))
 
@@ -203,8 +203,8 @@
 
   (wait-wr)
 
-  (zero-buf) 
-  
+  (zero-buf)
+
   (ui* (+ pico~*MBox (* 4 0)) (* 4 7))            # msg len
   (ui* (+ pico~*MBox (* 4 1)) 0)                  # REQ
   (ui* (+ pico~*MBox (* 4 2)) BOARD-REVISION)  # tag ID
@@ -212,21 +212,21 @@
   (ui* (+ pico~*MBox (* 4 4)) 4)                  # request/response code
   (ui* (+ pico~*MBox (* 4 5)) 0)
   (ui* (+ pico~*MBox (* 4 6)) TAG-END)
-  
+
   (let R (| pico~*MBox CH-PRO-AV)
     (ptr32 WRITE1 R)
     (wait-rd R))
-  
-  (list 
+
+  (list
     (hex (ptr32 (+ pico~*MBox (* 4 5))))))
-    
-  
+
+
 (de bmod ()
 
   (wait-wr)
 
   (zero-buf)
-  
+
   (ui* (+ pico~*MBox (* 4 0)) (* 4 7))            # msg len
   (ui* (+ pico~*MBox (* 4 1)) 0)                  # REQ
   (ui* (+ pico~*MBox (* 4 2)) BOARD-MODEL)  # tag ID
@@ -234,21 +234,21 @@
   (ui* (+ pico~*MBox (* 4 4)) 4)                  # request/response code
   (ui* (+ pico~*MBox (* 4 5)) 0)
   (ui* (+ pico~*MBox (* 4 6)) TAG-END)
-  
+
   (let R (| pico~*MBox CH-PRO-AV)
     (ptr32 WRITE1 R)
     (wait-rd R))
-  
-  (list 
+
+  (list
     (hex (ptr32 (+ pico~*MBox (* 4 5))))))
-    
-  
+
+
 (de frev ()
 
   (wait-wr)
 
   (zero-buf)
-  
+
   (ui* (+ pico~*MBox (* 4 0)) (* 4 7))            # msg len
   (ui* (+ pico~*MBox (* 4 1)) 0)                  # REQ
   (ui* (+ pico~*MBox (* 4 2)) FIRMWARE-REVISION)  # tag ID
@@ -256,21 +256,21 @@
   (ui* (+ pico~*MBox (* 4 4)) 4)                  # request/response code
   (ui* (+ pico~*MBox (* 4 5)) 0)
   (ui* (+ pico~*MBox (* 4 6)) TAG-END)
-  
+
   (let R (| pico~*MBox CH-PRO-AV)
     (ptr32 WRITE1 R)
     (wait-rd R))
-  
-  (list 
+
+  (list
     (hex (ptr32 (+ pico~*MBox (* 4 5))))))
-  
-  
+
+
 (de bser ()
 
   (wait-wr)
-  
+
   (zero-buf)
-  
+
   (ui* (+ pico~*MBox (* 4 0)) (* 4 8)) # This msg len
   (ui* (+ pico~*MBox (* 4 1)) 0) # REQ/RES
   (ui* (+ pico~*MBox (* 4 2)) BOARD-SERIAL)
@@ -279,19 +279,19 @@
   (ui* (+ pico~*MBox (* 4 5)) 0)
   (ui* (+ pico~*MBox (* 4 6)) 0)
   (ui* (+ pico~*MBox (* 4 7)) TAG-END)
-  
+
   (let R (| pico~*MBox CH-PRO-AV)
     (ptr32 WRITE1 R)
     (wait-rd R))
 
-  (list 
+  (list
     (hex (ptr32 (+ pico~*MBox (* 4 6))))
     (hex (ptr32 (+ pico~*MBox (* 4 5))))))
-    
+
 (de wait-wr-1 () (while (bit? FULL  (>> -4 (ptr32 STATUS0))) (prinl (ptr32 STATUS0))))
 
 (de wait-rd-1 () (while (bit? EMPTY (>> -4 (ptr32 STATUS0))) (prinl (ptr32 STATUS0))))
-    
+
 (de wait-wr-2 ()
   (loop
     (setq X (ptr32 STATUS0))
@@ -308,7 +308,7 @@
     (for X 8 (prin (byte (+ STATUS0 (dec X))) " "))
     (prinl) (prinl)
     (NIL (bit? EMPTY (>> -4 X)))))
-    
+
 (de wait-wr ()
   (while (bit? FULL (ptr32 STATUS0))))
 

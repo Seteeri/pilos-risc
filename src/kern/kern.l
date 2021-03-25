@@ -48,36 +48,47 @@
       (prl-kern (pack *IntID " Restart timer..."))
       (timer~start))))
 
-
 (de main ()
+
+  # Switch input
+  # TODO: mov to nsp - load very first
+  (setq *Putc '(uart~wr))
+
+  # Switch input to UART1 (mini UART)
+  # On exit, set NIL to switch back to kern input
+  (setq *Getc '(uart~rd))
 
   ################
   # print sys info
 
   (prinl)
 
-  (setq *MBox (hex "4000000"))
   (setq *Int intr)
 
   (pr-mbox)
 
   (prl-kern)
 
-  (timer~pr)
-
-  (prl-kern)
-
-  (pr-sys)
-
   ##############
   # init drivers
-
-  (prl-kern)
 
   (def '*gic
     (new '(gic~+Gic) (hex "FF840000")))
 
   (timer~init)
+
+  (prl-kern)
+
+  ##########
+  # preamble
+
+  (pr-sys)
+
+  (prl-kern)
+
+  (timer~pr)
+
+  (prl-kern)
 
   ###################
   # start term (repl)

@@ -3,46 +3,22 @@ Pre-Release
 
 https://github.com/ARM-software/arm-trusted-firmware/blob/master/bl32/tsp/tsp_timer.c
 
-* load
-  * rewrite 'load to load from ptr or sym
-  * refactor kern to use this
+* use builtin ptrs for periphs
 
-* refactor repl
-  * kern repl/term emulator
-    * use catch/throw to bypass err->repl
-    * main will simply load kern and kern should never ret
-    * if ret, loop wfe (hang)
-    * (loop (catch (repl]
-  * i/o
-    * *putc/getc
-    * eval can be in kern but pr/print relies on ptr manip...
-      * can implement with ptr functions but the rule is
-      anything manipulating lisp data with ptrs belongs in interpreter
-      except for MMIO or peripheral/external devices
-    * rd/read reads from a ptr...
-      * technically can be in lisp since output is lisp data
-      * but make congruent with pr/print
-  * rewrite debug fns: '! (_break) 'e '$
-    * kern dbg fns will call repl
-    * pil21 repl calls
-      * ... : err -> top-level
-        * (repl 0 ($ "? ") $Nil)
-      * '!  : brkLoad -> immediate
-        * requires debug flag
-        * (repl 0 ($ "! ") $Nil)
-      * loadAll
-        * (repl Exe null (mkStr P))
-      * main
-        * (repl 0 ($ ": ") $Nil)
+* rewrite drivers to use classes instead of namespace
+
+* load
+  * rewrite 'load to do 'str/any from ptr
+    * can this be done without mkstr?
+      * use repl, modify getParse to simply read from ptr
+    * loadKern makes str sym from ptr
+    * like 'any or 'str
+  * refactor kern to use this
 
 * uart
   * test interrupts
     * mini
     * full
-
-* optimization needs volatile
-  * create 'setv for volatile wr
-  * add option for ptr*
 
 * move kern.l to end of bin
   * read from &end
@@ -50,13 +26,29 @@ https://github.com/ARM-software/arm-trusted-firmware/blob/master/bl32/tsp/tsp_ti
   * embed plio instead of string...later?
     * would need to translate lisp source code to bin data
 
-* pil21 main -> reload kern on exit
-
 * mmu -> pil21
+
+* optimization needs volatile
+  * create 'setv for volatile wr
+  * add option for ptr*
 
 * fix div -> compile clangrt
 
 LATER
+
+* rewrite debug fns: '! (_break) 'e '$
+  * kern dbg fns will call repl
+  * pil21 repl calls
+    * ... : err -> top-level
+      * (repl 0 ($ "? ") $Nil)
+    * '!  : brkLoad -> immediate
+      * requires debug flag
+      * (repl 0 ($ "! ") $Nil)
+    * loadAll
+      * (repl Exe null (mkStr P))
+    * main
+      * (repl 0 ($ ": ") $Nil)
+
 * rebase pil21
 * ptr syms
   * rename byte  -> ptr8
@@ -74,17 +66,13 @@ LATER
 
 General
 =======
+
+    anything manipulating lisp data with ptrs belongs in interpreter
+    except for MMIO or peripheral/external devices
+
 * reimplement alloc
   * heapAlloc must check stack/heap bounds
   * poss create segment for coroutines
-* rewrite drivers to use classes instead of namespace
-
-* create syms: *repl [???]
-  * is it possible to move repl to kern space?
-  * replace (call $XXX) -> (eval (eval *XXX))
-  * err jmps to repl
-    * jump to *repl instead
-* on kern error, jump to repl...
 
 * finish (cnt ...) api
   * in kern
@@ -106,12 +94,17 @@ General
 
 * limit pointer use to system registers and peripheral access (MMIO)
 
+* reader can be implemented in lisp with i/o + 'any or 'str (parser)
+  * parser can be implemented in lisp with intern
+
 # Milestones
 
-* 0.0 ()
+* 0.0 (Bootstrap)
   * serial
   * interrupts
   * mailbox
+  * notes
+    * extsym not work (need SD card access)
 * 0.1 (Lakenheath)
   * sd card (ext syms)
   * display

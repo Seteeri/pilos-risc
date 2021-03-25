@@ -1,52 +1,53 @@
 (symbols '(uart pico))
 
 (local)
-(MMIO   
- IRQ       
+(MMIO
+ IRQ
  ENABLES
- IO     
- IER    
- IIR    
- LCR    
- MCR    
- LSR    
- MSR    
+ IO
+ IER
+ IIR
+ LCR
+ MCR
+ LSR
+ MSR
  SCRATCH
- CNTL   
- STAT   
- BAUD   
+ CNTL
+ STAT
+ BAUD
 
  LSR-BIT
- TX-IDL 
- TX-GE1 
- RX-OVE 
- RX-GE1 
+ TX-IDL
+ TX-GE1
+ RX-OVE
+ RX-GE1
 
  STAT-BIT
- TX-FIL 
- RX-FIL 
- TX-DON 
- TX-EMP 
- CT-STA 
- RT-STA 
- TX-FUL 
- RX-OVE 
- TX-IDL 
- RX-IDL 
- TX-AVA 
- RX-AVA  
- 
+ TX-FIL
+ RX-FIL
+ TX-DON
+ TX-EMP
+ CT-STA
+ RT-STA
+ TX-FUL
+ RX-OVE
+ TX-IDL
+ RX-IDL
+ TX-AVA
+ RX-AVA
+
  LF
  CR
- 
+
  pr-fr
  poll-tx-emp
  poll-rx-one
  rd
  wr
+ wr-ch
  pr
  prl
- 
+
  echo
  pr-stat
  pr-lsr
@@ -71,9 +72,9 @@
 
 
 (de LSR-BIT
-  (TX-IDL . `(>> -6 1))  # set if transmit FIFO empty and transmitter idle       
+  (TX-IDL . `(>> -6 1))  # set if transmit FIFO empty and transmitter idle
                          # i.e. finished shifting out last bit
-  (TX-GE1 . `(>> -5 1))  # set if transmit FIFO can accept at least one byte    
+  (TX-GE1 . `(>> -5 1))  # set if transmit FIFO can accept at least one byte
   (RX-OVE . `(>> -1 1))  # i.e one or more chars arrived whilst receive FIFO full
   (RX-GE1 . `(>>  0 1))) # set if receive FIFO holds at least 1 symbol
 
@@ -90,36 +91,37 @@
   (RX-IDL . `(>> -2  1))  # rx idle
   (TX-AVA . `(>> -1  1))  # tx fifo sp avail >= 1 sym
   (RX-AVA . `(>>  0  1))) # rx fifo sp avail >= 1 sym
-                   
+
 
 (def 'LF (char "^J"))
-(def 'CR (char "^M"))                   
-                   
-# tx fifo accept >= 1 byte                   
+(def 'CR (char "^M"))
+
+# tx fifo accept >= 1 byte
 (de poll-tx-emp () (until (bit? (get LSR-BIT 'TX-GE1) (byte LSR))))
-  
+
 # rx fifo has >= 1 sym
 (de poll-rx-ge1 () (until (bit? (get LSR-BIT 'RX-GE1) (byte LSR))))
 
 (de rd ()  (poll-rx-ge1) (byte IO))
 
 (de wr (B) (poll-tx-emp) (byte IO B))
+(de wr-ch () (wr *Ch))
 
 (de pr (S) (for C (chop S) (wr (char C))))
-    
+
 (de prl (S) (pr S) (wr LF))
-  
+
 # Debug
 
 (de echo () (loop (uart~wr (uart~rd))))
-          
+
 (de pr-stat ()
   # TODO: show num for first two masks
   (pr-bit STAT STAT-BIT))
 
 (de pr-lsr () (pr-bit LSR LSR-BIT))
 
-(de pr-bit (R M)   
+(de pr-bit (R M)
   (let L (let V (byte R)
             (make
               (for X M
