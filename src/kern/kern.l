@@ -45,14 +45,17 @@
   # pass num?
   (case *IntID
     (27
-      (prl-kern (pack *IntID " Restart timer..."))
-      (timer~start))))
+      (prl-kern (pack *IntID " Start timer..."))
+      (timer~start 3))
+    (T
+      (prl-kern (format *IntID)))))
 
 (de main ()
 
   # Switch input
   # TODO: mov to nsp - load very first
-  (setq *Putc '(uart~wr-ch))
+  #(setq *Putc '(uart~wr-ch))
+  (setq *Putc uart~wr-ch)
 
   # Switch input to UART1 (mini UART)
   # On exit, set NIL to switch back to kern input

@@ -28,7 +28,7 @@
       (gic~ic-pend> (: gic~dist) IrqID T)
       (gic~is-enab> (: gic~dist) IrqID T))))
 
-(de start ()
+(de start (N)
 
   (daif2)
 
@@ -38,7 +38,8 @@
   (cntv-ctl 0)
   (isb)
 
-  (cntv-cval (+ (cntvct) (* 2 (cnt-frq))))
+  (println 'timer-start N)
+  (cntv-cval (+ (cntvct) (* N (cnt-frq))))
   (isb)
 
   (cntv-ctl 1)
@@ -47,7 +48,10 @@
   (with pico~*gic
     (let IrqID (get gic~*IntrID 'gic~CORE-N-V-TIMER)
       (gic~ic-pend> (: gic~dist) IrqID T)
-      (gic~is-enab> (: gic~dist) IrqID T)))
+      (gic~is-enab> (: gic~dist) IrqID T)
+      #(prl-kern (format (gic~ic-pend> (: gic~dist) 27)))
+      #(prl-kern (format (gic~is-enab> (: gic~dist) 27)))
+      ))
 
   (daif2 T)
 
@@ -71,8 +75,11 @@
 
   (with pico~*gic
     (let IrqID (get gic~*IntrID 'gic~CORE-N-V-TIMER)
-      (gic~ic-pend> (: gic~dist) IrqID T)
-      (gic~ic-enab> (: gic~dist) IrqID T)))
+      (gic~ic-pend> (: gic~dist) 27 T)
+      (gic~ic-enab> (: gic~dist) 27 T)
+      #(prl-kern (format (gic~ic-pend> (: gic~dist) 27)))
+      #(prl-kern (format (gic~ic-enab> (: gic~dist) 27)))
+      ))
 
   (daif2 T)
 

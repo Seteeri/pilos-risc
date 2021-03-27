@@ -3,35 +3,38 @@ Pre-Release
 
 https://github.com/ARM-software/arm-trusted-firmware/blob/master/bl32/tsp/tsp_timer.c
 
+SAT AM
 * use builtin ptrs for periphs
-
 * rewrite drivers to use classes instead of namespace
-
-* load
-  * rewrite 'load to do 'str/any from ptr
-    * can this be done without mkstr?
-      * use repl, modify getParse to simply read from ptr
-    * loadKern makes str sym from ptr
-    * like 'any or 'str
-  * refactor kern to use this
-
 * move kern.l to end of bin
   * read from &end
     * main: mkStr &end
   * embed plio instead of string...later?
     * would need to translate lisp source code to bin data
+* refactor loadKern -> parsePtr
+  * do without mkstr?
+    * use repl, modify getParse to simply read from ptr
+  * rewrite 'load to do 'str/any from ptr
+    * loadKern makes str sym from ptr
+    * like 'any or 'str
+  * sym for ptr to end
+  * sym for load fn
 
+SAT PM
 * uart
   * test interrupts
     * mini
     * full
-
-* mmu -> pil21
-
 * optimization needs volatile
   * create 'setv for volatile wr
   * add option for ptr*
+* usec
+  * in main (firmware time)
+  * pre kern (pil21 time)
+  * post kern (kern time)
 
+???
+* mmu -> pil21
 * fix div -> compile clangrt
 
 LATER
@@ -63,6 +66,7 @@ LATER
   * possible to make mmu dynamic
     * https://www.raspberrypi.org/forums/viewtopic.php?t=268543
     * any ptrs need to be updated
+    * as long as pages containing kernel do not change
 
 General
 =======
@@ -74,10 +78,6 @@ General
   * heapAlloc must check stack/heap bounds
   * poss create segment for coroutines
 
-* finish (cnt ...) api
-  * in kern
-* err return
-  * talk to alex why not about CL system
 * gc
   * on free inter heap, push to list
   * what about arbitrarily sized allocs?
@@ -88,9 +88,6 @@ General
   * one cval
   * on cond, check next timer
   * this means timers need to be kept sorted -> binary tree
-
-* rewrite I/O fns:
-  accept acquire any beep char close connect ctl dir echo eof eol err ext fd file flush format from hear here host in info ipid key line listen load mail msg once open opid out path peek pipe poll port pp pr prEval pretty prin prinl print println printsp rc rd read release rewind scl script show skip space str sym sync tab tell till tmp tty udp view wait wr
 
 * limit pointer use to system registers and peripheral access (MMIO)
 

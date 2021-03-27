@@ -39,7 +39,7 @@ _start:
 
     // set stack before our code
     ldr     x1, =_start
-    
+
     // set up EL1
     mrs     x0, CurrentEL
     and     x0, x0, #12 // clear reserved bits
@@ -93,16 +93,16 @@ _start:
 
     ldr	    x1, =vectors
     msr	    vbar_el1, x1
-    isb        
-    
+    isb
+
 4:  bl      uart_init
     bl      mmu_map_stage2
-    bl      uart_hello
+    //bl      uart_hello
     bl      main
     b       1b
-    
+
 /////////////////
-    
+
 .global __udivti3
 .p2align	4
 __udivti3:
@@ -123,7 +123,7 @@ __udivti3:
         sub     x1, x10, x12
         b.ne    .arst
         mov     x0, x8
-        ret     
+        ret
 
 
 .global setjmp
@@ -144,7 +144,7 @@ setjmp:
 	//stp d14, d15, [x0,#160]
 	mov x0, #0
 	ret
-	
+
 .global longjmp
 .p2align	4
 longjmp:
