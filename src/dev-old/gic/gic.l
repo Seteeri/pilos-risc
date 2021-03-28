@@ -7,25 +7,6 @@
 (def 'ON-CTL  (>> 0 1))
 (def 'OFF-CTL (>> 0 0))
 
-# abstract out and pass name
-(de gicd-enab (Irq F)
-  (ptr32
-    (+ (get *Gic (if F "DIST-ISENABLER" "DIST-ICENABLER"))
-       (* (/ Irq 32) 4))
-    (>> (- (% Irq 32)) 1)))
-
-(de gicd-pend (Irq F)
-  (ptr32
-    (+ (get *Gic (if F "DIST-ISPENDR" "DIST-ICPENDR"))
-       (* (/ Irq 32) 4))
-    (>> (- (% Irq 32)) 1)))
-
-(de gicd-act (Irq F)
-  (ptr32
-    (+ (get *Gic (if F "DIST-ISACTIVER" "DIST-ICACTIVER"))
-       (* (/ Irq 32) 4))
-    (>> (- (% Irq 32)) 1)))
-
 (class +Gic)
 (dm T ()
   (=: p (hex "FF840000"))

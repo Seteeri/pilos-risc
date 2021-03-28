@@ -3,9 +3,10 @@ Pre-Release
 
 https://github.com/ARM-software/arm-trusted-firmware/blob/master/bl32/tsp/tsp_timer.c
 
-SAT AM
-* use builtin ptrs for periphs
-* rewrite drivers to use classes instead of namespace
+SUN AM
+* refactor dev
+  * use builtin ptrs for periphs
+  * rewrite to use plain fns
 * move kern.l to end of bin
   * read from &end
     * main: mkStr &end
@@ -20,7 +21,7 @@ SAT AM
   * sym for ptr to end
   * sym for load fn
 
-SAT PM
+SUN PM
 * uart
   * test interrupts
     * mini
@@ -36,6 +37,7 @@ SAT PM
 ???
 * mmu -> pil21
 * fix div -> compile clangrt
+  * build on pi for now, shouldnt change much
 
 LATER
 
@@ -67,6 +69,10 @@ LATER
     * https://www.raspberrypi.org/forums/viewtopic.php?t=268543
     * any ptrs need to be updated
     * as long as pages containing kernel do not change
+
+* handle synchronous exceptions
+  * aka data aborts, invalid ptr etc
+  * https://developer.arm.com/documentation/100933/0100/Synchronous-and-asynchronous-exceptions
 
 General
 =======

@@ -37,7 +37,7 @@
   (prl-kern (text "PilOS @1 AArch64 ARMv8-A A64" (glue "." (version T))))
   (prl-kern (text "Heap Size: @1 MB" (heap)))
   (prl-kern (text "Heap Free: @1 MB" (heap T)))
-  (prl-kern (text "Stack Size: @1 KB" (stack 256)))
+  (prl-kern (text "Co Stack Size: @1 KB" (stack 64)))
   (prl-kern (text "*Kern Load Time: @1" (usec))))
 
 
@@ -76,7 +76,7 @@
   # drivers
 
   (def '*gic
-    (new '(gic~+Gic) (hex "FF840000")))
+    (new '(gic~+Gic))) # (hex "FF840000")
 
   (timer~init)
 
