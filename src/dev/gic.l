@@ -138,7 +138,7 @@
 
 (de dist-init ()
 
-  (ptr32 (cdr (assoc "DIST-CTLR" *Gic)) 0)
+  (ptr32 (cdr (assoc "DIST-CTLR" *Gic)) OFF-CTL)
 
   # TODO: store on init
   (let Max-IID (max-iid)
@@ -169,11 +169,11 @@
         (when (=0 (% N 16))
           (ptr32 Cf LVL-CFG)))))
 
-  (ptr32 (cdr (assoc "DIST-CTLR" *Gic)) 1))
+  (ptr32 (cdr (assoc "DIST-CTLR" *Gic)) ON-CTL))
 
 
 (de cpui-init ()
-  (ptr32 (cdr (assoc  "CPUI-CTLR" *Gic)) 0)
+  (ptr32 (cdr (assoc  "CPUI-CTLR" *Gic)) OFF-CTL)
 
   # Set the priority level as the lowest priority
   # Note: Higher priority corresponds to a lower Priority field value in the GIC_PMR.
@@ -186,7 +186,7 @@
 
   # Clear all pending interrupts
 
-  (ptr32 (cdr (assoc "CPUI-CTLR" *Gic)) 1))
+  (ptr32 (cdr (assoc "CPUI-CTLR" *Gic)) ON-CTL))
 
 
 (symbols '(pico))

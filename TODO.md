@@ -12,6 +12,8 @@ SUN AM
     * main: mkStr &end
   * embed plio instead of string...later?
     * would need to translate lisp source code to bin data
+* rewrite uart
+
 * refactor loadKern -> parsePtr
   * do without mkstr?
     * use repl, modify getParse to simply read from ptr
