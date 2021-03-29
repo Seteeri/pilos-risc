@@ -118,10 +118,10 @@
   (prinl)
   (for Y 9
     (for X 16
-      (prin (hex (byte (+ pico~*MBox (* 16 (dec Y)) (dec X)))) " "))
+      (prin (hex (byte (+ *MBox (* 16 (dec Y)) (dec X)))) " "))
       (prinl)))
 
-(de zero-buf () (for X (* 4 32) (ptr32 (+ pico~*MBox X) 0)))
+(de zero-buf () (for X (* 4 32) (ptr32 (+ *MBox X) 0)))
 
 (de madr ()
 
@@ -129,27 +129,27 @@
 
   (zero-buf)
 
-  (ui* (+ pico~*MBox (* 4 0)) (* 4 8))         # msg sz
-  (ui* (+ pico~*MBox (* 4 1)) 0)               # msg req/res code
-  (ui* (+ pico~*MBox (* 4 2)) MAC-ADDRESS)  # tag id
-  (ui* (+ pico~*MBox (* 4 3)) 8)               # val buf sz
-  (ui* (+ pico~*MBox (* 4 4)) 8)               # buf req/res code (see md)
-  (ui* (+ pico~*MBox (* 4 5)) 0)               # zero buf
-  (ui* (+ pico~*MBox (* 4 6)) 0)               # zero buf
-  (ui* (+ pico~*MBox (* 4 7)) TAG-END)
+  (ui* (+ *MBox (* 4 0)) (* 4 8))         # msg sz
+  (ui* (+ *MBox (* 4 1)) 0)               # msg req/res code
+  (ui* (+ *MBox (* 4 2)) MAC-ADDRESS)  # tag id
+  (ui* (+ *MBox (* 4 3)) 8)               # val buf sz
+  (ui* (+ *MBox (* 4 4)) 8)               # buf req/res code (see md)
+  (ui* (+ *MBox (* 4 5)) 0)               # zero buf
+  (ui* (+ *MBox (* 4 6)) 0)               # zero buf
+  (ui* (+ *MBox (* 4 7)) TAG-END)
 
-  (let R (| pico~*MBox CH-PRO-AV)
+  (let R (| *MBox CH-PRO-AV)
     (ptr32 WRITE1 R)
     (wait-rd R))
 
   # BE
   (list
-    (hex (byte (+ pico~*MBox (* 4 5) 0)))
-    (hex (byte (+ pico~*MBox (* 4 5) 1)))
-    (hex (byte (+ pico~*MBox (* 4 5) 2)))
-    (hex (byte (+ pico~*MBox (* 4 5) 3)))
-    (hex (byte (+ pico~*MBox (* 4 5) 4)))
-    (hex (byte (+ pico~*MBox (* 4 5) 5)))))
+    (hex (byte (+ *MBox (* 4 5) 0)))
+    (hex (byte (+ *MBox (* 4 5) 1)))
+    (hex (byte (+ *MBox (* 4 5) 2)))
+    (hex (byte (+ *MBox (* 4 5) 3)))
+    (hex (byte (+ *MBox (* 4 5) 4)))
+    (hex (byte (+ *MBox (* 4 5) 5)))))
 
 
 (de amem ()
@@ -158,22 +158,22 @@
 
   (zero-buf)
 
-  (ui* (+ pico~*MBox (* 4 0)) (* 4 8)) # This msg len
-  (ui* (+ pico~*MBox (* 4 1)) 0) # REQ/RES
-  (ui* (+ pico~*MBox (* 4 2)) ARM-MEMORY)
-  (ui* (+ pico~*MBox (* 4 3)) 8) # req sz
-  (ui* (+ pico~*MBox (* 4 4)) 8) # res sz
-  (ui* (+ pico~*MBox (* 4 5)) 0)
-  (ui* (+ pico~*MBox (* 4 6)) 0)
-  (ui* (+ pico~*MBox (* 4 7)) TAG-END)
+  (ui* (+ *MBox (* 4 0)) (* 4 8)) # This msg len
+  (ui* (+ *MBox (* 4 1)) 0) # REQ/RES
+  (ui* (+ *MBox (* 4 2)) ARM-MEMORY)
+  (ui* (+ *MBox (* 4 3)) 8) # req sz
+  (ui* (+ *MBox (* 4 4)) 8) # res sz
+  (ui* (+ *MBox (* 4 5)) 0)
+  (ui* (+ *MBox (* 4 6)) 0)
+  (ui* (+ *MBox (* 4 7)) TAG-END)
 
-  (let R (| pico~*MBox CH-PRO-AV)
+  (let R (| *MBox CH-PRO-AV)
     (ptr32 WRITE1 R)
     (wait-rd R))
 
   (list
-    (hex (ptr32 (+ pico~*MBox (* 4 6))))
-    (hex (ptr32 (+ pico~*MBox (* 4 5))))))
+    (hex (ptr32 (+ *MBox (* 4 6))))
+    (hex (ptr32 (+ *MBox (* 4 5))))))
 
 
 (de vmem ()
@@ -182,22 +182,22 @@
 
   (zero-buf)
 
-  (ui* (+ pico~*MBox (* 4 0)) (* 4 8)) # This msg len
-  (ui* (+ pico~*MBox (* 4 1)) 0) # REQ/RES
-  (ui* (+ pico~*MBox (* 4 2)) VC-MEMORY)
-  (ui* (+ pico~*MBox (* 4 3)) 8) # req sz
-  (ui* (+ pico~*MBox (* 4 4)) 8) # res sz
-  (ui* (+ pico~*MBox (* 4 5)) 0)
-  (ui* (+ pico~*MBox (* 4 6)) 0)
-  (ui* (+ pico~*MBox (* 4 7)) TAG-END)
+  (ui* (+ *MBox (* 4 0)) (* 4 8)) # This msg len
+  (ui* (+ *MBox (* 4 1)) 0) # REQ/RES
+  (ui* (+ *MBox (* 4 2)) VC-MEMORY)
+  (ui* (+ *MBox (* 4 3)) 8) # req sz
+  (ui* (+ *MBox (* 4 4)) 8) # res sz
+  (ui* (+ *MBox (* 4 5)) 0)
+  (ui* (+ *MBox (* 4 6)) 0)
+  (ui* (+ *MBox (* 4 7)) TAG-END)
 
-  (let R (| pico~*MBox CH-PRO-AV)
+  (let R (| *MBox CH-PRO-AV)
     (ptr32 WRITE1 R)
     (wait-rd R))
 
   (list
-    (hex (ptr32 (+ pico~*MBox (* 4 6))))
-    (hex (ptr32 (+ pico~*MBox (* 4 5))))))
+    (hex (ptr32 (+ *MBox (* 4 6))))
+    (hex (ptr32 (+ *MBox (* 4 5))))))
 
 (de brev ()
 
@@ -205,20 +205,20 @@
 
   (zero-buf)
 
-  (ui* (+ pico~*MBox (* 4 0)) (* 4 7))            # msg len
-  (ui* (+ pico~*MBox (* 4 1)) 0)                  # REQ
-  (ui* (+ pico~*MBox (* 4 2)) BOARD-REVISION)  # tag ID
-  (ui* (+ pico~*MBox (* 4 3)) 4)                  # val buf sz (for response)
-  (ui* (+ pico~*MBox (* 4 4)) 4)                  # request/response code
-  (ui* (+ pico~*MBox (* 4 5)) 0)
-  (ui* (+ pico~*MBox (* 4 6)) TAG-END)
+  (ui* (+ *MBox (* 4 0)) (* 4 7))            # msg len
+  (ui* (+ *MBox (* 4 1)) 0)                  # REQ
+  (ui* (+ *MBox (* 4 2)) BOARD-REVISION)  # tag ID
+  (ui* (+ *MBox (* 4 3)) 4)                  # val buf sz (for response)
+  (ui* (+ *MBox (* 4 4)) 4)                  # request/response code
+  (ui* (+ *MBox (* 4 5)) 0)
+  (ui* (+ *MBox (* 4 6)) TAG-END)
 
-  (let R (| pico~*MBox CH-PRO-AV)
+  (let R (| *MBox CH-PRO-AV)
     (ptr32 WRITE1 R)
     (wait-rd R))
 
   (list
-    (hex (ptr32 (+ pico~*MBox (* 4 5))))))
+    (hex (ptr32 (+ *MBox (* 4 5))))))
 
 
 (de bmod ()
@@ -227,20 +227,20 @@
 
   (zero-buf)
 
-  (ui* (+ pico~*MBox (* 4 0)) (* 4 7))            # msg len
-  (ui* (+ pico~*MBox (* 4 1)) 0)                  # REQ
-  (ui* (+ pico~*MBox (* 4 2)) BOARD-MODEL)  # tag ID
-  (ui* (+ pico~*MBox (* 4 3)) 4)                  # val buf sz (for response)
-  (ui* (+ pico~*MBox (* 4 4)) 4)                  # request/response code
-  (ui* (+ pico~*MBox (* 4 5)) 0)
-  (ui* (+ pico~*MBox (* 4 6)) TAG-END)
+  (ui* (+ *MBox (* 4 0)) (* 4 7))            # msg len
+  (ui* (+ *MBox (* 4 1)) 0)                  # REQ
+  (ui* (+ *MBox (* 4 2)) BOARD-MODEL)  # tag ID
+  (ui* (+ *MBox (* 4 3)) 4)                  # val buf sz (for response)
+  (ui* (+ *MBox (* 4 4)) 4)                  # request/response code
+  (ui* (+ *MBox (* 4 5)) 0)
+  (ui* (+ *MBox (* 4 6)) TAG-END)
 
-  (let R (| pico~*MBox CH-PRO-AV)
+  (let R (| *MBox CH-PRO-AV)
     (ptr32 WRITE1 R)
     (wait-rd R))
 
   (list
-    (hex (ptr32 (+ pico~*MBox (* 4 5))))))
+    (hex (ptr32 (+ *MBox (* 4 5))))))
 
 
 (de frev ()
@@ -249,20 +249,20 @@
 
   (zero-buf)
 
-  (ui* (+ pico~*MBox (* 4 0)) (* 4 7))            # msg len
-  (ui* (+ pico~*MBox (* 4 1)) 0)                  # REQ
-  (ui* (+ pico~*MBox (* 4 2)) FIRMWARE-REVISION)  # tag ID
-  (ui* (+ pico~*MBox (* 4 3)) 4)                  # val buf sz (for response)
-  (ui* (+ pico~*MBox (* 4 4)) 4)                  # request/response code
-  (ui* (+ pico~*MBox (* 4 5)) 0)
-  (ui* (+ pico~*MBox (* 4 6)) TAG-END)
+  (ui* (+ *MBox (* 4 0)) (* 4 7))            # msg len
+  (ui* (+ *MBox (* 4 1)) 0)                  # REQ
+  (ui* (+ *MBox (* 4 2)) FIRMWARE-REVISION)  # tag ID
+  (ui* (+ *MBox (* 4 3)) 4)                  # val buf sz (for response)
+  (ui* (+ *MBox (* 4 4)) 4)                  # request/response code
+  (ui* (+ *MBox (* 4 5)) 0)
+  (ui* (+ *MBox (* 4 6)) TAG-END)
 
-  (let R (| pico~*MBox CH-PRO-AV)
+  (let R (| *MBox CH-PRO-AV)
     (ptr32 WRITE1 R)
     (wait-rd R))
 
   (list
-    (hex (ptr32 (+ pico~*MBox (* 4 5))))))
+    (hex (ptr32 (+ *MBox (* 4 5))))))
 
 
 (de bser ()
@@ -271,22 +271,22 @@
 
   (zero-buf)
 
-  (ui* (+ pico~*MBox (* 4 0)) (* 4 8)) # This msg len
-  (ui* (+ pico~*MBox (* 4 1)) 0) # REQ/RES
-  (ui* (+ pico~*MBox (* 4 2)) BOARD-SERIAL)
-  (ui* (+ pico~*MBox (* 4 3)) 8) # req sz
-  (ui* (+ pico~*MBox (* 4 4)) 8) # res sz
-  (ui* (+ pico~*MBox (* 4 5)) 0)
-  (ui* (+ pico~*MBox (* 4 6)) 0)
-  (ui* (+ pico~*MBox (* 4 7)) TAG-END)
+  (ui* (+ *MBox (* 4 0)) (* 4 8)) # This msg len
+  (ui* (+ *MBox (* 4 1)) 0) # REQ/RES
+  (ui* (+ *MBox (* 4 2)) BOARD-SERIAL)
+  (ui* (+ *MBox (* 4 3)) 8) # req sz
+  (ui* (+ *MBox (* 4 4)) 8) # res sz
+  (ui* (+ *MBox (* 4 5)) 0)
+  (ui* (+ *MBox (* 4 6)) 0)
+  (ui* (+ *MBox (* 4 7)) TAG-END)
 
-  (let R (| pico~*MBox CH-PRO-AV)
+  (let R (| *MBox CH-PRO-AV)
     (ptr32 WRITE1 R)
     (wait-rd R))
 
   (list
-    (hex (ptr32 (+ pico~*MBox (* 4 6))))
-    (hex (ptr32 (+ pico~*MBox (* 4 5))))))
+    (hex (ptr32 (+ *MBox (* 4 6))))
+    (hex (ptr32 (+ *MBox (* 4 5))))))
 
 (de wait-wr-1 () (while (bit? FULL  (>> -4 (ptr32 STATUS0))) (prinl (ptr32 STATUS0))))
 
@@ -316,6 +316,6 @@
   (loop
     (while (bit? EMPTY (ptr32 STATUS0)))
     (T (= R (ptr32 READ0)))
-      (= RESP (ui* (+ pico~*MBox (* 4 1))))))
+      (= RESP (ui* (+ *MBox (* 4 1))))))
 
 (symbols '(pico))
