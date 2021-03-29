@@ -4,7 +4,7 @@ Pre-Release
 https://github.com/ARM-software/arm-trusted-firmware/blob/master/bl32/tsp/tsp_timer.c
 
 SUN AM
-* refactor dev
+* refactor dev [DONE]
   * use builtin ptrs for periphs
   * rewrite to use plain fns
 * move kern.l to end of bin

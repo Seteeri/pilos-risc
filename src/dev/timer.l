@@ -18,15 +18,13 @@
 
   NIL)
 
-
 (de init ()
-  (with pico~*gic
-    (let IrqID (get gic~*IntrID 'gic~CORE-N-V-TIMER)
-      (gic~i-cfg>   (: gic~dist) IrqID gic~EDGE)
-      (gic~i-prio>  (: gic~dist) IrqID (>> -4 0))
-      (gic~i-tgts>  (: gic~dist) IrqID (hex "1")) # proc 0
-      (gic~ic-pend> (: gic~dist) IrqID T)
-      (gic~is-enab> (: gic~dist) IrqID T))))
+  (let IrqID (cdr (assoc "IRQ-CORE-N-V-TIMER" *Irq))
+    (gic~gicd-cfg  IrqID gic~EDGE) # 2
+    (gic~gicd-pri  IrqID (>> -4 0))
+    (gic~gicd-tgt  IrqID (hex "1")) # proc 0
+    (gic~gicd-pend IrqID) # clr pend
+    (gic~gicd-enab IrqID T)))
 
 (de start (N)
 
@@ -45,13 +43,9 @@
   (cntv-ctl 1)
   (isb)
 
-  (with pico~*gic
-    (let IrqID (get gic~*IntrID 'gic~CORE-N-V-TIMER)
-      (gic~ic-pend> (: gic~dist) IrqID T)
-      (gic~is-enab> (: gic~dist) IrqID T)
-      #(prl-kern (format (gic~ic-pend> (: gic~dist) 27)))
-      #(prl-kern (format (gic~is-enab> (: gic~dist) 27)))
-      ))
+  (let IrqID (cdr (assoc "IRQ-CORE-N-V-TIMER" *Irq))
+    (gic~gicd-pend IrqID)
+    (gic~gicd-enab IrqID T))
 
   (daif2 T)
 
@@ -77,8 +71,6 @@
     (let IrqID (get gic~*IntrID 'gic~CORE-N-V-TIMER)
       (gic~ic-pend> (: gic~dist) 27 T)
       (gic~ic-enab> (: gic~dist) 27 T)
-      #(prl-kern (format (gic~ic-pend> (: gic~dist) 27)))
-      #(prl-kern (format (gic~ic-enab> (: gic~dist) 27)))
       ))
 
   (daif2 T)
@@ -86,6 +78,11 @@
   (pr)
 
   NIL)
+
+
+(de intr ()
+  (prl-kern (pack *IntID " Start timer @ 1 sec"))
+  (start 1))
 
 
 (symbols '(pico))

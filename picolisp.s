@@ -58040,34 +58040,6 @@ $StkLimit:
 	.xword	0
 	.size	$StkLimit, 8
 
-	.type	$Stdin,@object                  // @"$Stdin"
-	.globl	$Stdin
-	.p2align	3
-$Stdin:
-	.xword	0
-	.size	$Stdin, 8
-
-	.type	$Stdout,@object                 // @"$Stdout"
-	.globl	$Stdout
-	.p2align	3
-$Stdout:
-	.xword	0
-	.size	$Stdout, 8
-
-	.type	$ReplPrmt,@object               // @"$ReplPrmt"
-	.globl	$ReplPrmt
-	.p2align	3
-$ReplPrmt:
-	.xword	0
-	.size	$ReplPrmt, 8
-
-	.type	$ContPrmt,@object               // @"$ContPrmt"
-	.globl	$ContPrmt
-	.p2align	3
-$ContPrmt:
-	.xword	0
-	.size	$ContPrmt, 8
-
 	.type	$Ret,@object                    // @"$Ret"
 	.globl	$Ret
 	.p2align	3
@@ -58144,27 +58116,6 @@ $Ptr:
 $End:
 	.xword	0
 	.size	$End, 8
-
-	.type	$BufX,@object                   // @"$BufX"
-	.globl	$BufX
-	.p2align	3
-$BufX:
-	.xword	0
-	.size	$BufX, 8
-
-	.type	$PtrX,@object                   // @"$PtrX"
-	.globl	$PtrX
-	.p2align	3
-$PtrX:
-	.xword	0
-	.size	$PtrX, 8
-
-	.type	$EndX,@object                   // @"$EndX"
-	.globl	$EndX
-	.p2align	3
-$EndX:
-	.xword	0
-	.size	$EndX, 8
 
 	.type	$ExtN,@object                   // @"$ExtN"
 	.globl	$ExtN
@@ -59473,31 +59424,6 @@ $TBuf:
 	.ascii	"\005T"
 	.size	$TBuf, 2
 
-	.type	$Repl,@object                   // @"$Repl"
-	.bss
-	.globl	$Repl
-$Repl:
-	.byte	0                               // 0x0
-	.size	$Repl, 1
-
-	.type	$PRepl,@object                  // @"$PRepl"
-	.globl	$PRepl
-$PRepl:
-	.byte	0                               // 0x0
-	.size	$PRepl, 1
-
-	.type	$Jam,@object                    // @"$Jam"
-	.globl	$Jam
-$Jam:
-	.byte	0                               // 0x0
-	.size	$Jam, 1
-
-	.type	$InBye,@object                  // @"$InBye"
-	.globl	$InBye
-$InBye:
-	.byte	0                               // 0x0
-	.size	$InBye, 1
-
 	.type	$Empty,@object                  // @"$Empty"
 	.section	.rodata,"a",@progbits
 	.globl	$Empty
@@ -59753,8 +59679,8 @@ _end:
 	.type	.L$85,@object                   // @"$85"
 	.p2align	2
 .L$85:
-	.asciz	"DIST-ITARGETS"
-	.size	.L$85, 14
+	.asciz	"DIST-ITARGETSR"
+	.size	.L$85, 15
 
 	.type	.L$86,@object                   // @"$86"
 	.p2align	2

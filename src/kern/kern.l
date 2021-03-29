@@ -42,13 +42,12 @@
 
 
 (de intr ()
-  # pass num?
   (case *IntID
     (27
-      (prl-kern (pack *IntID " Start timer..."))
-      (timer~start 3))
+      (timer~intr))
     (T
       (prl-kern (format *IntID)))))
+
 
 (de main ()
 
@@ -75,9 +74,7 @@
   ##############
   # drivers
 
-  (def '*gic
-    (new '(gic~+Gic))) # (hex "FF840000")
-
+  (gic~gic-init)
   (timer~init)
 
   (prl-kern)
