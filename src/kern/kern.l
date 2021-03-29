@@ -43,17 +43,14 @@
 
 (de intr ()
   (case *IntID
-    (27
-      (timer~intr))
-    (T
-      (prl-kern (format *IntID)))))
+    (27 (timer~intr))
+    (T  (prl-kern (format *IntID)))))
 
 
 (de main ()
 
   # Switch input
   # TODO: mov to nsp - load very first
-  #(setq *Putc '(uart~wr-ch))
   (setq *Putc uart~wr-ch)
 
   # Switch input to UART1 (mini UART)
@@ -74,7 +71,7 @@
   ##############
   # drivers
 
-  (gic~gic-init)
+  (gic~init)
   (timer~init)
 
   (prl-kern)

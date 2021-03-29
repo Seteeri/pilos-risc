@@ -1,18 +1,32 @@
 (symbols '(gic pico))
 
 (local)
-(ON-CTL OFF-CTL
- gicd-enab gicd-pend gicd-act
- gicd-cfg  gicd-pri  gicd-tgt
- gic-init gicd-init gicc-init
- +Gic)
+(on-ctl off-ctl lvl-cfg edge-cfg
+ dist-id-bits dist-type-bits
+ lst-bits pr-bits dist-type dist-iid pr-reg pr-type pr-iid
+ max-iid state enab pend act cfg pri tgt
+ init dist-init cpui-init)
 
 (def 'ON-CTL  (>> 0 1))
 (def 'OFF-CTL (>> 0 0))
 
 # 8.9.7 GICD_ICFGR<n>, Interrupt Configuration Registers
-(def 'LVL   (hex "0")) # level-sensitive
-(def 'EDGE  (hex "2")) # edge-triggered
+(def 'LVL-CFG   (hex "0")) # level-sensitive
+(def 'EDGE-CFG  (hex "2")) # edge-triggered
+
+(def 'DIST-IID-BITS
+  (list
+    (cons 'PRODUCTID   '(31 24))
+    (cons 'VARIANT     '(19 16))
+    (cons 'REVISION    '(15 12))
+    (cons 'IMPLEMENTER '(11 0))))
+
+(def 'DIST-TYPE-BITS
+  (list
+    (cons 'LSPI            '(15 11))
+    (cons 'SECURITY-EXTN   '(10 10))
+    (cons 'CPU-NUMBER      '(7  5))
+    (cons 'IT-LINES-NUMBER '(4  0))))
 
 #{
 
@@ -29,34 +43,76 @@
 
 }#
 
-# abstract out and pass name
+(de lst-bits (P L N)
+  # Make assoc list of name : masked
+  (let O (make
+          (let R (ptr32 P)
+            (for Nm-Msk L
+              (let (Nm  (car Nm-Msk)
+                    Msk (cdr Nm-Msk))
+                (link (cons Nm (ubfx R (car Msk) (cadr Msk))))))))
+    # Return single prop if N
+    (if N
+        (get O N)
+        O)))
 
-(de gicd-enab (Irq F)
+(de pr-bits (Msk Fns)
+  (mapc
+    '((A Pr)
+      (let (Nm  (car A)
+            Va  (cdr A))
+        (prl-kern (pack "gic  " Nm "=" Va))))
+    Msk
+    Fns))
+
+(de dist-type (Nm)
+  (lst-bits
+    (cdr (assoc "DIST-TYPER" *Gic))
+    DIST-TYPE-BITS
+    Nm))
+
+(de dist-iid (Nm)
+  (lst-bits
+    (cdr (assoc "DIST-IIDR" *Gic))
+    DIST-IID-BITS
+    Nm))
+
+(de pr-reg (Nm Lst)
+  (let P (cdr (assoc Nm *Gic))
+    (prl-kern
+      (pack
+        (pack "gic " Nm "=")
+        (ptr32 P) "="
+        (bin (ptr32 P)))))
+  (pr-bits Lst This))
+
+(de pr-type () (pr-reg "DIST-TYPER" (dist-type)))
+(de pr-iid  () (pr-reg "DIST-IIDR" (dist-iid)))
+
+
+#### state
+
+(de max-iid ()
+  (* (+ (dist-type 'IT-LINES-NUMBER) 1) 32))
+
+(de state (Irq Reg)
   (ptr32
-    (+ (cdr (assoc (if F "DIST-ISENABLER" "DIST-ICENABLER") *Gic))
+    (+ (cdr (assoc Reg *Gic))
        (* (/ Irq 32) 4))
     (>> (- (% Irq 32)) 1)))
 
-(de gicd-pend (Irq F)
-  (ptr32
-    (+ (cdr (assoc (if F "DIST-ISPENDR" "DIST-ICPENDR") *Gic))
-       (* (/ Irq 32) 4))
-    (>> (- (% Irq 32)) 1)))
+(de enab (Irq F) (state Irq (if F "DIST-ISENABLER" "DIST-ICENABLER")))
+(de pend (Irq F) (state Irq (if F "DIST-ISPENDR" "DIST-ICPENDR")))
+(de act  (Irq F) (state Irq (if F "DIST-ISACTIVER" "DIST-ICACTIVER")))
 
-(de gicd-act (Irq F)
-  (ptr32
-    (+ (cdr (assoc (if F "DIST-ISACTIVER" "DIST-ICACTIVER") *Gic))
-       (* (/ Irq 32) 4))
-    (>> (- (% Irq 32)) 1)))
-
-(de gicd-cfg (Irq X)
+(de cfg (Irq X)
   (let (Shft (* (% Irq 16) 2)
         P    (+ (cdr (assoc "DIST-ICFGR" *Gic)) (* (/ Irq 16) 4))
         Reg  (& (ui* P) (bw-not (>> (- Shft) (hex "03"))))
         Reg  (| Reg (>> (- Shft) X)))
     (ptr32 P Reg)))
 
-(de gicd-pri (Irq X)
+(de pri (Irq X)
   (let (Shft (* (% Irq 4) 8)
         P    (+ (cdr (assoc "DIST-IPRIORITYR" *Gic)) (* (/ Irq 4) 4))
         Reg  (& (ui* P) (bw-not (>> (- Shft) (hex "FF"))))
@@ -64,57 +120,59 @@
     (setq Reg (hex "00FFFFFF"))
     (ptr32 P Reg)))
 
-(de gicd-tgt (Irq X)
+(de tgt (Irq X)
   (let (Shft (* (% Irq 4) 8)
         P    (+ (cdr (assoc "DIST-ITARGETSR" *Gic)) (* (/ Irq 4) 4))
         Reg  (& (ui* P) (bw-not (>> (- Shft) (hex "FF"))))
         Reg  (| Reg (>> (- Shft) X)))
     (ptr32 P Reg)))
 
-# init
+#### init
 
-(de gic-init ()
-  (gicd-init)
-  (gicc-init))
+(de init ()
+  (pr-type)
+  (pr-iid)
+  (dist-init)
+  (cpui-init))
 
 
-(de gicd-init ()
+(de dist-init ()
 
   (ptr32 (cdr (assoc "DIST-CTLR" *Gic)) 0)
 
   # TODO: store on init
-  (let Max-Intr-ID 224
+  (let Max-IID (max-iid)
 
     # Disable/clear pend
-    (for (N 0 (< N Max-Intr-ID) (inc N))
-      (gicd-enab N)
-      (gicd-pend N))
+    (for (N 0 (< N Max-IID) (inc N))
+      (enab N)
+      (pend N))
 
     # Set lowest priority
-    (for (N 0 (< N Max-Intr-ID) (inc N))
+    (for (N 0 (< N Max-IID) (inc N))
       (let (O (* 4 (/ N 4))
             Pr (+ (cdr (assoc "DIST-IPRIORITYR" *Gic)) O))
         (when (=0 (% N 4))
           (ptr32 Pr (hex "FFFFFFFF")))))
 
     # Set tgt of SPIs -> PE 0
-    (for (N 0 (< N Max-Intr-ID) (inc N))
+    (for (N 0 (< N Max-IID) (inc N))
       (let (O (* 4 (/ N 4))
             Ta (+ (cdr (assoc "DIST-ITARGETSR" *Gic)) O))
         (when (=0 (% N 4))
           (ptr32 Ta (hex "01010101")))))
 
     # Set trigger of SPIs -> level
-    (for (N 0 (< N Max-Intr-ID) (inc N))
+    (for (N 0 (< N Max-IID) (inc N))
       (let (O (* 4 (/ N 16))
             Cf (+ (cdr (assoc "DIST-ICFGR" *Gic)) O))
         (when (=0 (% N 16))
-          (ptr32 Cf LVL)))))
+          (ptr32 Cf LVL-CFG)))))
 
   (ptr32 (cdr (assoc "DIST-CTLR" *Gic)) 1))
 
 
-(de gicc-init ()
+(de cpui-init ()
   (ptr32 (cdr (assoc  "CPUI-CTLR" *Gic)) 0)
 
   # Set the priority level as the lowest priority
@@ -130,32 +188,5 @@
 
   (ptr32 (cdr (assoc "CPUI-CTLR" *Gic)) 1))
 
-
-###########################################################
-
-(class +Gic)
-(dm T ()
-  (=: p (hex "FF840000"))
-
-  (=: dist (new '(+Dist) (+ (: p) (hex "1000"))))
-  (=: cpu  (new '(+Cpu)  (+ (: p) (hex "2000")))))
-
-# Pass T/NIL to set/clear
-(dm enab> (Irq Fn) ((if Fn 'is-enab> 'ic-enab>) (: dist) Irq Fn))
-(dm pend> (Irq Fn) ((if Fn 'is-pend> 'ic-pend>) (: dist) Irq Fn))
-(dm act>  (Irq Fn) ((if Fn 'is-act>  'ic-act>)  (: dist) Irq Fn))
-
-(dm find-pend-irq> ()
-  (let Irq NIL
-    (for Id (max-intr-id> (: dist))
-      # check pend bit
-      (let (J (dec Id)
-            W (is-pend> (: dist) J)
-            B (>> (- (% J 32)) 1))
-        #(prl-kern (pack "(find-pend-irq) " J "@" (+ (get (: dist) 'is-pend) (* (/ J 32) 4)) " " B " " W ))
-        (when (n0 (& B W))
-          (prl-kern (pack "(find-pend-irq) " J " " B " " W " <<<<"))
-          (setq Irq J))))
-    Irq))
 
 (symbols '(pico))

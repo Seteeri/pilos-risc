@@ -1732,355 +1732,32 @@
 (symbols '(gic pico))
 
 (local)
-(+Cpu
- init-cpu
- ia>
- eoi>)
+(on-ctl off-ctl lvl-cfg edge-cfg
+ dist-id-bits dist-type-bits
+ lst-bits pr-bits dist-type dist-iid pr-reg pr-type pr-iid
+ max-iid state enab pend act cfg pri tgt
+ init dist-init cpui-init)
 
-
-(class +Cpu)
-(dm T (P)
-
-  (=: ctl    P)
-  (=: pm     (+ P (hex "0004")))
-  (=: bp     (+ P (hex "0008")))
-  (=: ia     (+ P (hex "000C")))
-
-  (=: eoi    (+ P (hex "0010")))
-  (=: rp     (+ P (hex "0014")))
-  (=: hppi   (+ P (hex "0018")))
-  (=: abp    (+ P (hex "001C")))
-
-  (=: aia    (+ P (hex "0020")))
-  (=: aeoi   (+ P (hex "0024")))
-  (=: ahppi  (+ P (hex "0028")))
-  (=: ap0    (+ P (hex "00D0")))
-
-  (=: ns-ap0 (+ P (hex "00E0")))
-  (=: iid    (+ P (hex "00FC")))
-  (=: di     (+ P (hex "1000")))
-
-  (init> This))
-
-
-(dm init> ()
-
-  (ptr32 (: ctl) OFF-CTL)
-
-  # Set the priority level as the lowest priority
-  # Note: Higher priority corresponds to a lower Priority field value in the GIC_PMR.
-  # In addition to this, writing 255 to the GICC_PMR always sets it to the
-  # largest supported priority field value.
-  (ptr32 (: pm) (hex "FF")) # "F0"
-
-  # Handle all of interrupts in a single group
-  (ptr32 (: bp) (hex "0"))
-
-  # Clear all of the active interrupts
-  (when NIL
-    (let Pen-IRQ c # =255
-      (while (not (= Pen-IRQ (hex "3FF")))
-        (ptr32 (: eoi)
-          (ptr32 (: ia)))
-        (setq Pen-IRQ (& (ptr32 (: ia)) (hex "3FF"))))))
-
-  (ptr32 (: ctl) ON-CTL))
-
-
-(dm ia> (X)
-  (if X
-      (ptr32 (: ia) X)
-      (ptr32 (: ia))))
-
-(dm eoi> (X)
-  (if X
-      (ptr32 (: eoi) X)
-      (ptr32 (: eoi))))
-
-
-(dm di> (X)
-  (if X
-      (ptr32 (: di) X)
-      (ptr32 (: di))))
-
-
-(symbols '(pico))
-(symbols '(gic pico))
-
-(local)
-(+Dist
- init-dist
- ctl> id>
- prl-dist-iid prl-dist-type
- get-it-lines-number
- dist-cfg      dist-i-prio dist-i-tgts
- dist-clr-pend dist-on-intr dist-off-intr)
-
+(def 'ON-CTL  (>> 0 1))
+(def 'OFF-CTL (>> 0 0))
 
 # 8.9.7 GICD_ICFGR<n>, Interrupt Configuration Registers
-(def 'LVL   (hex "0")) # level-sensitive
-(def 'EDGE  (hex "2")) # edge-triggered
+(def 'LVL-CFG   (hex "0")) # level-sensitive
+(def 'EDGE-CFG  (hex "2")) # edge-triggered
 
-# create assoc list, store in Dist
-
-(def 'DIST-I-ID-MSK
+(def 'DIST-IID-BITS
   (list
     (cons 'PRODUCTID   '(31 24))
     (cons 'VARIANT     '(19 16))
     (cons 'REVISION    '(15 12))
     (cons 'IMPLEMENTER '(11 0))))
 
-
-(def 'DIST-TYPE-R-MSK
+(def 'DIST-TYPE-BITS
   (list
     (cons 'LSPI            '(15 11))
     (cons 'SECURITY-EXTN   '(10 10))
-    (cons 'CPU-NUMBER      '(7   5))
-    (cons 'IT-LINES-NUMBER '(4   0))))
-
-
-(def 'DIST-TYPE-R-PR
-  '(((X) (if (=0 X) "NO SECURITY EXTENSIONS" X))
-    ((X) (+ X 1))
-    ((X) (n0 X))
-    ((X) (* X 32))))
-
-
-(class +Dist)
-(dm T (P)
-
-  (=: ctl          P)
-  (=: type-r       (+ P (hex "004")))
-  (=: i-id         (+ P (hex "008")))
-  (=: i-group      (+ P (hex "080")))
-
-  (=: is-enab      (+ P (hex "100")))
-  (=: ic-enab      (+ P (hex "180")))
-
-  (=: is-pend      (+ P (hex "200")))
-  (=: ic-pend      (+ P (hex "280")))
-
-  (=: is-act       (+ P (hex "300")))
-  (=: ic-act       (+ P (hex "380")))
-
-  (=: i-prio       (+ P (hex "400")))
-  (=: i-tgts       (+ P (hex "800")))
-  (=: i-cfg        (+ P (hex "C00")))
-
-  (=: ppi-s        (+ P (hex "D00")))
-  (=: spi-s        (+ P (hex "D04")))
-  (=: sgi          (+ P (hex "F00")))
-  (=: c-pend-sgi   (+ P (hex "F10")))
-  (=: s-pend-sgi   (+ P (hex "F20")))
-
-  (=: pid-4        (+ P (hex "FD0")))
-  (=: pid-5        (+ P (hex "FD4")))
-  (=: pid-6        (+ P (hex "FD8")))
-  (=: pid-7        (+ P (hex "FDC")))
-
-  (=: pid-0        (+ P (hex "FE0")))
-  (=: pid-1        (+ P (hex "FE4")))
-  (=: pid-2        (+ P (hex "FE8")))
-  (=: pid-3        (+ P (hex "FEC")))
-
-  (=: cid-0        (+ P (hex "FF0")))
-  (=: cid-1        (+ P (hex "FF4")))
-  (=: cid-2        (+ P (hex "FF8")))
-  (=: cid-3        (+ P (hex "FEC")))
-
-  (init> This))
-
-
-(dm init> ()
-
-  # TODO: On init, create id, type-r cls since fixed
-  # Pr info
-  (pr-i-id> This)
-  (pr-type-r> This)
-
-  # Off distributor
-  # Cfg before intrs passed to CPU
-  (off> This)
-
-  # TODO: store on init
-  (let (Intr-Lns (get-it-lines-number> This)
-        Max-Intr-ID (* (+ Intr-Lns 1) 32))
-
-    # Disable/clear IRQs
-    (for (N 0 (< N Max-Intr-ID) (inc N))
-      (let (O (* 4 (/ N 32))
-            En (+ (: ic-enab) O)
-            Pe (+ (: ic-pend) O))
-        (when (=0 (% N 32))
-          (ptr32 En (hex "FFFFFFFF"))
-          (ptr32 Pe (hex "FFFFFFFF")))))
-
-    # Set lowest priority
-    (for (N 0 (< N Max-Intr-ID) (inc N))
-      (let (O (* 4 (/ N 4))
-            Pr (+ (: i-prio) O))
-        (when (=0 (% N 4))
-          (ptr32 Pr (hex "FFFFFFFF")))))
-
-    # Set tgt of SPIs -> PE 0
-    (for (N 0 (< N Max-Intr-ID) (inc N))
-      (let (O (* 4 (/ N 4))
-            Ta (+ (: i-tgts) O))
-        (when (=0 (% N 4))
-          (ptr32 Ta (hex "01010101")))))
-
-    # Set trigger of SPIs -> level
-    (for (N 0 (< N Max-Intr-ID) (inc N))
-      (let (O (* 4 (/ N 16))
-            Cf (+ (: i-cfg) O))
-        (when (=0 (% N 16))
-          (ptr32 Cf LVL)))))
-
-  # On distributor
-  (on> This))
-
-
-(dm on> ()  (ptr32 (: ctl) ON-CTL))
-(dm off> () (ptr32 (: ctl) OFF-CTL))
-
-(dm type-r> (N) (mak-nm-lst (: type-r) DIST-TYPE-R-MSK N))
-(dm get-it-lines-number> () (type-r> This 'IT-LINES-NUMBER))
-
-(dm max-intr-id> () (* (+ (get-it-lines-number> This) 1) 32))
-
-(dm pr-type-r> ()
-  (prl-kern
-    (pack
-      "gic DIST-TYPE-R: "
-      (ptr32 (: type-r)) " "
-      (bin (ptr32 (: type-r)))))
-  (pr-reg (type-r> This) DIST-TYPE-R-PR))
-
-(dm i-id>   (N) (mak-nm-lst (: i-id) DIST-I-ID-MSK N))
-(dm pr-i-id> ()
-  (prl-kern
-    (pack
-      "gic DIST-I-ID: "
-      (ptr32 (: i-id)) " "
-      (bin (ptr32 (: i-id)))))
-  (pr-reg (i-id> This) NIL)) # No pr fns
-
-#####################
-
-# Rd
-
-(dm is-enab> (Irq X)
-  (if X
-      (ptr32 (+ (: is-enab) (* (/ Irq 32) 4))
-        (>> (- (% Irq 32)) 1))
-      (ptr32 (+ (: is-enab) (* (/ Irq 32) 4)))))
-
-(dm is-pend> (Irq X)
-  (if X
-      (ptr32 (+ (: is-pend) (* (/ Irq 32) 4))
-        (>> (- (% Irq 32)) 1))
-      (ptr32 (+ (: is-pend) (* (/ Irq 32) 4)))))
-
-(dm is-act>  (Irq X)
-  (if X
-      (ptr32 (+ (: is-act) (* (/ Irq 32) 4))
-        (>> (- (% Irq 32)) 1))
-      (ptr32 (+ (: is-act) (* (/ Irq 32) 4)))))
-
-
-(dm ic-enab> (Irq X)
-  (if X
-      (ptr32 (+ (: ic-enab) (* (/ Irq 32) 4))
-        (>> (- (% Irq 32)) 1))
-      (ptr32 (+ (: ic-enab) (* (/ Irq 32) 4)))))
-
-(dm ic-pend> (Irq X)
-  (if X
-      (ptr32 (+ (: ic-pend) (* (/ Irq 32) 4))
-        (>> (- (% Irq 32)) 1))
-      (ptr32 (+ (: ic-pend) (* (/ Irq 32) 4)))))
-
-(dm ic-act>  (Irq X)
-  (if X
-      (ptr32 (+ (: ic-act) (* (/ Irq 32) 4))
-        (>> (- (% Irq 32)) 1))
-      (ptr32 (+ (: ic-act) (* (/ Irq 32) 4)))))
-
-
-(dm i-cfg> (Irq X)
-  (let (Shft (* (% Irq 16) 2)
-        P    (+ (: i-cfg) (* (/ Irq 16) 4))
-        Reg  (& (ui* P) (bw-not (>> (- Shft) (hex "03"))))
-        Reg  (| Reg (>> (- Shft) X)))
-    (ptr32 P Reg)))
-
-# FIX
-(dm i-prio> (Irq X)
-  (let (Shft (* (% Irq 4) 8)
-        P    (+ (: i-prio) (* (/ Irq 4) 4))
-        Reg  (& (ui* P) (bw-not (>> (- Shft) (hex "FF"))))
-        Reg  (| Reg (>> (- Shft) X)))
-    (setq Reg (hex "00FFFFFF"))
-    (ptr32 P Reg)))
-
-
-(dm i-tgts> (Irq X)
-  (let (Shft (* (% Irq 4) 8)
-        P    (+ (: i-tgts) (* (/ Irq 4) 4))
-        Reg  (& (ui* P) (bw-not (>> (- Shft) (hex "FF"))))
-        Reg  (| Reg (>> (- Shft) X)))
-    (ptr32 P Reg)))
-
-
-#############################
-
-# Both empty = rd
-# One or more = wr
-(dm ctl> (Grp0 Grp1)
-  (if (nor Grp0 Grp1)))
-
-######################
-
-(de mak-nm-lst (P L N)
-  # Make assoc list of name : masked
-  (let O (make
-          (let R (ui* P)
-            (for Nm-Msk L
-              (let (Nm  (car Nm-Msk)
-                    Msk (cdr Nm-Msk))
-                (link (cons Nm (ubfx R (car Msk) (cadr Msk))))))))
-    # Return single prop if N
-    (if N
-        (get O N)
-        O)))
-
-(de pr-reg (Msk Fns)
-  (mapc
-    '((A Pr)
-      (let (Nm  (car A)
-            Va  (cdr A)
-            Out (when Pr (Pr Va)))
-        (prl-kern (pack "gic  " Nm ": " Out " (" Va ")"))))
-    Msk
-    Fns))
-
-
-(symbols '(pico))
-(symbols '(gic pico))
-
-(local)
-(ON-CTL OFF-CTL
- gicd-enab gicd-pend gicd-act
- gicd-cfg  gicd-pri  gicd-tgt
- gic-init gicd-init gicc-init
- +Gic)
-
-(def 'ON-CTL  (>> 0 1))
-(def 'OFF-CTL (>> 0 0))
-
-# 8.9.7 GICD_ICFGR<n>, Interrupt Configuration Registers
-(def 'LVL   (hex "0")) # level-sensitive
-(def 'EDGE  (hex "2")) # edge-triggered
+    (cons 'CPU-NUMBER      '(7  5))
+    (cons 'IT-LINES-NUMBER '(4  0))))
 
 #{
 
@@ -2097,34 +1774,76 @@
 
 }#
 
-# abstract out and pass name
+(de lst-bits (P L N)
+  # Make assoc list of name : masked
+  (let O (make
+          (let R (ptr32 P)
+            (for Nm-Msk L
+              (let (Nm  (car Nm-Msk)
+                    Msk (cdr Nm-Msk))
+                (link (cons Nm (ubfx R (car Msk) (cadr Msk))))))))
+    # Return single prop if N
+    (if N
+        (get O N)
+        O)))
 
-(de gicd-enab (Irq F)
+(de pr-bits (Msk Fns)
+  (mapc
+    '((A Pr)
+      (let (Nm  (car A)
+            Va  (cdr A))
+        (prl-kern (pack "gic  " Nm "=" Va))))
+    Msk
+    Fns))
+
+(de dist-type (Nm)
+  (lst-bits
+    (cdr (assoc "DIST-TYPER" *Gic))
+    DIST-TYPE-BITS
+    Nm))
+
+(de dist-iid (Nm)
+  (lst-bits
+    (cdr (assoc "DIST-IIDR" *Gic))
+    DIST-IID-BITS
+    Nm))
+
+(de pr-reg (Nm Lst)
+  (let P (cdr (assoc Nm *Gic))
+    (prl-kern
+      (pack
+        (pack "gic " Nm "=")
+        (ptr32 P) "="
+        (bin (ptr32 P)))))
+  (pr-bits Lst This))
+
+(de pr-type () (pr-reg "DIST-TYPER" (dist-type)))
+(de pr-iid  () (pr-reg "DIST-IIDR" (dist-iid)))
+
+
+#### state
+
+(de max-iid ()
+  (* (+ (dist-type 'IT-LINES-NUMBER) 1) 32))
+
+(de state (Irq Reg)
   (ptr32
-    (+ (cdr (assoc (if F "DIST-ISENABLER" "DIST-ICENABLER") *Gic))
+    (+ (cdr (assoc Reg *Gic))
        (* (/ Irq 32) 4))
     (>> (- (% Irq 32)) 1)))
 
-(de gicd-pend (Irq F)
-  (ptr32
-    (+ (cdr (assoc (if F "DIST-ISPENDR" "DIST-ICPENDR") *Gic))
-       (* (/ Irq 32) 4))
-    (>> (- (% Irq 32)) 1)))
+(de enab (Irq F) (state Irq (if F "DIST-ISENABLER" "DIST-ICENABLER")))
+(de pend (Irq F) (state Irq (if F "DIST-ISPENDR" "DIST-ICPENDR")))
+(de act  (Irq F) (state Irq (if F "DIST-ISACTIVER" "DIST-ICACTIVER")))
 
-(de gicd-act (Irq F)
-  (ptr32
-    (+ (cdr (assoc (if F "DIST-ISACTIVER" "DIST-ICACTIVER") *Gic))
-       (* (/ Irq 32) 4))
-    (>> (- (% Irq 32)) 1)))
-
-(de gicd-cfg (Irq X)
+(de cfg (Irq X)
   (let (Shft (* (% Irq 16) 2)
         P    (+ (cdr (assoc "DIST-ICFGR" *Gic)) (* (/ Irq 16) 4))
         Reg  (& (ui* P) (bw-not (>> (- Shft) (hex "03"))))
         Reg  (| Reg (>> (- Shft) X)))
     (ptr32 P Reg)))
 
-(de gicd-pri (Irq X)
+(de pri (Irq X)
   (let (Shft (* (% Irq 4) 8)
         P    (+ (cdr (assoc "DIST-IPRIORITYR" *Gic)) (* (/ Irq 4) 4))
         Reg  (& (ui* P) (bw-not (>> (- Shft) (hex "FF"))))
@@ -2132,57 +1851,59 @@
     (setq Reg (hex "00FFFFFF"))
     (ptr32 P Reg)))
 
-(de gicd-tgt (Irq X)
+(de tgt (Irq X)
   (let (Shft (* (% Irq 4) 8)
         P    (+ (cdr (assoc "DIST-ITARGETSR" *Gic)) (* (/ Irq 4) 4))
         Reg  (& (ui* P) (bw-not (>> (- Shft) (hex "FF"))))
         Reg  (| Reg (>> (- Shft) X)))
     (ptr32 P Reg)))
 
-# init
+#### init
 
-(de gic-init ()
-  (gicd-init)
-  (gicc-init))
+(de init ()
+  (pr-type)
+  (pr-iid)
+  (dist-init)
+  (cpui-init))
 
 
-(de gicd-init ()
+(de dist-init ()
 
   (ptr32 (cdr (assoc "DIST-CTLR" *Gic)) 0)
 
   # TODO: store on init
-  (let Max-Intr-ID 224
+  (let Max-IID (max-iid)
 
     # Disable/clear pend
-    (for (N 0 (< N Max-Intr-ID) (inc N))
-      (gicd-enab N)
-      (gicd-pend N))
+    (for (N 0 (< N Max-IID) (inc N))
+      (enab N)
+      (pend N))
 
     # Set lowest priority
-    (for (N 0 (< N Max-Intr-ID) (inc N))
+    (for (N 0 (< N Max-IID) (inc N))
       (let (O (* 4 (/ N 4))
             Pr (+ (cdr (assoc "DIST-IPRIORITYR" *Gic)) O))
         (when (=0 (% N 4))
           (ptr32 Pr (hex "FFFFFFFF")))))
 
     # Set tgt of SPIs -> PE 0
-    (for (N 0 (< N Max-Intr-ID) (inc N))
+    (for (N 0 (< N Max-IID) (inc N))
       (let (O (* 4 (/ N 4))
             Ta (+ (cdr (assoc "DIST-ITARGETSR" *Gic)) O))
         (when (=0 (% N 4))
           (ptr32 Ta (hex "01010101")))))
 
     # Set trigger of SPIs -> level
-    (for (N 0 (< N Max-Intr-ID) (inc N))
+    (for (N 0 (< N Max-IID) (inc N))
       (let (O (* 4 (/ N 16))
             Cf (+ (cdr (assoc "DIST-ICFGR" *Gic)) O))
         (when (=0 (% N 16))
-          (ptr32 Cf LVL)))))
+          (ptr32 Cf LVL-CFG)))))
 
   (ptr32 (cdr (assoc "DIST-CTLR" *Gic)) 1))
 
 
-(de gicc-init ()
+(de cpui-init ()
   (ptr32 (cdr (assoc  "CPUI-CTLR" *Gic)) 0)
 
   # Set the priority level as the lowest priority
@@ -2198,314 +1919,6 @@
 
   (ptr32 (cdr (assoc "CPUI-CTLR" *Gic)) 1))
 
-
-###########################################################
-
-(class +Gic)
-(dm T ()
-  (=: p (hex "FF840000"))
-
-  (=: dist (new '(+Dist) (+ (: p) (hex "1000"))))
-  (=: cpu  (new '(+Cpu)  (+ (: p) (hex "2000")))))
-
-# Pass T/NIL to set/clear
-(dm enab> (Irq Fn) ((if Fn 'is-enab> 'ic-enab>) (: dist) Irq Fn))
-(dm pend> (Irq Fn) ((if Fn 'is-pend> 'ic-pend>) (: dist) Irq Fn))
-(dm act>  (Irq Fn) ((if Fn 'is-act>  'ic-act>)  (: dist) Irq Fn))
-
-(dm find-pend-irq> ()
-  (let Irq NIL
-    (for Id (max-intr-id> (: dist))
-      # check pend bit
-      (let (J (dec Id)
-            W (is-pend> (: dist) J)
-            B (>> (- (% J 32)) 1))
-        #(prl-kern (pack "(find-pend-irq) " J "@" (+ (get (: dist) 'is-pend) (* (/ J 32) 4)) " " B " " W ))
-        (when (n0 (& B W))
-          (prl-kern (pack "(find-pend-irq) " J " " B " " W " <<<<"))
-          (setq Irq J))))
-    Irq))
-
-(symbols '(pico))
-(symbols '(gic pico))
-
-(local) 
-(*IntrID
-
-  CORE-N-HP-TIMER 
-  CORE-N-V-TIMER  
-  LEGACY-FIQn     
-  CORE-N-PS-TIMER 
-  CORE-N-PNS-TIMER
-  LEGACY-IRQn     
-
-  MAILBOX-0 
-  MAILBOX-1 
-  MAILBOX-2 
-  MAILBOX-3 
-  MAILBOX-4 
-  MAILBOX-5 
-  MAILBOX-6 
-  MAILBOX-7 
-  MAILBOX-8 
-  MAILBOX-9 
-  MAILBOX-10
-  MAILBOX-11
-  MAILBOX-12
-  MAILBOX-13
-  MAILBOX-14
-  MAILBOX-15
-
-  CORE-0-PMU 
-  CORE-1-PMU 
-  CORE-2-PMU 
-  CORE-3-PMU 
-  AXIERR     
-  LOCAL-TIMER
-
-  TIMER                 
-  MAILBOX               
-  DOORBELL-0            
-  DOORBELL-1              
-  VPU0-HALTED           
-  VPU1-HALTED           
-  ARM-ADDRESS-ERROR     
-  ARM-AXI-ERROR           
-  SOFTWARE-INTERRUPT-0  
-  SOFTWARE-INTERRUPT-1  
-  SOFTWARE-INTERRUPT-2  
-  SOFTWARE-INTERRUPT-3    
-  SOFTWARE-INTERRUPT-4  
-  SOFTWARE-INTERRUPT-5  
-  SOFTWARE-INTERRUPT-6  
-  SOFTWARE-INTERRUPT-7
-
-  TIMER-0          
-  TIMER-1          
-  TIMER-2          
-  TIMER-3          
-  H264-0           
-  H264-1           
-  H264-2           
-  JPEG             
-  ISP              
-  USB              
-  V3D              
-  TRANSPOSER       
-  MULTICORE-SYNC-0 
-  MULTICORE-SYNC-1 
-  MULTICORE-SYNC-2 
-  MULTICORE-SYNC-3 
-  DMA-0            
-  DMA-1            
-  DMA-2            
-  DMA-3            
-  DMA-4            
-  DMA-5            
-  DMA-6            
-  DMA-7&8          
-  DMA-9&10         
-  DMA-11           
-  DMA-12           
-  DMA-13           
-  DMA-14           
-  AUX              
-  ARM              
-  DMA-15           
-  HDMI-CEC         
-  HVS              
-  RPIVID           
-  SDC              
-  DSI-0            
-  PIXEL-VALVE-2    
-  CAMERA-0         
-  CAMERA-1         
-  HDMI-0           
-  HDMI-1           
-  PIXEL-VALVE-3    
-  SPI/BSC-SLAVE    
-  DSI-1            
-  PIXEL-VALVE-0    
-  PIXEL-VALVE-1&4  
-  CPR              
-  SMI              
-  GPIO-0           
-  GPIO-1           
-  GPIO-2           
-  GPIO-3           
-  I2C-ALL          
-  SPI-ALL          
-  PCM/I2S          
-  SDHOST           
-  PL011-UART-ALL   
-  ETH-PCIe-L2-ALL  
-  VEC              
-  CPG              
-  RNG              
-  EMMC&2           
-  ETH-PCIe-SECURE  
-
-  AVS         
-  PCIE-0-INTA 
-  PCIE-0-INTB 
-  PCIE-0-INTC 
-  PCIE-0-INTD 
-  PCIE-0-MSI  
-  GENET-0-A   
-  GENET-0-B   
-  USB0-XHCI-0)
-
-# Source:
-#
-# Link: https://datasheets.raspberrypi.org/bcm2711/bcm2711-peripherals.pdf
-#
-# Sections:
-# 6.3. GIC-400 interrupt controller, Figure 7. GIC IRQ routing
-# 6.4. Legacy interrupt controller, Figure 9. Legacy IRQ status registers
-
-(de *IntrID
-
-  # Software Generated Interrupt (SGI) [0-15]
-  # none
-  
-  # Per Processor Interrupts (PPI) [16-31]
-  
-  (CORE-N-HP-TIMER  . 26)  # hypervisor timer
-  (CORE-N-V-TIMER   . 27)  # virtual timer
-  (LEGACY-FIQn      . 28)
-  (CORE-N-PS-TIMER  . 29)  # secure physical
-  (CORE-N-PNS-TIMER . 30)  # non-secure physical
-  (LEGACY-IRQn      . 31)
-
-  # Shared Processor Interrupts [32-1020]
-  
-  ################################
-  # Chapter 13. ARM Mailboxes [32-47]
-  (MAILBOX-0  . 32)
-  (MAILBOX-1  . 33)  
-  (MAILBOX-2  . 34)  
-  (MAILBOX-3  . 35)
-  (MAILBOX-4  . 36)
-  (MAILBOX-5  . 37)  
-  (MAILBOX-6  . 38)  
-  (MAILBOX-7  . 39)
-  (MAILBOX-8  . 40)
-  (MAILBOX-9  . 41)  
-  (MAILBOX-10 . 42)  
-  (MAILBOX-11 . 43)
-  (MAILBOX-12 . 44)
-  (MAILBOX-13 . 45)  
-  (MAILBOX-14 . 46)  
-  (MAILBOX-15 . 47)  
-  ################################
-  
-  (CORE-0-PMU  . 48)
-  (CORE-1-PMU  . 48)
-  (CORE-2-PMU  . 48)
-  (CORE-3-PMU  . 48)  
-  (AXIERR      . 52)
-  (LOCAL-TIMER . 53)
-  
-  ################################
-  # ARMC Peripheral Interrupts [64-79]
-  # 6.2.3. ARMC interrupts, Table 101. ARMC peripheral IRQs
-  (TIMER                . 64)  
-  (MAILBOX              . 65)  
-  (DOORBELL-0           . 66)  
-  (DOORBELL-1           . 67)    
-  (VPU0-HALTED          . 68)  
-  (VPU1-HALTED          . 69)  
-  (ARM-ADDRESS-ERROR    . 70)  
-  (ARM-AXI-ERROR        . 71)    
-  (SOFTWARE-INTERRUPT-0 . 72)  
-  (SOFTWARE-INTERRUPT-1 . 73)  
-  (SOFTWARE-INTERRUPT-2 . 74)  
-  (SOFTWARE-INTERRUPT-3 . 75)    
-  (SOFTWARE-INTERRUPT-4 . 76)  
-  (SOFTWARE-INTERRUPT-5 . 77)  
-  (SOFTWARE-INTERRUPT-6 . 78)  
-  (SOFTWARE-INTERRUPT-7 . 79)
-  
-  ################################
-  # VC Peripheral Interrupts [96-159]
-  # 6.2.4. VideoCore interrupts, Table 102. VC peripheral IRQs
-  (TIMER-0          . 96)
-  (TIMER-1          . 97)
-  (TIMER-2          . 98)
-  (TIMER-3          . 99)
-  (H264-0           . 100)
-  (H264-1           . 101)
-  (H264-2           . 102)
-  (JPEG             . 103)
-  (ISP              . 104)
-  (USB              . 105)
-  (V3D              . 106)
-  (TRANSPOSER       . 107)
-  (MULTICORE-SYNC-0 . 108)
-  (MULTICORE-SYNC-1 . 109)
-  (MULTICORE-SYNC-2 . 110)
-  (MULTICORE-SYNC-3 . 111)
-  (DMA-0            . 112)
-  (DMA-1            . 113)
-  (DMA-2            . 114)
-  (DMA-3            . 115)
-  (DMA-4            . 116)
-  (DMA-5            . 117)
-  (DMA-6            . 118)
-  (DMA-7&8          . 119)
-  (DMA-9&10         . 120)
-  (DMA-11           . 121)
-  (DMA-12           . 122)
-  (DMA-13           . 123)
-  (DMA-14           . 124)
-  (AUX              . 125) # UART1 + SPI1/2, Figure 6. Peripheral IRQ OR-ing
-  (ARM              . 126)
-  (DMA-15           . 127)
-  (HDMI-CEC         . 128)
-  (HVS              . 129)
-  (RPIVID           . 130)
-  (SDC              . 131)
-  (DSI-0            . 132)
-  (PIXEL-VALVE-2    . 133)
-  (CAMERA-0         . 134)
-  (CAMERA-1         . 135)
-  (HDMI-0           . 136)
-  (HDMI-1           . 137)
-  (PIXEL-VALVE-3    . 138)
-  (SPI/BSC-SLAVE    . 139)
-  (DSI-1            . 140)
-  (PIXEL-VALVE-0    . 141)
-  (PIXEL-VALVE-1&4  . 142)
-  (CPR              . 143)
-  (SMI              . 144)
-  (GPIO-0           . 145)
-  (GPIO-1           . 146)
-  (GPIO-2           . 147)
-  (GPIO-3           . 148)
-  (I2C-ALL          . 149) # [0-6], Figure 6. Peripheral IRQ OR-ing
-  (SPI-ALL          . 150) # [0-7], Figure 6. Peripheral IRQ OR-ing
-  (PCM/I2S          . 151)
-  (SDHOST           . 152)
-  (PL011-UART-ALL   . 153) # UART5/4/3/2/0, Figure 6. Peripheral IRQ OR-ing
-  (ETH-PCIe-L2-ALL  . 154)
-  (VEC              . 155)
-  (CPG              . 156)
-  (RNG              . 157)
-  (EMMC&2           . 158)
-  (ETH-PCIe-SECURE  . 159)
-  
-  ################################  
-  # ARMC Peripheral Interrupts [160-216]
-  # Unlisted IDs reserved
-  (AVS         . `(+ 160 9)) # ...216
-  (PCIE-0-INTA . `(+ 160 15))
-  (PCIE-0-INTB . `(+ 160 16))
-  (PCIE-0-INTC . `(+ 160 17))
-  (PCIE-0-INTD . `(+ 160 18))
-  (PCIE-0-MSI  . `(+ 160 20))
-  (GENET-0-A   . `(+ 160 29))  
-  (GENET-0-B   . `(+ 160 30))    
-  (USB0-XHCI-0 . `(+ 160 48)))
 
 (symbols '(pico))
 (symbols '(timer pico))
@@ -2530,11 +1943,11 @@
 
 (de init ()
   (let IrqID (cdr (assoc "IRQ-CORE-N-V-TIMER" *Irq))
-    (gic~gicd-cfg  IrqID gic~EDGE) # 2
-    (gic~gicd-pri  IrqID (>> -4 0))
-    (gic~gicd-tgt  IrqID (hex "1")) # proc 0
-    (gic~gicd-pend IrqID) # clr pend
-    (gic~gicd-enab IrqID T)))
+    (gic~cfg  IrqID gic~EDGE-CFG) # 2
+    (gic~pri  IrqID (>> -4 0))
+    (gic~tgt  IrqID (hex "1")) # proc 0
+    (gic~pend IrqID) # clr pend
+    (gic~enab IrqID T)))
 
 (de start (N)
 
@@ -2554,8 +1967,8 @@
   (isb)
 
   (let IrqID (cdr (assoc "IRQ-CORE-N-V-TIMER" *Irq))
-    (gic~gicd-pend IrqID)
-    (gic~gicd-enab IrqID T))
+    (gic~pend IrqID)
+    (gic~enab IrqID T))
 
   (daif2 T)
 
@@ -2577,11 +1990,9 @@
   (cntv-cval 0)
   (isb)
 
-  (with pico~*gic
-    (let IrqID (get gic~*IntrID 'gic~CORE-N-V-TIMER)
-      (gic~ic-pend> (: gic~dist) 27 T)
-      (gic~ic-enab> (: gic~dist) 27 T)
-      ))
+  (let IrqID (cdr (assoc "IRQ-CORE-N-V-TIMER" *Irq))
+    (gicd-pend IrqID)
+    (gicd-enab IrqID))
 
   (daif2 T)
 
@@ -2764,18 +2175,15 @@
 
 
 (de intr ()
-  # pass num?
   (case *IntID
-    (27
-      (timer~intr))
-    (T
-      (prl-kern (format *IntID)))))
+    (27 (timer~intr))
+    (T  (prl-kern (format *IntID)))))
+
 
 (de main ()
 
   # Switch input
   # TODO: mov to nsp - load very first
-  #(setq *Putc '(uart~wr-ch))
   (setq *Putc uart~wr-ch)
 
   # Switch input to UART1 (mini UART)
@@ -2796,7 +2204,7 @@
   ##############
   # drivers
 
-  (gic~gic-init)
+  (gic~init)
   (timer~init)
 
   (prl-kern)

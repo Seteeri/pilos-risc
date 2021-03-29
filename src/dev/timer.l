@@ -20,11 +20,11 @@
 
 (de init ()
   (let IrqID (cdr (assoc "IRQ-CORE-N-V-TIMER" *Irq))
-    (gic~gicd-cfg  IrqID gic~EDGE) # 2
-    (gic~gicd-pri  IrqID (>> -4 0))
-    (gic~gicd-tgt  IrqID (hex "1")) # proc 0
-    (gic~gicd-pend IrqID) # clr pend
-    (gic~gicd-enab IrqID T)))
+    (gic~cfg  IrqID gic~EDGE-CFG) # 2
+    (gic~pri  IrqID (>> -4 0))
+    (gic~tgt  IrqID (hex "1")) # proc 0
+    (gic~pend IrqID) # clr pend
+    (gic~enab IrqID T)))
 
 (de start (N)
 
@@ -44,8 +44,8 @@
   (isb)
 
   (let IrqID (cdr (assoc "IRQ-CORE-N-V-TIMER" *Irq))
-    (gic~gicd-pend IrqID)
-    (gic~gicd-enab IrqID T))
+    (gic~pend IrqID)
+    (gic~enab IrqID T))
 
   (daif2 T)
 
@@ -67,11 +67,9 @@
   (cntv-cval 0)
   (isb)
 
-  (with pico~*gic
-    (let IrqID (get gic~*IntrID 'gic~CORE-N-V-TIMER)
-      (gic~ic-pend> (: gic~dist) 27 T)
-      (gic~ic-enab> (: gic~dist) 27 T)
-      ))
+  (let IrqID (cdr (assoc "IRQ-CORE-N-V-TIMER" *Irq))
+    (gicd-pend IrqID)
+    (gicd-enab IrqID))
 
   (daif2 T)
 
