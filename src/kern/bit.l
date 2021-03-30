@@ -3,11 +3,11 @@
   Bits
 
   assume LE
-  
+
   default unsigned
-  
+
   todo check overflow
-  
+
 }#
 
 # https://stackoverflow.com/questions/8011700/how-do-i-extract-specific-n-bits-of-a-32-bit-unsigned-integer-in-c
@@ -15,7 +15,7 @@
   # a < b
   (>> A (& R (>> (- A) (- (>> (- (+ (- B A) 1)) 1) 1)))))
 
-(de bw-not (N)
+(de bnot (N)
   (bin
     (pack
       (make
@@ -34,7 +34,7 @@
   (let ((C D E F G H I J) B)
     (| (>> -56 J) (>> -48 I) (>> -40 H) (>> -32 G)
        (>> -24 F) (>> -16 E) (>> -8 D)  (>> 0 C))))
-(de l->c (I) 
+(de l->c (I)
   (list (& I 255)         (& (>> 8  I) 255) (& (>> 16 I) 255) (& (>> 24 I) 255)
         (& (>> 32 I) 255) (& (>> 40 I) 255) (& (>> 48 I) 255) (& (>> 56 I) 255)))
 
@@ -44,10 +44,10 @@
 
   (de * ptr) # rd sz
   (de * ptr num) # wr sz
-  
-  (de ** ptr list  ) # wr sz, ret ptr  
+
+  (de ** ptr list  ) # wr sz, ret ptr
   (de ** ptr num   ) # rd sz, ret lst or num if 1
-  
+
 }#
 
 # uint8
@@ -62,14 +62,14 @@
       (dec 'P) (make (for X V (link (byte (+ P X))))))
     (T # V=NIL
       (byte P V))))
-      
+
 # uint16
-      
+
 (de us* (P V)
   (if V
       (uc** P (i->c V))
       (c->i (uc** P 2))))
-      
+
 (de us** (P V)
   (cond
     ((pair V)
@@ -78,14 +78,14 @@
       (make (do V (link (c->s (uc* P 2))) (inc 'P 2))))
     (T # V=NIL
       (c->s (uc* P 2)))))
-      
+
 # uint32
 
 (de ui* (P V)
   (if V
       (uc** P (i->c V))
       (c->i (uc** P 4))))
-      
+
 (de ui** (P V)
   (cond
     ((pair V)
@@ -101,7 +101,7 @@
   (if V
       (uc** P (l->c V))
       (c->l (uc** P 8))))
-      
+
 (de ul** (P V)
   (cond
     ((pair V)

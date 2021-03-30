@@ -6,13 +6,13 @@
  ctl> id>
  prl-dist-iid prl-dist-type
  get-it-lines-number
- dist-cfg      dist-i-prio dist-i-tgts 
+ dist-cfg      dist-i-prio dist-i-tgts
  dist-clr-pend dist-on-intr dist-off-intr)
 
 
 # 8.9.7 GICD_ICFGR<n>, Interrupt Configuration Registers
 (def 'LVL   (hex "0")) # level-sensitive
-(def 'EDGE  (hex "2")) # edge-triggered 
+(def 'EDGE  (hex "2")) # edge-triggered
 
 # create assoc list, store in Dist
 
@@ -23,7 +23,7 @@
     (cons 'REVISION    '(15 12))
     (cons 'IMPLEMENTER '(11 0))))
 
-    
+
 (def 'DIST-TYPE-R-MSK
   (list
     (cons 'LSPI            '(15 11))
@@ -31,11 +31,11 @@
     (cons 'CPU-NUMBER      '(7   5))
     (cons 'IT-LINES-NUMBER '(4   0))))
 
- 
+
 (def 'DIST-TYPE-R-PR
   '(((X) (if (=0 X) "NO SECURITY EXTENSIONS" X))
     ((X) (+ X 1))
-    ((X) (n0 X))    
+    ((X) (n0 X))
     ((X) (* X 32))))
 
 
@@ -48,7 +48,7 @@
   (=: i-group      (+ P (hex "080")))
 
   (=: is-enab      (+ P (hex "100")))
-  (=: ic-enab      (+ P (hex "180")))  
+  (=: ic-enab      (+ P (hex "180")))
 
   (=: is-pend      (+ P (hex "200")))
   (=: ic-pend      (+ P (hex "280")))
@@ -60,29 +60,29 @@
   (=: i-tgts       (+ P (hex "800")))
   (=: i-cfg        (+ P (hex "C00")))
 
-  (=: ppi-s        (+ P (hex "D00")))    
+  (=: ppi-s        (+ P (hex "D00")))
   (=: spi-s        (+ P (hex "D04")))
   (=: sgi          (+ P (hex "F00")))
   (=: c-pend-sgi   (+ P (hex "F10")))
-  (=: s-pend-sgi   (+ P (hex "F20")))  
+  (=: s-pend-sgi   (+ P (hex "F20")))
 
   (=: pid-4        (+ P (hex "FD0")))
   (=: pid-5        (+ P (hex "FD4")))
   (=: pid-6        (+ P (hex "FD8")))
-  (=: pid-7        (+ P (hex "FDC")))    
+  (=: pid-7        (+ P (hex "FDC")))
 
   (=: pid-0        (+ P (hex "FE0")))
   (=: pid-1        (+ P (hex "FE4")))
   (=: pid-2        (+ P (hex "FE8")))
   (=: pid-3        (+ P (hex "FEC")))
 
-  (=: cid-0        (+ P (hex "FF0")))    
+  (=: cid-0        (+ P (hex "FF0")))
   (=: cid-1        (+ P (hex "FF4")))
   (=: cid-2        (+ P (hex "FF8")))
   (=: cid-3        (+ P (hex "FEC")))
-  
+
   (init> This))
-  
+
 
 (dm init> ()
 
@@ -98,7 +98,7 @@
   # TODO: store on init
   (let (Intr-Lns (get-it-lines-number> This)
         Max-Intr-ID (* (+ Intr-Lns 1) 32))
-  
+
     # Disable/clear IRQs
     (for (N 0 (< N Max-Intr-ID) (inc N))
       (let (O (* 4 (/ N 32))
@@ -130,7 +130,7 @@
           (ptr32 Cf LVL)))))
 
   # On distributor
-  (on> This))  
+  (on> This))
 
 
 (dm on> ()  (ptr32 (: ctl) ON-CTL))
@@ -141,7 +141,7 @@
 
 (dm max-intr-id> () (* (+ (get-it-lines-number> This) 1) 32))
 
-(dm pr-type-r> () 
+(dm pr-type-r> ()
   (prl-kern
     (pack
       "gic DIST-TYPE-R: "
@@ -150,7 +150,7 @@
   (pr-reg (type-r> This) DIST-TYPE-R-PR))
 
 (dm i-id>   (N) (mak-nm-lst (: i-id) DIST-I-ID-MSK N))
-(dm pr-i-id> () 
+(dm pr-i-id> ()
   (prl-kern
     (pack
       "gic DIST-I-ID: "
@@ -159,21 +159,21 @@
   (pr-reg (i-id> This) NIL)) # No pr fns
 
 #####################
-  
+
 # Rd
-  
+
 (dm is-enab> (Irq X)
   (if X
       (ptr32 (+ (: is-enab) (* (/ Irq 32) 4))
         (>> (- (% Irq 32)) 1))
       (ptr32 (+ (: is-enab) (* (/ Irq 32) 4)))))
-  
-(dm is-pend> (Irq X) 
+
+(dm is-pend> (Irq X)
   (if X
       (ptr32 (+ (: is-pend) (* (/ Irq 32) 4))
         (>> (- (% Irq 32)) 1))
       (ptr32 (+ (: is-pend) (* (/ Irq 32) 4)))))
-  
+
 (dm is-act>  (Irq X)
   (if X
       (ptr32 (+ (: is-act) (* (/ Irq 32) 4))
@@ -186,14 +186,14 @@
       (ptr32 (+ (: ic-enab) (* (/ Irq 32) 4))
         (>> (- (% Irq 32)) 1))
       (ptr32 (+ (: ic-enab) (* (/ Irq 32) 4)))))
-  
-(dm ic-pend> (Irq X) 
+
+(dm ic-pend> (Irq X)
   (if X
       (ptr32 (+ (: ic-pend) (* (/ Irq 32) 4))
         (>> (- (% Irq 32)) 1))
       (ptr32 (+ (: ic-pend) (* (/ Irq 32) 4)))))
 
-(dm ic-act>  (Irq X) 
+(dm ic-act>  (Irq X)
   (if X
       (ptr32 (+ (: ic-act) (* (/ Irq 32) 4))
         (>> (- (% Irq 32)) 1))
@@ -203,7 +203,7 @@
 (dm i-cfg> (Irq X)
   (let (Shft (* (% Irq 16) 2)
         P    (+ (: i-cfg) (* (/ Irq 16) 4))
-        Reg  (& (ui* P) (bw-not (>> (- Shft) (hex "03"))))
+        Reg  (& (ui* P) (bnot (>> (- Shft) (hex "03"))))
         Reg  (| Reg (>> (- Shft) X)))
     (ptr32 P Reg)))
 
@@ -211,7 +211,7 @@
 (dm i-prio> (Irq X)
   (let (Shft (* (% Irq 4) 8)
         P    (+ (: i-prio) (* (/ Irq 4) 4))
-        Reg  (& (ui* P) (bw-not (>> (- Shft) (hex "FF"))))
+        Reg  (& (ui* P) (bnot (>> (- Shft) (hex "FF"))))
         Reg  (| Reg (>> (- Shft) X)))
     (setq Reg (hex "00FFFFFF"))
     (ptr32 P Reg)))
@@ -220,12 +220,12 @@
 (dm i-tgts> (Irq X)
   (let (Shft (* (% Irq 4) 8)
         P    (+ (: i-tgts) (* (/ Irq 4) 4))
-        Reg  (& (ui* P) (bw-not (>> (- Shft) (hex "FF"))))
+        Reg  (& (ui* P) (bnot (>> (- Shft) (hex "FF"))))
         Reg  (| Reg (>> (- Shft) X)))
     (ptr32 P Reg)))
 
 
-#############################    
+#############################
 
 # Both empty = rd
 # One or more = wr

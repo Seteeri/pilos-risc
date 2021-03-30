@@ -21,15 +21,12 @@
                "src/lib/misc.l"
                "src/lib/lib.l"
                "src/kern/bit.l"
-               "src/dev/uart.mini.l"
+               "src/dev/uart/uart1.l"
                "src/dev/mbox.l"
                "src/dev/gic.l"
                "src/dev/timer.l"
                "src/kern/term.l"
                "src/kern/kern.l")
         (in F (echo))))))
-
-
-# Modify picolisp.s $Kerns symbol
 
 (bye)

@@ -1169,11 +1169,11 @@
   Bits
 
   assume LE
-  
+
   default unsigned
-  
+
   todo check overflow
-  
+
 }#
 
 # https://stackoverflow.com/questions/8011700/how-do-i-extract-specific-n-bits-of-a-32-bit-unsigned-integer-in-c
@@ -1181,7 +1181,7 @@
   # a < b
   (>> A (& R (>> (- A) (- (>> (- (+ (- B A) 1)) 1) 1)))))
 
-(de bw-not (N)
+(de bnot (N)
   (bin
     (pack
       (make
@@ -1200,7 +1200,7 @@
   (let ((C D E F G H I J) B)
     (| (>> -56 J) (>> -48 I) (>> -40 H) (>> -32 G)
        (>> -24 F) (>> -16 E) (>> -8 D)  (>> 0 C))))
-(de l->c (I) 
+(de l->c (I)
   (list (& I 255)         (& (>> 8  I) 255) (& (>> 16 I) 255) (& (>> 24 I) 255)
         (& (>> 32 I) 255) (& (>> 40 I) 255) (& (>> 48 I) 255) (& (>> 56 I) 255)))
 
@@ -1210,10 +1210,10 @@
 
   (de * ptr) # rd sz
   (de * ptr num) # wr sz
-  
-  (de ** ptr list  ) # wr sz, ret ptr  
+
+  (de ** ptr list  ) # wr sz, ret ptr
   (de ** ptr num   ) # rd sz, ret lst or num if 1
-  
+
 }#
 
 # uint8
@@ -1228,14 +1228,14 @@
       (dec 'P) (make (for X V (link (byte (+ P X))))))
     (T # V=NIL
       (byte P V))))
-      
+
 # uint16
-      
+
 (de us* (P V)
   (if V
       (uc** P (i->c V))
       (c->i (uc** P 2))))
-      
+
 (de us** (P V)
   (cond
     ((pair V)
@@ -1244,14 +1244,14 @@
       (make (do V (link (c->s (uc* P 2))) (inc 'P 2))))
     (T # V=NIL
       (c->s (uc* P 2)))))
-      
+
 # uint32
 
 (de ui* (P V)
   (if V
       (uc** P (i->c V))
       (c->i (uc** P 4))))
-      
+
 (de ui** (P V)
   (cond
     ((pair V)
@@ -1267,7 +1267,7 @@
   (if V
       (uc** P (l->c V))
       (c->l (uc** P 8))))
-      
+
 (de ul** (P V)
   (cond
     ((pair V)
@@ -1317,6 +1317,8 @@
  LF
  CR
 
+ init
+
  pr-fr
  poll-tx-emp
  poll-rx-one
@@ -1348,6 +1350,12 @@
 (def 'BAUD       (+ MMIO (hex "00215068"))) # Baudrate
 # ...0xfc
 
+(def 'GPFSEL1    (+ MMIO (hex "00200004")))
+
+(def 'LF (char "^J"))
+(def 'CR (char "^M"))
+
+# Mov -> uart.l
 
 (de LSR-BIT
   (TX-IDL . `(>> -6 1))  # set if transmit FIFO empty and transmitter idle
@@ -1370,24 +1378,39 @@
   (TX-AVA . `(>> -1  1))  # tx fifo sp avail >= 1 sym
   (RX-AVA . `(>>  0  1))) # rx fifo sp avail >= 1 sym
 
-
-(def 'LF (char "^J"))
-(def 'CR (char "^M"))
-
 # tx fifo accept >= 1 byte
 (de poll-tx-emp () (until (bit? (get LSR-BIT 'TX-GE1) (byte LSR))))
-
 # rx fifo has >= 1 sym
 (de poll-rx-ge1 () (until (bit? (get LSR-BIT 'RX-GE1) (byte LSR))))
 
 (de rd ()  (poll-rx-ge1) (byte IO))
-
 (de wr (B) (poll-tx-emp) (byte IO B))
 (de wr-ch () (wr *Ch))
-
 (de pr (S) (for C (chop S) (wr (char C))))
-
 (de prl (S) (pr S) (wr LF))
+
+(de init ()
+  (let (P (cdr (assoc "AUX-ENABLES" *Uart))
+        R (ptr32 P))
+    (ptr32 P (| R 1)))
+  (ptr32 (cdr (assoc "AUX-MU-IER-REG"  *Aux)) 0)
+  (ptr32 (cdr (assoc "AUX-MU-IIR-REG"  *Aux)) (hex "c6")) # disable interrupts
+  (ptr32 (cdr (assoc "AUX-MU-CNTL-REG" *Aux)) 0)
+  (ptr32 (cdr (assoc "AUX-MU-LCR-REG"  *Aux)) 3) # 8 bits
+  (ptr32 (cdr (assoc "AUX-MU-MCR-REG"  *Aux)) 0)
+
+  (ptr32 (cdr (assoc "AUX-MU-BAUD-REG" *Aux)) 541) # 115200 baud
+
+  # map UART1 : GPIO
+
+  (ptr32 GPFSEL1
+    (let R (ptr32 GPFSEL1)
+      # gpio14, gpio15
+      # alt5
+      (setq R (& R (bnot (| (>> -12 7) (>> -15 7)))))
+      (setq R (| R (>> -12 2) (>> -15 2)))))
+
+  (ptr32 (cdr (assoc "AUX-MU-CNTL-REG" *Aux)) 3)) # enable Tx, Rx
 
 # Debug
 
@@ -1839,14 +1862,14 @@
 (de cfg (Irq X)
   (let (Shft (* (% Irq 16) 2)
         P    (+ (cdr (assoc "DIST-ICFGR" *Gic)) (* (/ Irq 16) 4))
-        Reg  (& (ui* P) (bw-not (>> (- Shft) (hex "03"))))
+        Reg  (& (ui* P) (bnot (>> (- Shft) (hex "03"))))
         Reg  (| Reg (>> (- Shft) X)))
     (ptr32 P Reg)))
 
 (de pri (Irq X)
   (let (Shft (* (% Irq 4) 8)
         P    (+ (cdr (assoc "DIST-IPRIORITYR" *Gic)) (* (/ Irq 4) 4))
-        Reg  (& (ui* P) (bw-not (>> (- Shft) (hex "FF"))))
+        Reg  (& (ui* P) (bnot (>> (- Shft) (hex "FF"))))
         Reg  (| Reg (>> (- Shft) X)))
     (setq Reg (hex "00FFFFFF"))
     (ptr32 P Reg)))
@@ -1854,7 +1877,7 @@
 (de tgt (Irq X)
   (let (Shft (* (% Irq 4) 8)
         P    (+ (cdr (assoc "DIST-ITARGETSR" *Gic)) (* (/ Irq 4) 4))
-        Reg  (& (ui* P) (bw-not (>> (- Shft) (hex "FF"))))
+        Reg  (& (ui* P) (bnot (>> (- Shft) (hex "FF"))))
         Reg  (| Reg (>> (- Shft) X)))
     (ptr32 P Reg)))
 

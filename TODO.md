@@ -3,16 +3,14 @@ Pre-Release
 
 https://github.com/ARM-software/arm-trusted-firmware/blob/master/bl32/tsp/tsp_timer.c
 
-SUN AM
-* refactor dev [DONE]
-  * use builtin ptrs for periphs
-  * rewrite to use plain fns
-* move kern.l to end of bin
-  * read from &end
-    * main: mkStr &end
-  * embed plio instead of string...later?
-    * would need to translate lisp source code to bin data
-* rewrite uart
+Week 29MAR2021
+
+* refactor UART ptrs to use *Uart
+* rewrite uart init in kern
+
+* optimization needs volatile
+  * create 'setv for volatile wr
+  * add option for ptr*
 
 * refactor loadKern -> parsePtr
   * do without mkstr?
@@ -23,14 +21,18 @@ SUN AM
   * sym for ptr to end
   * sym for load fn
 
-SUN PM
+-------------------
+
+* move kern.l to end of bin
+  * read from &end
+    * main: mkStr &end
+  * embed plio instead of string...later?
+    * would need to translate lisp source code to bin data
 * uart
   * test interrupts
     * mini
     * full
-* optimization needs volatile
-  * create 'setv for volatile wr
-  * add option for ptr*
+
 * usec
   * in main (firmware time)
   * pre kern (pil21 time)

@@ -57843,7 +57843,7 @@ setPeri:                                // @setPeri
 main:                                   // @main
 	.cfi_startproc
 // %bb.0:                               // %"$1"
-	str	x30, [sp, #-48]!                // 8-byte Folded Spill
+	stp	x30, x23, [sp, #-48]!           // 16-byte Folded Spill
 	stp	x22, x21, [sp, #16]             // 16-byte Folded Spill
 	stp	x20, x19, [sp, #32]             // 16-byte Folded Spill
 	.cfi_def_cfa_offset 48
@@ -57851,6 +57851,7 @@ main:                                   // @main
 	.cfi_offset w20, -16
 	.cfi_offset w21, -24
 	.cfi_offset w22, -32
+	.cfi_offset w23, -40
 	.cfi_offset w30, -48
 	//APP
 	mrs	x8, CNTVCT_EL0
@@ -57871,59 +57872,69 @@ main:                                   // @main
 .LBB575_3:                              // %"$4"
 	adrp	x19, SymTab+8
 	add	x19, x19, :lo12:SymTab+8
-	mov	w8, #2
-	movk	w8, #16384, lsl #16
-	str	x0, [x19, #608]
 	adrp	x20, ($QuitRst)
 	add	x20, x20, :lo12:($QuitRst)
+	str	x0, [x19, #608]
+	mov	w8, #2
+	movk	w8, #16384, lsl #16
+	mov	w9, #144
 	str	x8, [x19, #640]
-	mov	w8, #144
-	strb	w8, [x20]
-	adrp	x21, ($Heap)
+	strb	w9, [x20]
+	adrp	x22, ($Heap)
 	mov	w8, #1168
 	movk	w8, #1024, lsl #16
-	str	x8, [x21, :lo12:($Heap)]
-	adrp	x22, ($Limit)
-	str	x8, [x22, :lo12:($Limit)]
+	str	x8, [x22, :lo12:($Heap)]
+	adrp	x21, ($Limit)
+	adrp	x9, ($Put)
+	str	x8, [x21, :lo12:($Limit)]
 	adrp	x8, _putUART1
 	add	x8, x8, :lo12:_putUART1
-	adrp	x9, ($Put)
 	str	x8, [x9, :lo12:($Put)]
-	adrp	x8, ($Get)
-	adrp	x9, _getUART1
-	add	x9, x9, :lo12:_getUART1
-	str	x9, [x8, :lo12:($Get)]
+	adrp	x8, _getUART1
+	add	x8, x8, :lo12:_getUART1
+	adrp	x9, ($Get)
+	str	x8, [x9, :lo12:($Get)]
+	add	x23, x19, #640                  // =640
 	bl	newline
 	adrp	x0, .L$351
 	add	x0, x0, :lo12:.L$351
 	bl	outString
-	mov	w0, #67108864
+	adrp	x0, _end
+	add	x0, x0, :lo12:_end
 	bl	outWord
 	bl	newline
 	adrp	x0, .L$352
 	add	x0, x0, :lo12:.L$352
 	bl	outString
-	mov	x0, x20
+	ldr	w8, [x19, #640]
+	ldur	w0, [x23, #-4]
+	bfi	x0, x8, #32, #32
 	bl	outWord
 	bl	newline
 	adrp	x0, .L$353
 	add	x0, x0, :lo12:.L$353
 	bl	outString
-	ldr	x0, [x21, :lo12:($Heap)]
+	mov	x0, x20
 	bl	outWord
 	bl	newline
 	adrp	x0, .L$354
 	add	x0, x0, :lo12:.L$354
 	bl	outString
-	ldr	x0, [x22, :lo12:($Limit)]
+	ldr	x0, [x22, :lo12:($Heap)]
 	bl	outWord
 	bl	newline
 	adrp	x0, .L$355
 	add	x0, x0, :lo12:.L$355
 	bl	outString
-	bl	heapAlloc
+	ldr	x0, [x21, :lo12:($Limit)]
+	bl	outWord
+	bl	newline
 	adrp	x0, .L$356
 	add	x0, x0, :lo12:.L$356
+	bl	outString
+	bl	heapAlloc
+	adrp	x0, .L$357
+	add	x0, x0, :lo12:.L$357
 	bl	outString
 	mov	w8, #6096
 	add	x22, x19, x8
@@ -57974,7 +57985,7 @@ main:                                   // @main
 	bl	loadKern
 	ldp	x20, x19, [sp, #32]             // 16-byte Folded Reload
 	ldp	x22, x21, [sp, #16]             // 16-byte Folded Reload
-	ldr	x30, [sp], #48                  // 8-byte Folded Reload
+	ldp	x30, x23, [sp], #48             // 16-byte Folded Reload
 	ret
 .Lfunc_end575:
 	.size	main, .Lfunc_end575-main
@@ -59450,10 +59461,10 @@ $Kerns:
 	.type	_end,@object                    // @_end
 	.bss
 	.globl	_end
-	.p2align	3
+	.p2align	2
 _end:
-	.xword	0
-	.size	_end, 8
+	.byte	0                               // 0x0
+	.size	_end, 1
 
 	.type	.L$1,@object                    // @"$1"
 	.section	.rodata,"a",@progbits
@@ -61283,37 +61294,43 @@ _end:
 	.type	.L$351,@object                  // @"$351"
 	.p2align	2
 .L$351:
-	.asciz	"$MBox="
-	.size	.L$351, 7
+	.asciz	"$EndLd="
+	.size	.L$351, 8
 
 	.type	.L$352,@object                  // @"$352"
 	.p2align	2
 .L$352:
-	.asciz	"$QuitRst="
-	.size	.L$352, 10
+	.asciz	"$MBox="
+	.size	.L$352, 7
 
 	.type	.L$353,@object                  // @"$353"
 	.p2align	2
 .L$353:
-	.asciz	"$Heap="
-	.size	.L$353, 7
+	.asciz	"$QuitRst="
+	.size	.L$353, 10
 
 	.type	.L$354,@object                  // @"$354"
 	.p2align	2
 .L$354:
-	.asciz	"$Limit="
-	.size	.L$354, 8
+	.asciz	"$Heap="
+	.size	.L$354, 7
 
 	.type	.L$355,@object                  // @"$355"
-	.p2align	4
+	.p2align	2
 .L$355:
-	.asciz	"Call heapAlloc...\n"
-	.size	.L$355, 19
+	.asciz	"$Limit="
+	.size	.L$355, 8
 
 	.type	.L$356,@object                  // @"$356"
 	.p2align	4
 .L$356:
+	.asciz	"Call heapAlloc...\n"
+	.size	.L$356, 19
+
+	.type	.L$357,@object                  // @"$357"
+	.p2align	4
+.L$357:
 	.asciz	"Init internal symbols...\n"
-	.size	.L$356, 26
+	.size	.L$357, 26
 
 	.section	".note.GNU-stack","",@progbits
