@@ -49,6 +49,8 @@
 
 (de main ()
 
+  (uart~init)
+
   # Switch input
   # TODO: mov to nsp - load very first
   (setq *Putc uart~wr-ch)

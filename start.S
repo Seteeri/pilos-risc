@@ -95,9 +95,7 @@ _start:
     msr	    vbar_el1, x1
     isb
 
-4:  bl      uart_init
-    bl      mmu_map_stage2
-    //bl      uart_hello
+4:  bl      mmu_map_stage2
     bl      main
     b       1b
 

@@ -1390,7 +1390,7 @@
 (de prl (S) (pr S) (wr LF))
 
 (de init ()
-  (let (P (cdr (assoc "AUX-ENABLES" *Uart))
+  (let (P (cdr (assoc "AUX-ENABLES" *Aux))
         R (ptr32 P))
     (ptr32 P (| R 1)))
   (ptr32 (cdr (assoc "AUX-MU-IER-REG"  *Aux)) 0)
@@ -2204,6 +2204,8 @@
 
 
 (de main ()
+
+  #(uart~init)
 
   # Switch input
   # TODO: mov to nsp - load very first

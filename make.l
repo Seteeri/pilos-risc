@@ -21,7 +21,7 @@
                "src/lib/misc.l"
                "src/lib/lib.l"
                "src/kern/bit.l"
-               "src/dev/uart/uart1.l"
+               "src/dev/uart/uart-aux.l"
                "src/dev/mbox.l"
                "src/dev/gic.l"
                "src/dev/timer.l"

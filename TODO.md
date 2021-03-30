@@ -5,8 +5,9 @@ https://github.com/ARM-software/arm-trusted-firmware/blob/master/bl32/tsp/tsp_ti
 
 Week 29MAR2021
 
-* refactor UART ptrs to use *Uart
-* rewrite uart init in kern
+* UART [DONE]
+  * refactor UART ptrs to use *Uart
+  * rewrite uart init in kern
 
 * optimization needs volatile
   * create 'setv for volatile wr
