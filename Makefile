@@ -35,11 +35,11 @@ start.o: start.S
 	clang --target=aarch64-elf $(CFLAGS) -c start.S -o start.o
 
 vector.o: vector.s
-	clang --target=aarch64-elf $(CFLAGS) -c vector.s -o vector.o	
-	
+	clang --target=aarch64-elf $(CFLAGS) -c vector.s -o vector.o
+
 picolisp.o: picolisp.s
-	clang --target=arm64-elf $(CFLAGS) -c picolisp.s -o picolisp.o	
-	
+	clang --target=arm64-elf $(CFLAGS) -c picolisp.s -o picolisp.o
+
 %.o: %.c
 	clang --target=aarch64-elf $(CFLAGS) -c $< -o $@
 
@@ -52,10 +52,10 @@ clean:
 
 minicom:
 	sudo minicom -b 115200 -o -D /dev/ttyUSB0
-	
+
 qemu:
 	qemu-system-aarch64 -M raspi3 -kernel kernel8.img -serial stdio
 
 dump:
 	${OBJDUMP} -D kernel8.elf > kernel8.list
-	$(NM) -n kernel8.elf > kernel8.map	
+	$(NM) -n kernel8.elf > kernel8.map

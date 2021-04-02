@@ -21,7 +21,7 @@
 (de init ()
   (let IrqID (cdr (assoc "IRQ-CORE-N-V-TIMER" *Irq))
     (gic~cfg  IrqID gic~EDGE-CFG) # 2
-    (gic~pri  IrqID (>> -4 0))
+    (gic~pri  IrqID 0) # highest priority
     (gic~tgt  IrqID (hex "1")) # proc 0
     (gic~pend IrqID) # clr pend
     (gic~enab IrqID T)))
@@ -68,8 +68,8 @@
   (isb)
 
   (let IrqID (cdr (assoc "IRQ-CORE-N-V-TIMER" *Irq))
-    (gicd-pend IrqID)
-    (gicd-enab IrqID))
+    (gic~pend IrqID)
+    (gic~enab IrqID))
 
   (daif2 T)
 

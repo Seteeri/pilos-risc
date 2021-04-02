@@ -1317,7 +1317,11 @@
  LF
  CR
 
+ reg
  init
+ irq
+ irq2
+ intr
 
  pr-fr
  poll-tx-emp
@@ -1389,16 +1393,33 @@
 (de pr (S) (for C (chop S) (wr (char C))))
 (de prl (S) (pr S) (wr LF))
 
+(de reg ()
+  (prl-kern (pack "AUX-IRQ="         (ptr32 (cdr (assoc "AUX-IRQ"     *Aux)))))
+  (prl-kern (pack "AUX-ENABLES="     (ptr32 (cdr (assoc "AUX-ENABLES"     *Aux)))))
+  (prl-kern (pack "AUX-MU-IO-REG="   (ptr32 (cdr (assoc "AUX-MU-IO-REG"  *Aux)))))
+  (prl-kern (pack "AUX-MU-IER-REG="  (ptr32 (cdr (assoc "AUX-MU-IER-REG"  *Aux)))))
+  (prl-kern (pack "AUX-MU-IIR-REG="  (ptr32 (cdr (assoc "AUX-MU-IIR-REG"  *Aux)))))
+  (prl-kern (pack "AUX-MU-LCR-REG="  (ptr32 (cdr (assoc "AUX-MU-LCR-REG"  *Aux)))))
+  (prl-kern (pack "AUX-MU-MCR-REG="  (ptr32 (cdr (assoc "AUX-MU-MCR-REG"  *Aux)))))
+  (prl-kern (pack "AUX-MU-LSR-REG="  (ptr32 (cdr (assoc "AUX-MU-LSR-REG"  *Aux)))))
+  (prl-kern (pack "AUX-MU-SCRATCH="  (ptr32 (cdr (assoc "AUX-MU-SCRATCH"  *Aux)))))
+  (prl-kern (pack "AUX-MU-CNTL-REG=" (ptr32 (cdr (assoc "AUX-MU-CNTL-REG" *Aux)))))
+  (prl-kern (pack "AUX-MU-STAT-REG=" (ptr32 (cdr (assoc "AUX-MU-STAT-REG" *Aux)))))
+  (prl-kern (pack "AUX-MU-BAUD-REG=" (ptr32 (cdr (assoc "AUX-MU-BAUD-REG" *Aux)))))
+  )
+
+(de prr () (cons (ptr32 (cdr (assoc "AUX-MU-IER-REG"  *Aux))) (ptr32 (cdr (assoc "AUX-MU-IIR-REG"  *Aux)))))
+
+
 (de init ()
-  (let (P (cdr (assoc "AUX-ENABLES" *Aux))
-        R (ptr32 P))
-    (ptr32 P (| R 1)))
+  (let P (cdr (assoc "AUX-ENABLES" *Aux))
+    (ptr32 P (| (ptr32 P) 1)))
   (ptr32 (cdr (assoc "AUX-MU-IER-REG"  *Aux)) 0)
-  (ptr32 (cdr (assoc "AUX-MU-IIR-REG"  *Aux)) (hex "c6")) # disable interrupts
   (ptr32 (cdr (assoc "AUX-MU-CNTL-REG" *Aux)) 0)
   (ptr32 (cdr (assoc "AUX-MU-LCR-REG"  *Aux)) 3) # 8 bits
   (ptr32 (cdr (assoc "AUX-MU-MCR-REG"  *Aux)) 0)
-
+  (ptr32 (cdr (assoc "AUX-MU-IER-REG"  *Aux)) (bin "1111"))
+  (ptr32 (cdr (assoc "AUX-MU-IIR-REG"  *Aux)) (hex "c6")) # clear FIFOs
   (ptr32 (cdr (assoc "AUX-MU-BAUD-REG" *Aux)) 541) # 115200 baud
 
   # map UART1 : GPIO
@@ -1411,6 +1432,20 @@
       (setq R (| R (>> -12 2) (>> -15 2)))))
 
   (ptr32 (cdr (assoc "AUX-MU-CNTL-REG" *Aux)) 3)) # enable Tx, Rx
+
+(de irq (X)
+  (daif2)
+  (let Id (cdr (assoc "IRQ-AUX" *Irq))
+    (when X
+      (gic~cfg Id gic~EDGE-CFG) # 2
+      (gic~pri Id 0)
+      (gic~tgt Id (hex "1"))) # proc 0
+    (gic~pend Id)
+    (gic~enab Id X))
+  (daif2 T))
+
+(de intr ()
+  (prl-kern "AUX"))
 
 # Debug
 
@@ -1754,11 +1789,29 @@
 (symbols '(pico))
 (symbols '(gic pico))
 
+#{
+
+  DIST-I-ID: 33559611 1000000000000101000011101
+   PRODUCTID:  (2)
+   VARIANT:  (0)
+   REVISION:  (1)
+   IMPLEMENTER:  (1083)
+  DIST-TYPE-R: 64615 1111110001100111
+   LSPI: 31 (31)
+   SECURITY-EXTN: 2 (1)
+   CPU-NUMBER: T (3)
+   IT-LINES-NUMBER: 224 (7)
+
+  ARM® Generic Interrupt Controller Architecture version 2.0
+
+}#
+
 (local)
-(on-ctl off-ctl lvl-cfg edge-cfg
+(ON-CTL OFF-CTL LVL-CFG EDGE-CFG
  dist-id-bits dist-type-bits
  lst-bits pr-bits dist-type dist-iid pr-reg pr-type pr-iid
- max-iid state enab pend act cfg pri tgt
+ max-iid fld-32-1 fld-8 fld-2
+ enab pend act cfg pri tgt
  init dist-init cpui-init)
 
 (def 'ON-CTL  (>> 0 1))
@@ -1782,20 +1835,12 @@
     (cons 'CPU-NUMBER      '(7  5))
     (cons 'IT-LINES-NUMBER '(4  0))))
 
-#{
-
-    35918462 gic DIST-I-ID: 33559611 1000000000000101000011101
-    36207761 gic  PRODUCTID:  (2)
-    36321579 gic  VARIANT:  (0)
-    36454293 gic  REVISION:  (1)
-    36592739 gic  IMPLEMENTER:  (1083)
-    36811161 gic DIST-TYPE-R: 64615 1111110001100111
-    37045496 gic  LSPI: 31 (31)
-    37152538 gic  SECURITY-EXTN: 2 (1)
-    37316604 gic  CPU-NUMBER: T (3)
-    37470417 gic  IT-LINES-NUMBER: 224 (7)
-
-}#
+(def 'PRI-BITS
+  (list
+    (cons 31 24)
+    (cons 23 16)
+    (cons 15 8)
+    (cons 7  0)))
 
 (de lst-bits (P L N)
   # Make assoc list of name : masked
@@ -1804,6 +1849,7 @@
             (for Nm-Msk L
               (let (Nm  (car Nm-Msk)
                     Msk (cdr Nm-Msk))
+                # extract bits
                 (link (cons Nm (ubfx R (car Msk) (cadr Msk))))))))
     # Return single prop if N
     (if N
@@ -1843,43 +1889,74 @@
 (de pr-type () (pr-reg "DIST-TYPER" (dist-type)))
 (de pr-iid  () (pr-reg "DIST-IIDR" (dist-iid)))
 
-
-#### state
-
 (de max-iid ()
   (* (+ (dist-type 'IT-LINES-NUMBER) 1) 32))
 
-(de state (Irq Reg)
+#### fields/registers
+
+# calc ptr off and reg shift
+
+(de fld-32-1 (Irq Reg)
+  # 32 bits cfg/interrupt/register = 32 interrupts/register
   (ptr32
     (+ (cdr (assoc Reg *Gic))
        (* (/ Irq 32) 4))
     (>> (- (% Irq 32)) 1)))
 
-(de enab (Irq F) (state Irq (if F "DIST-ISENABLER" "DIST-ICENABLER")))
-(de pend (Irq F) (state Irq (if F "DIST-ISPENDR" "DIST-ICPENDR")))
-(de act  (Irq F) (state Irq (if F "DIST-ISACTIVER" "DIST-ICACTIVER")))
+# toggle irq state by writing bits in set or clear register
+(de enab (Irq F) (fld-32-1 Irq (if F "DIST-ISENABLER" "DIST-ICENABLER")))
+(de pend (Irq F) (fld-32-1 Irq (if F "DIST-ISPENDR"   "DIST-ICPENDR")))
+(de act  (Irq F) (fld-32-1 Irq (if F "DIST-ISACTIVER" "DIST-ICACTIVER")))
 
-(de cfg (Irq X)
-  (let (Shft (* (% Irq 16) 2)
-        P    (+ (cdr (assoc "DIST-ICFGR" *Gic)) (* (/ Irq 16) 4))
-        Reg  (& (ui* P) (bnot (>> (- Shft) (hex "03"))))
-        Reg  (| Reg (>> (- Shft) X)))
-    (ptr32 P Reg)))
+# (bin (need 32 "1")) = 4294967295 = "FFFFFFFF"
+
+(de fld-8 (Irq Reg X)
+  # 8 bits cfg/interrupt/register = 4 interrupts/register
+  (let (Off (* (/ Irq 4) 4)
+        Ptr (+ (cdr (assoc Reg *Gic)) Off)
+        B (chop (bin (ptr32 Ptr)))
+        Shft (* (% Irq 4) 8)
+        Lo (tail Shft B)
+        Md (pad 8 (bin X))
+        Hi (head (- 32 8 Shft) B))
+    (ptr32 Ptr
+      (bin (pack (conc Hi Md Lo))))))
+
+
+(de fld-2 (Irq Reg X)
+  # 2 bits cfg/interrupt/register = 16 interrupts/register
+  (let (Off (* (/ Irq 16) 4)
+        Ptr (+ (cdr (assoc Reg *Gic)) Off)
+        B (chop (bin (ptr32 Ptr)))
+        Shft (* (% Irq 16) 2)
+        Lo (tail Shft B)
+        Md (pad 2 (bin X))
+        Hi (head (- 32 2 Shft) B))
+    (ptr32 Ptr
+      (bin (pack (conc Hi Md Lo))))))
+
 
 (de pri (Irq X)
-  (let (Shft (* (% Irq 4) 8)
-        P    (+ (cdr (assoc "DIST-IPRIORITYR" *Gic)) (* (/ Irq 4) 4))
-        Reg  (& (ui* P) (bnot (>> (- Shft) (hex "FF"))))
-        Reg  (| Reg (>> (- Shft) X)))
-    (setq Reg (hex "00FFFFFF"))
-    (ptr32 P Reg)))
+  # low value = hi priority
+  #
+  # GIC supports min 16 and max 256 priority lvls
+  #
+  # To find lvls supported, wr 0xFF to a field and read it back
+  # See Table 4-15, Page 104
+  # -> pi supports 256 levels
+  (fld-8 Irq "DIST-IPRIORITYR" X))
 
 (de tgt (Irq X)
-  (let (Shft (* (% Irq 4) 8)
-        P    (+ (cdr (assoc "DIST-ITARGETSR" *Gic)) (* (/ Irq 4) 4))
-        Reg  (& (ui* P) (bnot (>> (- Shft) (hex "FF"))))
-        Reg  (| Reg (>> (- Shft) X)))
-    (ptr32 P Reg)))
+  # See Table 4-16, Page 107
+  #
+  # See Table 4-17, Page 107
+  # bit N enables forwarding interrupts to interface N
+  # 0bxxxxxxx1 = CPU interface 0
+  # 0b1xxxxxxx = CPU interface 7
+  (fld-8 Irq "DIST-ITARGETSR" X))
+
+(de cfg (Irq X)
+  (fld-8 Irq "DIST-ICFGR" X))
 
 #### init
 
@@ -1894,51 +1971,35 @@
 
   (ptr32 (cdr (assoc "DIST-CTLR" *Gic)) OFF-CTL)
 
-  # TODO: store on init
-  (let Max-IID (max-iid)
-
-    # Disable/clear pend
-    (for (N 0 (< N Max-IID) (inc N))
-      (enab N)
-      (pend N))
-
-    # Set lowest priority
-    (for (N 0 (< N Max-IID) (inc N))
-      (let (O (* 4 (/ N 4))
-            Pr (+ (cdr (assoc "DIST-IPRIORITYR" *Gic)) O))
-        (when (=0 (% N 4))
-          (ptr32 Pr (hex "FFFFFFFF")))))
-
-    # Set tgt of SPIs -> PE 0
-    (for (N 0 (< N Max-IID) (inc N))
-      (let (O (* 4 (/ N 4))
-            Ta (+ (cdr (assoc "DIST-ITARGETSR" *Gic)) O))
-        (when (=0 (% N 4))
-          (ptr32 Ta (hex "01010101")))))
-
-    # Set trigger of SPIs -> level
-    (for (N 0 (< N Max-IID) (inc N))
-      (let (O (* 4 (/ N 16))
-            Cf (+ (cdr (assoc "DIST-ICFGR" *Gic)) O))
-        (when (=0 (% N 16))
-          (ptr32 Cf LVL-CFG)))))
+  # Disable/clear pend
+  (for (Irq 0 (< Irq (max-iid)) (inc Irq))
+    (enab Irq)
+    (pend Irq)
+    # can chunk these...create fn to do rx
+    (pri Irq 0)
+    (tgt Irq (hex "1")) # PE0
+    (cfg Irq EDGE-CFG))
 
   (ptr32 (cdr (assoc "DIST-CTLR" *Gic)) ON-CTL))
 
 
 (de cpui-init ()
+
   (ptr32 (cdr (assoc  "CPUI-CTLR" *Gic)) OFF-CTL)
 
-  # Set the priority level as the lowest priority
-  # Note: Higher priority corresponds to a lower Priority field value in the GIC_PMR.
-  # In addition to this, writing 255 to the GICC_PMR always sets it to the
-  # largest supported priority field value.
+  # Only interrupts with priority higher than this val will be signaled to PE
+  # FF is the max val which is lowest priority so prio lvl > FF to be signaled
+  # basically says pass all interrupts
+  #
+  # Higher priority corresponds to a lower Priority field value
+  #
+  # Writing 255 always sets it to the largest supported priority field value
   (ptr32 (cdr (assoc "CPUI-PMR" *Gic)) (hex "FF")) # "F0"
 
-  # Handle all of interrupts in a single group
+  # Handle all interrupts in a single group
   (ptr32 (cdr (assoc "CPUI-BPR" *Gic)) (hex "0"))
 
-  # Clear all pending interrupts
+  # Clear all pending interrupts?
 
   (ptr32 (cdr (assoc "CPUI-CTLR" *Gic)) ON-CTL))
 
@@ -1967,7 +2028,7 @@
 (de init ()
   (let IrqID (cdr (assoc "IRQ-CORE-N-V-TIMER" *Irq))
     (gic~cfg  IrqID gic~EDGE-CFG) # 2
-    (gic~pri  IrqID (>> -4 0))
+    (gic~pri  IrqID 0) # highest priority
     (gic~tgt  IrqID (hex "1")) # proc 0
     (gic~pend IrqID) # clr pend
     (gic~enab IrqID T)))
@@ -2014,8 +2075,8 @@
   (isb)
 
   (let IrqID (cdr (assoc "IRQ-CORE-N-V-TIMER" *Irq))
-    (gicd-pend IrqID)
-    (gicd-enab IrqID))
+    (gic~pend IrqID)
+    (gic~enab IrqID))
 
   (daif2 T)
 
@@ -2158,24 +2219,13 @@
 
 #{
 
-    [24908182] Board Model: 0
-    [25121743] Board Revision: C03112
-    [25410831] Board Serial: 10000000 BA08938C
-    [25712292] Firmware Revision: 5FF86CB4
-    [26004380] ARM Memory Base/Size: 3B400000 0
-    [26337306] VC Memory Base/Size: 4C00000 3B400000
-    [26695736] MAC Address: DC-A6-32-9B-40-37
-    [26916918]
-    [26977889] cntv-ctl: 0
-    [27086774] cntv-cval: 0
-    [27201597] cntvct: 27196357
-    [27338944] cnt-frq: 54000000
-    [27471752]
-    [27540543] PilOS 21.1.25 AArch64 ARMv8-A A64
-    [27746104] Heap Size: 1 MB
-    [28362097] Heap Free: 0 MB
-    [28458391] Stack Size: 512 KB
-    [28601545] *Kern Load Time: 21759131
+    Board Model: 0
+    Board Revision: C03112
+    Board Serial: 10000000 BA08938C
+    Firmware Revision: 5FF86CB4
+    ARM Memory Base/Size: 3B400000 0
+    VC Memory Base/Size: 4C00000 3B400000
+    MAC Address: DC-A6-32-9B-40-37
 
 }#
 
@@ -2194,26 +2244,27 @@
   (prl-kern (text "Heap Size: @1 MB" (heap)))
   (prl-kern (text "Heap Free: @1 MB" (heap T)))
   (prl-kern (text "Co Stack Size: @1 KB" (stack 64)))
-  (prl-kern (text "*Kern Load Time: @1" (usec))))
+  (prl-kern (text "*Kern Load Ticks: @1" (usec))))
 
 
 (de intr ()
   (case *IntID
     (27 (timer~intr))
+    (125 (prl-kern "AUX"))
     (T  (prl-kern (format *IntID)))))
 
 
 (de main ()
 
-  #(uart~init)
+  (uart~init)
 
   # Switch input
   # TODO: mov to nsp - load very first
-  (setq *Putc uart~wr-ch)
+  #(setq *Putc uart~wr-ch)
 
   # Switch input to UART1 (mini UART)
   # On exit, set NIL to switch back to kern input
-  (setq *Getc '(uart~rd))
+  #(setq *Getc '(uart~rd))
 
   ################
   # print sys info
@@ -2247,6 +2298,8 @@
 
   ###################
   # start term (repl)
+
+  # when intr, use (loop (wfe) (read) ...)
 
   (term))
 

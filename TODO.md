@@ -5,9 +5,13 @@ https://github.com/ARM-software/arm-trusted-firmware/blob/master/bl32/tsp/tsp_ti
 
 Week 29MAR2021
 
-* UART [DONE]
-  * refactor UART ptrs to use *Uart
-  * rewrite uart init in kern
+* pil21
+  * need sym list to decide whether to disable interrupt
+
+* uart [DONE]
+  * test interrupts
+    * mini
+    * full
 
 * optimization needs volatile
   * create 'setv for volatile wr
@@ -29,10 +33,6 @@ Week 29MAR2021
     * main: mkStr &end
   * embed plio instead of string...later?
     * would need to translate lisp source code to bin data
-* uart
-  * test interrupts
-    * mini
-    * full
 
 * usec
   * in main (firmware time)

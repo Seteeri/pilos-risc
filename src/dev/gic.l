@@ -1,18 +1,36 @@
 (symbols '(gic pico))
 
+#{
+
+  DIST-I-ID: 33559611 1000000000000101000011101
+   PRODUCTID:  (2)
+   VARIANT:  (0)
+   REVISION:  (1)
+   IMPLEMENTER:  (1083)
+  DIST-TYPE-R: 64615 1111110001100111
+   LSPI: 31 (31)
+   SECURITY-EXTN: 2 (1)
+   CPU-NUMBER: T (3)
+   IT-LINES-NUMBER: 224 (7)
+
+  ARM® Generic Interrupt Controller Architecture version 2.0
+
+}#
+
 (local)
-(on-ctl off-ctl lvl-cfg edge-cfg
+(ON-CTL OFF-CTL LVL-CFG EDGE-CFG
  dist-id-bits dist-type-bits
  lst-bits pr-bits dist-type dist-iid pr-reg pr-type pr-iid
- max-iid state enab pend act cfg pri tgt
+ max-iid fld-32-1 fld-8 fld-2
+ enab pend act cfg pri tgt
  init dist-init cpui-init)
 
-(def 'ON-CTL  (>> 0 1))
-(def 'OFF-CTL (>> 0 0))
+(def 'ON-CTL  1)
+(def 'OFF-CTL 0)
 
 # 8.9.7 GICD_ICFGR<n>, Interrupt Configuration Registers
-(def 'LVL-CFG   (hex "0")) # level-sensitive
-(def 'EDGE-CFG  (hex "2")) # edge-triggered
+(def 'LVL-CFG   (bin "00")) # level-sensitive
+(def 'EDGE-CFG  (bin "10")) # edge-triggered
 
 (def 'DIST-IID-BITS
   (list
@@ -28,21 +46,6 @@
     (cons 'CPU-NUMBER      '(7  5))
     (cons 'IT-LINES-NUMBER '(4  0))))
 
-#{
-
-    35918462 gic DIST-I-ID: 33559611 1000000000000101000011101
-    36207761 gic  PRODUCTID:  (2)
-    36321579 gic  VARIANT:  (0)
-    36454293 gic  REVISION:  (1)
-    36592739 gic  IMPLEMENTER:  (1083)
-    36811161 gic DIST-TYPE-R: 64615 1111110001100111
-    37045496 gic  LSPI: 31 (31)
-    37152538 gic  SECURITY-EXTN: 2 (1)
-    37316604 gic  CPU-NUMBER: T (3)
-    37470417 gic  IT-LINES-NUMBER: 224 (7)
-
-}#
-
 (de lst-bits (P L N)
   # Make assoc list of name : masked
   (let O (make
@@ -50,6 +53,7 @@
             (for Nm-Msk L
               (let (Nm  (car Nm-Msk)
                     Msk (cdr Nm-Msk))
+                # extract bits
                 (link (cons Nm (ubfx R (car Msk) (cadr Msk))))))))
     # Return single prop if N
     (if N
@@ -89,43 +93,74 @@
 (de pr-type () (pr-reg "DIST-TYPER" (dist-type)))
 (de pr-iid  () (pr-reg "DIST-IIDR" (dist-iid)))
 
-
-#### state
-
 (de max-iid ()
   (* (+ (dist-type 'IT-LINES-NUMBER) 1) 32))
 
-(de state (Irq Reg)
+#### fields/registers
+
+# calc ptr off and reg shift
+
+(de fld-32-1 (Irq Reg)
+  # 32 bits cfg/interrupt/register = 32 interrupts/register
   (ptr32
     (+ (cdr (assoc Reg *Gic))
        (* (/ Irq 32) 4))
     (>> (- (% Irq 32)) 1)))
 
-(de enab (Irq F) (state Irq (if F "DIST-ISENABLER" "DIST-ICENABLER")))
-(de pend (Irq F) (state Irq (if F "DIST-ISPENDR" "DIST-ICPENDR")))
-(de act  (Irq F) (state Irq (if F "DIST-ISACTIVER" "DIST-ICACTIVER")))
+# toggle irq state by writing bits in set or clear register
+(de enab (Irq F) (fld-32-1 Irq (if F "DIST-ISENABLER" "DIST-ICENABLER")))
+(de pend (Irq F) (fld-32-1 Irq (if F "DIST-ISPENDR"   "DIST-ICPENDR")))
+(de act  (Irq F) (fld-32-1 Irq (if F "DIST-ISACTIVER" "DIST-ICACTIVER")))
 
-(de cfg (Irq X)
-  (let (Shft (* (% Irq 16) 2)
-        P    (+ (cdr (assoc "DIST-ICFGR" *Gic)) (* (/ Irq 16) 4))
-        Reg  (& (ui* P) (bnot (>> (- Shft) (hex "03"))))
-        Reg  (| Reg (>> (- Shft) X)))
-    (ptr32 P Reg)))
+# (bin (need 32 "1")) = 4294967295 = "FFFFFFFF"
+
+(de fld-8 (Irq Reg X)
+  # 8 bits cfg/interrupt/register = 4 interrupts/register
+  (let (Off (* (/ Irq 4) 4)
+        Ptr (+ (cdr (assoc Reg *Gic)) Off)
+        B (chop (bin (ptr32 Ptr)))
+        Shft (* (% Irq 4) 8)
+        Lo (tail Shft B)
+        Md (pad 8 (bin X))
+        Hi (head (- 32 8 Shft) B))
+    (ptr32 Ptr
+      (bin (pack (conc Hi Md Lo))))))
+
+
+(de fld-2 (Irq Reg X)
+  # 2 bits cfg/interrupt/register = 16 interrupts/register
+  (let (Off (* (/ Irq 16) 4)
+        Ptr (+ (cdr (assoc Reg *Gic)) Off)
+        B (chop (bin (ptr32 Ptr)))
+        Shft (* (% Irq 16) 2)
+        Lo (tail Shft B)
+        Md (pad 2 (bin X))
+        Hi (head (- 32 2 Shft) B))
+    (ptr32 Ptr
+      (bin (pack (conc Hi Md Lo))))))
+
 
 (de pri (Irq X)
-  (let (Shft (* (% Irq 4) 8)
-        P    (+ (cdr (assoc "DIST-IPRIORITYR" *Gic)) (* (/ Irq 4) 4))
-        Reg  (& (ui* P) (bnot (>> (- Shft) (hex "FF"))))
-        Reg  (| Reg (>> (- Shft) X)))
-    (setq Reg (hex "00FFFFFF"))
-    (ptr32 P Reg)))
+  # low value = hi priority
+  #
+  # GIC supports min 16 and max 256 priority lvls
+  #
+  # To find lvls supported, wr 0xFF to a field and read it back
+  # See Table 4-15, Page 104
+  # -> pi supports 256 levels
+  (fld-8 Irq "DIST-IPRIORITYR" X))
 
 (de tgt (Irq X)
-  (let (Shft (* (% Irq 4) 8)
-        P    (+ (cdr (assoc "DIST-ITARGETSR" *Gic)) (* (/ Irq 4) 4))
-        Reg  (& (ui* P) (bnot (>> (- Shft) (hex "FF"))))
-        Reg  (| Reg (>> (- Shft) X)))
-    (ptr32 P Reg)))
+  # See Table 4-16, Page 107
+  #
+  # See Table 4-17, Page 107
+  # bit N enables forwarding interrupts to interface N
+  # 0bxxxxxxx1 = CPU interface 0
+  # 0b1xxxxxxx = CPU interface 7
+  (fld-8 Irq "DIST-ITARGETSR" X))
+
+(de cfg (Irq X)
+  (fld-8 Irq "DIST-ICFGR" X))
 
 #### init
 
@@ -140,51 +175,38 @@
 
   (ptr32 (cdr (assoc "DIST-CTLR" *Gic)) OFF-CTL)
 
-  # TODO: store on init
-  (let Max-IID (max-iid)
+  (for (Irq 0 (< Irq (max-iid)) (inc Irq))
 
     # Disable/clear pend
-    (for (N 0 (< N Max-IID) (inc N))
-      (enab N)
-      (pend N))
-
-    # Set lowest priority
-    (for (N 0 (< N Max-IID) (inc N))
-      (let (O (* 4 (/ N 4))
-            Pr (+ (cdr (assoc "DIST-IPRIORITYR" *Gic)) O))
-        (when (=0 (% N 4))
-          (ptr32 Pr (hex "FFFFFFFF")))))
-
-    # Set tgt of SPIs -> PE 0
-    (for (N 0 (< N Max-IID) (inc N))
-      (let (O (* 4 (/ N 4))
-            Ta (+ (cdr (assoc "DIST-ITARGETSR" *Gic)) O))
-        (when (=0 (% N 4))
-          (ptr32 Ta (hex "01010101")))))
-
-    # Set trigger of SPIs -> level
-    (for (N 0 (< N Max-IID) (inc N))
-      (let (O (* 4 (/ N 16))
-            Cf (+ (cdr (assoc "DIST-ICFGR" *Gic)) O))
-        (when (=0 (% N 16))
-          (ptr32 Cf LVL-CFG)))))
+    (enab Irq)
+    (pend Irq)
+    # can chunk these...create fn to do rx
+    (pri Irq 0)
+    (tgt Irq (hex "1")) # PE0
+    (cfg Irq EDGE-CFG))
 
   (ptr32 (cdr (assoc "DIST-CTLR" *Gic)) ON-CTL))
 
 
 (de cpui-init ()
+
   (ptr32 (cdr (assoc  "CPUI-CTLR" *Gic)) OFF-CTL)
 
-  # Set the priority level as the lowest priority
-  # Note: Higher priority corresponds to a lower Priority field value in the GIC_PMR.
-  # In addition to this, writing 255 to the GICC_PMR always sets it to the
-  # largest supported priority field value.
+  # print CPU-IIDR
+
+  # Only interrupts with priority higher than this val will be signaled to PE
+  # FF is the max val which is lowest priority so prio lvl > FF to be signaled
+  # basically says pass all interrupts
+  #
+  # Higher priority corresponds to a lower Priority field value
+  #
+  # Writing 255 always sets it to the largest supported priority field value
   (ptr32 (cdr (assoc "CPUI-PMR" *Gic)) (hex "FF")) # "F0"
 
-  # Handle all of interrupts in a single group
-  (ptr32 (cdr (assoc "CPUI-BPR" *Gic)) (hex "0"))
+  # Handle all interrupts in a single group
+  (ptr32 (cdr (assoc "CPUI-BPR" *Gic)) 0)
 
-  # Clear all pending interrupts
+  # Clear all pending interrupts?
 
   (ptr32 (cdr (assoc "CPUI-CTLR" *Gic)) ON-CTL))
 

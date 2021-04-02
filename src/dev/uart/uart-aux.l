@@ -39,7 +39,11 @@
  LF
  CR
 
+ reg
  init
+ irq
+ irq2
+ intr
 
  pr-fr
  poll-tx-emp
@@ -111,16 +115,33 @@
 (de pr (S) (for C (chop S) (wr (char C))))
 (de prl (S) (pr S) (wr LF))
 
+(de reg ()
+  (prl-kern (pack "AUX-IRQ="         (ptr32 (cdr (assoc "AUX-IRQ"     *Aux)))))
+  (prl-kern (pack "AUX-ENABLES="     (ptr32 (cdr (assoc "AUX-ENABLES"     *Aux)))))
+  (prl-kern (pack "AUX-MU-IO-REG="   (ptr32 (cdr (assoc "AUX-MU-IO-REG"  *Aux)))))
+  (prl-kern (pack "AUX-MU-IER-REG="  (ptr32 (cdr (assoc "AUX-MU-IER-REG"  *Aux)))))
+  (prl-kern (pack "AUX-MU-IIR-REG="  (ptr32 (cdr (assoc "AUX-MU-IIR-REG"  *Aux)))))
+  (prl-kern (pack "AUX-MU-LCR-REG="  (ptr32 (cdr (assoc "AUX-MU-LCR-REG"  *Aux)))))
+  (prl-kern (pack "AUX-MU-MCR-REG="  (ptr32 (cdr (assoc "AUX-MU-MCR-REG"  *Aux)))))
+  (prl-kern (pack "AUX-MU-LSR-REG="  (ptr32 (cdr (assoc "AUX-MU-LSR-REG"  *Aux)))))
+  (prl-kern (pack "AUX-MU-SCRATCH="  (ptr32 (cdr (assoc "AUX-MU-SCRATCH"  *Aux)))))
+  (prl-kern (pack "AUX-MU-CNTL-REG=" (ptr32 (cdr (assoc "AUX-MU-CNTL-REG" *Aux)))))
+  (prl-kern (pack "AUX-MU-STAT-REG=" (ptr32 (cdr (assoc "AUX-MU-STAT-REG" *Aux)))))
+  (prl-kern (pack "AUX-MU-BAUD-REG=" (ptr32 (cdr (assoc "AUX-MU-BAUD-REG" *Aux)))))
+  )
+
+(de prr () (cons (ptr32 (cdr (assoc "AUX-MU-IER-REG"  *Aux))) (ptr32 (cdr (assoc "AUX-MU-IIR-REG"  *Aux)))))
+
+
 (de init ()
-  (let (P (cdr (assoc "AUX-ENABLES" *Aux))
-        R (ptr32 P))
-    (ptr32 P (| R 1)))
+  (let P (cdr (assoc "AUX-ENABLES" *Aux))
+    (ptr32 P (| (ptr32 P) 1)))
   (ptr32 (cdr (assoc "AUX-MU-IER-REG"  *Aux)) 0)
-  (ptr32 (cdr (assoc "AUX-MU-IIR-REG"  *Aux)) (hex "c6")) # disable interrupts
   (ptr32 (cdr (assoc "AUX-MU-CNTL-REG" *Aux)) 0)
   (ptr32 (cdr (assoc "AUX-MU-LCR-REG"  *Aux)) 3) # 8 bits
   (ptr32 (cdr (assoc "AUX-MU-MCR-REG"  *Aux)) 0)
-
+  (ptr32 (cdr (assoc "AUX-MU-IER-REG"  *Aux)) (bin "1111"))
+  (ptr32 (cdr (assoc "AUX-MU-IIR-REG"  *Aux)) (hex "c6")) # clear FIFOs
   (ptr32 (cdr (assoc "AUX-MU-BAUD-REG" *Aux)) 541) # 115200 baud
 
   # map UART1 : GPIO
@@ -133,6 +154,20 @@
       (setq R (| R (>> -12 2) (>> -15 2)))))
 
   (ptr32 (cdr (assoc "AUX-MU-CNTL-REG" *Aux)) 3)) # enable Tx, Rx
+
+(de irq (X)
+  (daif2)
+  (let Id (cdr (assoc "IRQ-AUX" *Irq))
+    (when X
+      (gic~cfg Id gic~EDGE-CFG) # 2
+      (gic~pri Id 0)
+      (gic~tgt Id (hex "1"))) # proc 0
+    (gic~pend Id)
+    (gic~enab Id X))
+  (daif2 T))
+
+(de intr ()
+  (prl-kern "AUX"))
 
 # Debug
 

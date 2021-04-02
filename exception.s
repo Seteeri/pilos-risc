@@ -1,4 +1,6 @@
-.section ".text.boot"
+// SPDX-License-Identifier: MIT OR Apache-2.0
+//
+// Copyright (c) 2018-2021 Andre Richter <andre.o.richter@gmail.com>
 
 /// Call the function provided by parameter `\handler` after saving the exception context. Provide
 /// the context as the first parameter to '\handler'.
@@ -45,63 +47,69 @@
     b      1b
 .endm
 
+//--------------------------------------------------------------------------------------------------
+// The exception vector table.
+//--------------------------------------------------------------------------------------------------
+.section ".text.boot"
 
-	/*
-	 * Exception vectors.
-	 */
-	.align 11
-	.globl vectors
-vectors:
-	/*
-	 * Current EL with SP0
-	 */
-	.align 7
-	CALL_WITH_CONTEXT sig
-	.align 7
-	CALL_WITH_CONTEXT sig
-	.align 7
-	CALL_WITH_CONTEXT sig
-	.align 7
-	CALL_WITH_CONTEXT sig
+// Align by 2^11 bytes, as demanded by ARMv8-A. Same as ALIGN(2048) in an ld script.
+.align 11
 
-	/*
-	 * Current EL with SPx
-	 */
-	.align 7
-	CALL_WITH_CONTEXT sig
-	.align 7
-	CALL_WITH_CONTEXT sig
-	.align 7
-	CALL_WITH_CONTEXT sig
-	.align 7
-	CALL_WITH_CONTEXT sig
+// Export a symbol for the Rust code to use.
+__exception_vector_start:
 
-	/*
-	 * Lower EL using AArch64
-	 */
-	.align 7
-	CALL_WITH_CONTEXT sig
-	.align 7
-	CALL_WITH_CONTEXT sig
-	.align 7
-	CALL_WITH_CONTEXT sig
-	.align 7
-	CALL_WITH_CONTEXT sig
+// Current exception level with SP_EL0.
+//
+// .org sets the offset relative to section start.
+//
+// # Safety
+//
+// - It must be ensured that `CALL_WITH_CONTEXT` <= 0x80 bytes.
+.org 0x000
+    CALL_WITH_CONTEXT sig
+.org 0x080
+    CALL_WITH_CONTEXT sig
+.org 0x100
+    FIQ_SUSPEND
+.org 0x180
+    CALL_WITH_CONTEXT sig
 
-	/*
-	 * Lower EL using AArch32
-	 */
-	.align 7
-	CALL_WITH_CONTEXT sig
-	.align 7
-	CALL_WITH_CONTEXT sig
-	.align 7
-	CALL_WITH_CONTEXT sig
-	.align 7
-	CALL_WITH_CONTEXT sig
+// Current exception level with SP_ELx, x > 0.
+.org 0x200
+    CALL_WITH_CONTEXT sig
+.org 0x280
+    CALL_WITH_CONTEXT sig
+.org 0x300
+    FIQ_SUSPEND
+.org 0x380
+    CALL_WITH_CONTEXT sig
 
+// Lower exception level, AArch64
+.org 0x400
+    CALL_WITH_CONTEXT sig
+.org 0x480
+    CALL_WITH_CONTEXT sig
+.org 0x500
+    FIQ_SUSPEND
+.org 0x580
+    CALL_WITH_CONTEXT sig
 
-	.align  2
+// Lower exception level, AArch32
+.org 0x600
+    CALL_WITH_CONTEXT sig
+.org 0x680
+    CALL_WITH_CONTEXT sig
+.org 0x700
+    FIQ_SUSPEND
+.org 0x780
+    CALL_WITH_CONTEXT sig
+.org 0x800
+
+//--------------------------------------------------------------------------------------------------
+// Helper functions
+//--------------------------------------------------------------------------------------------------
+.section .text
+
 __exception_restore_context:
     ldr    w19,      [sp, #16 * 16]
     ldp    lr,  x20, [sp, #16 * 15]
